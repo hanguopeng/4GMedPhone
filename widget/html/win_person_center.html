@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>病人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/personCenter.css"/>
+</head>
+<body>
+    <div id="header" class="topPersonInfo aui-padded-l-15 aui-padded-r-15">
+    </div>
+
+    <footer class="aui-bar aui-bar-tab" id="footer">
+        <div class="aui-bar-tab-item" tapmode onclick="openFrameContent('frm_tizhengshouji')">
+            <i class="aui-iconfont aui-icon-home"></i>
+            <div class="aui-bar-tab-label">体征采集</div>
+        </div>
+        <div class="aui-bar-tab-item"  tapmode onclick="openFrameContent('frm_yizhuzhixing')">
+            <i class="aui-iconfont aui-icon-star"></i>
+            <div class="aui-bar-tab-label">医嘱执行</div>
+        </div>
+        <div class="aui-bar-tab-item"  tapmode onclick="openFrameContent('frm_huliwendang')">
+            <i class="aui-iconfont aui-icon-cart"></i>
+            <div class="aui-bar-tab-label">护理文书</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openFrameContent('frm_fuzhugongju')">
+            <!--<div class="aui-dot"></div>-->
+            <i class="aui-iconfont aui-icon-my"></i>
+            <div class="aui-bar-tab-label">辅助工具</div>
+        </div>
+    </footer>
+</body>
+<script id="header-tpl" type="text/template">
+  <div class="leftChooseIcon" tapmode onclick="prePerson()">
+      <img src="../image/u29318.png" >
+  </div>
+  <div class="personImg aui-margin-l-15" tapmode onclick="openFrameContent('frm_person_center')">
+  {{? it.person.sex=="1"}}
+      <img src="../image/u64.png">
+  {{??}}
+      <img src="../image/u37.png">
+  {{?}}
+  </div>
+  <div class="rightChooseIcon aui-margin-l-15" tapmode onclick="nextPerson()">
+      <img src="../image/u29318.png">
+  </div>
+  <div class="personInfo aui-margin-l-15 aui-padded-t-5 aui-padded-b-5" style="width:7rem;">
+      <div class="topInfo aui-font-size-12 aui-ellipsis-1">
+          <span>{{=it.person.medBedName || it.person.med_bed_name || '--'}}床</span>
+          <span>{{=it.person.name || '--'}}</span>
+      </div>
+      <div class="bottomInfo aui-font-size-12 aui-ellipsis-1">
+          <span>{{=it.person.age || '--'}}</span>
+          <span>({{=it.person.costType || it.person.costType || '--'}})</span>
+      </div>
+  </div>
+  <div class="aui-pull-right" style="line-height:3.5rem" tapmode onclick="toggleMenu();">
+      <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1rem;"></span>
+  </div>
+  <!-- <div class="homeIcon aui-padded-l-10" tapmode onclick="openPersonSearchFrame();">
+      <span class="aui-iconfont aui-icon-search" style="font-size:1.5rem;color:white;"></span>
+  </div>
+  <div class="tiaoXingMaImg" tapmode>
+      <img src="../image/u28937.png">
+  </div> -->
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/aui-tab.js"></script>
+<script type="text/javascript" src="../script/win_person_center.js"></script>
+</html>

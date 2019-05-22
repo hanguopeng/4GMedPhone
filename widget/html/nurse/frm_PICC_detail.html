@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <div class="aui-card-list">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            PICC穿刺记录
+        </div>
+        <div class="outInfo">
+            <!--<div class="aui-row border-bottom">
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>姓名:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.name}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>床号:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.medBedId||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>住院号:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.registerNumber||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>诊断:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.diagnose||''}}">
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="aui-row item border-bottom aui-padded-b-0">
+                <div class="aui-row border-bottom">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>身高:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <span class="aui-margin-l-5">{{=it.shengao || '-'}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>是否做过化疗:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left ">
+                        <span class="aui-margin-l-5">{{=it.shifouzuoguohualiao || '-'}}</span>
+                    </div>
+                </div>
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>血常规:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <span class="aui-margin-l-5">{{=it.xuechanggui || '-'}}</span>
+                    </div>
+                    <div class="inline">
+                        <span class="aui-margin-l-5">{{=it.yichang || '-'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>穿刺静脉:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <span class="aui-margin-l-5">{{=it.chuancijingmai || '-'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item border-bottom">
+                <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                    <div>臂围(肘窝10cm)</div>
+                    <div class="flex-item">
+                        <div class="aui-padded-l-15 flex">
+                            <div>上</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.yewoshang || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                            <div>下</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.yewoxia || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item border-bottom">
+                <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                    <div>导管批号(贴在背面)</div>
+                    <div class="flex-item">
+                        <div class="aui-padded-l-15 flex">
+                            <div>品牌</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.pinpai || '-'}} </span>
+                            </div>
+                        </div>
+                        <div class="aui-padded-l-15 flex">
+                            <div>插入</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.charu || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                        </div>
+                        <div class="aui-padded-l-15 flex">
+                            <div>推入</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.tuiru || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>封管方法</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <span class="aui-margin-l-5">{{=it.fengguanfangfa || '-'}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row aui-padded-l-10 aui-padded-t-15">
+                <label class="">
+                    导管尖端位置(X光报告粘贴在报告第四项)
+                </label>
+            </div>
+        </div>
+        <div class="intInfo">
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>PICC导管尖端位于:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <span class="aui-margin-l-5">{{=it.jianduanweiyu || '-'}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>操作者:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <span class="aui-margin-l-5">{{=it.createUserName || '-'}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <span class="aui-margin-l-5">{{=it.createTime || '-'}} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div class="flex aui-padded-l-15">
+                        <div>助手</div>
+                        <div class="aui-margin-l-10 aui-text-left">
+                            <span class="aui-margin-l-5">{{=it.zhushou || '-'}} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item border-bottom">
+                <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                    <div class="flex-item">
+                        <div class="aui-padded-l-15 flex">
+                            <div>再退出</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.zaituichu || '-'}} </span>
+                            </div>
+                            <div>cm&nbsp&nbsp</div>
+                            <div>推入</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.tuiru1 || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                        </div>
+                        <div class="aui-padded-l-15 flex">
+                            <div>外露</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.wailu || '-'}} </span>
+                            </div>
+                            <div>cm&nbsp&nbsp</div>
+                            <div>剪去</div>
+                            <div class="aui-margin-l-10 aui-text-left flex-item">
+                                <span class="aui-margin-l-5">{{=it.jianqu || '-'}} </span>
+                            </div>
+                            <div>cm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row item border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>新的尖端位置:</div>
+                    <div class="aui-margin-l-10 aui-text-left flex-item">
+                        <span class="aui-margin-l-5">{{=it.xinjianduan || '-'}} </span>
+                    </div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <span class="aui-margin-l-5">{{=it.xindejianduanweizhi || '-'}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-6">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>操作者:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <span class="aui-margin-l-5">{{=it.createUserName || '-'}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+        var params = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        params.name = person.name;
+        params.pgrq = person.pgrq
+
+
+        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+        $api.html($api.byId('content'), contentTmpl(params));
+    };
+</script>
+</html>

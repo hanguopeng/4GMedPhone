@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>肠胃减压知情通知书-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css"/>
+    <style>
+    .ctitle{background-color:#67c23a;color: #fff;}
+    .itemDate{position: relative;line-height: 1.5rem;}
+    .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+    .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+    .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    .sel{display: inline-block !important;width: inherit !important;}
+    </style>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <section class="aui-content">
+      <ul class="aui-list aui-collapse aui-border">
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                <div >
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>患者姓名:</span>
+                        <span>{{=it.person.name||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>性别:</span>
+                        <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>年龄:</span>
+                        <span>{{=it.person.age||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>科室名称:</span>
+                        <span>{{=it.person.organizationName||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>病案号:</span>
+                        <span>{{=it.person.registerNumber||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>床号:</span>
+                        <span>{{=it.person.medBedName||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>出生日期:</span>
+                        <span>{{=it.person.birthday||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>身份证号:</span>
+                        <span>{{=it.person.idNumber||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>民族:</span>
+                        <span>{{=it.person.nationName||'-'}}</span>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">操作目的</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+
+                <p>护士已告知我患有<span class="border-bottom aui-text-danger">{{=it.params.bingName||''}}</span>或定于在<span class="border-bottom aui-text-danger">{{=it.params.mazui||''}}</span>麻醉下进行手术，需要留置胃管。</p>
+                <p>胃肠减压是利用负压吸引装置，通过导管将积聚在胃肠道内的气体和液体吸出，降低胃肠道的内压力和张力， 改善胃肠壁血液循环，有利于炎症的局限，促进胃肠功能恢复的一种治疗措施。可解除或缓解机械性肠梗阻所致急性胃肠道扩张的症状；可缓解肠麻痹或肠痉挛所致的肠梗塞；为消化道及腹部较大的手术做术前准备，以 减少缝线张力和切口疼痛，促进切口愈合，并改善胃肠壁血液循环，但促进消化道功能的恢复，并且胃管可以用来抽取胃液作胃液分析以协助诊断疾病；进食毒物时可洗胃用。</p>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title">操作潜在的风险和对策</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>
+                  护士告知我导尿可能发生的一些风险，有些不常见的风险可能没有在此列出，如果有特殊问题可与护士讨论
+                </p>
+                <p>1.我理解任何操作都存在风险。</p>
+                <p>2.我理解此操作可能发生的风险和护士的对策：></p>
+                <p>&nbsp;&nbsp; 1）呼吸道感染、窒息：放置胃管，会干扰通气，影响咳嗽，容易引起痰液积聚及肺部感染，引入气道引起肺水肿甚至窒息。</p>
+                <p>&nbsp;&nbsp; 2）心血管并发症：刺激迷走神经，引起呼吸。</p>
+                <p>&nbsp;&nbsp; 3）局部粘膜溃疡、出血、穿孔。</p>
+                <p>
+                  &nbsp;&nbsp; 4）增加上消化道出血、溃疡、穿孔的风险。
+                </p>
+                <p>&nbsp;&nbsp; 5）刺激后情绪烦躁，病情加重。</p>
+                <p>&nbsp;&nbsp; 6）液体丢失、电解质紊乱：胃肠引流可导致大量上消化道液丢失，使CL-、H+、K+、减少，如胃管插至幽门以下的消化道，或有胆汁、胰液逆流，也可产生Na+减少。
+                </p>
+                <p>&nbsp;&nbsp; 7）鼻孔溃疡及坏死：若胃管长期放置于一侧鼻孔，会压迫该侧鼻腔粘膜或软骨，从而引起鼻孔溃疡及坏死。</p>
+                <p>&nbsp;&nbsp; 8）胃内容物及胆汁返流：引起食管炎、食管狭隘，胃管本身也可引起食管粘膜的侵蚀和糜烂，甚至出血。</p>
+                <p>
+                  &nbsp;&nbsp; 9）病人经口呼吸，可引起口咽部干燥，并可能导致严重的并发症，如腮腺炎等。
+                </p>
+                <p>&nbsp;&nbsp; 10）其他少见的并发症有：鼻窦炎、中耳炎、创伤性喉炎及声哑、创伤性食管静脉曲张破裂、导管打结不能拔出、鼻粘膜创伤性出血、与环状软骨相对的食管或咽部压迫坏死、咽后壁及喉部感染及脓肿等。</span>
+                </p>
+                <p>&nbsp;&nbsp; 11）其他目前医学无法预料不能预防的不良后果。</p>
+                <p>&nbsp;&nbsp; 12）除以上情况外，该患者行胃肠减压可能发生的其他并发症或者需要提请患者及家属特别注意的其他事项，如<span class="border-bottom aui-text-danger">{{=it.params.tixing||''}}</span>。</p>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">患者知情权</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>
+                  我的责任护士已经告知我将要进行的操作方式、此次操作及操作后可能发生的并发症和风险、并且解答了我关于此次操作的相关问题。
+                </p>
+                <p>我并未得到操作百分之百成功的许诺。</p>
+                <p>我授权护士根据我的疾病进行此项操作。</p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">患者签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">签名日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.qmrq||''}}</span></div>
+                </div>
+                <p>
+                  如果患者无法签署知情通知书，请其授权的亲属在此签名：
+                </p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">患者授权亲属签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzsqqsqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">与患者关系:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzgx||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">签名日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.qmrq2||''}}</span></div>
+                </div>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">护士陈述</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>我已经告知患者将要进行的操作、此次操作及操作后可能发生的并发症和风险、并且解答了患者关于此次操作的相关问题。</p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">护士签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hsqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">时间日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hsqmrq||''}}</span></div>
+                </div>
+              </div>
+          </div>
+      </ul>
+  </section>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var id = api.pageParam.data;
+    var person = $api.getStorage(storageKey.currentPerson);
+    common.get({
+        url: config.patientDetailUrl+person.id,
+        isLoading: true,
+        success:function(ret){
+          common.get({
+            url:config.nursePlanUrl+"/"+id,
+            isLoading:false,
+            success:function(ret1){
+              var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+              var map = {};
+              for (var i = 0; i < ret1.content.itemList.length; i++) {
+                map[ret1.content.itemList[i].key] = ret1.content.itemList[i].value;
+              }
+              $api.html($api.byId('content'), contentTmpl({person:ret.content,params:map}));
+              api.parseTapmode();
+              var collapse = new auiCollapse({
+                  autoHide:false //是否自动隐藏已经展开的容器
+              });
+              api.hideProgress();
+
+            }
+          });
+        }
+    });
+};
+</script>
+</html>

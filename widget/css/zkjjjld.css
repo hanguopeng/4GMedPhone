@@ -1,0 +1,27 @@
+.title{
+    background-color: #67c23b;
+    color: #fff;
+}
+.centerContainer{
+}
+.centerContainer .value{
+    border-bottom: 1px double #ccc;
+    padding: 3px 5px;
+}
+.centerContainer .rczgz span{
+    display: inline-block;
+}
+.centerContainer .value input{
+    height: 0.8rem;
+    width: 2rem;
+    display: inline-block;
+}
+.hlpg input[type='text']{
+    height: 0.8rem;
+    width: 2rem;
+    display: inline-block;
+    border-bottom: 1px double #ccc;
+}
+div.inline{
+    display: inline-block;
+}

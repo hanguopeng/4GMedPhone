@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>转科交接记录单-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <div class="aui-card-list">
+      <div class="aui-card-list-content-padded aui-border-t">
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">记录人: </span>
+                  <span class="aui-margin-l-5">{{=it['recordPerson'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">记录时间: </span>
+                  <span class="aui-margin-l-5">{{=it['recordTime'] || '-'}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="aui-card-list-content-padded aui-border-t">
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-12 ">
+                  <span class="">转出科室: </span>
+                  <span class="aui-margin-l-5">{{=it['rollout'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-12 ">
+                  <span class="">转科诊断: </span>
+                  <span class="aui-margin-l-5">{{=it['diagnosis'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">T: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutt'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">P: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutp'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">R: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutr'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">SP02: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutspo2'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">EP: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutep1'] || '-'}} {{=it['rolloutep2'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">意识状态: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutconsciousness'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">皮肤情况: </span>
+                  <span class="aui-margin-l-5">
+                      {{=it['rolloutskinCase'] || '-'}}
+
+                      {{? it['rolloutskinCase']&&it['rolloutskinCase']!='完好'}}
+                      &nbsp;{{=it['rolloutskinCaseAcreage'] || '-'}}
+                      &nbsp;{{=it['rolloutskinCaseDepth'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">药物治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutmedicineCure'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">输血治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rollouttransfusionCure'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">其他治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutotherCure'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">管路: </span>
+                  <span class="aui-margin-l-5">
+                      {{=it['rolloutcanal'] || '-'}}
+                      {{? it['rolloutcanal']&&it['rolloutcanal']=='其他'}}
+                      &nbsp;{{=it['rolloutcanalOther'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">携带仪器: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutInstruments'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">转运医师: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutdoctorA'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">转运护士: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutnurseA'] || '-'}} {{=it['rolloutnurseB'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">传出时间: </span>
+                  <span class="aui-margin-l-5">{{=it['rolloutrolloutTimeA'] || '-'}} {{=it['rolloutrolloutTimeB'] || '-'}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="aui-card-list-content-padded aui-border-t">
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">T: </span>
+                  <span class="aui-margin-l-5">{{=it['rollint'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">P: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinp'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">R: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinr'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">SP02: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinspo2'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">EP: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinep1'] || '-'}} {{=it['rollinep2'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">意识状态: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinconsciousness'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">皮肤情况: </span>
+                  <span class="aui-margin-l-5">
+                      {{? it['rollinskinCase']&&it['rollinskinCase']!='完好'}}
+                      &nbsp;{{=it['rollinskinCaseAcreage'] || '-'}}
+                      &nbsp;{{=it['rollinskinCaseDepth'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">药物治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinmedicineCure'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">输血治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rollintransfusionCure'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">其他治疗: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinotherCure'] || '-'}}</span>
+              </div>
+          </div>
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">管路: </span>
+                  <span class="aui-margin-l-5">
+                      {{=it['rollincanal'] || '-'}}
+                      {{? it['rollincanal']&&it['rollincanal']=='其他'}}
+                      &nbsp;{{=it['rollincanalOther'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">携带仪器: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinInstruments'] || '-'}}</span>
+              </div>
+          </div>
+
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">转运医师: </span>
+                  <span class="aui-margin-l-5">{{=it['rollindoctorA'] || '-'}} </span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">转运护士: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinnurseA'] || '-'}} {{=it['rollinnurseB'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">传出时间: </span>
+                  <span class="aui-margin-l-5">{{=it['rollinrolloutTimeA'] || '-'}} {{=it['rollinrolloutTimeB'] || '-'}}</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var params = api.pageParam.data;
+    //构造成key value的形式
+    var map = {};
+    for(var k in params){
+      map[params[k].key] = params[k].value;
+    }
+    var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+    //console.log(JSON.stringify(map));
+    $api.html($api.byId('content'), contentTmpl(map));
+};
+</script>
+</html>

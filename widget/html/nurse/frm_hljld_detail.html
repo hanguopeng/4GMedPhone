@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>护理记录单-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="time-detail-tpl" type="text/template">
+  <div class="aui-card-list">
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">创建人: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['qianming'] || '-'}}</span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">创建日期: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['dateStr'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['timeStr'] || '-'}}</span>
+          <span class="aui-pull-right">创建时间: </span>
+        </div>
+      </div>
+      <div class="aui-card-list-content-padded aui-text-justify" style="color: #757575;">
+        分时段总量: {{=it.fixFields['fsdzl'] || '-'}}
+      </div>
+    </div>
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">内容: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['content'] || '-'}}</span>
+        </div>
+      </div>
+      {{? it.fixFields['contentrlval'] }}
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">总入量(ml): </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['contentrlval'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['contentclval'] || '-'}}</span>
+          <span class="aui-pull-right">总出量(ml): </span>
+        </div>
+      </div>
+      {{??}}
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-12">
+          <span class="">总出量(ml):</span>
+          <span class="aui-margin-l-5">{{=it.fixFields['contentclval'] || '-'}}</span>
+        </div>
+      </div>
+      {{?}}
+      <div class="aui-card-list-content-padded aui-text-justify" style="color: #757575;">
+        特殊情况记录: {{=it.fixFields['remark'] || '-'}}
+      </div>
+    </div>
+  </div>
+</script>
+<script id="all-detail-tpl" type="text/template">
+  <div class="aui-card-list">
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">创建人: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['qianming'] || '-'}}</span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">创建日期: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['dateStr'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['timeStr'] || '-'}}</span>
+          <span class="aui-pull-right">创建时间: </span>
+        </div>
+      </div>
+    </div>
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">T(℃): </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['Tval'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['PHRval'] || '-'}}</span>
+          <span class="aui-pull-right">P/HR: </span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">R(次/min): </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['Rval'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['BPval'] || '-'}}</span>
+          <span class="aui-pull-right">BP(mmHg): </span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">意识: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['ysVal'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['AllOutval'] || '-'}}</span>
+          <span class="aui-pull-right">总出量(ml): </span>
+        </div>
+      </div>
+    </div>
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-12 ">
+          <span style="color: #000">入量</span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">内容: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['contentrl'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['contentrlval'] || '-'}}</span>
+          <span class="aui-pull-right">量(ml): </span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-12">
+          <span style="color: #000">出量</span>
+        </div>
+      </div>
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+        <div class="aui-col-xs-6 ">
+          <span class="">内容: </span>
+          <span class="aui-margin-l-5">{{=it.fixFields['contentcl'] || '-'}}</span>
+        </div>
+        <div class="aui-col-xs-6 ">
+          <span class="aui-pull-right aui-margin-l-5">{{=it.fixFields['contentclval'] || '-'}}</span>
+          <span class="aui-pull-right">量(ml): </span>
+        </div>
+      </div>
+    </div>
+    <div class="aui-card-list-content-padded aui-border-t">
+      <div class="aui-card-list-content-padded aui-text-justify" style="color: #757575;">
+        特殊情况记录: {{=it.fixFields['remark'] || '-'}}
+      </div>
+      <!-- 自定义 -->
+      <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+      {{~ it.cusFields:info}}
+        <div class="aui-col-xs-6 ">
+          <span class="">{{=info.key}}: </span>
+          <span class="aui-margin-l-5">{{=info.value}}</span>
+        </div>
+      {{~}}
+      </div>
+    </div>
+  </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var params = api.pageParam.data;
+    //构造成key value的形式
+    var map = {};
+    for(var k in params){
+      map[params[k].key] = params[k].value;
+    }
+    //需要区分那些是用户自定义的数据,如果存在fsdzl这个字段表示是分段录入，否则是全量录入
+    var data = {};
+    var fixFields={};
+    var cusFields=[];
+    if(map.fsdzl){
+      //分时
+      fixFields["content"] = map["content"]; //内容
+      fixFields["contentrlval"] = map["contentrlval"];
+      fixFields["contentclval"] = map["contentclval"];
+      fixFields["qianming"] = map["qianming"];
+      fixFields["dateStr"] = map["dateStr"];
+      fixFields["timeStr"] = map["timeStr"];
+      fixFields["recordType"] = map["recordType"];
+      fixFields["fsdzl"] = map["fsdzl"];
+      fixFields["remark"] = map["remark"];
+      fixFields["startTime"] = map["startTime"];
+      fixFields["endTime"] = map["endTime"];
+
+      data["fixFields"] = fixFields;
+      data["cusFields"] = cusFields;
+      var contentTmpl = doT.template($api.text($api.byId('time-detail-tpl')));
+      //console.log(JSON.stringify(data));
+      $api.html($api.byId('content'), contentTmpl(data));
+
+    }else{
+      //全部
+      fixFields["Tval"] = map["Tval"]; //内容
+      fixFields["PHRval"] = map["PHRval"];
+      fixFields["Rval"] = map["Rval"];
+      fixFields["BPval"] = map["BPval"];
+      fixFields["ysVal"] = map["ysVal"];
+      fixFields["AllOutval"] = map["AllOutval"];
+      fixFields["contentrl"] = map["contentrl"];
+      fixFields["contentrlval"] = map["contentrlval"];
+      fixFields["contentcl"] = map["contentcl"];
+      fixFields["contentclval"] = map["contentclval"];
+      fixFields["remark"] = map["remark"];
+      fixFields["qianming"] = map["qianming"];
+      fixFields["dateStr"] = map["dateStr"];
+      fixFields["timeStr"] = map["timeStr"];
+      fixFields["recordType"] = map["recordType"];
+
+      for(var key in map){
+        if(!fixFields[key]){
+          //自定义字段
+          cusFields.push({"key":key,"value":map[key]});
+        }
+      }
+      data["fixFields"] = fixFields;
+      data["cusFields"] = cusFields;
+      var contentTmpl = doT.template($api.text($api.byId('all-detail-tpl')));
+      $api.html($api.byId('content'), contentTmpl(data));
+    }
+
+};
+</script>
+</html>

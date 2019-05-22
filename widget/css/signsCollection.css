@@ -1,0 +1,59 @@
+.bodyContainer .tabBody .tab-body-item{
+    display: none;
+}
+.bodyContainer .tabBody .tab-body-item.active{
+    display: block;
+}
+.tab-body-item#tzcj .input{
+    width: 4rem;
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1.2rem;
+    border-bottom: 1px double #ccc;
+    padding: 0px 5px;
+}
+.tab-body-item#tzcj .flex-item{
+    text-align: left;
+}
+.tab-body-item#lsjl .title{
+    color: #fff;
+    background-color: #409eff;
+    border-bottom: 1px double #fff;
+    line-height: 1.5rem;
+}
+.tab-body-item#lsjl .title .num{
+    width: 1.5rem;
+}
+.tab-body-item#lsjl .title .date{
+    width: 6rem;
+}
+.tab-body-item#lsjl .title .time{
+    width: 3.5rem;
+}
+.tab-body-item#lsjl .title .border-right{
+    border-right: 1px double #fff;
+}
+.tab-body-item#lsjl .content .flex-item{
+    text-align: left;
+}
+.tab-body-item#lsjl .content{
+    padding: 0px 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

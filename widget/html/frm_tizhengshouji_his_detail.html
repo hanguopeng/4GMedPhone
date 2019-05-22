@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>体征收集历史记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+</head>
+<body>
+<div class="aui-content">
+  <ul id="content" class="aui-list aui-list-in">
+
+  </ul>
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">创建日期</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields.currentDate}}</div>
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">创建时间</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields.currentTime}}</div>
+          </div>
+      </div>
+  </li>
+  {{? it.fixFields['temperature']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">腋温(°C)</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields['temperature']}}</div>
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['temperature1']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">口温(°C)</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields['temperature1']}}</div>
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['temperature2']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">肛温(°C)</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields['temperature2']}}</div>
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['temperature3']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">耳温(°C)</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields['temperature3']}}</div>
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['temperature4']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">额温(°C)</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=it.fixFields['temperature4']}}</div>
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['pulse']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">脉搏(自测，次/min)</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.pulse}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.pulse}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  {{?}}
+  {{? it.fixFields['pulse1']}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">脉搏(起搏器，次/min)</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.pulse1}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.pulse1}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  {{?}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">心率(次/min)</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.heartRate}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.heartRate}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">呼吸(次/min)</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.breathRate}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.breathRate}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">血压(mmHg)</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.bloodPressureHigh || it.fixFields.bloodPressureLow}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.bloodPressureLow||'-'}}/{{=it.fixFields.bloodPressureHigh||'-'}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">痛感强度</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.painIntensity}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.painIntensity}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">大便次数</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.shitTime}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.shitTime}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">小便次数</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.urineTime}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.urineTime}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">体重KG</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.weight}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.weight}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">身高cm</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.height}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.height}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">总入量(ml)</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.totalInput}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.totalInput}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">总出量(ml)</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.totalOutput}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.totalOutput}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">入量(ml)</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.input || it.fixFields.inputMl}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.input||'-'}}-{{=it.fixFields.inputMl||'-'}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">出量(ml)</div>
+          <div class="aui-list-item-right">
+              {{? it.fixFields.output || it.fixFields.output}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.output||'-'}}-{{=it.fixFields.outputMl||'-'}}</div>
+              {{?}}
+          </div>
+      </div>
+  </li>
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">尿量(ml)</div>
+          <div class="aui-list-item-right">
+            {{? it.fixFields.upd}}
+              <div class="aui-label aui-label-warning">{{=it.fixFields.upd}}</div>
+            {{?}}
+          </div>
+      </div>
+  </li>
+  {{~ it.cusFields:info:index}}
+  <li class="aui-list-item">
+      <div class="aui-list-item-inner">
+          <div class="aui-list-item-title">{{=info.key}}</div>
+          <div class="aui-list-item-right">
+              <div class="aui-label aui-label-warning">{{=info.value}}</div>
+          </div>
+      </div>
+  </li>
+  {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var params = JSON.parse(api.pageParam.content);
+    //构造成key value的形式
+    var map = {};
+    for(var k in params.itemList){
+      map[params.itemList[k].key] = params.itemList[k].value;
+    }
+    //需要区分那些是用户自定义的数据
+    var data = {};
+    var fixFields={};
+    var cusFields=[];
+
+    fixFields["currentDate"] = map["currentDate"];
+    fixFields["currentTime"] = map["currentTime"];
+    fixFields["temperature"] = map["temperature"];
+    fixFields["temperature1"] = map["temperature1"];
+    fixFields["temperature2"] = map["temperature2"];
+    fixFields["temperature3"] = map["temperature3"];
+    fixFields["pulse"] = map["pulse"];
+    fixFields["pulse1"] = map["pulse1"];
+    fixFields["heartRate"] = map["heartRate"];
+    fixFields["breathRate"] = map["breathRate"];
+    fixFields["bloodPressureHigh"] = map["bloodPressureHigh"];
+    fixFields["bloodPressureLow"] = map["bloodPressureLow"];
+    fixFields["painIntensity"] = map["painIntensity"];
+    fixFields["shitTime"] = map["shitTime"];
+    fixFields["urineTime"] = map["urineTime"];
+    fixFields["weight"] = map["weight"];
+    fixFields["height"] = map["height"];
+    fixFields["totalInput"] = map["totalInput"];
+    fixFields["totalOutput"] = map["totalOutput"];
+    fixFields["input"] = map["input"];
+    fixFields["inputMl"] = map["inputMl"];
+    fixFields["output"] = map["output"];
+    fixFields["outputMl"] = map["outputMl"];
+    fixFields["upd"] = map["upd"];
+
+    for(var key in map){
+      if(!fixFields[key]){
+        //自定义字段
+          if("handleTime"==key){
+              continue;
+          }
+        cusFields.push({"key":key,"value":map[key]});
+      }
+    }
+    data["fixFields"] = fixFields;
+    data["cusFields"] = cusFields;
+    var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+    $api.html($api.byId('content'), contentTmpl(data));
+};
+</script>
+</html>

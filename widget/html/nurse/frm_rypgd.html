@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>入院评估单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/admissionAssessment.css"/>
+    <style type="text/css"></style>
+</head>
+<body>
+<!-- 顶部 -->
+<div class="aui-font-size-16 title aui-text-center aui-padded-t-5 aui-padded-b-5">入院评估单</div>
+<div style="padding-bottom: 3rem;">
+    <div class="aui-padded-t-10 aui-padded-l-15 aui-padded-r-10">
+        <div class="">
+            <div class="flex topInfo aui-font-size-14 aui-padded-t-5 aui-padded-b-5 aui-padded-l-15 aui-padded-r-15" id="pingguInfo">
+
+            </div>
+            <div id="detailInfo"></div>
+        </div>
+    </div>
+</div>
+<script id="pingguInfo-tpl" type="text/template">
+    <div class="aui-text-left">
+        <span>评估人:</span>
+    <span>{{=it.pgr||''}}</span>
+    </div>
+    <div class="flex-item aui-text-right">
+        <span>评估日期:</span>
+    <span>{{=it.pgrq||''}}</span>
+    </div>
+</script>
+<script id="detail-tpl" type="text/template">
+    <div class="centerContainer aui-padded-t-15 aui-padded-b-15 aui-font-size-14">
+        <div id="personInfo">
+            <div class="flex aui-text-left aui-margin-b-10">
+                <div class="flex-item">
+                    <span>姓名:</span>
+                    <span class="value">{{=it.personInfo.name||''}}</span>
+                </div>
+                <div class="flex-item">
+                    <span>性别:</span>
+                    <span class="value">{{=it.personInfo.sexName||''}}</span>
+                </div>
+                <div class="flex-item">
+                    <span>年龄:</span>
+                    <span class="value">{{=it.personInfo.age||''}}</span>
+                </div>
+            </div>
+            <div class="flex aui-text-left aui-margin-b-10">
+                <div class="flex-item">
+                    <span>科室:</span>
+                    <span class="value">{{=it.personInfo.organizationName||''}}</span>
+                </div>
+                <div class="flex-item">
+                    <span>住院号:</span>
+                    <span class="value">{{=it.personInfo.registerNumber||''}}</span>
+                </div>
+                <div class="flex-item">
+                    <span>床号:</span>
+                    <span class="value">{{=it.personInfo.medBedName||''}}</span>
+                </div>
+            </div>
+            <div class="flex aui-text-left aui-margin-b-10">
+                <div class="flex-item">
+                    <span>入院:</span>
+                    <span class="value">{{=it.personInfo.inHospitalTime||''}}</span>
+                </div>
+                <div class="flex-item">
+                    <span>职业:</span>
+                    <span class="value">无</span>
+                </div>
+                <div class="flex-item">
+                    <span>民族:</span>
+                    <span class="value">{{=it.personInfo.nationName||'无'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex-item aui-text-left">
+                <span>教育程度:</span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key11=='文盲' }} checked {{?}}
+                           name="key11" value="文盲"> 文盲
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key11=='小学' }} checked {{?}}
+                           name="key11" value="小学"> 小学
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key11=='中学' }} checked {{?}}
+                           name="key11" value="中学"> 中学
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key11=='中专' }} checked {{?}}
+                           name="key11" value="中专"> 中专
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key11=='大专以上' }} checked {{?}}
+                           name="key11" value="大专以上"> 大专以上
+                </span>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex-item aui-text-left">
+                <span>资料来源:</span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key12=='患者' }} checked {{?}}
+                           name="key12" value="患者"> 患者
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key12=='家属' }} checked {{?}}
+                           name="key12" value="家属"> 家属
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key12=='朋友' }} checked {{?}}
+                           name="key12" value="朋友"> 朋友
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key12=='其他' }} checked {{?}}
+                           name="key12" value="其他"> 其他
+                </span>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>日常照顾者:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='自我照顾' }} checked {{?}}
+                               name="key13" value="自我照顾"> 自我照顾
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='夫/妻' }} checked {{?}}
+                               name="key13" value="夫/妻"> 夫/妻
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='父母' }} checked {{?}}
+                               name="key13" value="父母"> 父母
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='子女' }} checked {{?}}
+                               name="key13" value="子女"> 子女
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='亲戚' }} checked {{?}}
+                               name="key13" value="亲戚"> 亲戚
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='朋友' }} checked {{?}}
+                               name="key13" value="朋友"> 朋友
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='保姆"' }} checked {{?}}
+                               name="key13" value="保姆"> 保姆
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key13=='其他' }} checked {{?}}
+                               name="key13" value="其他"> 其他
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>入院诊断:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <input type="text" name="">
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex-item aui-text-left">
+                <span>入院方式:</span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key15=='步行' }} checked {{?}}
+                           name="key15" value="步行"> 步行
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key15=='扶行' }} checked {{?}}
+                           name="key15" value="扶行"> 扶行
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key15=='轮椅' }} checked {{?}}
+                           name="key15" value="轮椅"> 轮椅
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key15=='平车' }} checked {{?}}
+                           name="key15" value="平车"> 平车
+                </span>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex-item aui-text-left">
+                <span>过敏史:</span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key16=='无' }} checked {{?}}
+                           name="key16" value="无"> 无
+                </span>
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key16=='有' }} checked {{?}}
+                           name="key16" value="有"> 有
+                </span>
+                <!--<span>(过敏源:</span>
+                <span class="value">
+                    <input type="text" name="key16_value" value="{{=it._map.key16||''}}">
+                </span>)-->
+                <span>
+                    <input type="radio"
+                           {{? it&&it._map.key16=='不明确' }} checked {{?}}
+                           name="key16" value="不明确"> 不明确
+                </span>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <span>医疗费用支付方式:</span>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='自费' }} checked {{?}}
+                               name="key18" value="自费"> 自费
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='公费医疗' }} checked {{?}}
+                               name="key18" value="公费医疗"> 公费医疗
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='医保' }} checked {{?}}
+                               name="key18" value="医保"> 医保
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='社保' }} checked {{?}}
+                               name="key18" value="社保"> 社保
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='商业保险' }} checked {{?}}
+                               name="key18" value="商业保险"> 商业保险
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='他人赔付' }} checked {{?}}
+                               name="key18" value="他人赔付"> 他人赔付
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='保姆' }} checked {{?}}
+                               name="key18" value="保姆"> 保姆
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key18=='其他' }} checked {{?}}
+                               name="key18" value="其他"> 其他
+                    </span>
+                    <span class="value">
+                        <input type="text" name="key19" value="{{=it._map.key19||''}}">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--护理评估-->
+    <div class="hlpg aui-padded-t-15 aui-padded-b-15 aui-font-size-14">
+        <div class="aui-text-left">一、护理评估</div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>意识状态:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div>
+                        <span>
+                            呼之: <input type="radio"
+                                       {{? it&&it._map.key20&&it._map.key20.indexOf('能应')!=-1 }} checked {{?}}
+                                       name="key20" value="能应"> 能应
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key20&&it._map.key20.indexOf('不应')!=-1 }} checked {{?}}
+                                   name="key20" value="不应"> 不应
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            对答: <input type="radio"
+                                       {{? it&&it._map.key201&&it._map.key201.indexOf('切题')!=-1 }} checked {{?}}
+                                       name="key20_da" value="切题"> 切题
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key201&&it._map.key201.indexOf('不切题')!=-1 }} checked {{?}}
+                                   name="key20_da" value="不切题"> 不切题
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key201&&it._map.key201.indexOf('无法评估')!=-1 }} checked {{?}}
+                                   name="key20_da" value="无法评估"> 无法评估
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            视力: <input type="radio"
+                                       {{? it&&it._map.key202&&it._map.key202.indexOf('正常')!=-1 }} checked {{?}}
+                                       name="key20_sl" value="正常"> 正常
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key202&&it._map.key202.indexOf('模糊')!=-1 }} checked {{?}}
+                                   name="key20_sl" value="模糊"> 模糊
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key202&&it._map.key202.indexOf('失明')!=-1 }} checked {{?}}
+                                   name="key20_sl" value="失明"> 失明
+                        </span>
+                        <span>
+                            <input type="radio"
+                                   {{? it&&it._map.key202&&it._map.key202.indexOf('无法评估')!=-1 }} checked {{?}}
+                                   name="key20_sl" value="无法评估"> 无法评估
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>饮食:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key21=='自行进食' }} checked {{?}}
+                               name="key21" value="自行进食"> 自行进食
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key21=='辅助进食' }} checked {{?}}
+                               name="key21" value="辅助进食"> 辅助进食
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key21=='经鼻胃管' }} checked {{?}}
+                               name="key21" value="经鼻胃管"> 经鼻胃管
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key21=='肠胃造瘘管' }} checked {{?}}
+                               name="key21" value="肠胃造瘘管"> 肠胃造瘘管
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>咀嚼困难:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key22=='无' }} checked {{?}}
+                               name="key22" value="无"> 无
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key22=='有' }} checked {{?}}
+                               name="key22" value="有"> 有
+                    </span>
+                    <span>
+                        <input type="radio"
+                               {{? it&&it._map.key22=='无法评估' }} checked {{?}}
+                               name="key22" value="无法评估"> 无法评估
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>口腔黏膜:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key23=='完整' }} checked {{?}}
+                               name="key23" value="完整"> 完整
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key23=='溃疡' }} checked {{?}}
+                               name="key23" value="溃疡"> 溃疡
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key23=='白斑' }} checked {{?}}
+                               name="key23" value="白斑"> 白斑
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key23=='红肿' }} checked {{?}}
+                               name="key23" value="红肿"> 红肿
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key23=='其他' }} checked {{?}}
+                               name="key23" value="其他"> 其他 <input type="text" name="key24" value="{{=it.key24||''}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>吞咽困难:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key25=='无' }} checked {{?}}
+                               name="key25" value="无"> 无
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key25=='有' }} checked {{?}}
+                               name="key25" value="有"> 有
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key25=='无法评估' }} checked {{?}}
+                               name="key25" value="无法评估"> 无法评估
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>睡眠:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='正常' }} checked {{?}}
+                               name="key26" value="正常"> 正常
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='难入睡' }} checked {{?}}
+                               name="key26" value="难入睡"> 难入睡
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='易醒' }} checked {{?}}
+                               name="key26" value="易醒"> 易醒
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='早醒' }} checked {{?}}
+                               name="key26" value="早醒"> 早醒
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='多梦' }} checked {{?}}
+                               name="key26" value="多梦"> 多梦
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key26=='辅助药物' }} checked {{?}}
+                               name="key26" value="辅助药物"> 辅助药物
+                        <input type="text" name="key27" value="{{=it._map.key27||''}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>醒后疲劳感:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key28=='无' }} checked {{?}}
+                               name="key28" value="无"> 无
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key28=='有' }} checked {{?}}
+                               name="key28" value="有"> 有
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key28=='无法评估' }} checked {{?}}
+                               name="key28" value="无法评估"> 无法评估
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>排尿:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='正常' }} checked {{?}}
+                               name="key29" value="正常"> 正常
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='尿频' }} checked {{?}}
+                               name="key29" value="尿频"> 尿频
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='尿急' }} checked {{?}}
+                               name="key29" value="尿急"> 尿急
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='尿痛' }} checked {{?}}
+                               name="key29" value="尿痛"> 尿痛
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='尿失禁' }} checked {{?}}
+                               name="key29" value="尿失禁"> 尿失禁
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='尿潴留' }} checked {{?}}
+                               name="key29" value="尿潴留"> 尿潴留
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='留置尿管' }} checked {{?}}
+                               name="key29" value="留置尿管"> 留置尿管
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key29=='其他' }} checked {{?}}
+                               name="key29" value="其他"> 其他 <input type="text" name="key30" value="{{=it._map.key30||''}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>排便:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key31=='正常' }} checked {{?}}
+                               name="key31" value="正常"> 正常
+                        <input type="text" name="key33" value="{{=it._map.key33||''}}"> 次/天
+                        （1次<input type="text" name="key34" value="{{=it._map.key34||''}}">天）
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key31=='便秘' }} checked {{?}}
+                               name="key31" value="便秘"> 便秘
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key31=='腹泻' }} checked {{?}}
+                               name="key31" value="腹泻"> 腹泻
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key31=='失禁' }} checked {{?}}
+                               name="key31" value="失禁"> 失禁
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key31=='其他' }} checked {{?}}
+                               name="key31" value="其他"> 其他 <input type="text" name="key32" value="{{=it._map.key32||''}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>四肢活动:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='自如' }} checked {{?}}
+                               name="key35" value="自如"> 自如
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='无力' }} checked {{?}}
+                               name="key35" value="无力"> 无力
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='截瘫' }} checked {{?}}
+                               name="key35" value="截瘫"> 截瘫
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='全瘫' }} checked {{?}}
+                               name="key35" value="全瘫"> 全瘫
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='无法评估' }} checked {{?}}
+                               name="key35" value="无法评估"> 无法评估
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key35=='偏瘫' }} checked {{?}}
+                               name="key35" value="偏瘫"> 偏瘫
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        (<input type="radio"
+                                {{? it&&it._map.key40=='左上肢' }} checked {{?}}
+                                name="key40" value="左上肢"> 左上肢
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key40=='左下肢' }} checked {{?}}
+                               name="key40" value="左下肢"> 左下肢
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key40=='右上肢' }} checked {{?}}
+                               name="key40" value="右上肢"> 右上肢
+                    </div>
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio"
+                               {{? it&&it._map.key40=='右下肢' }} checked {{?}}
+                               name="key40" value="右下肢"> 右下肢)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>跌倒风险评估:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="text" name="key36" value="{{=it._map.key36||''}}"> 分
+                        <!--<input type="text" name="key37" value="{{=it._map.key37||''}}">-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex aui-text-left aui-margin-b-10">
+            <div class="flex aui-text-left">
+                <div>基本生活活动能力评估:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="text" name="key38" value="{{=it._map.key38||''}}">分
+                        <!--<input type="text" name="key39" value="{{=it._map.key39||''}}">-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{? it._map.hasValue==false}}
+    <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="save();" style="text-align: center;">
+        <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+    </div>
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurseRecord.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_rypgd.js?v=1.1"></script>
+</body>
+</html>

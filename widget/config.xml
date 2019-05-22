@@ -1,0 +1,27 @@
+﻿ <widget id="A6003081836445"  version="0.0.1">
+    <name>CmcPhone</name>
+    <description>移动护理</description>
+    <author email="" href="">CMC</author>
+    <content src="login.html" />
+    <access origin="*" />
+    <preference name="pageBounce" value="false"/>
+  	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+  	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+  	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+  	<preference name="hScrollBarEnabled" value="false"/>
+  	<preference name="vScrollBarEnabled" value="false"/>
+  	<preference name="autoLaunch" value="true"/>
+  	<preference name="fullScreen" value="false"/>
+  	<preference name="autoUpdate" value="false" />
+  	<preference name="smartUpdate" value="false" />
+  	<preference name="debug" value="true"/>
+  	<preference name="statusBarAppearance" value="true"/>
+  	<permission name="readPhoneState" />
+  	<permission name="camera" />
+  	<permission name="record" />
+  	<permission name="location" />
+  	<permission name="fileSystem" />
+  	<permission name="internet" />
+  	<permission name="bootCompleted" />
+  	<permission name="hardware" />
+</widget>

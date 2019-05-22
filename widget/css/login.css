@@ -1,0 +1,31 @@
+.header{
+    background-color: #67c23a;
+    color: #fff;
+    text-align: center;
+    padding: 1.2rem 0px;
+}
+.footer{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #67c23a;
+    text-align: center;
+}
+.footer .footerContainer{
+    padding: 1rem 0px;
+}
+.footer .footerContainer p{
+    color: #fff;
+}
+.aui-padded-30 {
+    padding: 1.5rem!important;
+}
+.operatorContainer{
+    line-height: 2rem;
+}
+.loginBtn{
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0px 1.5rem;
+}

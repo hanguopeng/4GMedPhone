@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>危重患者患者护理记录单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
+    <style>
+        .aui-grid [class*=aui-col-] {
+            display: table-cell;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.2rem 0;
+        }
+        input.inputItem{
+            width: 2rem;
+        }
+        .aui-row.item{
+            min-height: 44px;line-height: 44px;
+        }
+        .aui-row.border-bottom{
+            border-bottom: 1px double #f1f1f1;
+            padding-bottom: 0.5rem;
+        }
+        .ctitle{background-color:#67c23a;color: #fff;}
+        .itemDate{position: relative;line-height: 1.5rem;}
+        .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+        .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+        .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">新建</div>
+        <div class="aui-tab-item">历史记录</div>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+<script id="add-tpl" type="text/template">
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-margin-b-15">
+            <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+                危重患重护理记录单
+            </div>
+            <div class="aui-row ">
+                <div class="aui-col-xs-4">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>床号:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.medBedName}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-5">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>患者姓名:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.name}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>性别:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.sexName||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-4">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>住院号:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.registerNumber||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-8">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>入院时间:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.birthday||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-12">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>诊断:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value"  value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>日期时间:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="explainTime" id="explainTime" onclick="chooseDateTime();">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="aui-list-item-label aui-margin-l-10" style="width:100%;background-color: #F1F1F1;">
+                    录入记录
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div class="aui-col-xs-3">体温:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="TWval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">脉搏(次/min):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="MBval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">呼吸(次/min):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="HXval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">血压(mmHg):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="XYval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">血氧饱和度(%):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="XYBHval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">吸氧(L/min):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="XYLval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="aui-list-item-label aui-margin-l-10" style="width:100%;background-color: #F1F1F1;">
+                    入量
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                    <div  class="aui-col-xs-3">名称:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <select id="RLMCval" multiple="multiple">
+                            <option value="">请选择</option>
+                            <option value="静脉输液">静脉输液</option>
+                            <option value="鼻饲">鼻饲</option>
+                            <option value="全血">全血</option>
+                            <option value="红细胞">红细胞</option>
+                            <option value="血小板">血小板</option>
+                            <option value="白蛋白">白蛋白</option>
+                            <option value="血浆">血浆</option>
+                            <option value="白细胞">白细胞</option>
+                            <option value="TPN">TPN</option>
+                            <option value="水饮料">水饮料</option>
+                            <option value="饮食">饮食</option>
+                            <option value="">无</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="RLRLval" placeholder="请输入内容">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row ">
+                <div class="aui-list-item-label aui-margin-l-10" style="width:100%;background-color: #F1F1F1;">
+                    出量
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                    <div  class="aui-col-xs-3">名称:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <select id="CHMCval">
+                            <option value="">请选择</option>
+                            <option value="尿">尿</option>
+                            <option value="大便">大便</option>
+                            <option value="血">血</option>
+                            <option value="呕吐物">呕吐物</option>
+                            <option value="痰">痰</option>
+                            <option value="伤口引流液">伤口引流液</option>
+                            <option value="腹腔引流液">腹腔引流液</option>
+                            <option value="盆腔引流液">盆腔引流液</option>
+                            <option value="胸腔引流液">胸腔引流液</option>
+                            <option value="胸室引流液">胸室引流液</option>
+                            <option value="">无</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="" id="CLRLval" placeholder="请输入内容">
+                    </div>
+                </div>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                    <div  class="aui-col-xs-3">颜色性状:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <select id="YSXZval">
+                            <option value="">请选择</option>
+                            <option value="黄色">黄色</option>
+                            <option value="淡黄色">淡黄色</option>
+                            <option value="红色">红色</option>
+                            <option value="暗红色">暗红色</option>
+                            <option value="鲜红色">鲜红色</option>
+                            <option value="黄绿色">黄绿色</option>
+                            <option value="咖啡色">咖啡色</option>
+                            <option value="">无</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                <div  class="aui-col-xs-3">意识:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="YSval">
+                        <option value="">请选择</option>
+                        <option value="黄色">全麻未醒</option>
+                        <option value="淡黄色">清醒</option>
+                        <option value="红色">嗜睡</option>
+                        <option value="暗红色">昏睡</option>
+                        <option value="鲜红色">谵妄</option>
+                        <option value="黄绿色">烦躁</option>
+                        <option value="咖啡色">浅昏迷</option>
+                        <option value="中度昏迷">中度昏迷</option>
+                        <option value="暗红色">深昏迷</option>
+                        <option value="鲜红色">睡眠</option>
+                        <option value="黄绿色">意识模糊</option>
+                        <option value="">无</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right" style="background-color:#F1F1F1 ">
+                <div  class="aui-col-xs-3">导管护理:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="DGHLval" onchange="QGQKselect()">
+                        <option value="">请选择</option>
+                        <option value="胃管">胃管</option>
+                        <option value="导尿管">导尿管</option>
+                        <option value="静脉留置针">静脉留置针</option>
+                        <option value="静脉置管">静脉置管</option>
+                        <option value="'T'管">"T"管</option>
+                        <option value="胸腔引流管">胸腔引流管</option>
+                        <option value="腹腔引流管">腹腔引流管</option>
+                        <option value="切口引流管">切口引流管</option>
+                        <option value="气管插管">气管插管</option>
+                        <option value="气管切开">气管切开</option>
+                        <option value="">无</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right hide" id="QGQKselect" style="background-color:#F1F1F1 ">
+                <div  class="aui-col-xs-3">气管切开:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="QGQKval">
+                        <option value="">请选择</option>
+                        <option value="通畅">a.通畅</option>
+                        <option value="不通畅">b.不通畅</option>
+                        <option value="更换">c.更换</option>
+                        <option value="夹管">d.夹管</option>
+                        <option value="置管">e.置管</option>
+                        <option value="拔管">f.拔管</option>
+                        <option value="封管">g.封管</option>
+                        <option value="更换引流器">h.更换引流器(袋)</option>
+                        <option value="更换敷袋">i.更换敷袋</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                <div  class="aui-col-xs-3">饮食:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="SWval">
+                        <option value="">请选择</option>
+                        <option value="禁食">禁食</option>
+                        <option value="流食">流食</option>
+                        <option value="半流食">半流食</option>
+                        <option value="鼻饲">鼻饲</option>
+                        <option value="普食">普食</option>
+                        <option value="低盐饮食">低盐饮食</option>
+                        <option value="低脂饮食">低脂饮食</option>
+                        <option value="糖尿病饮食">糖尿病饮食</option>
+                        <option value="">无</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                <div  class="aui-col-xs-3">健康指导:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="JKZDval">
+                        <option value="">请选择</option>
+                        <option value="入院指导">入院指导</option>
+                        <option value="饮食指导">饮食指导</option>
+                        <option value="药物指导">药物指导</option>
+                        <option value="检查指导">检查指导</option>
+                        <option value="安全指导">安全指导</option>
+                        <option value="活动与康复指导">活动与康复指导</option>
+                        <option value="心里指导">心里指导</option>
+                        <option value="术前指导">术前指导</option>
+                        <option value="术后指导">术后指导</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
+                <div  class="aui-col-xs-3">病情观察:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="BQGCval">
+                        <option value="">请选择</option>
+                        <option value="入院指导"></option>
+                        <option value="饮食指导">头晕</option>
+                        <option value="药物指导">头痛</option>
+                        <option value="检查指导">呼吸困难</option>
+                        <option value="安全指导">口唇发绛</option>
+                        <option value="活动与康复指导">气短</option>
+                        <option value="心里指导">心悸</option>
+                        <option value="术前指导">胸闷</option>
+                        <option value="术后指导">贫血貌</option>
+                        <option value="药物指导">呕血</option>
+                        <option value="检查指导">便血</option>
+                        <option value="安全指导">血尿</option>
+                        <option value="活动与康复指导">咳嗽</option>
+                        <option value="心里指导">咳痰</option>
+                        <option value="术前指导">恶心</option>
+                        <option value="术后指导">呕吐</option>
+
+                        <option value="饮食指导">腹痛</option>
+                        <option value="药物指导">腹泻</option>
+                        <option value="检查指导">入睡困难</option>
+                        <option value="安全指导">周身不适、乏力</option>
+                        <option value="活动与康复指导">双侧瞳孔               </option>
+                        <option value="心里指导">瞳孔对光发散                 </option>
+                        <option value="术前指导">(L/R)侧肢体活动障碍</option>
+                        <option value="术后指导">语言                    </option>
+                        <option value="药物指导">患肢             </option>
+                        <option value="检查指导">患肢皮温            </option>
+                        <option value="安全指导">肌力      </option>
+                        <option value="活动与康复指导">肢体外观              </option>
+                        <option value="心里指导">伤口敷料外观切口疼痛             </option>
+                        <option value="术前指导">恶心</option>
+                        <option value="术后指导">呕吐</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right hide">
+                <div  class="aui-col-xs-3">:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="SCTKval">
+                        <option value="">双侧瞳孔:</option>
+                        <option value="等大通圆">a.等大通圆</option>
+                        <option value="不等大">b.不等大</option>
+                        <option value="散大固定">c.散大固定</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right hide">
+                <div  class="aui-col-xs-3">瞳孔对光发散:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="TKDGFSval">
+                        <option value="">请选择</option>
+                        <option value="灵敏">a.灵敏</option>
+                        <option value="迟钝">b.迟钝</option>
+                        <option value="存在">c.存在</option>
+                        <option value="消失">c.消失</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right hide">
+                <div  class="aui-col-xs-3">语言:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <select id="YYval">
+                        <option value="">请选择</option>
+                        <option value="灵敏">a.失语</option>
+                        <option value="迟钝">b.流利</option>
+                        <option value="存在">c.不清晰</option>
+                        <option value="消失">c.消失</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>8.学习障碍:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="无"> 无
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="语言不通"> 语言不通
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="视力不良"> 视力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="能力不良"> 能力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="理解能力不良"> 理解能力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="头痛"> 头痛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="家属压力大"> 家属压力大
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="文化差异"> 文化差异
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="经济困难"> 经济困难
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="宗教影响"> 宗教影响
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="疲惫"> 疲惫
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="learningDisorder" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="learningDisorderOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>若有障碍的替代说明方法</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="learningDisorderWay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>9.说明方式:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="讨论"> 讨论
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="示范"> 示范
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="卫生教育、社会资源单张"> 卫生教育、社会资源单张
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="影片/卫生教育看板"> 影片/卫生教育看板
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainWay" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="explainWayOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>若有障碍的替代说明方法</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="explainWayWay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>10.说明者签名:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="医师"> 医师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="医护人员"> 医护人员
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="营养师"> 营养师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="药师"> 药师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainSignature" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="signatureOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>签名</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="signature">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>11.说明内容:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            经由以上说明，家属/病人已充分了解目前疾病护理的注意事项并
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="agreeFlag" value="同意"> 同意
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="agreeFlag" value="不同意"> 不同意
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            接受本院的护理。给予
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="入院通知"> 入院通知
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="预防地道13知"> 预防地道13知
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="病人的权利与义务"> 病人的权利与义务
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="疼痛的处理"> 疼痛的处理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            的护理及单张假说/病人的签字：
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="text" class="value" name="patientsSignature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>12.自我批评:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我已完全了解"> 我已完全了解
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我部分了解"> 我部分了解
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我完全不了解"> 我完全不了解
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>签名</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="selfAppraisalSignature">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>13.自我批评只回顾或追踪:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="review" value="无"> 无
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="review" value="写加强说明"> 写加强说明
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>护士签名:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>日期/时间:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="explainTimeBottom" id="explainTimeBottom" onclick="chooseDateTime();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-margin-t-15 aui-margin-b-15">
+                    <div>备注:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            书写"其他"时，请填写说明内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+        <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
+    </div>
+</script>
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            病人宣教评估及教育记录单
+        </div>
+        <div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-input aui-border-radius">
+                <i class="aui-iconfont aui-icon-search"></i>
+                <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+            </div>
+            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+        </div>
+        <div id="recordContent" class="recordContent">
+        </div>
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin(this);">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+                <span class="aui-hide json-span">{{= JSON.stringify(info.itemList)}}</span>
+            </div>
+            {{~}}
+        </div>
+    </div>
+    {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_nurse_gkwzhz.js"></script>
+</body>
+</html>

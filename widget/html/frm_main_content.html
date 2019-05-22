@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>病人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/win_main.css"/>
+    <style>
+      select {
+        font-size: 0.8rem;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+    </style>
+    <style>
+      .shirk-line{
+         min-height: 1.2rem !important;
+         padding: 0 0 !important;
+      }
+      .flex-container{
+        display:-webkit-box;
+        display:flex;
+        display:-ms-flex;
+        display:-webkit-flex;
+        width:100%;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+      }
+      .flex-item1{
+        width:49%;
+        box-sizing: border-box;
+        margin: 10px 0.5% 0px 0.5%;
+      }
+      .forbid{
+        color: white !important;
+      }
+    </style>
+</head>
+
+<body>
+  <div class="searchConditionContainer aui-padded-l-15 aui-padded-r-15 flex">
+      <div class="flex-item flex">
+          <div class="checkboxContainer">
+              <input type="checkbox" onchange="searchPersons()" id="patientFlag"><label class="aui-margin-l-5">我的病人</label>
+          </div>
+      </div>
+      <div class="bedNum flex-item">
+          <!-- 修改查询的样式 -->
+          <div class="icon-search" tapmode onclick="searchPersons();"></div>
+          <input id="medBedCode" type="text" placeholder="请输入床号">
+      </div>
+      <div class="selectContainer flex-item">
+          <select id="chooseType" onchange="searchPersons();">
+              <option value="-1">全部</option>
+              <option value="0">今日出院</option>
+              <option value="1">高风险</option>
+              <option value="2">3天内手术</option>
+          </select>
+      </div>
+  </div>
+
+<section  class="aui-content aui-margin-t-0">
+  <div id="nurseLevelContent" class="aui-content-padded aui-font-size-12">
+
+  </div>
+</section>
+
+<section  class="aui-content aui-margin-t-0">
+  <div id="personContent" class="bedContainer aui-padded-t-15 aui-padded-l-5 aui-padded-r-5">
+
+  </div>
+</section>
+  <!--<div class="aui-col-xs-4">
+      <image src="../image/jiantou.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image><span class="aui-margin-l-5">发热病人</span><span>({{=it.feverNum || '0'}})</span>
+  </div>
+  <div class="aui-col-xs-4">
+      <image src="../image/jiahao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image><span  class="aui-margin-l-5">新开医嘱</span><span>({{=it.newAdviceNum || '0'}})</span>
+  </div>
+  <div class="aui-col-xs-4">
+      <image src="../image/tanhao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image></span><span  class="aui-margin-l-5">待办事项</span><span>({{=it.backlogNum || '0'}})</span>
+  </div>-->
+</body>
+<script id="nurse-level-tpl" type="text/template">
+
+</script>
+<script id="person-info-tpl" type="text/template">
+{{~it.list:info:index}}
+  {{? (index+1)%2==1}}
+    <div class="flex aui-padded-b-10">
+  {{?}}
+  <div class="bedItem flex-item1" tapmode onclick="openPersonCenter({{= index }})">
+      <div class="topBenNum">
+          <div class="bedNumTxt">{{= info.medBedName}}床</div>
+          <div class="itemStatusIcon aui-margin-r-5">
+              {{? info.nurse_level_code=="A" || info.nurseLevelCode=="A"}}
+              <span class="te">特</span>
+              {{?? info.nurse_level_code=="B" || info.nurseLevelCode=="B"}}
+              <span class="th">I</span>
+              {{?? info.nurse_level_code=="C" || info.nurseLevelCode=="C"}}
+              <span class="er">II</span>
+              {{?? info.nurse_level_code=="D" || info.nurseLevelCode=="D"}}
+              <span class="san">III</span>
+              {{?}}
+          </div>
+      </div>
+      <div class="bedContentContainer flex">
+          <div class="personImg aui-col-xs-5">
+            {{? info.sex=="1"}}
+              <img src="../image/u64.png" alt="">
+            {{??}}
+              <img src="../image/u37.png" alt="">
+
+            {{?}}
+
+              <p class="aui-font-size-12 person-name-weight">{{= info.name || '-' }}</p>
+          </div>
+          <div class="doctorContainer aui-col-xs-7 aui-font-size-12">
+              <div>主治医生:{{=info.doctorName || '-'}}</div>
+              <div>主管护士:{{=info.nurseName || '-'}}</div>
+              <div>{{=info.costType|| '-'}}</div>
+          </div>
+
+      </div>
+      <div class="time aui-font-size-12">{{= info.inHospitalTime}}</div>
+      <div class="flex" style="height: 1.4rem;">
+          <div class="flex-item bottomStatusItem">
+          {{? info.feverFlag==true || info.fever_flag==="true"}}
+              <image src="../image/jiantou.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>
+          {{?}}
+          {{? info.newAdviceFlag==true || info.new_advice_flag==="true"}}
+              <image src="../image/jiahao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>
+          {{?}}
+          {{? info.backlogFlag==true || info.backlog_flag==="true"}}
+              <image src="../image/tanhao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>
+          {{?}}
+          </div>
+      </div>
+  </div>
+  {{? (index+1)%2==0 }}
+    </div>
+  {{?}}
+  {{? (index+1)%2==1 }}
+    {{? (index+1) == it._listCount}}
+    </div>
+    {{?}}
+  {{?}}
+{{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/frm_main_content.js"></script>
+</html>

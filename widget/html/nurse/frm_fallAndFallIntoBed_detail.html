@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>转科交接记录单-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+        住院患者跌倒/坠床风险评估与防范记录
+    </div>
+    <!--<div class="aui-row border-bottom">-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>科室:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.organizationName}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>姓名:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.name}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>性别:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.sexName||''}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>住院号:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.registerNumber||''}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>年龄:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.age||''}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>诊断:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.diagnose||''}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="aui-col-xs-6">-->
+    <!--<div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">-->
+    <!--<div>入院或转入日期:</div>-->
+    <!--<div class="flex-item aui-margin-l-10 aui-text-left">-->
+    <!--<input type="text" class="value" readonly value="{{=it.inHospitalTime||''}}">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="aui-row  aui-padded-l-10 aui-padded-t-15">
+        <label class="aui-font-size-18" style="font-weight: bold">
+            跌倒/坠床的危险因子评估:
+        </label>
+    </div>
+    <div class="aui-row item border-bottom aui-padded-b-0">
+        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+            <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.yi=='1' }} checked {{?}}
+                           name="yi" value="1"> 1、最近一年曾有不明原因跌倒/坠床经历：跌倒、坠床经历(每年≤1次)（1分）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.er=='4' }} checked {{?}}
+                           name="er" value="4"> 2、最近一年曾有不明原因跌倒/坠床经历：跌倒、坠床经历(每月≥1次)（高危）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.san=='1' }} checked {{?}}
+                           name="san" value="1">3、年龄≥65岁或年龄≤9岁（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.si=='4' }} checked {{?}}
+                           name="si" value="4">4、 年龄≥80(高危)
+                </div>
+                <br>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.wu=='4' }} checked {{?}}
+                           name="wu" value="4"> 5、视力障碍：双盲(高危)
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.liu=='1' }} checked {{?}}
+                           name="liu" value="1">6、视力障碍：单盲、弱势、白内障、青光眼、眼底病、复视（1分）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.qi=='4' }} checked {{?}}
+                           name="qi" value="4"> 7、步态不稳，下肢平衡能力下降(闭眼单腿站立不足5秒)（高危）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.ba=='3' }} checked {{?}}
+                           name="ba" value="3"/>8、 活动障碍，肢体偏瘫（3分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+
+                    <input type="radio"
+                           {{? it&&it.jiu=='2' }} checked {{?}}
+                           name="jiu" value="2"> 9、意识师码：意识模糊、烦躁、谵妄（2分）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shi=='2' }} checked {{?}}
+                           name="shi" value="2">10、头晕、眩晕、体位性低血压（2分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shiyi=='1' }} checked {{?}}
+                           name="shiyi" value="1"> 11、睡眠障碍（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shier=='1' }} checked {{?}}
+                           name="shier" value="1">12、夜尿增多，尿频，尿急（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shisan=='1' }} checked {{?}}
+                           name="shisan" value="1"> 13、贫血(血红蛋白<90g/)（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shisi=='1' }} checked {{?}}
+                           name="shisi" value="1">14、体能虚弱：白天过半时间卧床，果体活动不受限制（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shiwu=='2' }} checked {{?}}
+                           name="shiwu" value="2"> 15、体能虚弱：白天过半时间卧床，躯体活动轻度受限制（2分）
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shiliu=='3' }} checked {{?}}
+                           name="shiliu" value="3">16、体能虚弱：白天过半时间卧床，躯体活动严重受限制（3分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shiqi=='1' }} checked {{?}}
+                           name="shiqi" value="1"> 17、患者出汗多（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shiba=='1' }} checked {{?}}
+                           name="shiba" value="1"> 18、术后，化疗后患者（1分）
+                </div>
+                <br/>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.shijiu=='1' }} checked {{?}}
+                           name="shijiu" value="1"> 19、应用影响意识或活动的药物（1分）
+                    <div class="aui-row item border-bottom">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                                <span class="aui-margin-l-5">{{=it.yaowu || '-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.ershi=='1' }} checked {{?}}
+                           name="ershi" value="1"> 20、住院中无家人或其他人陪伴（1分）
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row item border-bottom">
+        <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+            <div class="flex-item">
+                <div class="aui-padded-l-15 flex">
+                    <div>目前评估得分:</div>
+                    <div class="aui-margin-l-10 aui-text-left flex-item">
+                        <span class="aui-margin-l-5">{{=it.leijipingfen || '-'}} </span>
+                    </div>
+                </div>
+                <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                    <div class="aui-margin-l-5 inline">
+                        <input type="radio" name="gaowei" value="高危"
+                               {{? it&&it.gaowei=='高危' }} checked {{?}}> 高危
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row  aui-padded-l-10 aui-padded-t-15">
+        <label class="aui-font-size-18" style="font-weight: bold">
+            跌倒/坠床的危险因子评估:
+        </label>
+    </div>
+    <div class="aui-row item border-bottom">
+        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+            <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei1=='11' }} checked {{?}}
+                           name="gaowei1" value="11"> 1、避免穿大小不合适或容易滑倒的鞋(或拖鞋)，或长短不合适的裤子，应用合适的助行器等辅助用
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei2=='12' }} checked {{?}}
+                           name="gaowei2" value="12">2、在下床活动时，应随时有陪伴在患者身旁
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei3=='13' }} checked {{?}}
+                           name="gaowei3" value="13"> 3、应用影响意识或活动的药物若感到头晕、软弱无力等不适时，应卧床休息，避免活动，并请告知医护人员。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei4=='14' }} checked {{?}}
+                           name="gaowei4" value="14">4、改变体位应遵守”三部曲”：即平躺30秒，坐起30秒，站立30秒，再行走，避免突然改变体位，尤其是夜间。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei5=='15' }} checked {{?}}
+                           name="gaowei5" value="15">5、至卫生间如厕时，陪伴请勿随意离开患者。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei6=='16' }} checked {{?}}
+                           name="gaowei6" value="16">6、病房医疗设备如有损坏或使用不便时(电灯等)，请立即通知医护人员予以处理。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei7=='17' }} checked {{?}}
+                           name="gaowei7" value="17">7、患者躁动不安时请陪伴立即通知医护人员。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei8=='18' }} checked {{?}}
+                           name="gaowei8" value="18">8、偏瘫患者应由健侧边缘上下床。
+                </div>
+                <div class="aui-margin-l-5 inline">
+                    <input type="radio"
+                           {{? it&&it.gaowei9=='19' }} checked {{?}}
+                           name="gaowei9" value="19">9、使用床档者要下床时，请先将床栏放下，切勿翻越。
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <div class="aui-col-xs-6">
+            <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                <div>记录人:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <span class="aui-margin-l-5">{{=it.createUserName || '-'}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-6">
+            <div class="flex aui-text-left aui-padded-l-3 aui-padded-r-3">
+                <div >记录时间:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <span class="aui-margin-l-5">{{=it.createTime || '-'}} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="aui-row">
+        <div class="aui-col-xs-6">
+            <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                <div>患者/家属签名:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <span class="aui-margin-l-5">{{=it.huanzhejiashuqianming || '-'}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-6">
+            <div class="flex aui-text-left aui-padded-l-3 aui-padded-r-3">
+                <div>与患者关系:</div>
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <span class="aui-margin-l-5">{{=it.hzgx || '-'}} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+        var params = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        params.name = person.name;
+        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+        $api.html($api.byId('content'), contentTmpl(params));
+    };
+</script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>重要事件提醒-添加提醒</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+
+</head>
+<body>
+  <header id="header" class="aui-bar aui-bar-nav" style="background-color: #004783;">
+      <span class="aui-pull-left aui-btn" tapmode  onclick="closeWin();">
+          <span class="aui-iconfont aui-icon-left"></span>
+      </span>
+      <div class="aui-title">添加事件</div>
+  </header>
+<div class="aui-content">
+
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var date;
+apiready = function(){
+    api.parseTapmode();
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    date= api.pageParam.date;
+    api.openFrame({
+        name: 'frm_add_notice',
+        url: './frm_add_notice.html',
+        rect: {
+            x: 0,
+            y: pos.h,
+            w: 'auto',
+            h: 'auto'
+        },
+        pageParam: {
+            date: date
+        },
+        reload: true,
+        bounces: true,
+        vScrollBarEnabled: true,
+        hScrollBarEnabled: false
+    });
+};
+
+function closeWin(){
+  api.closeWin();
+}
+</script>
+
+</html>

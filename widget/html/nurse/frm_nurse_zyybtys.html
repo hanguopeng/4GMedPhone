@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>住院一般同意书</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css"/>
+    <style>
+    .ctitle{background-color:#67c23a;color: #fff;}
+    .itemDate{position: relative;line-height: 1.5rem;}
+    .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+    .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+    .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    .sel{display: inline-block !important;width: inherit !important;}
+    </style>
+</head>
+<body>
+  <div class="aui-content">
+      <div class="aui-tab" id="tab">
+          <div class="aui-tab-item aui-active">新建</div>
+          <div class="aui-tab-item">历史记录</div>
+      </div>
+      <div id="content">
+      </div>
+  </div>
+</body>
+<script id="add-tpl" type="text/template">
+<section class="aui-content">
+    <ul class="aui-list aui-collapse aui-border">
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-padded-15 aui-border-b">
+              <div >
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>患者姓名:</span>
+                      <span>{{=it.person.name||"-"}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>性别:</span>
+                      <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>年龄:</span>
+                      <span>{{=it.person.age||"-"}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>科室名称:</span>
+                      <span>{{=it.person.organizationName||"-"}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>病案号:</span>
+                      <span>{{=it.person.medicalNumber||' '}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>床号:</span>
+                      <span>{{=it.person.medBedName||'-'}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>出生日期:</span>
+                      <span>{{=it.person.birthday||'-'}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>身份证号:</span>
+                      <span>{{=it.person.idNumber||'-'}}</span>
+                  </div>
+                  <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                      <span>民族:</span>
+                      <span>{{=it.person.nationName||'-'}}</span>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">同意治疗</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>本人自愿至通化市人民医院寻求医疗协助，并接受医师提供医学专业上认为需要的护理、治疗。本人签署本同意书，其医疗范围是指在通化市人民医院所接受的住院护理、治疗。在接受医院护理、治疗的过程中，本人同意接受常规的检查，包含实验室检查、放射线检查、内外科检查等。手术、麻醉及其他特殊性治疗及检查，需征得本人同意并另外签署同意书。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">医疗团队</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>本人了解医院为二级甲等级医院，因此本人的医疗护理、治疗团队将由主诊医师、护理人员、医技人员等成员所组成，其中亦包括实习医师、实习护士。为了医学教育的传承与服务品质提升，有时会有实习人员在场观摩学习，但我有权拒绝实习人员在场。本人了解通化市人民医院医疗护理团队会竭尽所能诊疗照顾病人，但临床医疗的过程有其自然风险，而诊疗或检验其局限性，无法达到百分之百精确。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">信息发布与查询</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>医院在以下几个情况下，可由本人授权提供本人的资料或必要的信息：复印病历、医疗护理服务费用的明细、法律允许下的政府机关做必要性审查、本人投保的保险公司。本人不追究通化市人民医院因上述原因而提供本人病历资料的责任。本人了解在住院期间，本人姓名将出现在病房的一览表和床头卡上，但也能要求不公开本人的姓名和诊断。</p>
+              <p>本人同意由于医疗的需要，医师通过信息系统查询本人在通化市人民医院的治疗记录。并同意医师及通化市人民医院各科室无需负担任何法律责任。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">个人物品</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>通化市人民医院对个人物品不负责保管责任，亦不对个人物品的遗失或损坏负责赔偿责任。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">禁烟政策</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>通化市人民医院为绝对禁烟场所。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">财务协议</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>本人了解并愿意担负通化市人民医院所收取的服务费用， 其中包含保险不支持的医疗费用。本人了解需负担健康保险非支付范围内的医疗服务费用。</p>
+              <p>本人郑重保证所提供给通化市人民医院的资料均属实正确，并于必要时接受政府机关的审查。</p>
+              <p>本人在签署这份同意书时已详细阅读，清楚了解签署这份同意书表示为同意遵守。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">陪床协议</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>本院实施一人一陪制，需收取陪床费10元/床日。</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title aui-text-danger">同意事项</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+              <p>1.若通化市人民医院基于治疗需要，要求住院人转床时，住院人愿无条件配合。</p>
+              <p>2.因病情需要而同性别科室已满床，病患或家属<select id="rzty" class="sel aui-text-danger"><option value="同意" selected="">同意</option><option value="不同意">不同意</option></select>入住不同性别科室。</p>
+              <p>3.病患或家<select class="sel aui-text-danger" id="gbty"><option value="同意" selected="">同意</option><option value="不同意">不同意</option></select>公布住院病人姓名、病床号以利亲友探视。</p>
+              <p>病患或家属同意患者自<span class="border-bottom"><input type="text" tapmode style="font-size:0.7rem" id="zyrq" readonly onclick="pickerDate(this);" value="{{=it.currentDate}}" class="input aui-text-danger"></span>日起住以下不同价格的病房。</p>
+              <p>单人间  <span class="border-bottom"><input type="text" style="font-size:0.7rem" class="input aui-text-danger" id="danrenjian"></span> 元/天；</p>
+              <p>双人间  <span class="border-bottom"><input type="text" style="font-size:0.7rem" class="input aui-text-danger" id="shuangrenjian"></span> 元/天；</p>
+              <p>普通床  <span class="border-bottom"><input type="text" style="font-size:0.7rem" class="input aui-text-danger" id="putongjian"></span> 元/天；</p>
+            </div>
+        </div>
+        <div class="aui-collapse-item">
+            <li class="aui-list-item aui-collapse-header" tapmode>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title aui-text-danger">签字</div>
+                    <div class="aui-list-item-right">
+                        <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                    </div>
+                </div>
+            </li>
+            <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify" style="font-size: 0.7rem;color: #757575;">
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">患者或家属签名:</div>
+                  <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="brhjsqm" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">电话或手机:</div>
+                  <div class="aui-col-xs-7"><input type="number" style="font-size:0.7rem" id="dhhsj" oninput="if(value.length>11)value=value.slice(0,11)"  class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">时间日期:</div>
+                  <div class="aui-col-xs-7"><input type="text" tapmode style="font-size:0.7rem;text-align:center;" id="sjrq" onclick="picker(this)" tapmode readOnly="readOnly" value="{{=it.currentTime}}" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">紧急联系人签名:</div>
+                  <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="jjlxrqm" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">关系:</div>
+                  <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="jjlxrgx"  class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">电话或手机:</div>
+                  <div class="aui-col-xs-7"><input type="number" style="font-size:0.7rem" id="jjlxrdhhsj"  oninput="if(value.length>11)value=value.slice(0,11)" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">时间日期:</div>
+                  <div class="aui-col-xs-7"><input type="text" tapmode style="font-size:0.7rem" id="jjlxrsjrq" onclick="picker(this)" tapmode readOnly="readOnly"  value="{{=it.currentTime}}" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">护士签名:</div>
+                  <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="hsqm"  value="{{=it.userName}}" class="input"></div>
+              </div>
+              <div class="aui-row">
+                  <div class="aui-col-xs-5">时间日期:</div>
+                  <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="hssjrq" onclick="picker(this)" tapmode readOnly value="{{=it.currentTime}}" class="input"></div>
+              </div>
+            </div>
+        </div>
+    </ul>
+</section>
+<div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+    <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存同意书</div>
+</div>
+</script>
+
+<script id="his-tpl" type="text/template">
+  <div id="qbxxkr-lsjl">
+    <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+        住院一般同意书
+    </div>
+    <!-- <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+        </div>
+        <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+    </div> -->
+    <div id="recordContent" class="recordContent">
+    </div>
+  </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+   {{ for(var prop in it) { }}
+  <div class="item">
+    <div class="itemDate aui-margin-t-15">
+        <img src="../../image/u30820.png" alt="" class="f-right">
+        <div class="date aui-font-size-14">{{= prop}}</div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="line"></div>
+    <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+        {{~ it[prop]:info:index}}
+        <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin('{{=info.id}}');">
+            <img src="../../image/u30815.png" alt="" style="margin: auto;">
+            <div class="aui-margin-t-10">
+                <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+            </div>
+            <div class="aui-margin-t-5">
+                <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+            </div>
+        </div>
+        {{~}}
+    </div>
+  </div>
+  {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_nurse_zyybtys.js"></script>
+</html>

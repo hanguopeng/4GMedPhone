@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>血糖监测单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/bloodGlucose.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/page.css" />
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+        }
+        table td, table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        table thead th {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        table tr {
+            background: #fff;
+        }
+        .trActive {
+            background: #F5FAFA;
+        }
+    </style>
+</head>
+<body>
+<div class="aui-font-size-16 topTitle aui-text-center aui-padded-t-5 aui-padded-b-5" style='width:100%;position:fixed; z-index:999; top:0;'>血糖监测单</div>
+<div class="top aui-padded-15 aui-font-size-14" id="personInfo">
+</div>
+<div class="center" style="overflow-x: scroll;overflow-y: auto;">
+    <table width="90%" class="table aui-font-size-14">
+        <thead>
+        <tr>
+            <th rowspan="3" style="width:200px !important;">
+                日期
+            </th>
+            <th colspan="9">
+                血糖
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">早餐</th>
+            <th colspan="2">中餐</th>
+            <th colspan="2">晚餐</th>
+            <th rowspan="2">睡前</th>
+            <th rowspan="2">空腹</th>
+            <th rowspan="2">随机</th>
+        </tr>
+        <tr>
+            <th>前0.5h</th>
+            <th>后2h</th>
+            <th>前0.5h</th>
+            <th>后2h</th>
+            <th>前0.5h</th>
+            <th>后2h</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</div>
+<div id="pageDivContainer"></div>
+<script id="personInfo-tmpl" type="text/template">
+    <div class="aui-margin-b-5 aui-margin-t-15">
+        <div class="inline aui-margin-t-5">
+            <span>科室:</span>
+            <span>{{=it.ks||''}}</span>
+        </div>
+        <div class="inline aui-margin-l-15 flex">
+            <span>住院号:</span>
+            <span>{{=it.zyh||''}}</span>
+        </div>
+    </div>
+    <div class="aui-margin-b-5">
+        <div class="inline">
+            <span>入院日期:</span>
+            <span>{{=it.ryrq||''}}</span>
+        </div>
+    </div>
+    <div class="aui-margin-b-5 flex">
+        <div class="inline">
+            <span>目标血糖:</span>
+        </div>
+    </div>
+    <div class="aui-margin-b-5 aui-margin-l-15">
+        <div class="inline">
+            餐前半小时:4.4－6.1mmol/L
+        </div>
+    </div>
+    <div class="aui-margin-b-5 aui-margin-l-15">
+        <div class="inline">
+            餐后（第一口食物后的2小时）：6.1－7.8mmol/L
+        </div>
+    </div>
+</script>
+<script id="content-tmpl" type="text/template">
+    <tr data-id="{{=it.id||''}}">
+        <td>{{=it.rq||''}}</td>
+        <td>{{=it.breakfast1||''}}</td>
+        <td>{{=it.breakfast2||''}}</td>
+        <td>{{=it.lunch1||''}}</td>
+        <td>{{=it.lunch2||''}}</td>
+        <td>{{=it.dinner1||''}}</td>
+        <td>{{=it.dinner2||''}}</td>
+        <td>{{=it.beforeSleep||''}}</td>
+        <td>{{=it.emptyStomach||''}}</td>
+        <td>{{=it.random||''}}</td>
+    </tr>
+</script>
+<script id="pageInfo-tmpl" type="text/template">
+    <div style="padding: 0px 20px;">
+        <div class="aui-row">
+            <span>第</span>
+            <span>{{=(it.currPage-1) * it.pageSize + 1}}</span>
+            <span>到</span>
+            <span>{{=it.currPage * it.pageSize}}</span>
+            <span>条记录</span>
+            <span style="margin-left: 25px;">共</span>
+            <span>{{=it.totalCount}}</span>
+            <span>条记录</span>
+        </div>
+        <div  class="aui-pull-right aui-row aui-margin-t-5" id="pageNumContainer" class="pageNumContainer" data-currentPage="{{=it.currPage}}">
+            {{? parseInt(it.currPage)!=1}}<span onclick="firstPage();">首页</span>{{?}}
+            {{? parseInt(it.currPage)>1}}<span onclick="prePage();" class="prePage">上一页</span>{{?}}
+            <span class="pageNumItem active">{{=it.currPage}}</span>
+            {{? parseInt(it.totalPage)>parseInt(it.currPage)}}
+            <span class="pageNumItem" onclick="nextPage('{{=parseInt(it.currPage)+1}}');">
+                    {{=parseInt(it.currPage)+1}}
+            </span>
+            {{?}}
+            {{? parseInt(it.totalPage)>parseInt(it.currPage)}}
+            <span class="nextPage" onclick="nextPage('{{=parseInt(it.currPage)+1}}');">下一页</span>
+            {{?}}
+        </div>
+
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/bloodGlucose.js"></script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>病人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/personCenter.css"/>
+    <style type="text/css">
+        .xueYa{
+            font-size: 0.45rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bodyContainer">
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item aui-active" id="tab-jcst" data-to="jcst" onclick="changeTab(this);">基础视图</div>
+            <div class="aui-tab-item" id="tab-jcjg" data-to="jcjg" onclick="changeTab(this);">检查结果</div>
+            <div class="aui-tab-item" id="tab-hyjg" data-to="hyjg" onclick="changeTab(this);">化验结果</div>
+            <div class="aui-tab-item" id="tab-fymx" data-to="fymx" onclick="changeTab(this);">费用明细</div>
+        </div>
+        <div class="tabBody">
+            <div id="jcst" class="tab-body-item active aui-padded-l-15 aui-padded-r-15">
+                <div class="title aui-font-size-16">
+                    体征一览
+                </div>
+                <div class="content aui-font-size-14 flex aui-padded-t-15" id="tzylContentContainer">
+
+                </div>
+                <div class="title aui-font-size-16">
+                    基础信息
+                </div>
+                <div class="baseInfo content aui-font-size-14 aui-padded-t-15" id="jcxxContentContainer">
+
+                </div>
+                <div class="title aui-font-size-16">
+                    费用汇总
+                </div>
+                <div class="content aui-font-size-14 aui-padded-t-15 flex" id="fyhzContentContainer">
+
+                </div>
+            </div>
+            <div id="jcjg" class="tab-body-item">
+
+            </div>
+            <div id="hyjg" class="tab-body-item">
+
+            </div>
+            <div id="fymx" class="tab-body-item">
+
+            </div>
+        </div>
+    </div>
+
+    <script id="tzylTmpl" type="text/template">
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 tiWen">{{=it.temperature||''}}</div>
+            <div class="aui-font-size-12 aui-padded-t-5">体温<p style="line-height: 1.39em;">&nbsp;</p></div>
+        </div>
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 huXi">{{=it.breathe||''}}</div>
+            <div class="aui-font-size-12 aui-padded-t-5">呼吸（次/分）</div>
+        </div>
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 maiBo">{{=it.pulse||''}}</div>
+            <div class="aui-font-size-12 aui-padded-t-5">脉搏（次/分）</div>
+        </div>
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 xueYa">{{=it.bloodPressureLow||''}}/{{=it.bloodPressureHigh||''}}</div>
+            <div class="aui-padded-t-5 aui-font-size-12">血压 (mmhg)</div>
+        </div>
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 xinLv">{{=it.heartRate||''}}</div>
+            <div class="aui-font-size-12 aui-padded-t-5">心率（次/分）</div>
+        </div>
+        <!--<div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 xinLv">{{=it.heartRate||''}}</div>
+            <div class="aui-font-size-12 aui-padded-t-5">心率（次/分）</div>
+        </div>-->
+    </script>
+    <script id="jcxxTmpl" type="text/template">
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">住院号：</span>
+            <span class="value">{{=it.registerNumber||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">出生日期：</span>
+            <span class="value">{{=it.birthday||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">民族：</span>
+            <span class="value">{{=it.nationName||'汉'}}</span>
+        </div>
+        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">身份：</span>
+            <span class="value">{{=it.nationName||''}}</span>
+        </div>-->
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">婚姻状况：</span>
+            <span class="value">{{=it.marriageName||'未婚'}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">籍贯：</span>
+            <span class="value">{{=it.nativePlace||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">学历：</span>
+            <span class="value">{{=it.educationName||'无'}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">联系人姓名：</span>
+            <span class="value">{{=it.contactsName||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">联系人电话：</span>
+            <span class="value">{{=it.contactsMobile||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">联系人关系：</span>
+            <span class="value">{{=it.contactsRelationCode||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">身份证号：</span>
+            <span class="value">{{=it.idNumber||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">入院时间：</span>
+            <span class="value">{{=it.inHospitalTime||''}}</span>
+        </div>
+        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">主管护士：</span>
+            <span class="value">{{=it.nationName||''}}</span>
+        </div>-->
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">诊断：</span>
+            <span class="value">{{=it.diagnose||''}}</span>
+        </div>
+        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+            <span class="key">药物过敏史：</span>
+            <span class="value">{{=it.drugAllergy||'无'}}</span>
+        </div>
+    </script>
+    <script id="fyhzTmpl" type="text/template">
+        <div class="flex-item">
+            <div class="aui-font-size-14 aui-margin-t-5">预交金额(元)</div>
+            <div class="aui-font-size-12 aui-margin-t-5">{{=it.prepayMoney||'0'}}</div>
+        </div>
+        <div class="flex-item">
+            <div class="aui-font-size-14 aui-margin-t-5">费用</div>
+            <div class="aui-font-size-12 aui-margin-t-5">{{=it.consumeMoney||'0'}}</div>
+        </div>
+        <div class="flex-item">
+            <div class="aui-font-size-14 aui-margin-t-5">担保金额(元)</div>
+            <div class="aui-font-size-12 aui-margin-t-5">{{=it.assureMoney||'0'}}</div>
+        </div>
+        <div class="flex-item">
+            <div class="aui-font-size-14 aui-margin-t-5">余额(元)</div>
+            <div class="aui-font-size-12 aui-margin-t-5">{{=it.balance||'0'}}</div>
+        </div>
+    </script>
+    <script id="jcjgListTmpl" type="text/template">
+        {{
+        for(var i=0;i<it.length;i++) {
+        var item = it[i];
+        }}
+        <div onclick="inspectionDetail(this,'{{=item.id}}')" data-id="{{=item.id}}" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+            <div class="flex-item aui-text-left">{{=i+1}}.{{=item.name||''}}</div>
+            <div class="flex-item aui-text-right"><div>{{=item.reportTime||''}}</div><div> {{=item.sendDoctorName||''}}</div></div>
+        </div>
+        <div class="jcjgItemDetail hide" id="jcjg_{{=item.id}}">
+
+        </div>
+        {{ } }}
+    </script>
+    <script id="jcjgDetailTmpl" type="text/template">
+        <div class="content">
+            <div class="key aui-font-size-16 aui-margin-t-10">检查所见</div>
+            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
+                {{=it.discover||''}}
+            </div>
+        </div>
+        <div class="content">
+            <div class="key aui-font-size-16 aui-margin-t-10">检查结果</div>
+            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
+                {{=it.result||''}}
+            </div>
+        </div>
+        <div class="content">
+            <div class="key aui-font-size-16 aui-margin-t-10">检查图像</div>
+            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
+                {{
+                for(var i=0;i<it.accessoryList.length;i++) {
+                var item = it.accessoryList[i];
+                }}
+                <img src="{{=item.path||''}}" alt="{{=item.name||''}}" style="width: 80%;margin: auto;">
+                {{ } }}
+            </div>
+        </div>
+    </script>
+    <script id="hyjgListTmpl" type="text/template">
+        {{
+        for(var i=0;i<it.length;i++) {
+        var item = it[i];
+        }}
+        <div onclick="assayDetail(this,'{{=item.id}}')" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+            <div class="flex-item aui-text-left">{{=i+1}}.{{=item.name||''}}</div>
+            <div class="flex-item aui-text-right"><div>{{=item.reportTime||''}}</div><div>
+                {{=item.sendDoctorName||''}}</div></div>
+        </div>
+        <div class="hyjgItemDetail hide content aui-padded-b-15 aui-padded-t-15">
+
+        </div>
+        {{ } }}
+    </script>
+    <script id="hyjgDetailTmpl" type="text/template">
+        <table>
+            <tr>
+                <th>化验项</th>
+                <th>化验结果</th>
+                <th>参考值</th>
+                <th>异常指示</th>
+            </tr>
+            {{
+            for(var i=0;i<it.itemList.length;i++) {
+            var item = it.itemList[i];
+                    if(item.exceptionsHint &&
+                        (item.exceptionsHint == 'H'
+                        || item.exceptionsHint == 'L')
+                   ) {   }}
+            <tr>
+                <td><span style="color: red;">{{=item.key||''}}</span></td>
+                <td><span style="color: red;">{{=item.value||''}}</span></td>
+                <td><span style="color: red;">{{=item.referenceValue||''}}</span></td>
+                <td>
+                    <span style="color: red;">{{=item.exceptionsHint||''}}</span>
+                </td>
+            </tr>
+                    {{   } else {   }}
+            <tr>
+                <td>{{=item.key||''}}</td>
+                <td>{{=item.value||''}}</td>
+                <td>{{=item.referenceValue||''}}</td>
+                <td>
+                    {{=item.exceptionsHint||''}}
+                </td>
+            </tr>
+
+            {{   }   }}
+            {{   }   }}
+            <!--<tr class="red">
+                <td>γ-谷氨酸氨基转移酶</td>
+                <td>26.3</td>
+                <td>7&#45;&#45;45U/L</td>
+                <td>H</td>
+            </tr>-->
+        </table>
+    </script>
+    <script id="fymxTmpl" type="text/template">
+        {{
+        for(var i=0;i<it.length;i++) {
+            var item = it[i];
+        }}
+        <div onclick="fymxDetail(this)" class="title aui-margin-t-10 aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+            <div class="flex-item aui-text-left">{{=item.bigKindNum||''}}</div>
+            <div class="flex-item aui-text-right">{{=item.cost||'0'}} 元</div>
+        </div>
+        <div class="content aui-padded-b-15 aui-padded-t-15 fymxItemDetail hide">
+            <table>
+                <tr>
+                    <th>医嘱</th>
+                    <th>数量</th>
+                    <th>费用(元)</th>
+                </tr>
+                {{
+                for(var j=0;j< item.list.length;j++) {
+                var itemDetail = item.list[j];
+                }}
+                <tr>
+                    <td>{{=itemDetail.adviceName||'--'}}</td>
+                    <td>{{=itemDetail.num||'0'}}  {{=itemDetail.unit||'支'}}</td>
+                    <td>{{=itemDetail.subtotal||''}}</td>
+                </tr>
+                {{ } }}
+            </table>
+        </div>
+        {{ } }}
+    </script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/config.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/aui-tab.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/personCenter.js"></script>
+</body>
+</html>

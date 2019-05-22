@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>病人宣教评估及教育记录单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
+    <style>
+        .aui-grid [class*=aui-col-] {
+            display: table-cell;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.2rem 0;
+        }
+        input.inputItem{
+            width: 2rem;
+        }
+        .aui-row.item{
+            min-height: 44px;line-height: 44px;
+        }
+        .aui-row.border-bottom{
+            border-bottom: 1px double #f1f1f1;
+            padding-bottom: 0.5rem;
+        }
+        .ctitle{background-color:#67c23a;color: #fff;}
+        .itemDate{position: relative;line-height: 1.5rem;}
+        .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+        .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+        .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">新建</div>
+        <div class="aui-tab-item">历史记录</div>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+<script id="add-tpl" type="text/template">
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-margin-b-15">
+            <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+                病人宣教评估及教育记录单
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>诊断:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="diagnosis">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>患者姓名:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.name}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>性别:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.sexName||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>年龄:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.age||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>病案号:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.registerNumber||''}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>出生日期:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" readonly value="{{=it.birthday||''}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>1.说明日期:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value" name="explainTime" id="explainTime" onclick="chooseDate();">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>2.说明对象:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="本人"> 本人
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="配偶"> 配偶
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="父母"> 父母
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="手足"> 手足
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="子女"> 子女
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainObject" value="外侨"> 外侨
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainObject" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="explainObjectOther" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>3.语言:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="language" value="汉语"> 汉语
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="language" value="英语"> 英语
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="language" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="languageOther" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>4.民族:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="country" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>5.教育程度:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="不识字"> 不识字
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="小学"> 小学
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="初中"> 初中
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="高中"> 高中
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="大专/大学"> 大专/大学
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="educationalStatus" value="研究生以上"> 研究生以上
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>6.说明类型:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="疾病/治疗方案"> 疾病/治疗方案
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="手术/检查之前/后注意事项"> 手术/检查之前/后注意事项
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="用药指导"> 用药指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="医疗设备使用注意项"> 医疗设备使用注意项
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="饮食与营养"> 饮食与营养
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="健康指导"> 健康指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="社会资源"> 社会资源
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="护理指导"> 护理指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainType" value="入院环境介绍"> 入院环境介绍
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainType" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="explainTypeOther" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>7.学习动机:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningMotivation" value="积极主动"> 积极主动
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningMotivation" value="普通"> 普通
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningMotivation" value="低"> 低
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>8.学习障碍:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="无"> 无
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="语言不通"> 语言不通
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="视力不良"> 视力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="能力不良"> 能力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="理解能力不良"> 理解能力不良
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="头痛"> 头痛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="家属压力大"> 家属压力大
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="文化差异"> 文化差异
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="经济困难"> 经济困难
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="宗教影响"> 宗教影响
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="learningDisorder" value="疲惫"> 疲惫
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="learningDisorder" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="learningDisorderOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>若有障碍的替代说明方法</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="learningDisorderWay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>9.说明方式:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="讨论"> 讨论
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="示范"> 示范
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="卫生教育、社会资源单张"> 卫生教育、社会资源单张
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainWay" value="影片/卫生教育看板"> 影片/卫生教育看板
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainWay" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="explainWayOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>若有障碍的替代说明方法</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="explainWayWay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>10.说明者签名:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="医师"> 医师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="医护人员"> 医护人员
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="营养师"> 营养师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="explainSignature" value="药师"> 药师
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="inline">
+                                <input type="radio"
+                                       name="explainSignature" value="其他"> 其他
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="signatureOther" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>签名</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="signature">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>11.说明内容:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            经由以上说明，家属/病人已充分了解目前疾病护理的注意事项并
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="agreeFlag" value="同意"> 同意
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="agreeFlag" value="不同意"> 不同意
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            接受本院的护理。给予
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="入院通知"> 入院通知
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="预防地道13知"> 预防地道13知
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="病人的权利与义务"> 病人的权利与义务
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="give" value="疼痛的处理"> 疼痛的处理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            的护理及单张假说/病人的签字：
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="text" class="value" name="patientsSignature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>12.自我批评:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我已完全了解"> 我已完全了解
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我部分了解"> 我部分了解
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="selfAppraisal" value="我完全不了解"> 我完全不了解
+                        </div>
+                        <br>
+                        <div class="aui-margin-l-5 inline">
+                            <div class="flex">
+                                <div>签名</div>
+                                <div class="aui-margin-l-10 aui-text-left">
+                                    <input type="text" class="value" name="selfAppraisalSignature">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>13.自我批评只回顾或追踪:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="review" value="无"> 无
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="radio"
+                                   name="review" value="写加强说明"> 写加强说明
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>护士签名:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>日期/时间:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="explainTimeBottom" id="explainTimeBottom" onclick="chooseDateTime();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-margin-t-15 aui-margin-b-15">
+                    <div>备注:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            书写"其他"时，请填写说明内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+        <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
+    </div>
+</script>
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            病人宣教评估及教育记录单
+        </div>
+         <div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-input aui-border-radius">
+                <i class="aui-iconfont aui-icon-search"></i>
+                <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+            </div>
+            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+        </div>
+        <div id="recordContent" class="recordContent">
+        </div>
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin(this);">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+                <span class="aui-hide json-span">{{= JSON.stringify(info.itemList)}}</span>
+            </div>
+            {{~}}
+        </div>
+    </div>
+    {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_brxjpgjjyjld.js"></script>
+</body>
+</html>

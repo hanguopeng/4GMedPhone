@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>辅助工具</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+
+</head>
+<body>
+<div class="aui-content">
+  <div class="aui-tab" id="tab">
+      <div class="aui-tab-item aui-active">重要事件提醒</div>
+      <div class="aui-tab-item">试管核对</div>
+  </div>
+  <div id="content">
+
+  </div>
+</div>
+
+</body>
+<script  id="calendar-tpl" type="text/template">
+  <div id="switch" class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left" tapmode onclick="lastMonth();">
+        <span class="aui-iconfont aui-icon-left"></span>
+      </a>
+     <div id="curDate" class="aui-title">　</div>
+     <a class="aui-pull-right" tapmode onclick="nextMonth();">
+       <span class="aui-iconfont aui-icon-right"></span>
+     </a>
+  </div>
+  <div class="aui-content-padded" style="margin-top:14em;margin-bottom:5em">
+    <div id="record-content" class="aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+
+    </div>
+  </div>
+  <a href="#" class="add-btn" tapmode onclick="addNotice();"></a>
+</script>
+<script id="check-tpl" type="text/template">
+  <div class="aui-text-center aui-content-padded" style="margin-top: 6rem !important;">
+      <div class="aui-btn aui-btn-block aui-btn-warning" tapmode onclick="scan();">扫一扫</div>
+  </div>
+</script>
+<script id="record-tpl" type="text/template">
+  {{~ it.content:info:index}}
+  <div id="record{{=info.id}}" class="aui-row aui-padded-t-10 aui-padded-b-10 aui-border-b cus-record-cus">
+      <div class="aui-col-xs-8 aui-ellipsis-1" tapmode onclick="openModifyWin('{{=info.id}}','{{=info.motionName}}','{{= spliceHourMinute(info.alertTime) }}',' {{=info.bedCode}}','{{=info.patientName}}')">
+        <span  class="aui-text-info aui-font-size-16" style="line-height: 1.5rem;">{{=info.motionName}} {{= spliceHourMinute(info.alertTime) }} {{=info.bedCode}}床 {{=info.patientName}}</span>
+      </div>
+      <div class="aui-col-xs-4">
+        <div  style="float:right;">
+          <div tapmode onclick="deleteRecord('{{=info.id}}');" class="aui-btn aui-btn-sm aui-btn-danger"><span class="aui-iconfont aui-icon-minus"></span>删除</div>
+        </div>
+      </div>
+  </div>
+  {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/aui-tab.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/frm_fuzhugongju.js"></script>
+</html>

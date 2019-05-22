@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>外周静脉置入中心静脉导管（PICC）拒绝维护知情同意书</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
+
+        .sel {
+            display: inline-block !important;
+            width: inherit !important;
+        }
+    </style>
+</head>
+
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <section class="aui-content">
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                    <div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>患者姓名:</span>
+                            <span>{{=it.person.name||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>性别:</span>
+                            <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>年龄:</span>
+                            <span>{{=it.person.age||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>科室名称:</span>
+                            <span>{{=it.person.organizationName||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>病案号:</span>
+                            <span>{{=it.person.medicalNumber||' '}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>床号:</span>
+                            <span>{{=it.person.medBedName||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>出生日期:</span>
+                            <span>{{=it.person.birthday||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>身份证号:</span>
+                            <span>{{=it.person.idNumber||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>民族:</span>
+                            <span>{{=it.person.nationName||'-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">风险告知</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                    <p>鉴于患者留置PICC，需常规实施导管维护，置管期间可能发生各种并发症，特此郑重向患者告知，包括（但不限于）：</p>
+                    <p>1.导管阻塞，需取出或重新置入。</p>
+                    <p>2.导管及局部感染。</p>
+                    <p>3.导管位移、折断、漏液。</p>
+                    <p>4.导管脱落致心脏内。</p>
+                    <p>5.血管血栓形成，血管内膜损伤。</p>
+                    <p>6.机械性上臂肿胀、静脉炎，严重时需拔除。</p>
+                    <br/>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">医生（护士）签字：</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="createUserName" value="{{=it.params.createUserName}}" class="input">
+                        </div>
+                    </div>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">日期:</div>
+                        <div class="aui-col-xs-7">
+                            <input type="text" tapmode style="font-size:0.7rem" id="handleTime" tapmode value="{{=it.params.handleTime}}" readOnly="readOnly" class="input">
+                            <span id="handleTimeicon" class="aui-iconfont aui-icon-close" style="position: relative;right: 24px;color: #ffffff;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">拒绝声明</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                    <p>
+                        因需常规实施导管维护，现对以上可能出现的风险已详细告知，但患者及家属仍拒绝此项操作，为此产生的一切后果自负。
+                    </p>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">患者签字:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="huanzheqianzi" value="{{=it.params.huanzheqianzi}}" class="input"></div>
+                    </div>
+
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">患者家属签字:</div>
+                        <div class="aui-col-xs-7">
+                            <input type="text" style="font-size:0.7rem" id="huanzhejiashuqianzi" value="{{=it.params.huanzhejiashuqianzi}}" class="input">
+                        </div>
+                    </div>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">与患者关系:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="guanxi" value="{{=it.params.guanxi}}" class="input"></div>
+                    </div>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">签字日期:</div>
+                        <div class="aui-col-xs-7">
+                            <input type="text" tapmode style="font-size:0.7rem" id="createTime" onclick="picker(this,'#createTimeicon')" tapmode readOnly="readOnly" value="{{=it.params.createTime}}" class="input">
+                            <span id="createTimeicon" class="aui-iconfont aui-icon-close" style="position: relative;right: 24px;color: #ffffff;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">备注</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                    <textarea id="beizhu" rows="4" cols="20">{{=it.params.beizhu}}</textarea>
+                </div>
+            </div>
+        </ul>
+    </section>
+</script>
+
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            外周静脉置入中心静脉导管（PICC）拒绝维护知情同意书
+        </div>
+        <!-- <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+        </div>
+        <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+    </div> -->
+        <div id="recordContent" class="recordContent">
+        </div>
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin('{{=info.id}}');">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+            </div>
+            {{~}}
+        </div>
+    </div>
+    {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_jjwhtys.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        var id = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url: config.patientDetailUrl + person.id,
+            isLoading: true,
+            success: function(ret) {
+                common.get({
+                    url: config.nursePlanUrl + "/" + id,
+                    isLoading: false,
+                    success: function(ret1) {
+                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                        var map = {};
+                        for (var i = 0; i < ret1.content.itemList.length; i++) {
+                            map[ret1.content.itemList[i].key] = ret1.content.itemList[i].value;
+                        }
+
+                        $api.html($api.byId('content'), contentTmpl({
+                            person: ret.content,
+                            params: map
+                        }));
+                        api.parseTapmode();
+                        var collapse = new auiCollapse({
+                            autoHide: false //是否自动隐藏已经展开的容器
+                        });
+                        api.hideProgress();
+
+                    }
+                });
+            }
+        });
+
+
+
+    };
+</script>
+
+</html>

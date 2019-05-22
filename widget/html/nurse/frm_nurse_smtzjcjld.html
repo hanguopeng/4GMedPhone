@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>生命体征检测</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+      .ctitle{background-color:#67c23a;color: #fff;}
+      .itemDate{position: relative;line-height: 1.5rem;}
+      .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+      .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+      .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">生命体征录入</div>
+        <div class="aui-tab-item ">生命体征检测记录单</div>
+
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+
+</body>
+<script id="all-tpl" type="text/template">
+  <section class="aui-content">
+    <div class="aui-card-list">
+        <div class="aui-card-list-header">
+          <div class="aui-pull-left">
+            <span>创建人:</span><span id="creator">{{=it.userName}}</span>
+          </div>
+          <div class="aui-pull-right">
+            <span>创建日期:</span><span id="createDate">{{=it.createDate}}</span>
+          </div>
+        </div>
+        <ul class="aui-list aui-form-list">
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                  体温(℃):
+              </div>
+              <div class="aui-list-item-input">
+                  <input id="TWval" type="number" oninput="if(value.length>3)value=value.slice(0,3)" placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                  脉搏(次/分):
+              </div>
+              <div class="aui-list-item-input">
+                  <input id="MBval" type="number"  placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" oninput="if(value.length>3)value=value.slice(0,3)" style="width:40%;">
+                  呼吸(次/分):
+              </div>
+              <div class="aui-list-item-input">
+                  <input id="HXval" type="number" placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                  血压(mmHg):
+              </div>
+              <div class="aui-list-item-input">
+                  <input id="XYval" type="number" placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-header">
+            入量
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                内容:
+              </div>
+              <div class="aui-list-item-input">
+                <select id="RLval">
+                    <option value="静脉输液">静脉输液</option>
+                    <option value="鼻饲">鼻饲</option>
+                    <option value="全血">全血</option>
+                    <option value="红细胞">红细胞</option>
+                    <option value="血小板">血小板</option>
+                    <option value="白蛋白">白蛋白</option>
+                    <option value="血浆">血浆</option>
+                    <option value="白细胞">白细胞</option>
+                    <option value="TPN">TPN</option>
+                    <option value="水饮料">水饮料</option>
+                    <option value="饮食">饮食</option>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                量(ml):
+              </div>
+              <div class="aui-list-item-input">
+                <input id="RLnum" type="number" placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-header">
+              出量
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                内容:
+              </div>
+              <div class="aui-list-item-input">
+                <select id="CLval">
+                  <option value="尿">尿</option>
+                  <option value="大便">大便</option>
+                  <option value="血">血</option>
+                  <option value="呕吐物">呕吐物</option>
+                  <option value="痰">痰</option>
+                  <option value="伤口引流液">伤口引流液</option>
+                  <option value="腹腔引流液">腹腔引流液</option>
+                  <option value="盆腔引流液">盆腔引流液</option>
+                  <option value="胸腔引流液">胸腔引流液</option>
+                  <option value="胸室引流液">胸室引流液</option>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                量(ml):
+              </div>
+              <div class="aui-list-item-input">
+                <input id="CLnum" type="number" placeholder="请输入内容">
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width:40%;">
+                护士签名:
+              </div>
+              <div class="aui-list-item-input">
+                    <span>{{=it.userName}}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+            <div class="aui-btn aui-btn-info" tapmode onclick="saveAllRecord();">保存护理记录单</div>
+        </div>
+    </div>
+  </section>
+</script>
+<script id="his-tpl" type="text/template">
+  <div id="qbxxkr-lsjl">
+    <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+        护理记录单列表
+    </div>
+    <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <input type="text" readonly onclick="picker();" placeholder="时间查询" id="dateRange">
+        </div>
+        <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+    </div>
+    <div id="recordContent" class="recordContent">
+    </div>
+  </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+   {{ for(var prop in it) { }}
+  <div class="item">
+    <div class="itemDate aui-margin-t-15">
+        <img src="../../image/u30820.png" alt="" class="f-right">
+        <div class="date aui-font-size-14">{{= prop}}</div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="line"></div>
+    <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+        {{~ it[prop]:info:index}}
+        <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin(this);">
+            <img src="../../image/u30815.png" alt="" style="margin: auto;">
+            <div class="aui-margin-t-10">
+                <div class="aui-ellipsis-1">时间:{{= truncTime(info.handleTime)}}</div>
+            </div>
+            <div class="aui-margin-t-5">
+                <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+            </div>
+            <span class="aui-hide json-span">{{= JSON.stringify(info.itemList)}}</span>
+        </div>
+        {{~}}
+    </div>
+  </div>
+  {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_nurse_smtzjcjld.js"></script>
+</html>

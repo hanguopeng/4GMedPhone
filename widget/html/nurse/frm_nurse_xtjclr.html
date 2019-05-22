@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>血糖录入</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/signsCollection.css"/>
+</head>
+<body>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">血糖录入</div>
+        <!--<div class="aui-tab-item">历史记录</div>-->
+        <div class="aui-tab-item">血糖监测表</div>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+
+</body>
+<script id="tzRecord-tpl" type="text/template">
+  <ul id="tzRecordList" class="aui-list aui-form-list">
+    <li class="aui-list-item">
+         <div class="aui-list-item-inner">
+             <div class="aui-list-item-label" style="width: 40%;">
+                 测量日期:
+             </div>
+             <div class="aui-list-item-input aui-text-center">
+                 <input id="currentDate" type="text" readOnly="true" value="{{=it.currentDate}}">
+             </div>
+         </div>
+     </li>
+     <li class="aui-list-item">
+         <div class="aui-list-item-inner aui-text-center">
+             <div class="aui-list-item-label" style="width: 40%;">
+                 测量时间:
+             </div>
+             <div class="aui-list-item-input aui-text-center">
+                 <input id="currentTime" type="time" placeholder="小时:分钟(02:11)" style="padding-top:0.7em;">
+             </div>
+         </div>
+     </li>
+     <li class="aui-list-item">
+         <div class="aui-list-item-inner">
+             <div class="aui-list-item-label" style="width: 40%;">
+                 血糖(mmol/L):
+             </div>
+             <div class="aui-list-item-input aui-text-center">
+                 <!--<input id="tempVal" type="number">-->
+                 <input id="xt-hs" type="number" class="aui-pull-left" style="width:auto" placeholder="" oninput="if(value.length>4)value=value.slice(0,4)" value="">
+             </div>
+         </div>
+     </li>
+     <li class="aui-list-item">
+         <div class="aui-list-item-inner">
+             <div class="aui-list-item-label" style="width: 70%;">
+                 患者自测血糖(mmol/L):
+             </div>
+             <div class="aui-list-item-input">
+                 <input id="xt-zc" type="number" oninput="if(value.length>4)value=value.slice(0,4)">
+             </div>
+         </div>
+     </li>
+      <li class="aui-list-item">
+          <div class="aui-list-item-inner">
+              <div class="aui-list-item-label" style="width: 40%;">
+                  签字:
+              </div>
+              <div class="aui-list-item-input">
+                  <input id="hsqm" type="text" value="{{=it.storageUserName}}" readonly="true">
+              </div>
+          </div>
+      </li>
+     <li  class="aui-list-item">
+        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="saveTZ();">
+            <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+        </div>
+     </li>
+
+  </ul>
+</script>
+<script id="hisRecord-tpl" type="text/template">
+  <ul id="hisRecordList" class="aui-list aui-media-list">
+    {{~it.list:info:index}}
+    <li class="aui-list-item aui-list-item-middle" tapmode onclick="showDetail({{=index}})">
+        <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-text">
+                    <div class="aui-list-item-title aui-font-size-14">{{=info.createUserName}}</div>
+                    <div class="aui-list-item-right">{{=info.handleTime || '-'}}</div>
+                </div>
+                <!--<div class="aui-list-item-text">
+                    {{=info._map['currentDate'] || '-'}}
+                </div>-->
+            </div>
+            <div id="content-{{=index}}" class="aui-hide">
+              {{= JSON.stringify(info)}}
+            </div>
+        </div>
+    </li>
+    {{~}}
+  </ul>
+</script>
+<script id="hisxt-tpl" type="text/template">
+    <div class="center" style="overflow-x: scroll;overflow-y: auto;">
+        <table width="90%" class="table aui-font-size-14">
+            <thead>
+            <tr>
+                <th>日期时间</th>
+                <th>血糖(mmol/L)</th>
+                <th>患者自测血糖(mmol/L)</th>
+                <th>签字</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            {{ for(var i=0;i<it.length;i++){
+            var item = it[i];
+            }}
+            <tr>
+                <td>{{=item.createTime||''}}</td>
+                <td>{{=item.xuetang||''}}</td>
+                <td>{{=item.huanzhezicexuetang||''}}</td>
+                <td>{{=item.qianzi||''}}</td>
+            </tr>
+            {{ } }}
+            </tbody>
+        </table>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/zrender.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_xtjcb.js"></script>
+</html>

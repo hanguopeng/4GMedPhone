@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>弹出层</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/layer.css"/>
+    <style>
+    body{
+          background: transparent;
+    }
+    </style>
+</head>
+<body>
+
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/layer.js"></script>
+<script type="text/javascript">
+  apiready = function(){
+    layer.open({
+      content:'请选择对应的按钮'
+      ,btn: ['搜索','扫描']
+      ,skin: 'footer'
+      ,yes: function(index,type){
+        if(type==1){
+          //搜索
+          api.sendEvent({
+              name: eventName.layerEvent,
+              extra: {
+                  type: '1'
+              }
+          });
+          api.closeFrame();
+        }else if(type==2){
+          //首页
+          api.sendEvent({
+              name: eventName.layerEvent,
+              extra: {
+                  type: '2'
+              }
+          });
+
+          api.closeFrame();
+        }
+      }
+      ,no:function(){
+        //扫描
+        api.sendEvent({
+            name: eventName.layerEvent,
+            extra: {
+                type: '0'
+            }
+        });
+        api.closeFrame();
+      }
+      ,success: function(){
+    		var obj = document.querySelector('.layui-m-layerbtn');
+    		var newbtn1 = document.createElement('span');
+    		newbtn1.textContent = '首页';
+    		newbtn1.setAttribute('yes', '');
+    		newbtn1.setAttribute('type', 2);
+    		obj.appendChild(newbtn1);
+    	}
+    });
+  }
+</script>
+</html>

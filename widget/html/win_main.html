@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>护理首页</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/win_main.css"/>
+    <style>
+    /*其中，IOS状态栏高度为20px，Android为25px*/
+    /*兼容ios和Android*/
+    .headerIos{
+      padding-top: 20px;
+    }
+    .headerAnd{
+      padding-top: -25px;
+    }
+    </style>
+</head>
+<body>
+<div id="header" class="topHeader aui-padded-15">
+    <div class="headImg">
+        <img src="../image/u28939.png" alt="">
+    </div>
+    <div class="doctorInfoContainer aui-padded-l-10 aui-padded-t-5">
+        <div id="welcomeContent" class="name"></div>
+        <div class="liaoQu">
+          <select id="areaSel" onchange="sendAreaChangedEvent()" class="text" style="height:30px;-webkit-appearance:none;appearance:none;border:none;font-size:18px;padding:0px 10px;display:block;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;background-color: #FFFFFF;color:#333333;border-radius:4px;">
+          </select>
+        </div>
+    </div>
+    <!-- <div class="homeIcon" tapmode onclick="backSystem();">
+        <img src="../image/u0.png">
+    </div> -->
+    <div class="tiaoXingMaImg" tapmode onclick="scan();">
+        <img src="../image/scan.png">
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/win_main.js"></script>
+</body>
+</html>

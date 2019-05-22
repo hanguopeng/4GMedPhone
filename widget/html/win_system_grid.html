@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            background-color: white;
+        }
+
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: #81a9c3;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+        }
+
+        footer {
+            height: 30px;
+            width: 100%;
+            background-color: #81a9c3;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        /*其中，IOS状态栏高度为20px，Android为25px*/
+        /*兼容ios和Android*/
+        .headerIos{
+          padding-top: 20px;
+        }
+        .headerAnd{
+          padding-top: -25px;
+        }
+    </style>
+</head>
+
+<body class="wrap">
+    <header id="header" class="aui-bar aui-bar-nav" style="background-color: #67c23a;">
+
+      <div class="aui-title">移动4G云护理</div>
+      <a href="#" class="aui-pull-right aui-btn" tapmode onclick="closeApp()">
+        <img src="../image/close.png" width ="20px" height="20px"/>
+      </a>
+    </header>
+    <section class="flex-1">
+      <section id="section1" class="aui-grid">
+      <div class="aui-row">
+        <div class="aui-col-xs-4" tapmode onclick="openWin()">
+          <img style="display: inline;" src="../image/care.png">
+          <div class="aui-grid-label">移动护理</div>
+        </div>
+      </section>
+    </section>
+    <footer  style="background-color: #67c23a; color:white">
+      <span class=" aui-padded-t-5 aui-padded-b-5"  style="font-size:0.8rem">医护工作因你而美丽</span>
+    </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        // api.openFrame({
+        //     name: 'frm_system_grid',
+        //     url: './frm_system_grid.html',
+        //     bounces: true,
+        //     rect: {
+        //         marginTop: headerH,
+        //         marginBottom: footerH,
+        //         w: 'auto'
+        //     }
+        // });
+
+        ExitApp();
+    };
+
+    function closeApp(){
+      api.confirm({
+          title: '提示',
+          msg: '请选择退出或者注销',
+          buttons: ['退出','注销', '取消']
+      }, function(ret, err) {
+          var index = ret.buttonIndex;
+          if(index ==1){
+            common.clearStorage();
+            api.closeWidget({
+                id: api.appId,
+                retData: {
+                    name: 'closeWidget'
+                },
+                silent: true
+            });
+          }else if(index==2){
+            common.clearStorage();
+            api.closeToWin({
+                name: 'root'
+            });
+          }
+      });
+
+    }
+
+    function openWin(){
+      api.openWin({
+          name: 'win_main',
+          bounces: false,
+          slidBackEnabled : false,
+          reload:true,
+          url: './win_main.html',
+          vScrollBarEnabled:true,
+          hScrollBarEnabled:false
+      });
+    }
+    /**
+     * 绑定退出事件
+     */
+    function ExitApp() {
+        var ci = 0;
+        var time1, time2;
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            if (ci == 0) {
+                time1 = new Date().getTime();
+                ci = 1;
+                api.toast({
+                    msg: '再按一次返回键退出'
+                });
+            } else if (ci == 1) {
+                time2 = new Date().getTime();
+                if (time2 - time1 < 2000) {
+                    common.clearStorage();
+                    api.closeWidget({
+                        id: api.appId,
+                        retData: {
+                            name: 'closeWidget'
+                        },
+                        silent: true
+                    });
+                } else {
+                    ci = 0;
+                    api.toast({
+                        msg: '再按一次返回键退出'
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+</html>

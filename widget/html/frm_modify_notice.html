@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>重要事件提醒-修改提醒</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+  <ul id="noticeForm" class="aui-list aui-form-list">
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label" style="width: 40%;">
+                床号
+            </div>
+            <div class="aui-list-item-input">
+                <input id="bedId" type="number" placeholder="请输入内容">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label" style="width: 40%;">
+                姓名
+            </div>
+            <div class="aui-list-item-input">
+                <input id="name" type="text" placeholder="请输入内容">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label" style="width: 40%;">
+                动作
+            </div>
+            <div class="aui-list-item-input">
+                   <select id="action">
+
+                   </select>
+               </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label" style="width: 40%;">
+                提醒时间
+            </div>
+            <div class="aui-list-item-input">
+                <input id="noticeTime" type="time" style="padding-top:0.7em;">
+            </div>
+        </div>
+    </li>
+    <li  class="aui-list-item">
+       <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="modifyNotice();">
+           <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+       </div>
+    </li>
+  <ul>
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+var date;
+var id;
+apiready = function(){
+    api.parseTapmode();
+    date = api.pageParam.date;
+    id=api.pageParam.id;
+    var motionName=api.pageParam.motionName;
+    var alertTime=api.pageParam.alertTime;
+    var bedCode=api.pageParam.bedCode;
+    var patientName=api.pageParam.patientName;
+    queryDictMotion(motionName);
+    $api.val($api.byId("bedId"),Number(bedCode));
+    $api.val($api.byId("name"),patientName);
+    $api.val($api.byId("noticeTime"),alertTime);
+};
+
+//获取动作的字典值
+function queryDictMotion(motionName){
+  if(!$api.getStorage(storageKey.motion)){
+    common.post({
+      url:config.dictUrl,
+      data: JSON.stringify({
+        addAllFlag:false,
+        nullFlag:false,
+        queryCode: "motion_code"
+      }),
+      success:function(ret){
+        var motionCache = ret.content;
+        $api.setStorage(storageKey.motion, motionCache);
+        for (var i = 0; i < motionCache.length; i++) {
+          if( motionName == motionCache[i].text){
+            $api.append($api.byId('action'), '<option selected="selected" value="' + motionCache[i].code + '">' + motionCache[i].text + '</option>');
+          }else{
+            $api.append($api.byId('action'), '<option value="' + motionCache[i].code + '">' + motionCache[i].text + '</option>');
+          }
+
+        }
+
+      }
+    });
+  }else{
+    var motionCache=$api.getStorage(storageKey.motion);
+    for (var i = 0; i < motionCache.length; i++) {
+      if( motionName == motionCache[i].text){
+        $api.append($api.byId('action'), '<option selected="selected" value="' + motionCache[i].code + '">' + motionCache[i].text + '</option>');
+      }else{
+        $api.append($api.byId('action'), '<option value="' + motionCache[i].code + '">' + motionCache[i].text + '</option>');
+      }
+    }
+  }
+}
+
+function modifyNotice(){
+  var bedId = $api.val($api.byId("bedId"));
+  if(!bedId){
+    api.toast({
+        msg: '请输入床号',
+        duration: config.duration,
+        location: 'bottom'
+    });
+    return;
+  }
+  var name = $api.val($api.byId("name"));
+  if(!name){
+    api.toast({
+        msg: '请输入姓名',
+        duration: config.duration,
+        location: 'bottom'
+    });
+    return;
+  }
+  var action = $api.byId('action').value;
+  var index = $api.byId('action').selectedIndex; // 选中索引
+  var text = $api.byId('action').options[index].text;
+
+  if(!action){
+    api.toast({
+        msg: '请输入事件',
+        duration: config.duration,
+        location: 'bottom'
+    });
+    return;
+  }
+  var noticeTime = $api.val($api.byId("noticeTime"));
+  if(!noticeTime){
+    api.toast({
+        msg: '请输入时间',
+        duration: config.duration,
+        location: 'bottom'
+    });
+    return;
+  }
+
+  common.post({
+    url:config.alertUpdateUrl+id,
+    isLoading:true,
+    text:"正在提交...",
+    data: JSON.stringify({
+      bedCode: bedId,
+      patientName: name,
+      motionCode: action,
+      motionName: text,
+      alertTime: date+" "+noticeTime+":00"
+    }),
+    success:function(ret){
+      api.sendEvent({
+          name: eventName.addAlertOk,
+          extra: {
+              date: date
+          }
+      });
+
+      api.alert({
+          title: '提示',
+          msg: '修改成功！',
+      }, function(ret, err){
+          api.closeWin();
+      });
+    }
+  });
+
+
+}
+</script>
+</html>

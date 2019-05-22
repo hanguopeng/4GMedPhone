@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>PICC穿刺记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
+    <style>
+        .aui-grid [class*=aui-col-] {
+            display: table-cell;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.2rem 0;
+        }
+
+        input.inputItem {
+            width: 2rem;
+        }
+
+        .aui-row.item {
+            min-height: 44px;
+            line-height: 44px;
+        }
+
+        .aui-row.border-bottom {
+            border-bottom: 1px double #f1f1f1;
+            padding-bottom: 0.5rem;
+        }
+
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">新建</div>
+        <div class="aui-tab-item">历史记录</div>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+<script id="add-tpl" type="text/template">
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-margin-b-15">
+            <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+                PICC穿刺记录
+            </div>
+            <div class="outInfo">
+                <div class="aui-row border-bottom">
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>姓名:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" readonly value="{{=it.name}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>床号:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" readonly value="{{=it.medBedId||''}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>住院号:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" readonly value="{{=it.registerNumber||''}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>诊断:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" readonly value="{{=it.diagnose||''}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom aui-padded-b-0">
+                    <div class="aui-row border-bottom">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>身高:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" name="shengao">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>是否做过化疗:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left ">
+                            <div class="aui-margin-l-5 inline">
+                                <input type="radio"
+                                       name="shifouzuoguohualiao" value="是"> 是
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="radio"
+                                       name="shifouzuoguohualiao" value="否"> 否
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>血常规:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                            <div class="aui-margin-l-5 inline">
+                                <input type="radio"
+                                       name="xuechanggui" value="正常"> 正常
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="radio"
+                                       name="xuechanggui" value="异常"> 异常
+                            </div>
+                            <div class="inline">
+                                <input type="text" class="value"
+                                       name="yichang" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>穿刺静脉:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="chuancijingmai" value="左"> 左
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="chuancijingmai" value="右"> 右
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom">
+                    <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                        <div>臂围(肘窝10cm)</div>
+                        <div class="flex-item">
+                            <div class="aui-padded-l-15 flex">
+                                <div>上</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="yewoshang">
+                                </div>
+                                <div>cm</div>
+                                <div>下</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="yewoxia">
+                                </div>
+                                <div>cm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom">
+                    <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                        <div>导管批号(贴在背面)</div>
+                        <div class="flex-item">
+                            <div class="aui-padded-l-15 flex">
+                                <div>品牌</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="pinpai">
+                                </div>
+                            </div>
+                            <div class="aui-padded-l-15 flex">
+                                <div>插入</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="charu">
+                                </div>
+                                <div>cm</div>
+                            </div>
+                            <div class="aui-padded-l-15 flex">
+                                <div>推入</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="tuiru">
+                                </div>
+                                <div>cm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>封管方法</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="fengguanfangfa" value="NS脉冲正压封管"> NS脉冲正压封管
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="fengguanfangfa" value="肝素脉冲正压封管"> 肝素脉冲正压封管
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="fengguanfangfa" value="明胶海绵"> 明胶海绵
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="fengguanfangfa" value="加压包扎"> 加压包扎
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row aui-padded-l-10 aui-padded-t-15">
+                    <label class="">
+                        导管尖端位置(X光报告粘贴在报告第四项)
+                    </label>
+                </div>
+            </div>
+            <div class="intInfo">
+                <div class="aui-row">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>PICC导管尖端位于:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="jianduanweiyu">
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div>操作者:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" name="recordPerson" value="{{=it.pgr||''}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aui-col-xs-6">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" name="recordTime" value="{{=it.pgrq}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div class="flex aui-padded-l-15">
+                            <div>助手</div>
+                            <div class="aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" name="zhushou">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom">
+                    <div class="flex aui-text-center aui-padded-l-10 aui-padded-r-10">
+                        <div class="flex-item">
+                            <div class="aui-padded-l-15 flex">
+                                <div>再退出</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="zaituichu">
+                                </div>
+                                <div>cm&nbsp&nbsp</div>
+                                <div>推入</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="tuiru1">
+                                </div>
+                                <div>cm</div>
+                            </div>
+                            <div class="aui-padded-l-15 flex">
+                                <div>外露</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="wailu">
+                                </div>
+                                <div>cm&nbsp&nbsp</div>
+                                <div>剪去</div>
+                                <div class="aui-margin-l-10 aui-text-left flex-item">
+                                    <input type="text" class="value" name="jianqu">
+                                </div>
+                                <div>cm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row item border-bottom">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>新的尖端位置:</div>
+                        <div class="aui-margin-l-10 aui-text-left flex-item">
+                            <input type="text" class="value" name="xinjianduan">
+                        </div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="xindejianduanweizhi" value="拍片"> 1.拍片
+                            </div>
+                            <div class="aui-margin-l-5 inline">
+                                <input type="checkbox"
+                                       name="xindejianduanweizhi" value="透视下"> 2.透视下
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                        <div>操作者:</div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left">
+                            <input type="text" class="value" name="recordPerson" value="{{=it.pgr||''}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+        <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
+    </div>
+</script>
+<!--<script id="his-tpl" type="text/template">-->
+<!--<div id="qbxxkr-lsjl">-->
+<!--<div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">-->
+<!--PICC穿刺记录-->
+<!--</div>-->
+<!--<div class="aui-searchbar" id="search">-->
+<!--<div class="aui-searchbar-input aui-border-radius">-->
+<!--<i class="aui-iconfont aui-icon-search"></i>-->
+<!--<input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">-->
+<!--</div>-->
+<!--<div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>-->
+<!--</div>-->
+<!--<div id="recordContent" class="recordContent">-->
+<!--</div>-->
+<!--</div>-->
+<!--</script>-->
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            导尿知情通知书
+        </div>
+        <div id="recordContent" class="recordContent">
+        </div>
+        <!-- <div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-input aui-border-radius">
+                <i class="aui-iconfont aui-icon-search"></i>
+                <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+            </div>
+            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+        </div> -->
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+    {{ for(var i=0;i< it.length;i++){
+    var item = it[i];
+    }}
+    <div class="aui-col-xs-6 aui-text-center aui-padded-t-15" tapmode onclick="openDetailWin(this);">
+        <img src="../../image/u30815.png" alt="" style="margin: auto;">
+        <div class="aui-margin-t-10">
+            <div class="aui-ellipsis-1">时间:{{= item.createTime}}</div>
+        </div>
+        <div class="aui-margin-t-5">
+            <div class="aui-ellipsis-1">创建人:{{= item.createUserName}}</div>
+        </div>
+        <span class="aui-hide json-span">{{= JSON.stringify(item)}}</span>
+    </div>
+    {{  } }}
+</script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_PICC.js"></script>
+
+</body>
+</html>

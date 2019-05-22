@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>试管核对明细</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <div class="aui-text-center aui-text-danger">核对成功!</div>
+  <div class="aui-card-list">
+        <div class="aui-card-list-header">
+            {{=it.medBedId||'-'}}床 {{=it.name||'-'}} {{=it.age||'-'}}岁 {{=it.healthTypeName ||'-'}}
+        </div>
+        <div class="aui-card-list-content-padded aui-border-b aui-border-t">
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">登记号</span>
+              </div>
+              <div class="aui-info-item">{{=it.registerNumber || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">出生日期</span>
+              </div>
+              <div class="aui-info-item">{{=it.birthday || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">民族</span>
+              </div>
+              <div class="aui-info-item">{{=it.nationName || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">身份</span>
+              </div>
+              <div class="aui-info-item">{{=it.identity || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">婚姻状况</span>
+              </div>
+              <div class="aui-info-item">{{=it.marriageName || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">籍贯</span>
+              </div>
+              <div class="aui-info-item">{{=it.nativePlace || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">学历</span>
+              </div>
+              <div class="aui-info-item">{{=it.educationName}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">联系人姓名</span>
+              </div>
+              <div class="aui-info-item">{{=it.contactsName||'-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">联系人电话</span>
+              </div>
+              <div class="aui-info-item">{{=it.contactsMobile || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">联系人关系</span>
+              </div>
+              <div class="aui-info-item">{{=it.contactsRelation || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">身份证号</span>
+              </div>
+              <div class="aui-info-item">{{=it.idNumber || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">入院时间</span>
+              </div>
+              <div class="aui-info-item">{{=it.inHospitalTime || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">主管医生</span>
+              </div>
+              <div class="aui-info-item">{{=it.doctorName||'-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">主管护士</span>
+              </div>
+              <div class="aui-info-item">{{=it.nurseName||'-'}}</div>
+          </div>
+          <div class="aui-card-list-content-padded aui-text-justify" style="color: #757575;">
+            诊断: {{=it.diagnose || '-'}}
+          </div>
+        </div>
+        <div class="aui-card-list-content-padded aui-border-b aui-border-t">
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">医嘱日期</span>
+              </div>
+              <div class="aui-info-item">{{=it.foundTime || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">开医嘱医生</span>
+              </div>
+              <div class="aui-info-item">{{it.beginDoctorName || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">医嘱名称</span>
+              </div>
+              <div class="aui-info-item aui-text-danger">{{=it.adviceName || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">医嘱状态</span>
+              </div>
+              <div class="aui-info-item">{{=it.statusName || '-'}}</div>
+          </div>
+          <div class="aui-info aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+              <div class="aui-info-item">
+                  <span class="aui-margin-l-5">医嘱执行状态</span>
+              </div>
+              <div class="aui-info-item">{{=it.executeStatusName || '-'}}</div>
+          </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+    $api.html($api.byId('content'), contentTmpl(api.pageParam.data));
+};
+</script>
+</html>

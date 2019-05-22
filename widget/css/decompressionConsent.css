@@ -1,0 +1,90 @@
+.topTitle{
+    background-color: #67c23b;
+    color: #fff;
+}
+.content .title{
+    line-height: 2rem;
+    border-bottom: 1px double #ccc;
+    font-weight: bolder;
+}
+
+div.inline{
+    display: inline-block;
+}
+.text-indent{
+    text-indent: 2em;
+    line-height: 2em;
+}
+.border-bottom{
+    border-bottom: 1px double #ccc;
+}
+input.input{
+    height: 0.8rem;
+    width: 4rem;
+    display: inline-block;
+    border-bottom: 1px double #ccc;
+}
+.bottomContainer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding-bottom: 2rem;
+    background-color: #fff;
+    max-height: 80%;
+    overflow-y: auto;
+}
+.recordList .title{
+    background-color: #67c23b;
+    color: #fff;
+}
+.recordList .itemDate{
+    position: relative;
+    height: 1.5rem;
+}
+.recordList .itemDate img{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 1.5rem;
+}
+.recordList .itemDate .date{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    line-height: 1.5rem;
+    margin-right: 2rem;
+    color: #fff;
+}
+.recordList .line{
+    background-color: rgba(64, 158, 254, 1);
+    height: 2px;
+    margin-top: -2px;
+}
+.recordList{
+    display: none;
+}
+
+.recordList.active{
+    display: block;
+}
+.recordContent .list .recordItem{
+    display: inline-block;
+    width: 6rem;
+}
+.bottomBtn{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 2rem;
+}
+.bottomBtn{
+    background-color: #67c23b;
+    color: #fff;
+}
+.bottomBtn .btn{
+    width: 50%;
+    height: 2rem;
+    line-height: 2rem;
+}

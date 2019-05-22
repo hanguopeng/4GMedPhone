@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>化疗药物静脉输液外渗告知书</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
+    <style>
+        .aui-grid [class*=aui-col-] {
+            display: table-cell;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.2rem 0;
+        }
+        input.inputItem{
+            width: 2rem;
+        }
+        .aui-row.item{
+            min-height: 44px;line-height: 44px;
+        }
+        .aui-row.border-bottom{
+            border-bottom: 1px double #f1f1f1;
+            padding-bottom: 0.5rem;
+        }
+        .ctitle{background-color:#67c23a;color: #fff;}
+        .itemDate{position: relative;line-height: 1.5rem;}
+        .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+        .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+        .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <div id="content">
+
+    </div>
+</div>
+<script id="detail-tpl" type="text/template">
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-margin-b-15">
+            <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+                化疗药物静脉输液外渗告知书
+            </div>
+            <div class="outInfo">
+
+                <div class="aui-row border-bottom">
+                </div>
+                <div class="aui-row border-bottom">
+                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-margin-t-15">
+                        <div class="flex-item aui-margin-l-10 aui-text-left aui-font-size-16">
+                            <span>您（或您的家人）在我科接受化疗，因化学药物对血管内膜刺激性较大，输注过程中可能会发生药物外渗，可引起渗漏部位红肿、疼痛、周围组织坏死。特地在此告知您，希望您知情配合。</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-row">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <span>患者或家属签名画押:</span>
+                            <span class="aui-margin-l-5">{{=it.huanzhejiashu || '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-row">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <span>与患者关系:</span>
+                            <span class="aui-margin-l-5">{{=it.guanxi || '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-row">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <span>护士签名:</span>
+                            <span class="aui-margin-l-5">{{=it.createUserName || '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-row">
+                        <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                            <span>时间日期:</span>
+                            <span class="aui-margin-l-5">{{=it.createTime || '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+        var params = api.pageParam.data;
+
+        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+        //console.log(JSON.stringify(map));
+        $api.html($api.byId('content'), contentTmpl(params));
+    };
+</script>
+
+</body>
+</html>

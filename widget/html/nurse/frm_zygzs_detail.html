@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>住院一般同意书-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
+
+        .sel {
+            display: inline-block !important;
+            width: inherit !important;
+        }
+    </style>
+</head>
+
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <section class="aui-content">
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                    <div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>患者姓名:</span>
+                            <span>{{=it.person.name||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>性别:</span>
+                            <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>年龄:</span>
+                            <span>{{=it.person.age||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>科室名称:</span>
+                            <span>{{=it.person.organizationName||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>病案号:</span>
+                            <span>{{=it.person.medicalNumber||' '}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>床号:</span>
+                            <span>{{=it.person.medBedName||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>出生日期:</span>
+                            <span>{{=it.person.birthday||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>身份证号:</span>
+                            <span>{{=it.person.idNumber||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>民族:</span>
+                            <span>{{=it.person.nationName||'-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">操作目的</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                    <p>尊敬的患者:</p>
+                    </br>
+                    <p>您好!感谢您对我院的信任,为了使您在住院期间得到良好的治疗和护理,现将住院期间的有关事宜介绍给您,希望得到您的理解和配合。</p>
+                    <p>1、为了您和他人的健康,请您及家属保持病房卫生,请您不要随地吐痰、不乱扔果皮,不从窗口向外扔垃圾、不酗酒、不喧哗和娱乐,保证病区安全肃静。<strong>请您爱护公物,如有损坏,照价赔偿。</strong></p>
+                    <p>2、我院是禁烟单位,<strong>请您和家属不要吸烟。</strong> 如有吸烟,病区人员将对您的香烟、火机没收,暂代为保管。</p>
+                    <p>3、住期间请您着患者服。</p>
+                    <p>4、病区设有开水壶,24小时供应开水。</p>
+                    <p>5、每晚22时锁大门,请探视人员自行离开,谢绝酒后探视。</p>
+                    <p>6、住院期间请您听从医护人员指导,配合治疗和护理。 <strong>请您不要擅自服用自带药物,不要私自请会诊,不要饮酒,以免酒精与您的治疗用药发生反应而造成不良后果。</strong></p>
+                    <p>7、为了保证医疗护理安全,请您及家人不要自行调节输液速度、氧气流量及其他医疗设备,否则不良后果自负。病房内使用氧气时,严禁烟火。</p>
+                    <p>8、请您及家属不得<strong>擅自到治疗室、处置室、护理站等诊疗场所,不得私自翻阅病历。</strong></p>
+                    <p>9、住院期间请勿自行窜病房、调床,外出或外宿,如有特殊情况需外出时,需请示医生后方可离开,<strong>离院期间如发生意外,后果自负。</strong></p>
+                    <p>10、为了保证您的安全,病房严谨私自使用电器和热水袋。</p>
+                    <p>11、<strong>住院期间请妥善保管好自己的钱款和贵重物品,若发生丢失被盗自行承担。</strong></p>
+                    <p>12、<strong>危重、老年、体弱、小儿、精神异常及行动不便患者必须有家属陪护。 进入洗漱室及卫生间请勿穿拖鞋,以防滑倒摔伤。</strong></p>
+                    <p>13、病人住院期间如发生自伤、自残或自杀行为,医院概不负责。</p>
+                    <p>14、为了不影响您的住院治疗,请您及时交足住院费用,门诊大厅设有费用查询系统可自行查询费用。</p>
+                    <p>15、医保规定:医保患者住院期间不能离院,否则不予报销,并请患者或其家属在患者住院3日内持医保卡到住院财会刷卡,同时提供医保卡及身份证复印件。 农合患者住院3日内办理转诊手续并到住院财会登录农合号,否则影响报销。</p>
+                    <p>16、<strong>营养科与营养食堂共同为住院患者提供营养餐,联系电话:3201450。</strong></p>
+                    <p>17、医护人员将竭成为您服务,如果您有意见或建议可向本科室领导及投诉科反映,投诉科电话: 3201348。</p>
+                    <p>以上告知也许会给您的生活带来不便,但能保证您能得到高质量的治疗和护理, 请您理解并配合我们工作。</p>
+                    <p>让我们用永恒的爱心,陪伴您渡过住院的每一天!衷心祝愿您早日康复!</p>
+                </div>
+            </div>
+
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">签字</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">责任护士:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="hsqm" value="{{=it.params.hsqm}}" class="input"></div>
+                    </div>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">患者/家属签名:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="brhjsqm" value="{{=it.params.brhjsqm}}" class="input"></div>
+                    </div>
+
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">与患者关系:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="jjlxrgx" value="{{=it.params.jjlxrgx}}" class="input"></div>
+                    </div>
+
+                    <div class="aui-row">
+                        <div class="aui-col-xs-5">时间日期:</div>
+                        <div class="aui-col-xs-7"><input type="text" style="font-size:0.7rem" id="hssjrq" tapmode readOnly value="{{=it.params.hssjrq}}" class="input"></div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </section>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        var id = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url: config.patientDetailUrl + person.id,
+            isLoading: true,
+            success: function(ret) {
+                common.get({
+                    url: config.nursePlanUrl + "/" + id,
+                    isLoading: false,
+                    success: function(ret1) {
+                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                        var map = {};
+                        for (var i = 0; i < ret1.content.itemList.length; i++) {
+                            map[ret1.content.itemList[i].key] = ret1.content.itemList[i].value;
+                        }
+
+                        $api.html($api.byId('content'), contentTmpl({
+                            person: ret.content,
+                            params: map
+                        }));
+                        api.parseTapmode();
+                        var collapse = new auiCollapse({
+                            autoHide: false //是否自动隐藏已经展开的容器
+                        });
+                        api.hideProgress();
+
+                    }
+                });
+            }
+        });
+
+
+
+    };
+</script>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>鼻饲知情同意书</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css"/>
+    <style>
+        .aui-grid [class*=aui-col-] {
+            display: table-cell;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.2rem 0;
+        }
+        input.inputItem{
+            width: 2rem;
+        }
+        .aui-row.item{
+            min-height: 44px;line-height: 44px;
+        }
+        p{
+            display: inline-block;
+        }
+        .aui-row.border-bottom{
+            border-bottom: 1px double #f1f1f1;
+            padding-bottom: 0.5rem;
+        }
+        .ctitle{background-color:#67c23a;color: #fff;}
+        .itemDate{position: relative;line-height: 1.5rem;}
+        .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+        .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+        .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    </style>
+</head>
+<body style="background-color: #fff">
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">新建</div>
+        <div class="aui-tab-item">历史记录</div>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+<script id="add-tpl" type="text/template">
+    <section class="aui-content centerContainer" style="font-size:0.7rem;">
+        <section class="aui-grid aui-margin-b-15 aui-font-size-18" >
+            <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+                鼻饲知情同意书
+            </div>
+            <div class="aui-col-xs-6">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>科室:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value aui-font-size-18" name="diagnosis" id="keshi" value="{{=it.organizationName}}">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-6">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>病案号:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value aui-font-size-18" name="diagnosis" value="{{=it.registerNumber||''}}">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-3">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>性别:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value aui-font-size-18" readonly  value="{{=it.sexName||''}}">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-3">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>年龄:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value aui-font-size-18" readonly value="{{=it.age||''}}">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-6">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div>临床诊断:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" class="value aui-font-size-18" readonly value="{{=it.diagnose||''}}">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-margin-t-5 aui-font-size-18 aui-margin-b-10">
+        <div class="aui-col-xs-6"><span>患者因<input type="text" style="width:7rem;" class="input" id="huanbing"></span></div>
+        <div class="aui-col-xs-6"><span>需进行<input type="text" style="width:7rem;" class="input" id="zhiliao"></span></div>
+    </div>
+    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+        <span class="aui-font-size-18">
+             <span class="aui-font-size-18">治疗。本项治疗一般情况下安全可靠，但治疗中、治疗后仍可能出现一些意外或者并发症，严重者甚至危机生命，现代医学对此尚难全面预防。现将可能出现的意外及并发症告知如下:</span>
+             <span class="aui-font-size-18">1、 诱发迷走神经兴奋导致心率失常、呼吸、心脏骤停。</span><br/>
+             <span class="aui-font-size-18">2、 下管时导致恶心、呕吐。</span><br/>
+             <span class="aui-font-size-18">3、 下胃管时损伤食道及胃黏膜引起消化道出血，长期置管导致口腔、食道粘膜溃疡。</span><br/>
+            <span class="aui-font-size-18">4、 误入气管导致窒息。</span><br/>
+            <span class="aui-font-size-18">5、 其他:<span><input type="text" style="font-size:0.7rem" class="input" id="otheritem"></span></span>
+        </span>
+    </div>
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-margin-b-15 aui-margin-t-15">
+            <div class="aui-row">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-font-size-18">
+                    <div class="aui-col-xs-4 aui-text-right">护士签字:</div>
+                    <div class="aui-col-xs-4 aui-pull-left">
+                        <input type="text" class="input aui-font-size-18" value="{{=it.hsqm}}">
+                    </div>
+                    <div class="aui-col-xs-4"></div>
+                </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-font-size-18">
+                    <div class="aui-col-xs-4 aui-text-right">时间日期:</div>
+                    <div class="aui-col-xs-4 aui-pull-left">
+                        <input type="text" tapmode onclick="currentDate()" value="{{=it.rqsj}}" readOnly="readOnly"  class="input aui-font-size-18">
+                    </div>
+                    <div class="aui-col-xs-4"></div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="aui-content centerContainer">
+        <section class="aui-grid aui-font-size-18">
+            <div class="aui-col-xs-3">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <input type="text" style="width:4rem" class="input aui-font-size-18" value="{{=it.hsqm}}">
+                    </div>
+                </div>
+            </div>
+            <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+        <span>
+           <span class="aui-font-size-18">护士已向我详细交代了此项治疗的必</span>
+        </span>
+            </div>
+        </section>
+    </section>
+    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-font-size-18">
+        <span>
+            <span class="aui-font-size-18">要性和检查治疗中及治疗后可能发生的情况，且不以为由拒绝医药费，特此签字同意。</span>
+        </span>
+    </div>
+    <section class="aui-content centerContainer aui-font-size-18">
+        <section class="aui-grid aui-margin-b-15 aui-margin-t-15">
+            <div class="aui-row"></div>
+                    <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                        <div class="aui-col-xs-4 aui-text-right">签字人:</div>
+                        <div class="aui-col-xs-4 aui-pull-left">
+                            <input type="text" class="input aui-font-size-18" id="qianziren">
+                        </div>
+                        <div class="aui-col-xs-4"></div>
+                </div>
+            </div>
+            <div class="aui-row">
+                    <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                        <div class="aui-col-xs-4 aui-text-right">与患者关系:</div>
+                        <div class="aui-col-xs-4 aui-pull-left aui-font-size-18">
+                            <select id="hzgx">
+
+                            </select>
+                        </div>
+                        <div class="aui-col-xs-4"></div>
+                    </div>
+            </div>
+            <div class="aui-row">
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div class="aui-col-xs-4 aui-text-right">时间日期:</div>
+                    <div class="aui-col-xs-4 aui-pull-left">
+                        <input type="text" tapmode onclick="picker(this)" value="{{=it.rqsj}}"  class="input aui-font-size-18" id="hzrqsj">
+                    </div>
+                    <div class="aui-col-xs-4"></div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+        <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/bszqtys.js"></script>
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            鼻饲知情同意书
+        </div>
+        <!--<div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+        </div>-->
+        <div id="recordContent" class="recordContent">
+
+        </div>
+    </div>
+</script>
+<script id="hzjsgx-tpl" type="text/template">
+    {{ for(var i=0;i<it.length;i++) {
+    var item = it[i];
+    }}
+    <option value="{{=item.text}}">{{=item.text||'-'}}</option>
+    {{ } }}
+</script>
+<script id="record-tpl" type="text/template">
+    {{ for(var i=0;i<it.length;i++){
+    var item = it[i];
+    }}
+    <div class="aui-col-xs-6 aui-text-center aui-padded-t-15" tapmode onclick="openDetailWin(this);">
+        <img src="../../image/u30815.png" alt="" style="margin: auto;">
+        <div class="aui-margin-t-10">
+            <div class="aui-ellipsis-1">时间:{{= item.createTime}}</div>
+        </div>
+        <div class="aui-margin-t-5">
+            <div class="aui-ellipsis-1">创建人:{{= item.createUserName}}</div>
+        </div>
+        <span class="aui-hide json-span">{{= JSON.stringify(item)}}</span>
+    </div>
+    {{  } }}
+</script>
+</body>
+</html>

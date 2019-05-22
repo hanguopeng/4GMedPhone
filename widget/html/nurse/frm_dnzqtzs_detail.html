@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>导尿知情通知书-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css"/>
+    <style>
+    .ctitle{background-color:#67c23a;color: #fff;}
+    .itemDate{position: relative;line-height: 1.5rem;}
+    .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
+    .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
+    .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+    .sel{display: inline-block !important;width: inherit !important;}
+    </style>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <section class="aui-content">
+      <ul class="aui-list aui-collapse aui-border">
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                <div >
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>患者姓名:</span>
+                        <span>{{=it.person.name||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>性别:</span>
+                        <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>年龄:</span>
+                        <span>{{=it.person.age||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>科室名称:</span>
+                        <span>{{=it.person.organizationName||"-"}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>病案号:</span>
+                        <span>{{=it.person.medicalNumber||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>床号:</span>
+                        <span>{{=it.person.medBedName||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>出生日期:</span>
+                        <span>{{=it.person.birthday||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>身份证号:</span>
+                        <span>{{=it.person.idNumber||'-'}}</span>
+                    </div>
+                    <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <span>民族:</span>
+                        <span>{{=it.person.nationName||'-'}}</span>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">操作目的</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>护士已告知我患有<span class="border-bottom aui-text-danger">{{=it.params.bingName||''}}</span>根据您的病情,您需要进行导尿术,目前无明显绝对禁忌症。</p>
+                <p>一般说来，操作过程是安全的，因个体差异及某些不可预料的因素，可能会发生意外和并发症，严重者会造成功能丧失。</p>
+                <p>导尿术是在严格无菌操作下，用导尿管经尿道插入膀胱引出尿液的方法；</p>
+                <p>导尿管留置法是在导尿后，将导尿管保留在膀胱内，引流出尿液的方法。 主要为潴留病人放出尿液，以减轻痛苦；</p>
+                <p>协助临床诊断，如留取不受污染的尿标本作细菌培养，测量膀胱容量、压力及检查残余尿，进行尿道或膀胱造影等；</p>
+                <p>为膀胱肿瘤病人进行膀胱腔内化疗；抢救危重、休克病人时正确记录尿量，测尿比重，借以观察病情；</p>
+                <p>腹腔、盆腔手术前引流尿液，排空膀胱，避免术中误伤；</p>
+                <p>某些泌尿系统手术后留置导尿管，便于持续引流和冲洗，并可减轻手术切口的张力，有利于愈合；</p>
+                <p>昏迷、截瘫或会阴部有伤口者保留导尿管以保持会阴部清洁干燥。</p>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title">操作潜在的风险和对策</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>
+                  护士告知我导尿可能发生的一些风险，有些不常见的风险可能没有在此列出，如果有特殊问题可与护士讨论
+                </p>
+                <p>1.我理解任何操作都存在风险。</p>
+                <p>2.我理解此操作可能发生的风险和护士的对策：></p>
+                <p>&nbsp;&nbsp; 1）导尿术中、术后诱导原有疾病恶化。</p>
+                <p>&nbsp;&nbsp; 2）术中因解剖位置及关系变异变更导尿器械。</p>
+                <p>&nbsp;&nbsp; 3）尿道疼痛，患者症状不能缓解。</p>
+                <p>
+                  &nbsp;&nbsp; 4）导尿术中、术后可能出现尿道出血；间断或持续血尿，出现相应的症状。
+                </p>
+                <p>&nbsp;&nbsp; 5）泌尿系统感染或败血症。</p>
+                <p>&nbsp;&nbsp; 6）前列腺肥大、尿道狭窄患者导致尿潴留置时，存在插管困难可能，须请相关科室会诊。
+                </p>
+                <p>&nbsp;&nbsp; 7）阴茎皮下血肿或阴囊血肿。</p>
+                <p>&nbsp;&nbsp; 8）气囊破裂导致尿管脱落，须重新留置导尿管。</p>
+                <p>
+                  &nbsp;&nbsp; 9）年老体弱或者是比较衰弱的患者，留置尿管后，尿管周围尿液漏出。
+                </p>
+                <p>&nbsp;&nbsp; 10）尿管留置时间过长且长期卧床尿垢积在膀胱形成结石可能。</span>
+                </p>
+                <p>&nbsp;&nbsp; 11）术后尿道狭窄，须用尿道扩张治疗。</p>
+                <p>&nbsp;&nbsp; 12）留置Foley尿管无法拔除。</p>
+                <p>&nbsp;&nbsp; 13）损伤尿道；可能会出现尿道裂伤。</p>
+                <p>&nbsp;&nbsp; 14）急性尿潴留导尿后膀胱压力下降，可能出现轻微肉眼血尿。
+                </p>
+                <p>&nbsp;&nbsp; 15）导尿管可能会阻塞，必要时重新置管。</p>
+                <p>&nbsp;&nbsp; 16）该患者行导尿可能发生的其他并发症或者需要提请患者及家属特别注意的除上述情况外，其他事项，
+                </p>
+                <p>如
+                  <span class="border-bottom aui-text-danger">{{=it.params.tixing||''}}</span></p>
+                <p>3.我理解如果我患有高血压、心脏病、糖尿病、肝肾功能不全等疾病，以上这些风险可能会加大。
+                </p>
+                <p>一旦发生上述风险和意外，护士会进行对症治疗。</p>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">患者知情权</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>
+                  我的责任护士已经告知我将要进行的操作方式、此次操作及操作后可能发生的并发症和风险、并且解答了我关于此次操作的相关问题。
+                </p>
+                <p>我并未得到操作百分之百成功的许诺。</p>
+                <p>我授权护士根据我的疾病进行此项操作。</p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">患者签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">签名日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.qmrq||''}}</span></div>
+                </div>
+                <p>
+                  如果患者无法签署知情通知书，请其授权的亲属在此签名：
+                </p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">患者授权亲属签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzsqqsqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">与患者关系:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hzgx||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">签名日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.qmrq2||''}}</span></div>
+                </div>
+              </div>
+          </div>
+          <div class="aui-collapse-item">
+              <li class="aui-list-item aui-collapse-header" tapmode>
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-title aui-text-danger">护士陈述</div>
+                      <div class="aui-list-item-right">
+                          <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                      </div>
+                  </div>
+              </li>
+              <div class="aui-collapse-content aui-font-size-14 text-indent aui-text-justify">
+                <p>我已经告知患者将要进行的操作、此次操作及操作后可能发生的并发症和风险、并且解答了患者关于此次操作的相关问题。</p>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">护士签名:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hsqm||''}}</span></div>
+                </div>
+                <div class="aui-row">
+                    <div class="aui-col-xs-5">时间日期:</div>
+                    <div class="aui-col-xs-7"><span class="border-bottom aui-text-danger">{{=it.params.hsqmrq||''}}</span></div>
+                </div>
+              </div>
+          </div>
+      </ul>
+  </section>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var id = api.pageParam.data;
+    var person = $api.getStorage(storageKey.currentPerson);
+    common.get({
+        url: config.patientDetailUrl+person.id,
+        isLoading: true,
+        success:function(ret){
+          common.get({
+            url:config.nursePlanUrl+"/"+id,
+            isLoading:false,
+            success:function(ret1){
+              var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+              var map = {};
+              for (var i = 0; i < ret1.content.itemList.length; i++) {
+                map[ret1.content.itemList[i].key] = ret1.content.itemList[i].value;
+              }
+              $api.html($api.byId('content'), contentTmpl({person:ret.content,params:map}));
+              api.parseTapmode();
+              var collapse = new auiCollapse({
+                  autoHide:false //是否自动隐藏已经展开的容器
+              });
+              api.hideProgress();
+
+            }
+          });
+        }
+    });
+
+
+
+};
+</script>
+</html>

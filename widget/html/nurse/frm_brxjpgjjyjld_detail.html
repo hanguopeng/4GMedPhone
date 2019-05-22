@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>病人宣教评估及教育记录单-记录明细</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+</head>
+<body>
+<div id="content" class="aui-content">
+</div>
+</body>
+<script id="detail-tpl" type="text/template">
+  <div class="aui-card-list">
+      <div class="aui-card-list-content-padded aui-border-t">
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-6 ">
+                  <span class="">诊断: </span>
+                  <span class="aui-margin-l-5">{{=it['diagnosis'] || '-'}}</span>
+              </div>
+              <div class="aui-col-xs-6 ">
+                  <span class="">说明日期: </span>
+                  <span class="aui-margin-l-5">{{=it['explainTime'] || '-'}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="aui-card-list-content-padded aui-border-t">
+          <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+              <div class="aui-col-xs-12 ">
+                  <span class="">说明对象: </span>
+                  <span class="aui-margin-l-5">
+                      {{=it['explainObject'] || '-'}}
+                      {{? it['explainObject']&&it['explainObject']!='其他'}}
+                      &nbsp;{{=it['explainObjectOther'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+              <div class="aui-col-xs-12 ">
+                  <span class="">语言: </span>
+                  <span class="aui-margin-l-5">
+                      {{=it['language'] || '-'}}
+                      {{? it['language']&&it['language']!='其他'}}
+                      &nbsp;{{=it['languageOther'] || '-'}}
+                      {{?}}
+                  </span>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">民族: </span>
+                      <span class="aui-margin-l-5">{{=it['country'] || '-'}}</span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">教育程度: </span>
+                      <span class="aui-margin-l-5">{{=it['educationalStatus'] || '-'}}</span>
+                  </div>
+
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">学习动机: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['learningMotivation'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">学习障碍: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['learningDisorder'] || '-'}}
+
+                          {{? it['learningDisorder']&&it['learningDisorder']!='其他'}}
+                          &nbsp;{{=it['learningDisorderOther'] || '-'}}
+                          {{?}}
+                      </span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">若有障碍的替代说明方法: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['learningDisorderWay'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">说明方式: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['explainWay'] || '-'}}
+                          {{? it['explainWay']&&it['explainWay']!='其他'}}
+                          &nbsp;{{=it['explainWayOther'] || '-'}}
+                          {{?}}
+                      </span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">若有障碍的替代说明方法: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['explainWayWay'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">说明者签名: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['explainSignature'] || '-'}}
+                          {{? it['explainSignature']&&it['explainSignature']!='其他'}}
+                          &nbsp;{{=it['signatureOther'] || '-'}}
+                          {{?}}
+                      </span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">签名: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['signature'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">说明内容: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['agreeFlag'] || '-'}}
+                      </span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">给予: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['give'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="aui-card-list-content-padded aui-border-t">
+              <div class="aui-padded-l-15 aui-padded-r-10 aui-row" style="padding: 0 0;color: #757575;font-size: 0.7rem;">
+                  <div class="aui-col-xs-6 ">
+                      <span class="">自我批评: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['selfAppraisal'] || '-'}}
+                      </span>
+                  </div>
+                  <div class="aui-col-xs-6 ">
+                      <span class="">签名: </span>
+                      <span class="aui-margin-l-5">
+                          {{=it['selfAppraisalSignature'] || '-'}}
+                      </span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+apiready = function(){
+    api.parseTapmode();
+    var params = api.pageParam.data;
+    //构造成key value的形式
+    var map = {};
+    for(var k in params){
+      map[params[k].key] = params[k].value;
+    }
+    var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+    //console.log(JSON.stringify(map));
+    $api.html($api.byId('content'), contentTmpl(map));
+};
+</script>
+</html>

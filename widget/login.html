@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="./css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/login.css"/>
+    <style>
+        /*其中，IOS状态栏高度为20px，Android为25px*/
+        /*兼容ios和Android*/
+        .headerIos{
+            padding-top: 20px;
+        }
+        .headerAnd{
+            padding-top: -25px;
+        }
+        body{
+            background-image:url(./image/log.png); background-repeat:no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 100%;"
+        }
+        footer {
+            height: 30px;
+            width: 100%;
+            background-color: #81a9c3;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+        }
+        .login-style {
+            width:60% ;
+            margin-left:20%;
+        }
+        #loginBtn {
+            height: 1.8rem;
+            line-height: 1.7rem
+        ;
+        }
+        #scanLoginBtn {
+            height: 1.8rem;
+            line-height: 1.7rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+</header>
+<div class="login-style" style="margin-top: 48%">
+    <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-my"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="userName"  type="text" value="" placeholder="请输入用户名">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item" >
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-lock"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="userPass"  type="password" value="" placeholder="请输入密码">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!-- <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item" >
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-info"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <select id="keShi">
+                        <option value="" disabled="true" selected="selected" style='display:none;'>请选择科室</option>
+                        <option value="1">产科</option>
+                        <option value="1">骨科</option>
+                    </select>
+                </div>
+            </div>
+        </li>
+    </ul> -->
+    <div class="aui-row aui-padded-5 operatorContainer">
+        <div>
+            记住用户名 <input id="remMe" type="checkbox" class="aui-switch" style="margin-top: 0.4rem;">
+        </div>
+    </div>
+    <div class="aui-row">
+        <div id="loginBtn" class="aui-btn aui-btn-block aui-btn-info" style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
+             tapmode onclick="login()">登录</div><br/>
+        <!--<div id="scanLoginBtn" class="aui-btn aui-btn-block aui-btn-info"  style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
+              tapmode onclick="scanLogin()">扫码登录</div>-->
+    </div>
+
+</div>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/config.js"></script>
+<script type="text/javascript" src="./script/common.js"></script>
+<script>
+    var UIActionProgress;
+    var fs;
+    var scanner;
+    apiready = function() {
+        UIActionProgress = api.require('UIActionProgress');
+        fs = api.require('fs');
+        scanner = api.require('cmcScan');
+        login()
+        scanner.open();
+        api.setScreenOrientation({
+            orientation : 'auto_portrait'
+        });
+        api.parseTapmode();
+        var header = document.querySelector('#header');
+        immersive(header);
+
+        //判断是否点击了记住用户名
+        $api.rmStorage(storageKey.token);
+        var storageUserName = $api.getStorage(storageKey.loginName);
+        if(storageUserName){
+            $api.val($api.byId("userName"),storageUserName);
+            $api.byId("remMe").checked = true;
+        }
+
+        //更新版本信息
+        api.showProgress({
+            title: '',
+            text: '检查更新...'
+        });
+        api.ajax({
+            url: config.versionUpdateUrl+"?appType=1&version="+api.appVersion,
+            method: 'get',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            dataType: 'json'
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.code == 200) {
+                    if(ret.content.update){
+                        //有更新
+                        api.hideProgress();
+                        var des="";
+                        if(ret.content.versionDes){
+                            var desArry = ret.content.versionDes.split("<br/>");
+                            for (var i = 0; i < desArry.length; i++) {
+                                des = des + desArry[i].trim() + "\n";
+                            }
+                        }
+                        api.confirm({
+                            title: ret.content.updateTip || '更新提示',
+                            msg: '有新版本啦！\n最新版本:'+(ret.content.version||'')+'\n\n更新描述:\n'+des+
+                                '\n发布时间:'+(ret.content.time||''),
+                            buttons: ['立即更新', '取消']
+                        }, function(ret1, err1){
+                            if (ret1.buttonIndex==1) {
+                                //禁用登录按钮
+                                $api.attr($api.byId("loginBtn"), 'disabled', 'disabled');
+                                if (api.systemType == "android"){
+
+                                    UIActionProgress.open({
+                                        maskBg: 'rgba(0,0,0,0.5)',
+                                        styles: {
+                                            h: 108,
+                                            bg: '#fff',
+                                            title: {
+                                                size: 13,
+                                                color: '#000',
+                                                marginT: 10
+                                            },
+                                            msg: {
+                                                size: 12,
+                                                color: '#000',
+                                                marginT: 5
+                                            },
+                                            lable: {
+                                                size: 12,
+                                                color: '#696969',
+                                                marginB: 5
+                                            },
+                                            progressBar: {
+                                                size: 2,
+                                                normal: '#000',
+                                                active: '#4876FF',
+                                                marginB: 35,
+                                                margin: 5
+                                            }
+                                        },
+                                        data: {
+                                            title: '正在更新',
+                                            msg: '',
+                                            value: 0
+                                        }
+                                    },function(ret){
+                                        if(ret && ret.eventType=='complete'){
+                                            UIActionProgress.close();
+                                        }
+                                    });
+
+                                    fs.removeSync({
+                                        path: 'fs://app.apk'
+                                    });
+
+                                    api.download({
+                                        url: ret.content.source,
+                                        savePath: 'fs://app.apk',
+                                        report: true,
+                                        cache: true,
+                                        allowResume: true
+                                    },function(retdownload, err2){
+                                        if (retdownload && 0 == retdownload.state) {/* 下载进度 */
+                                            UIActionProgress.setData({
+                                                data:{
+                                                    title: '正在更新',
+                                                    msg: '',
+                                                    value: retdownload.percent
+                                                }
+                                            });
+                                        }
+                                        if (retdownload && 1 == retdownload.state) {/* 下载完成 */
+                                            UIActionProgress.setData({
+                                                data:{
+                                                    title: '正在更新',
+                                                    msg: '',
+                                                    value: 100
+                                                }
+                                            });
+                                            api.installApp({
+                                                appUri : retdownload.savePath
+                                            });
+                                        }
+                                        if(retdownload && 2 == retdownload.state){/* 下载失败 */
+                                            UIActionProgress.close();
+                                            api.alert({
+                                                title: '错误',
+                                                msg: '更新失败,请稍后重试',
+                                            }, function(ret3, err3){
+                                                //判断是否需要强行关闭
+                                                if(ret.content.closed){
+                                                    api.alert({
+                                                        title: '提示',
+                                                        msg: ret.content.closeTip||'必须更新版本之后才能使用!',
+                                                    }, function(ret, err){
+                                                        api.closeWidget({
+                                                            id: api.appId,
+                                                            retData: {
+                                                                name: 'closeWidget'
+                                                            },
+                                                            silent: true
+                                                        });
+                                                    });
+                                                }else{
+                                                    //打开登录按钮
+                                                    $api.removeAttr($api.byId("loginBtn"), 'disabled');
+                                                }
+                                            });
+                                        }
+                                    });
+                                }else{
+                                    api.alert({
+                                        title: '提示',
+                                        msg: '暂不支持ios更新',
+                                    });
+                                }
+                            }else{
+                                //取消判断是否强行关闭
+                                if(ret.content.closed){
+                                    api.alert({
+                                        title: '提示',
+                                        msg: ret.content.closeTip||'必须更新版本之后才能使用!',
+                                    }, function(ret, err){
+                                        api.closeWidget({
+                                            id: api.appId,
+                                            retData: {
+                                                name: 'closeWidget'
+                                            },
+                                            silent: true
+                                        });
+                                    });
+                                }else{
+                                    //打开登录按钮
+                                    $api.removeAttr($api.byId("loginBtn"), 'disabled');
+                                }
+                            }
+                        });
+                    }
+                    // else if(!ret.content.update && ret.content.closed){
+                    //   api.alert({
+                    //       title: '提示',
+                    //       msg: '该应用不能继续使用!',
+                    //   }, function(ret, err){
+                    //     api.closeWidget({
+                    //         id: api.appId,
+                    //         retData: {
+                    //             name: 'closeWidget'
+                    //         },
+                    //         silent: true
+                    //     });
+                    //   });
+                    // }
+                    else{
+                        api.hideProgress();
+                        // api.toast({
+                        //     msg: "当前已是最新版本",
+                        //     duration: config.duration,
+                        //     location: 'bottom'
+                        // });
+                    }
+                }else{
+                    api.hideProgress();
+                    api.toast({
+                        msg: ret.msg,
+                        duration: config.duration,
+                        location: 'bottom'
+                    });
+                }
+            } else {
+                api.hideProgress();
+                api.alert({
+                    title: '错误',
+                    msg: '版本更新异常,请联系管理员'
+                });
+            }
+        });
+
+        document.onkeyup = function (e) {
+            var code = e.charCode || e.keyCode;
+            if (code == 13) {
+                login();
+            }
+        }
+    };
+
+    /*
+     * 沉浸式
+     */
+    function immersive(header) {
+        var systemType = api.systemType;  // 获取手机类型，比如： ios
+        if (systemType == 'ios') {//兼容ios和安卓
+            $api.addCls(header, 'headerIos');
+        } else {
+            $api.addCls(header, 'headerAnd');
+        }
+        api.setStatusBarStyle({
+            color: '#67c23a',//设置APP状态栏背景色
+            style: 'light'
+        });
+    }
+
+    function login(){
+
+        var userName = $api.trim($api.val($api.byId('userName')));
+        var userPass = $api.trim($api.val($api.byId('userPass')));
+        //var keShi = $api.trim($api.val($api.byId('keShi')));
+        var remMe = $api.byId('remMe').checked;
+
+        //获取用户设备id
+        var deviceId = api.deviceId;
+        //alert(deviceId);
+        if(userName==""){
+            api.toast({
+                msg: '用户名不能为空！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        if(userPass==""){
+            api.toast({
+                msg: '用户密码不能为空！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        if(deviceId==""){
+            api.toast({
+                msg: '无法获取设备标识！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+        common.post({
+            url:config.loginUrl,
+            isLoading:true,
+            text:"登录中...",
+            data: JSON.stringify({
+                username: userName,
+                password: userPass,
+                deviceId:deviceId
+            }),
+            success:function(ret){
+                api.hideProgress();
+                //删除一次localstorage
+                common.clearStorage();
+                if(remMe){
+                    $api.setStorage(storageKey.loginName,userName);
+                }else{
+                    $api.rmStorage(storageKey.loginName);
+                }
+                //保存token
+                $api.setStorage(storageKey.token,ret.token);
+                //设置登录有效,后续登录失效时使用
+                common.loginInvalid = false;
+                //转到主页
+                api.openWin({
+                    name: 'win_system_grid',
+                    bounces: false,
+                    slidBackEnabled : false,
+                    reload:true,
+                    url: './html/win_system_grid.html',
+                    vScrollBarEnabled:false,
+                    hScrollBarEnabled:false
+                });
+            }
+        });
+    }
+
+   /* function scanLogin(){
+        scanner.start({
+        },function(ret,err){
+            if(ret.status===1){
+                const value = ret.value;
+                //获取用户设备id
+                const deviceId = api.deviceId;
+                // 通过解析的用户名获取库中是否有这个用户
+                common.post({
+                    url:config.loginUrl,
+                    isLoading:true,
+                    text:"扫描中",
+                    data: JSON.stringify({
+                        username: value,
+                        deviceId: deviceId,
+                        //为了区分是普通登录还是扫码登录
+                        isScanLogin: "true"
+                    }),
+                    success:function(ret){
+                        //成功关闭扫描控件
+                        scanner.stop();
+                        api.hideProgress();
+                        //删除一次localstorage
+                        common.clearStorage();
+                        //扫码登录默认选中记住用户名
+                        $api.setStorage(storageKey.loginName,value);
+                        //保存token
+                        $api.setStorage(storageKey.token,ret.token);
+                        //设置登录有效,后续登录失效时使用
+                        common.loginInvalid = false;
+                        //转到主页
+                        api.openWin({
+                            name: 'win_system_grid',
+                            bounces: false,
+                            slidBackEnabled : false,
+                            reload:true,
+                            url: './html/win_system_grid.html',
+                            vScrollBarEnabled:false,
+                            hScrollBarEnabled:false
+                        });
+
+                    }
+                });
+            }else if(ret.status===0){
+                api.toast({
+                    msg: '超时或解码失败，请重试！',
+                    duration: config.duration,
+                    location: 'bottom'
+                });
+            }
+        });
+
+    }*/
+</script>
+</body>
+</html>
