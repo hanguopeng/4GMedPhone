@@ -14,7 +14,15 @@ apiready = function() {
         name: 'scanEvent'
     }, function(ret, err) {
         if (ret) {
-
+            if(ret.value.status=='1'){
+                alert(JSON.stringify(ret));
+            }else{
+                api.toast({
+                    msg: '未收录此病人！',
+                    duration: config.duration,
+                    location: 'bottom'
+                });
+            }
         } else {
             alert(JSON.stringify(err));
         }
