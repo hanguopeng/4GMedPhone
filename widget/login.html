@@ -101,8 +101,8 @@
     <div class="aui-row">
         <div id="loginBtn" class="aui-btn aui-btn-block aui-btn-info" style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
              tapmode onclick="login()">登录</div><br/>
-        <!--<div id="scanLoginBtn" class="aui-btn aui-btn-block aui-btn-info"  style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
-              tapmode onclick="scanLogin()">扫码登录</div>-->
+        <div id="scanLoginBtn" class="aui-btn aui-btn-block aui-btn-info"  style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
+             tapmode onclick="scanLogin()">扫码登录</div>
     </div>
 
 </div>
@@ -114,29 +114,75 @@
     var fs;
     var scanner;
     apiready = function() {
+        //alert('加载开始')
         UIActionProgress = api.require('UIActionProgress');
         fs = api.require('fs');
         scanner = api.require('cmcScan');
-        //login();
+        //alert('login')
+        //login()
+        //alert('scanner')
         scanner.open();
 
-       /* api.addEventListener({
+        //alert('监听加载开始')
+        api.addEventListener({
             name: 'scanEvent'
         }, function(ret, err) {
+            //alert(ret)
             if (ret) {
-                if(ret.value.status=='1'){
-                    alert(JSON.stringify(ret));
+                //alert(JSON.stringify(ret));
+                if (ret.value.status===1){
+                    //alert(ret.value);
+                    const value = ret.value.value;
+                    //获取用户设备id
+                    const deviceId = api.deviceId;
+                    // 通过解析的用户名获取库中是否有这个用户
+                    common.post({
+                        url:config.loginUrl,
+                        isLoading:true,
+                        text:"扫描中",
+                        data: JSON.stringify({
+                            username: value,
+                            deviceId: deviceId,
+                            //为了区分是普通登录还是扫码登录
+                            isScanLogin: "true"
+                        }),
+                        success:function(ret) {
+                            //成功关闭扫描控件
+                            scanner.stop();
+                            api.hideProgress();
+                            //删除一次localstorage
+                            common.clearStorage();
+                            //扫码登录默认选中记住用户名
+                            $api.setStorage(storageKey.loginName, value);
+                            //保存token
+                            $api.setStorage(storageKey.token, ret.token);
+                            //设置登录有效,后续登录失效时使用
+                            common.loginInvalid = false;
+                            //转到主页
+                            api.openWin({
+                                name: 'win_system_grid',
+                                bounces: false,
+                                slidBackEnabled: false,
+                                reload: true,
+                                url: './html/win_system_grid.html',
+                                vScrollBarEnabled: false,
+                                hScrollBarEnabled: false
+                            });
+
+                        }
+                    });
                 }else{
                     api.toast({
-                        msg: '未收录此病人！',
+                        msg: '超时或解码失败，请重试！',
                         duration: config.duration,
                         location: 'bottom'
                     });
                 }
             } else {
-                alert(JSON.stringify(err));
+                //alert(JSON.stringify(err));
             }
-        });*/
+        });
+        //alert('监听加载结束')
         api.setScreenOrientation({
             orientation : 'auto_portrait'
         });
@@ -378,10 +424,9 @@
     }
 
     function login(){
-
+        //alert('login1')
         var userName = $api.trim($api.val($api.byId('userName')));
         var userPass = $api.trim($api.val($api.byId('userPass')));
-        //var keShi = $api.trim($api.val($api.byId('keShi')));
         var remMe = $api.byId('remMe').checked;
 
         //获取用户设备id
@@ -448,62 +493,9 @@
             }
         });
     }
-
-   /* function scanLogin(){
-        scanner.start({
-        },function(ret,err){
-            if(ret.status===1){
-                const value = ret.value;
-                //获取用户设备id
-                const deviceId = api.deviceId;
-                // 通过解析的用户名获取库中是否有这个用户
-                common.post({
-                    url:config.loginUrl,
-                    isLoading:true,
-                    text:"扫描中",
-                    data: JSON.stringify({
-                        username: value,
-                        deviceId: deviceId,
-                        //为了区分是普通登录还是扫码登录
-                        isScanLogin: "true"
-                    }),
-                    success:function(ret){
-                        //成功关闭扫描控件
-                        scanner.stop();
-                        api.hideProgress();
-                        //删除一次localstorage
-                        common.clearStorage();
-                        //扫码登录默认选中记住用户名
-                        $api.setStorage(storageKey.loginName,value);
-                        //保存token
-                        $api.setStorage(storageKey.token,ret.token);
-                        //设置登录有效,后续登录失效时使用
-                        common.loginInvalid = false;
-                        //转到主页
-                        api.openWin({
-                            name: 'win_system_grid',
-                            bounces: false,
-                            slidBackEnabled : false,
-                            reload:true,
-                            url: './html/win_system_grid.html',
-                            vScrollBarEnabled:false,
-                            hScrollBarEnabled:false
-                        });
-
-                    }
-                });
-            }else if(ret.status===0){
-                api.toast({
-                    msg: '超时或解码失败，请重试！',
-                    duration: config.duration,
-                    location: 'bottom'
-                });
-            }
-        });
-
-    }*/
-    //打开扫描
-    function scan(){
+    // 我觉得直接start就可以，剩下的由监听做，但是不知道行不行
+    function scanLogin(){
+        //lert("进来了")
         scanner.start();
     }
 </script>
