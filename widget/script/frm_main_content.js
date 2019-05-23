@@ -18,7 +18,13 @@ apiready = function() {
         name: 'scanEvent'
     }, function(ret, err) {
         if (ret) {
-            alert(JSON.stringify(ret));
+            var rval = ret.value;
+            if(rval.status == 1){
+                var personIndex = Number($api.getStorage(storageKey.currentIdx));
+
+            }else{
+
+            }
         } else {
             alert(JSON.stringify(err));
         }
@@ -86,7 +92,7 @@ function searchPersons(){
       if(ret.content && ret.content.list && ret.content.list.length>0){
         //var levelInfo = doT.template($api.text($api.byId('nurse-level-tpl')));
         var personInfo = doT.template($api.text($api.byId('person-info-tpl')));
-
+        //alert(JSON.stringify(ret));
         //$api.html($api.byId('nurseLevelContent'), levelInfo(ret.content));
         var params = ret.content;
         params._listCount = ret.content.list.length;

@@ -7,7 +7,10 @@ apiready = function () {
     api.parseTapmode();
     // db = api.require('db');
     loadJCST();
+
 };
+
+
 
 /**
  * 基础信息

@@ -26,46 +26,46 @@ apiready = function(){
         openFrameContent(ret.value.name);
     });
 
-    // 保留
-    // api.addEventListener({
-    //     name: eventName.layerEvent
-    // }, function(ret, err){
-    //     if(ret.value.type==0){
-    //       scanner.start({
-    //       },function(ret,err){
-    //     			if(ret.status===1){
-    //             var value = ret.value;
-    //             var persons = $api.getStorage(storageKey.persons);
-    //             //遍历查询
-    //             for (var i = 0; i < persons.length; i++) {
-    //               if(persons[i].id==value){
-    //                 api.sendEvent({
-    //                     name: eventName.personChoosed,
-    //                     extra: {
-    //                         index: i
-    //                     }
-    //                 });
-    //                 return;
-    //               }
-    //             }
-    //             api.alert({
-    //                 title: '提示',
-    //                 msg: '系统未管理此病人，请刷新后重试',
-    //             });
-    //     			}else if(ret.status===0){
-    //             api.toast({
-    //                 msg: '超时或解码失败，请重试！',
-    //                 duration: config.duration,
-    //                 location: 'bottom'
-    //             });
-    //     			}
-    //     	});
-    //     }else if(ret.value.type==1){
-    //       openPersonSearchFrame();
-    //     }else if(ret.value.type==2){
-    //       api.closeWin();
-    //     }
-    // });
+    //保留
+    api.addEventListener({
+        name: eventName.layerEvent
+    }, function(ret, err){
+        if(ret.value.type==0){
+          scanner.start({
+          },function(ret,err){
+        			if(ret.status===1){
+                var value = ret.value;
+                var persons = $api.getStorage(storageKey.persons);
+                //遍历查询
+                for (var i = 0; i < persons.length; i++) {
+                  if(persons[i].id==value){
+                    api.sendEvent({
+                        name: eventName.personChoosed,
+                        extra: {
+                            index: i
+                        }
+                    });
+                    return;
+                  }
+                }
+                api.alert({
+                    title: '提示',
+                    msg: '系统未管理此病人，请刷新后重试',
+                });
+        			}else if(ret.status===0){
+                api.toast({
+                    msg: '超时或解码失败，请重试！',
+                    duration: config.duration,
+                    location: 'bottom'
+                });
+        			}
+        	});
+        }else if(ret.value.type==1){
+          openPersonSearchFrame();
+        }else if(ret.value.type==2){
+          api.closeWin();
+        }
+    });
 
 
     //点击返回键关闭当前window窗口
