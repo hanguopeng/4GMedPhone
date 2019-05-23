@@ -258,6 +258,7 @@ function saveAddRecord() {
 
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
+
     params.medBedName = medBedName;
     params.name = name;
     params.sexName = sexName;
@@ -287,7 +288,7 @@ function saveAddRecord() {
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
     params.measureDate= currentTime()+":00";
-
+    alert(JSON.stringify(params));
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',
