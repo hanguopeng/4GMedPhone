@@ -13,8 +13,8 @@ apiready = function() {
     api.addEventListener({
         name: 'scanEvent'
     }, function(ret,err){
-        if(ret.status===1){
-            var value = ret.value;
+        if(ret.value.status===1){
+            var value = ret.value.value;
             var persons = $api.getStorage(storageKey.persons);
             //遍历查询
             for (var i = 0; i < persons.length; i++) {
