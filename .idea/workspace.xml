@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/widget/html/nurse/win_nurse_gk_wzhzhljld_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/widget/script/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/login.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,13 +18,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="102" column="51" lean-forward="true" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
+            <state relative-caret-position="646">
+              <caret line="94" column="13" lean-forward="true" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/CmcScan.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="44" column="61" selection-start-line="44" selection-start-column="61" selection-end-line="44" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/index_frm.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -45,6 +61,14 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>stop</find>
@@ -58,6 +82,10 @@
       <list>
         <option value="$PROJECT_DIR$/widget/script/win_main.js" />
         <option value="$PROJECT_DIR$/widget/login.html" />
+        <option value="$PROJECT_DIR$/widget/script/config.js" />
+        <option value="$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html" />
+        <option value="$PROJECT_DIR$/widget/html/nurse/win_nurse_gk_wzhzhljld_detail.html" />
+        <option value="$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/CmcScan.java" />
       </list>
     </option>
   </component>
@@ -97,6 +125,12 @@
               <item name="html" type="462c0819:PsiDirectoryNode" />
               <item name="nurse" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="4Gyun" type="b2602c69:ProjectViewProjectNode" />
+              <item name="4Gyun" type="462c0819:PsiDirectoryNode" />
+              <item name="widget" type="462c0819:PsiDirectoryNode" />
+              <item name="script" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -105,6 +139,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -134,12 +169,12 @@
       <updated>1558538866575</updated>
       <workItem from="1558538867838" duration="767000" />
       <workItem from="1558545128545" duration="924000" />
-      <workItem from="1558571904954" duration="395000" />
+      <workItem from="1558571904954" duration="2726000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2086000" />
+    <option name="totallyTimeSpent" value="4417000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -189,10 +224,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../CmcPhone/html/frm_yizhuzhixing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="7" lean-forward="true" selection-end-line="491" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="491" lean-forward="true" selection-start-line="491" selection-end-line="491" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../CmcPhone/html/nurse/win_nurse_gk_wzhzhljld_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="65" lean-forward="true" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/win_nurse_gk_wzhzhljld_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/widget/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="102" column="51" lean-forward="true" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
+        <state relative-caret-position="646">
+          <caret line="94" column="13" lean-forward="true" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/index_frm.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/CmcScan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="44" column="61" selection-start-line="44" selection-start-column="61" selection-end-line="44" selection-end-column="61" />
         </state>
       </provider>
     </entry>
