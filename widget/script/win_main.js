@@ -43,7 +43,7 @@ apiready = function() {
   api.addEventListener({
       name : 'keyback'
   }, function(ret, err) {
-    scanner.stop_sync();
+    scanner.stop();
     api.closeWin();
   });
 };
