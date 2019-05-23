@@ -226,7 +226,7 @@ function saveAddRecord() {
     var hushiqianming = $("input[name='userName']").val();
 
 
-    addMapIfNotNull(data, "medBedName", medBedName, true);
+    /*addMapIfNotNull(data, "medBedName", medBedName, true);
 
     addMapIfNotNull(data, "name", name, true);
     addMapIfNotNull(data, "sexName", sexName, true);
@@ -253,15 +253,39 @@ function saveAddRecord() {
     addMapIfNotNull(data, "jiankangzhidao", jiankangzhidao, true);
     addMapIfNotNull(data, "bingqingguancha", bingqingguancha, true);
     addMapIfNotNull(data, "hulicuoshi", hulicuoshi, true);
-    addMapIfNotNull(data, "hushiqianming", hushiqianming, true);
+    addMapIfNotNull(data, "hushiqianming", hushiqianming, true);*/
 
 
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
+    params.medBedName = medBedName;
+    params.name = name;
+    params.sexName = sexName;
+    params.registerNumber = registerNumber;
+    params.inHospitalTime = params.inHospitalTime;
+    params.createTime = createTime;
+    params.tiwen = tiwen;
+    prams.maibo = maibo;
+    params.huxi = huxi;
+    params.xueya = xueya;
+    params.xiyang = xiyang;
+    params.ruliangmingcheng = ruliangmingcheng;
+    params.ruliangml = ruliangml;
+    params.chuliangmingcheng = chuliangmingcheng;
+    params.tiwei = tiwei;
+    params.chuliangml = chuliangml;
+    params.yangsexingzhuang = yansexingzhuang;
+    params.yishi = yishi;
+    params.daoguanhuli = daoguanhuli;
+    params.yinshi = yinshi;
+    params.jiankangzhidao = jiankangzhidao;
+    params.bingqingguancha = bingqingguancha;
+    params.hulicuoshi = hulicuoshi;
+    params.hushiqianming = hushiqianming;
     params.medPatientId = person.id;
     params.medTemplateId = 223;
     params.name = "血液肿瘤科危重患者护理记录单";
-    params.itemList = data;
+    //params.itemList = data;
     params.measureDate= currentTime()+":00";
 
     api.confirm({
