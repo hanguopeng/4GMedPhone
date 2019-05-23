@@ -100,7 +100,7 @@
     </div>
     <div class="aui-row">
         <div id="loginBtn" class="aui-btn aui-btn-block aui-btn-info" style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
-             tapmode onclick="login()">登录</div><br/>
+             tapmode onclick="scan()">登录</div><br/>
         <!--<div id="scanLoginBtn" class="aui-btn aui-btn-block aui-btn-info"  style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
               tapmode onclick="scanLogin()">扫码登录</div>-->
     </div>
@@ -117,8 +117,26 @@
         UIActionProgress = api.require('UIActionProgress');
         fs = api.require('fs');
         scanner = api.require('cmcScan');
-        login();
+        //login();
         scanner.open();
+
+        api.addEventListener({
+            name: 'scanEvent'
+        }, function(ret, err) {
+            if (ret) {
+                if(ret.value.status=='1'){
+                    alert(JSON.stringify(ret));
+                }else{
+                    api.toast({
+                        msg: '未收录此病人！',
+                        duration: config.duration,
+                        location: 'bottom'
+                    });
+                }
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
         api.setScreenOrientation({
             orientation : 'auto_portrait'
         });
@@ -484,6 +502,10 @@
         });
 
     }*/
+    //打开扫描
+    function scan(){
+        scanner.start();
+    }
 </script>
 </body>
 </html>
