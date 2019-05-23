@@ -40,12 +40,6 @@ apiready = function() {
             });
         }
     });
-  api.addEventListener({
-      name : 'keyback'
-  }, function(ret, err) {
-    scanner.stop();
-    api.closeWin();
-  });
 };
 
 function immersive(header) {
@@ -170,6 +164,12 @@ function sendAreaChangedEvent() {
 //打开扫描
 function scan(){
   scanner.start();
+    api.addEventListener({
+        name : 'keyback'
+    }, function(ret, err) {
+        scanner.stop();
+        api.closeWin();
+    });
  /*   scanner.start({
     },function(ret,err){
         if(ret.status===1){
