@@ -27,7 +27,7 @@ function showAdd() {
         isLoading: true,
         success: function (ret) {
             ret.content.pgrq = currentTime();
-            var storageUserName = $api.getStorage(storageKey.loginName);
+            var storageUserName = $api.getStorage(storageKey.userName);
             ret.content.pgr = storageUserName;
 
             personInfo = ret.content;
@@ -218,7 +218,7 @@ function saveAddRecord() {
     var hushiqianming = $("input[name='userName']").val();
 
 
-    addMapIfNotNull(data, "medBedName", medBedName, true);
+    /*addMapIfNotNull(data, "medBedName", medBedName, true);
 
     addMapIfNotNull(data, "name", name, true);
     addMapIfNotNull(data, "sexName", sexName, true);
@@ -245,11 +245,35 @@ function saveAddRecord() {
     addMapIfNotNull(data, "jiankangzhidao", jiankangzhidao, true);
     addMapIfNotNull(data, "bingqingguancha", bingqingguancha, true);
     addMapIfNotNull(data, "hulicuoshi", hulicuoshi, true);
-    addMapIfNotNull(data, "hushiqianming", hushiqianming, true);
+    addMapIfNotNull(data, "hushiqianming", hushiqianming, true);*/
 
 
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
+    parms.hushiqianming = hushiqianming;
+    params.hulicuoshi = hulicuoshi;
+    params.bingqingguancha = bingqingguancha;
+    params.jiankangzhidao = jiankangzhidao;
+    params.yinshi = yinshi;
+    params.daoguanhuli = daoguanhuli;
+    params.yishi = yishi;
+    params.yansexingzhuang = yansexingzhuang;
+    params.chuliangml = chuliangml;
+    params.ruliangml = ruliangml;
+    params.ruliangmingcheng = ruliangmingcheng;
+    params.chuliangmingcheng = chuliangmingcheng;
+    params.xueyangbaohedu = xueyangbaohedu;
+    params.xiyang = xiyang;
+    params.huxi = huxi;
+    params.xueya = xueya;
+    params.createTime = createTime;
+    params.tiwen = tiwen;
+    params.maibo = maibo;
+    params.medBedName = medBedName;
+    params.name = name;
+    params.sexName = sexName;
+    params.registerNumber = registerNumber;
+    params.inHospitalTime = inHospitalTime;
     params.medPatientId = person.id;
     params.medTemplateId = 225;
     params.name = "骨科危重患者护理记录单";

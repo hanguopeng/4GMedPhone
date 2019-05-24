@@ -5,7 +5,7 @@
     <meta name="viewport" content=
             "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>危重患者患者护理记录单</title>
+    <title>血液肿瘤科病重（病危）患者护理记录单</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/zkjjjld.css"/>
@@ -162,7 +162,7 @@
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
                     <div  class="aui-col-xs-3">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.ruliangmingcheng}}</span>
+                        <span>{{=it.ruliangmingcheng|| ''}}</span>
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
@@ -239,7 +239,7 @@
                     <div>健康教育:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.jiankangjiaoyu || '-'}}</span>
+                            <span>{{=it.jiankangzhidao || '-'}}</span>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@
             </div>
             </div>
             <div class="aui-row ">
-                <div class="aui-col-xs-4">
+                <div class="aui-col-xs-8">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>护士签名:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
@@ -276,8 +276,6 @@
             </div>
         </section>
     </section>
-
-
 </script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/config.js"></script>

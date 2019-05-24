@@ -27,7 +27,7 @@ function showAdd() {
         isLoading: true,
         success: function (ret) {
             ret.content.pgrq = currentTime();
-            var storageUserName = $api.getStorage(storageKey.loginName);
+            var storageUserName = $api.getStorage(storageKey.userName);
             ret.content.pgr = storageUserName;
 
             personInfo = ret.content;
@@ -118,15 +118,16 @@ function saveAddRecord() {
     var maibo = $("input[name='pulse']").val();//脉搏
     var huxi = $("input[name='breath']").val();
     var xueya = $("input[name='bloodpressure']").val();
-    var xueyangbaohedu = $("input[name='ogen']").val();//血氧饱和度
+    var xueyangbaohedu = $api.val($api.byId("XYBHval"));//血氧饱和度
     var xiyang = $("input[name='inputogen']").val();//吸氧
-    var ruliangmingcheng = $("input[name='RLMCval']").val();
+    var ruliangmingcheng = $("select[name='RLMCval']").val();
     var ruliangml = $("input[name='RLRLval']").val();
-    var chuliangmingcheng = $("input[name='CHMCval']").val();
+    var chuliangmingcheng = $("select[name='CHMCval']").val();
     var chuliangml = $("input[name='CLRLval']").val();
 
-    var yansexingzhuang = $("input[name='YSXZval']").val();
+    var yansexingzhuang = $("select[name='YSXZval']").val();
 
+    //var xueyang = $("input[name='ogen']").val;
     var yishi = "";
     var dxysArr = $("input[name='dx-ys']");
     for(var i=0;i<dxysArr.length;i++){
@@ -191,21 +192,33 @@ function saveAddRecord() {
         if(dxbqgcArr[i].checked){
             if("双侧瞳孔"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+sctksel+")"+",";
-            }else if("瞳孔对光发散"==dxbqgcArr[i].value){
+                continue;
+            }
+            if("瞳孔对光发散"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+dkdgfs+")"+",";
-            }else if("语言"==dxbqgcArr[i].value){
+                continue;
+            }
+            if("语言"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+czthdza+")"+",";
-            }else if("患肢"==dxbqgcArr[i].value){
+                continue;
+            }
+            if("患肢"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+hzhz+")"+",";
-            }else if("患肢皮温"==dxbqgcArr[i].value){
+                continue;
+            }
+            if("患肢皮温"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+hzfw+")"+",";
-            }else if("肌力"==dxbqgcArr[i].value){
+                continue;
+            }
+            if("肌力"==dxbqgcArr[i].value){
                 bingqingguancha += dxbqgcArr[i].value+"("+jljl+")"+",";
-            }else if("侧肢体活动障碍"==dxbqgcArr[i].value) {
+                continue;
+            }
+            if("侧肢体活动障碍"==dxbqgcArr[i].value) {
                 bingqingguancha += dxbqgcArr[i].value+"("+czthdlr+")"+",";
-            }else{
+                continue;
+            }
                     bingqingguancha += dxbqgcArr[i].value+",";
-                }
             }
         }
 
@@ -258,22 +271,22 @@ function saveAddRecord() {
 
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
-
+    params.xueyangbaohedu = xueyangbaohedu;
     params.medBedName = medBedName;
     params.name = name;
     params.sexName = sexName;
     params.registerNumber = registerNumber;
-    params.inHospitalTime = params.inHospitalTime;
+    //params.inHospitalTime = params.inHospitalTime;
     params.createTime = createTime;
     params.tiwen = tiwen;
-    prams.maibo = maibo;
+    params.maibo = maibo;
     params.huxi = huxi;
     params.xueya = xueya;
     params.xiyang = xiyang;
     params.ruliangmingcheng = ruliangmingcheng;
     params.ruliangml = ruliangml;
     params.chuliangmingcheng = chuliangmingcheng;
-    params.tiwei = tiwei;
+    params.tiwei = dxtw;
     params.chuliangml = chuliangml;
     params.yangsexingzhuang = yansexingzhuang;
     params.yishi = yishi;
@@ -282,6 +295,7 @@ function saveAddRecord() {
     params.jiankangzhidao = jiankangzhidao;
     params.bingqingguancha = bingqingguancha;
     params.hulicuoshi = hulicuoshi;
+    //var storageUserName = $api.getStorage(storageKey.loginName);
     params.hushiqianming = hushiqianming;
     params.medPatientId = person.id;
     params.medTemplateId = 223;

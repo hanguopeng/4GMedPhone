@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../css/nursingDocuments.css"/>
 </head>
-<body>
+<>
 <div class="aui-content">
     <div id="div1" class="title aui-font-size-16 aui-text-center" style="background-color: #67c23b;color: #fff;line-height: 2.2em;" tapmode onclick="hide('section1')">基础护理</div>
     <section id="section1" class="aui-grid">
@@ -124,6 +124,12 @@
             $("#"+id).hide();
         }
     }
+</script>
+<script type="text/template" id="hlws-tpl">
+    <div class="aui-col-xs-4" tapmode onclick="openFrame('nurse/{{=it.sheetName}}'):">
+        <img style="display: inline;" src="../image/{{==it.picName}}.png">
+        <div class="aui-grid-label">{{=it.name}}</div>
+    </div>
 </script>
 </body>
 </html>
