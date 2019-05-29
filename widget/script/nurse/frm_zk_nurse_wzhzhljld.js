@@ -112,8 +112,8 @@ function saveAddRecord() {
     var name = $("input[name='name']").val();
     var sexName = $("input[name='sexName']").val();
     var registerNumber = $("input[name='registerNumber']").val();
-    var inHospitalTime = $("input[name='inHospitalTime']").val();
-    var createTime = $("input[name='createTime']").val();
+    var createTime = $api.text($("input[name='hsqmrq']"));
+    //var createTime = $("input[name='createTime']").val();
     var tiwen = $("input[name='temperature']").val();
     var maibo = $("input[name='pulse']").val();//脉搏
     var huxi = $("input[name='breath']").val();
@@ -288,11 +288,11 @@ function saveAddRecord() {
     params.chuliangmingcheng = chuliangmingcheng;
     params.tiwei = dxtw;
     params.chuliangml = chuliangml;
-    params.yangsexingzhuang = yansexingzhuang;
+    params.yansexingzhuang = yansexingzhuang;
     params.yishi = yishi;
-    params.daoguanhuli = daoguanhuli;
+    params.daoguanguanli = daoguanhuli;
     params.yinshi = yinshi;
-    params.jiankangzhidao = jiankangzhidao;
+    params.jiankangjiaoyu = jiankangzhidao;
     params.bingqingguancha = bingqingguancha;
     params.hulicuoshi = hulicuoshi;
     //var storageUserName = $api.getStorage(storageKey.loginName);
@@ -302,7 +302,7 @@ function saveAddRecord() {
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
     params.measureDate= currentTime()+":00";
-    alert(JSON.stringify(params));
+    //alert(JSON.stringify(params));
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',

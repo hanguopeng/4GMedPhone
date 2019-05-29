@@ -421,7 +421,22 @@
             style: 'light'
         });
     }
-
+    function careSheetTable(){
+        common.get({
+            url:config.lqhlws,
+            isLoading:false,
+            success:function (ret) {
+                var menuList = [];
+                if(ret){
+                    for(var i=0;i<ret.content.menuList.length;i++){
+                        menuList.push(ret.content.menuList[i].name);
+                    }
+                }
+                $api.setStorage(storageKey.careSheet,menuList);
+                //alert(JSON.stringify(menuList));
+            }
+        })
+    }
     function login(){
         //alert('login1')
         var userName = $api.trim($api.val($api.byId('userName')));
@@ -479,6 +494,7 @@
                 $api.setStorage(storageKey.token,ret.token);
                 //设置登录有效,后续登录失效时使用
                 common.loginInvalid = false;
+
                 //转到主页
                 api.openWin({
                     name: 'win_system_grid',
@@ -491,6 +507,7 @@
                 });
             }
         });
+        careSheetTable();
     }
     // 我觉得直接start就可以，剩下的由监听做，但是不知道行不行
     function scanLogin(){

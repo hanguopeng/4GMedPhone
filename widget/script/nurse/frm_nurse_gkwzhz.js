@@ -477,7 +477,7 @@ function search() {
             templateList:[{"templateCode":"gkwzhzhljld","templateVersion":225}]
         }),
         success: function (ret) {
-            alert(JSON.stringify(ret));
+            //alert(JSON.stringify(ret));
             if (ret.content && ret.content.list && ret.content.list.length > 0) {
                 //处理数据
                 var data = ret.content.list;
