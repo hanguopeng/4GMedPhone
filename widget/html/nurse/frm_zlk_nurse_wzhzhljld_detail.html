@@ -288,7 +288,7 @@
     apiready = function(){
         api.parseTapmode();
         var params = api.pageParam.data;
-        alert(JSON.stringify(params));
+        //(JSON.stringify(params));
         var person = $api.getStorage(storageKey.currentPerson);
 
         var contentTmpl = doT.template($api.text($api.byId('add-tpl')));

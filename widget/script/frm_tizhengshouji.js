@@ -465,197 +465,197 @@ var currentEndDate=null;
 var limitEndDate = null;
 var yWdLow = 34; //最低体温34
 var yMbLow = 20; //最低脉搏20
-//显示温度曲线
-// function showChart(){
-//   var contentTmpl = doT.template($api.text($api.byId('chart-tpl')));
-//   $api.html($api.byId('content'), contentTmpl({}));
-//   api.parseTapmode();
-//
-//   //设置canvas外部的宽高
-//   var btnHeight = $api.byId("weekBtn").offsetHeight;
-//   var frameWidth = api.frameWidth;
-//   var frameHeight = api.frameHeight;
-//   $("#mainDiv").css("width",frameWidth);
-//
-//   zr = zrender.init(document.getElementById('main'));
-//   //todo 请求具体数据
-//   //绘图准备
-//   currentFirstDate=null;
-//   currentDates.length=0;
-//   currentStartDate=null;
-//   currentEndDate=null;
-//   limitEndDate=null;
-//   setDate(new Date());
-//   draw();
-// }
+显示温度曲线
+function showChart(){
+  var contentTmpl = doT.template($api.text($api.byId('chart-tpl')));
+  $api.html($api.byId('content'), contentTmpl({}));
+  api.parseTapmode();
 
-//绘图逻辑
-// function draw(){
-//   zr.clear();
-//   zr.add(DrawUtil.drawXAxis());
-//   zr.add(DrawUtil.drawYAxis());
-//   zr.add(DrawUtil.drawXAxisSolid());
-//   zr.add(DrawUtil.drawYAxisSolid());
-//   zr.add(DrawUtil.drawXAxisText(currentDates));
-//   zr.add(DrawUtil.drawYAxisText());
-//   zr.add(DrawUtil.drawDesc());
-//   //根据请求回来的排序数据，判断体温还是脉搏，体温的情况判断是那种温度，然后画出对应的图形
-//
-//   //请求数据
-//   var person = $api.getStorage(storageKey.currentPerson);
-//   var requestUrl = config.nurseLogTZSJ; /*+ "?patientId="+person.id+"&limit=-1&beginTime="+currentStartDate+" 00:00:00&endTime="+currentEndDate+" 23:59:59";*/
-//   var currentSDate = currentStartDate+" 00:00:00";
-//   var currentEDate = currentEndDate+" 23:59:59";
-//   //alert("currentStartDate: "+currentStartDate+"currentEndDate: "+currentEndDate+"petientId: "+person.id);
-//   common.post({
-//     url:requestUrl,
-//     isLoading:true,
-//       data:JSON.stringify({
-//           patientId: person.id,
-//           limit: -1,
-//           templateList:[{"templateCode":"temperature","templateVersion":1}],
-//           beginTime:currentSDate,
-//           endTime:currentEDate
-//       }),
-//     success:function(ret){
-//       if(ret.content && ret.content.list && ret.content.list.length>0){
-//         var wdDatas=[];
-//         var mbDatas=[];
-//         for (var i = 0; i < ret.content.list.length; i++) {
-//           var data = {};
-//           var mbData = {};
-//           //type
-//           if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
-//             data["createTime"]=ret.content.list[i].createTime;
-//             for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
-//               if(ret.content.list[i].itemList[j].key=="temperature"){
-//                 data["type"]=0;
-//                 data["value"]=ret.content.list[i].itemList[j].value;
-//                 wdDatas.push(data);
-//               }else if(ret.content.list[i].itemList[j].key=="temperature1"){
-//                 data["type"]=1;
-//                 data["value"]=ret.content.list[i].itemList[j].value;
-//                 wdDatas.push(data);
-//               }else if(ret.content.list[i].itemList[j].key=="temperature2"){
-//                 data["type"]=2;
-//                 data["value"]=ret.content.list[i].itemList[j].value;
-//                 wdDatas.push(data);
-//               }else if(ret.content.list[i].itemList[j].key=="temperature3"){
-//                 data["type"]=3;
-//                 data["value"]=ret.content.list[i].itemList[j].value;
-//                 wdDatas.push(data);
-//               }
-//             }
-//           }//end if
-//           if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
-//             mbData["createTime"]=ret.content.list[i].createTime;
-//             for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
-//               if(ret.content.list[i].itemList[j].key=="pulse"){
-//                 mbData["type"]=4; //脉搏
-//                 mbData["value"]=ret.content.list[i].itemList[j].value;
-//                 mbDatas.push(mbData);
-//                 break;
-//               }
-//             }
-//           }//end if
-//         }//end for
-//         //计算温度的每个的坐标
-//         // console.log(JSON.stringify(wdDatas));
-//         // console.log(JSON.stringify(mbDatas));
-//         for (var i = 0; i < wdDatas.length; i++) {
-//           if(Number(wdDatas[i].value)-yWdLow>=0 && Number(wdDatas[i].value)-yWdLow <=8){
-//             wdDatas[i].y = DrawUtil.startY - (Number(wdDatas[i].value)-yWdLow)*DrawUtil.yWidth*5;
-//           }else{
-//             wdDatas.splice(i,1);
-//             i--;
-//             continue;
-//           }
-//
-//           var d1 = currentStartDate.replace(/\-/g, "/");
-//           var date1 = new Date(d1);
-//           var d2 = wdDatas[i].createTime.replace(/\-/g, "/");
-//           var date2 = new Date(d2);
-//           var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
-//           //console.log("minutes="+minutes);
-//           wdDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
-//         }
-//         //画图形
-//         for (var i = 0; i < wdDatas.length; i++) {
-//           if(wdDatas[i].type==0){
-//             zr.add(DrawUtil.drawX({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //腋温  type=0
-//           }else if(wdDatas[i].type==1){
-//             zr.add(DrawUtil.drawCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //口温 type=1
-//           }else if(wdDatas[i].type==2){
-//             zr.add(DrawUtil.drawPointCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //肛温 type=2
-//           }else if(wdDatas[i].type==3){
-//             zr.add(DrawUtil.drawIsogon({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //耳温 type=3
-//           }
-//         }
-//         //画连线
-//         for (var i = 0; i < wdDatas.length-1; i++) {
-//           var line = new zrender.Line({
-//             shape:{
-//               x1:wdDatas[i].x,
-//               y1:wdDatas[i].y,
-//               x2:wdDatas[i+1].x,
-//               y2:wdDatas[i+1].y
-//             },
-//             style:{
-//               stroke:'#000',
-//               lineWidth:1
-//             }
-//           });
-//           zr.add(line);
-//         }
-//         //计算脉搏的每个的坐标
-//         for (var i = 0; i < mbDatas.length; i++) {
-//           if(Number(mbDatas[i].value)-yMbLow>=0 && Number(mbDatas[i].value)-yMbLow <=160 ){
-//             mbDatas[i].y = DrawUtil.startY - (Number(mbDatas[i].value)-yMbLow)*75/20;
-//           }else{
-//             mbDatas.splice(i,1);
-//             i--;
-//             continue;
-//           }
-//           var d1 = currentStartDate.replace(/\-/g, "/");
-//           var date1 = new Date(d1);
-//           var d2 = mbDatas[i].createTime.replace(/\-/g, "/");
-//           var date2 = new Date(d2);
-//           var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
-//           mbDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
-//         }
-//         //console.log(JSON.stringify(wdDatas));
-//         //console.log(JSON.stringify(mbDatas));
-//         for (var i = 0; i < mbDatas.length; i++) {
-//             zr.add(DrawUtil.drawHollowCircle({x: mbDatas[i].x, y: mbDatas[i].y}, '#03a9f4')); //脉搏 type=4
-//         }
-//         for (var i = 0; i < mbDatas.length-1; i++) {
-//           var line = new zrender.Line({
-//             shape:{
-//               x1:mbDatas[i].x,
-//               y1:mbDatas[i].y,
-//               x2:mbDatas[i+1].x,
-//               y2:mbDatas[i+1].y
-//             },
-//             style:{
-//               stroke:'#e51c23',
-//               lineWidth:1
-//             }
-//           });
-//           zr.add(line);
-//         }
-//
-//         api.hideProgress();
-//       }else{
-//         api.hideProgress();
-//         api.toast({
-//             msg: '没有查询到数据',
-//             duration: 2000,
-//             location: 'bottom'
-//         });
-//       }
-//     }
-//   });
-// }
+  //设置canvas外部的宽高
+  var btnHeight = $api.byId("weekBtn").offsetHeight;
+  var frameWidth = api.frameWidth;
+  var frameHeight = api.frameHeight;
+  $("#mainDiv").css("width",frameWidth);
+
+  zr = zrender.init(document.getElementById('main'));
+  //todo 请求具体数据
+  //绘图准备
+  currentFirstDate=null;
+  currentDates.length=0;
+  currentStartDate=null;
+  currentEndDate=null;
+  limitEndDate=null;
+  setDate(new Date());
+  draw();
+}
+
+绘图逻辑
+function draw(){
+  zr.clear();
+  zr.add(DrawUtil.drawXAxis());
+  zr.add(DrawUtil.drawYAxis());
+  zr.add(DrawUtil.drawXAxisSolid());
+  zr.add(DrawUtil.drawYAxisSolid());
+  zr.add(DrawUtil.drawXAxisText(currentDates));
+  zr.add(DrawUtil.drawYAxisText());
+  zr.add(DrawUtil.drawDesc());
+  //根据请求回来的排序数据，判断体温还是脉搏，体温的情况判断是那种温度，然后画出对应的图形
+
+  //请求数据
+  var person = $api.getStorage(storageKey.currentPerson);
+  var requestUrl = config.nurseLogTZSJ; /*+ "?patientId="+person.id+"&limit=-1&beginTime="+currentStartDate+" 00:00:00&endTime="+currentEndDate+" 23:59:59";*/
+  var currentSDate = currentStartDate+" 00:00:00";
+  var currentEDate = currentEndDate+" 23:59:59";
+  //alert("currentStartDate: "+currentStartDate+"currentEndDate: "+currentEndDate+"petientId: "+person.id);
+  common.post({
+    url:requestUrl,
+    isLoading:true,
+      data:JSON.stringify({
+          patientId: person.id,
+          limit: -1,
+          templateList:[{"templateCode":"temperature","templateVersion":1}],
+          beginTime:currentSDate,
+          endTime:currentEDate
+      }),
+    success:function(ret){
+      if(ret.content && ret.content.list && ret.content.list.length>0){
+        var wdDatas=[];
+        var mbDatas=[];
+        for (var i = 0; i < ret.content.list.length; i++) {
+          var data = {};
+          var mbData = {};
+          //type
+          if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
+            data["createTime"]=ret.content.list[i].createTime;
+            for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
+              if(ret.content.list[i].itemList[j].key=="temperature"){
+                data["type"]=0;
+                data["value"]=ret.content.list[i].itemList[j].value;
+                wdDatas.push(data);
+              }else if(ret.content.list[i].itemList[j].key=="temperature1"){
+                data["type"]=1;
+                data["value"]=ret.content.list[i].itemList[j].value;
+                wdDatas.push(data);
+              }else if(ret.content.list[i].itemList[j].key=="temperature2"){
+                data["type"]=2;
+                data["value"]=ret.content.list[i].itemList[j].value;
+                wdDatas.push(data);
+              }else if(ret.content.list[i].itemList[j].key=="temperature3"){
+                data["type"]=3;
+                data["value"]=ret.content.list[i].itemList[j].value;
+                wdDatas.push(data);
+              }
+            }
+          }//end if
+          if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
+            mbData["createTime"]=ret.content.list[i].createTime;
+            for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
+              if(ret.content.list[i].itemList[j].key=="pulse"){
+                mbData["type"]=4; //脉搏
+                mbData["value"]=ret.content.list[i].itemList[j].value;
+                mbDatas.push(mbData);
+                break;
+              }
+            }
+          }//end if
+        }//end for
+        //计算温度的每个的坐标
+        // console.log(JSON.stringify(wdDatas));
+        // console.log(JSON.stringify(mbDatas));
+        for (var i = 0; i < wdDatas.length; i++) {
+          if(Number(wdDatas[i].value)-yWdLow>=0 && Number(wdDatas[i].value)-yWdLow <=8){
+            wdDatas[i].y = DrawUtil.startY - (Number(wdDatas[i].value)-yWdLow)*DrawUtil.yWidth*5;
+          }else{
+            wdDatas.splice(i,1);
+            i--;
+            continue;
+          }
+
+          var d1 = currentStartDate.replace(/\-/g, "/");
+          var date1 = new Date(d1);
+          var d2 = wdDatas[i].createTime.replace(/\-/g, "/");
+          var date2 = new Date(d2);
+          var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
+          //console.log("minutes="+minutes);
+          wdDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
+        }
+        //画图形
+        for (var i = 0; i < wdDatas.length; i++) {
+          if(wdDatas[i].type==0){
+            zr.add(DrawUtil.drawX({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //腋温  type=0
+          }else if(wdDatas[i].type==1){
+            zr.add(DrawUtil.drawCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //口温 type=1
+          }else if(wdDatas[i].type==2){
+            zr.add(DrawUtil.drawPointCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //肛温 type=2
+          }else if(wdDatas[i].type==3){
+            zr.add(DrawUtil.drawIsogon({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //耳温 type=3
+          }
+        }
+        //画连线
+        for (var i = 0; i < wdDatas.length-1; i++) {
+          var line = new zrender.Line({
+            shape:{
+              x1:wdDatas[i].x,
+              y1:wdDatas[i].y,
+              x2:wdDatas[i+1].x,
+              y2:wdDatas[i+1].y
+            },
+            style:{
+              stroke:'#000',
+              lineWidth:1
+            }
+          });
+          zr.add(line);
+        }
+        //计算脉搏的每个的坐标
+        for (var i = 0; i < mbDatas.length; i++) {
+          if(Number(mbDatas[i].value)-yMbLow>=0 && Number(mbDatas[i].value)-yMbLow <=160 ){
+            mbDatas[i].y = DrawUtil.startY - (Number(mbDatas[i].value)-yMbLow)*75/20;
+          }else{
+            mbDatas.splice(i,1);
+            i--;
+            continue;
+          }
+          var d1 = currentStartDate.replace(/\-/g, "/");
+          var date1 = new Date(d1);
+          var d2 = mbDatas[i].createTime.replace(/\-/g, "/");
+          var date2 = new Date(d2);
+          var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
+          mbDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
+        }
+        //console.log(JSON.stringify(wdDatas));
+        //console.log(JSON.stringify(mbDatas));
+        for (var i = 0; i < mbDatas.length; i++) {
+            zr.add(DrawUtil.drawHollowCircle({x: mbDatas[i].x, y: mbDatas[i].y}, '#03a9f4')); //脉搏 type=4
+        }
+        for (var i = 0; i < mbDatas.length-1; i++) {
+          var line = new zrender.Line({
+            shape:{
+              x1:mbDatas[i].x,
+              y1:mbDatas[i].y,
+              x2:mbDatas[i+1].x,
+              y2:mbDatas[i+1].y
+            },
+            style:{
+              stroke:'#e51c23',
+              lineWidth:1
+            }
+          });
+          zr.add(line);
+        }
+
+        api.hideProgress();
+      }else{
+        api.hideProgress();
+        api.toast({
+            msg: '没有查询到数据',
+            duration: 2000,
+            location: 'bottom'
+        });
+      }
+    }
+  });
+}
 
 var formatDate = function(date){
     var year = date.getFullYear();

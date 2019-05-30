@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/html/frm_huliwendang.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/frm_huliwendang.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_bszqtys.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_bszqtys.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/html/frm_tizhengshouji.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/frm_tizhengshouji.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/frm_huliwendang.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/frm_huliwendang.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/frm_tizhengshouji.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/frm_tizhengshouji.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,15 +19,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="497" column="19" selection-start-line="497" selection-start-column="14" selection-end-line="497" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_gczqtzs.html">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -41,30 +26,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_gk_wzhzhljld.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="791" column="62" lean-forward="true" selection-start-line="791" selection-start-column="62" selection-end-line="791" selection-end-column="62" />
+            <state relative-caret-position="15029">
+              <caret line="791" column="69" selection-start-line="791" selection-start-column="69" selection-end-line="791" selection-end-column="69" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="889">
-              <caret line="491" column="34" lean-forward="true" selection-start-line="491" selection-start-column="34" selection-end-line="491" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/widget/html/frm_huliwendang.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="91" column="21" lean-forward="true" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
+            <state relative-caret-position="1881">
+              <caret line="99" column="18" selection-start-line="99" selection-start-column="18" selection-end-line="99" selection-end-column="18" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#19;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#20;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_smtzjcjld.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="196" column="33" lean-forward="true" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
+            <state relative-caret-position="3724">
+              <caret line="196" column="33" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -82,7 +56,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_bszqtys.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
+            <state relative-caret-position="1672">
               <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
             </state>
           </provider>
@@ -91,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="706" column="69" lean-forward="true" selection-start-line="706" selection-start-column="69" selection-end-line="706" selection-end-column="69" />
+            <state relative-caret-position="13414">
+              <caret line="706" column="69" selection-start-line="706" selection-start-column="69" selection-end-line="706" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -109,8 +83,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2660">
-              <caret line="140" column="18" selection-start-line="140" selection-start-column="18" selection-end-line="140" selection-end-column="18" />
+            <state relative-caret-position="506">
+              <caret line="287" column="26" lean-forward="true" selection-start-line="287" selection-start-column="26" selection-end-line="287" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="696">
+              <caret line="309" column="59" lean-forward="true" selection-start-line="309" selection-start-column="59" selection-end-line="309" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="317">
+              <caret line="466" column="25" lean-forward="true" selection-start-line="466" selection-start-column="25" selection-end-line="466" selection-end-column="25" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,7 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add-tpl</find>
       <find>xueyang</find>
       <find>时间</find>
       <find>pgr</find>
@@ -157,6 +154,7 @@
       <find>下午</find>
       <find>template</find>
       <find>alert</find>
+      <find>showChart</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,7 +178,6 @@
         <option value="$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html" />
         <option value="$PROJECT_DIR$/widget/html/nurse/frm_nurse_gk_wzhzhljld.html" />
         <option value="$PROJECT_DIR$/widget/html/nurse/frm_hlywjmsyws.html" />
-        <option value="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html" />
         <option value="$PROJECT_DIR$/widget/script/config.js" />
         <option value="$PROJECT_DIR$/widget/login.html" />
         <option value="$PROJECT_DIR$/widget/script/frm_huliwendang.js" />
@@ -190,10 +187,13 @@
         <option value="$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js" />
         <option value="$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js" />
         <option value="$PROJECT_DIR$/widget/html/frm_huliwendang.html" />
+        <option value="$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html" />
+        <option value="$PROJECT_DIR$/widget/html/frm_tizhengshouji.html" />
+        <option value="$PROJECT_DIR$/widget/script/frm_tizhengshouji.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="936" />
     <option name="y" value="59" />
     <option name="width" value="975" />
@@ -204,6 +204,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -246,7 +247,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,18 +285,19 @@
       <workItem from="1558684853356" duration="3353000" />
       <workItem from="1558956634892" duration="179000" />
       <workItem from="1559002085425" duration="9614000" />
-      <workItem from="1559093555364" duration="2315000" />
+      <workItem from="1559093555364" duration="3587000" />
+      <workItem from="1559176007986" duration="756000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43792000" />
+    <option name="totallyTimeSpent" value="45820000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26865673" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23027718" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Project Explorer" order="3" />
@@ -537,53 +538,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8474">
-          <caret line="446" column="42" selection-start-line="446" selection-start-column="42" selection-end-line="446" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="42" column="54" selection-start-line="42" selection-start-column="50" selection-end-line="42" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_wcjyzqtzs.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji_his_detail.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3477">
-          <caret line="183" column="25" selection-start-line="183" selection-start-column="22" selection-end-line="183" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2660">
-          <caret line="140" column="18" selection-start-line="140" selection-start-column="18" selection-end-line="140" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_bszqtys.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="706" column="69" lean-forward="true" selection-start-line="706" selection-start-column="69" selection-end-line="706" selection-end-column="69" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/code.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -597,45 +556,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js">
+    <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
-          <caret line="497" column="19" selection-start-line="497" selection-start-column="14" selection-end-line="497" selection-end-column="19" />
+          <caret line="479" column="19" selection-start-line="479" selection-start-column="14" selection-end-line="479" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_zk_nurse_wzhzhljld.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5776">
+          <caret line="304" column="11" selection-start-line="304" selection-start-column="6" selection-end-line="304" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_gczqtzs.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="889">
-          <caret line="491" column="34" lean-forward="true" selection-start-line="491" selection-start-column="34" selection-end-line="491" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_gk_wzhzhljld.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="791" column="62" lean-forward="true" selection-start-line="791" selection-start-column="62" selection-end-line="791" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_smtzjcjld.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="196" column="33" lean-forward="true" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
+        <state relative-caret-position="15029">
+          <caret line="791" column="69" selection-start-line="791" selection-start-column="69" selection-end-line="791" selection-end-column="69" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/frm_huliwendang.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="91" column="21" lean-forward="true" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
+        <state relative-caret-position="1881">
+          <caret line="99" column="18" selection-start-line="99" selection-start-column="18" selection-end-line="99" selection-end-column="18" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#19;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#20;n#div#0;n#section#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_smtzjcjld.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3724">
+          <caret line="196" column="33" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_bszqtys.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13414">
+          <caret line="706" column="69" selection-start-line="706" selection-start-column="69" selection-end-line="706" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3477">
+          <caret line="183" column="25" selection-start-line="183" selection-start-column="22" selection-end-line="183" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_zlk_nurse_wzhzhljld_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="287" column="26" lean-forward="true" selection-start-line="287" selection-start-column="26" selection-end-line="287" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="309" column="59" lean-forward="true" selection-start-line="309" selection-start-column="59" selection-end-line="309" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="466" column="25" lean-forward="true" selection-start-line="466" selection-start-column="25" selection-end-line="466" selection-end-column="25" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
