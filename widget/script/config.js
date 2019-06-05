@@ -79,7 +79,7 @@ var config={
     nurLastExamineDownloadUrl: localServer+"/nur/nurseLog/lastExamine/download",  //护理信息
     medCostSituationDownloadUrl: localServer+"/med/cost/situation/downLoad",  //费用信息
     medPatientDetailsDownloadUrl: localServer+"/med/patient/details/download",  //病人详情
-    lqhlws:localServer+"/nur/nursePlan/selectPlanMenu", //根据登录用户疗区不同显示不同护理单
+    //lqhlws:localServer+"/nur/nursePlan/selectPlanMenu", //根据登录用户疗区不同显示不同护理单
 }
 
 var accessoryType={

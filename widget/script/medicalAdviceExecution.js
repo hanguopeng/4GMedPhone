@@ -152,7 +152,7 @@ var waitExecuteDoctorAdvice = function () {
     params.beginRequireExecuteTime = beginRequireExecuteTime;
     params.endRequireExecuteTime = endRequireExecuteTime;
     //alert(JSON.stringify(params))
-    //alert(JSON.stringify(params))
+    //alert(JSON.stringify(params));
     common.post({
         url: config.adviceExecute ,
         isLoading: true,
