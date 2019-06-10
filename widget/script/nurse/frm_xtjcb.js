@@ -64,10 +64,19 @@ function showXTLR(){
 //保存血糖录入
 function saveTZ(){
     //校验时间已经填写，并且是正确格式
+    var xyDate = $("#currentDate").val();
     var xytime = $("#currentTime").val();
+    if(! xyDate){
+        api.toast({
+            msg: '请输入测量日期',
+            duration: config.duration,
+            location: 'bottom'
+        });
+        return;
+    }
     if(! xytime){
         api.toast({
-            msg: '请输入创建时间',
+            msg: '请输入测量时间',
             duration: config.duration,
             location: 'bottom'
         });
@@ -81,7 +90,6 @@ function saveTZ(){
         });
         return;
     }
-    var xydate = $api.val($api.byId("currentDate"));
     var xuetang = $api.val($api.byId("xt-hs"));
     var huanzhezicexuetang = $api.val($api.byId("xt-zc"));
     var qianzi = $api.val($api.byId("hsqm"));
@@ -91,9 +99,12 @@ function saveTZ(){
     params.medTemplateId= 222;
     params.name = "血糖监测报表";
     params.huanzhezicexuetang = huanzhezicexuetang;
-    params.medTemplateVersion = 1;
+    // params.medTemplateVersion = 1;
     params.qianzi = qianzi;
     params.xuetang = xuetang;
+    params.xydate = xyDate;
+    params.xytime = xytime;
+    params.handleTime = xyDate + ' '+ xytime + ':00.000000';
 
     api.confirm({
         title: '提示',
