@@ -68,10 +68,10 @@
                 <div class="aui-list-item-input">
                     <!--<input id="tempVal" type="number">-->
                     <input id="temp-sw" type="number" class="aui-pull-left" style="width:47%"
-                           oninput="if(value.length>2)value=value.slice(0,2)" placeholder="请输入内容">
-                    <input id="temp-fw" type="number" class="aui-pull-right" style="width:47%;margin-left: 0.1rem;"
-                           oninput="if(value.length>1)value=value.slice(0,1)" placeholder="请输入内容">
-                    <input type="text" class="aui-pull-left" style="width:2%" value="." readOnly="true">
+                            placeholder="请输入内容">
+                    <!--<input id="temp-fw" type="number" class="aui-pull-right" style="width:47%;margin-left: 0.1rem;"-->
+                           <!--oninput="if(value.length>1)value=value.slice(0,1)" placeholder="请输入内容">-->
+                    <!--<input type="text" class="aui-pull-left" style="width:2%" value="." readOnly="true">-->
                 </div>
             </div>
         </li>
@@ -116,22 +116,30 @@
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    血压(mmHg)
+                    高血压(mmHg)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="bloodPressureLow" type="number" class="aui-pull-left" style="width:47%"
-                           oninput="if(value.length>3)value=value.slice(0,3)" placeholder="请输入内容">
-                    <input id="bloodPressureHigh" type="number" class="aui-pull-right"
+                    <input id="bloodPressureHigh" type="number" class="aui-pull-left"
                            style="width:47%;margin-left: 0.1rem;" oninput="if(value.length>3)value=value.slice(0,3)"
                            placeholder="请输入内容">
-                    <input type="text" class="aui-pull-right" style="width:2%" value="/" readOnly="true">
                 </div>
             </div>
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    痛感强度
+                    低血压(mmHg)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="bloodPressureLow" type="number" class="aui-pull-left" style="width:47%"
+                           oninput="if(value.length>3)value=value.slice(0,3)" placeholder="请输入内容">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    疼痛强度(分)
                 </div>
                 <div class="aui-list-item-input">
                     <input id="painIntensity" type="number" oninput="if(value.length>2)value=value.slice(0,2)"
@@ -306,6 +314,6 @@
 <script type="text/javascript" src="../script/aui-tab.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
 <script type="text/javascript" src="../script/zrender.min.js"></script>
-<!--<script type="text/javascript" src="../script/drawUtils.js"></script>-->
+<script type="text/javascript" src="../script/drawUtils.js"></script>
 <script type="text/javascript" src="../script/frm_tizhengshouji.js"></script>
 </html>

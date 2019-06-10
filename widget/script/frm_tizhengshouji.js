@@ -465,7 +465,7 @@ var currentEndDate=null;
 var limitEndDate = null;
 var yWdLow = 34; //最低体温34
 var yMbLow = 20; //最低脉搏20
-显示温度曲线
+//显示温度曲线
 function showChart(){
   var contentTmpl = doT.template($api.text($api.byId('chart-tpl')));
   $api.html($api.byId('content'), contentTmpl({}));
@@ -489,7 +489,7 @@ function showChart(){
   draw();
 }
 
-绘图逻辑
+//绘图逻辑
 function draw(){
   zr.clear();
   zr.add(DrawUtil.drawXAxis());
@@ -526,7 +526,7 @@ function draw(){
           var mbData = {};
           //type
           if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
-            data["createTime"]=ret.content.list[i].createTime;
+            data["handleTime"]=ret.content.list[i].handleTime;
             for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
               if(ret.content.list[i].itemList[j].key=="temperature"){
                 data["type"]=0;
@@ -544,11 +544,15 @@ function draw(){
                 data["type"]=3;
                 data["value"]=ret.content.list[i].itemList[j].value;
                 wdDatas.push(data);
+              } else if (ret.content.list[i].itemList[j].key=="temperature4") {
+                  data["type"]=5;
+                  data["value"]=ret.content.list[i].itemList[j].value;
+                  wdDatas.push(data);
               }
             }
           }//end if
           if(ret.content.list[i].itemList && ret.content.list[i].itemList.length>0){
-            mbData["createTime"]=ret.content.list[i].createTime;
+            mbData["handleTime"]=ret.content.list[i].handleTime;
             for (var j = 0; j < ret.content.list[i].itemList.length; j++) {
               if(ret.content.list[i].itemList[j].key=="pulse"){
                 mbData["type"]=4; //脉搏
@@ -573,11 +577,18 @@ function draw(){
 
           var d1 = currentStartDate.replace(/\-/g, "/");
           var date1 = new Date(d1);
-          var d2 = wdDatas[i].createTime.replace(/\-/g, "/");
+          var d2 = wdDatas[i].handleTime.replace(/\-/g, "/");
           var date2 = new Date(d2);
           var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
+            // alert("wdDatas[i].value"+wdDatas[i].value)
+            // alert(d1) //2019/05/27
+            // alert(date1) //
+            // alert(d2) //2019/05/28 11:33:51
+            // alert(date2) //
+            // alert(minutes) //2132.85
           //console.log("minutes="+minutes);
           wdDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
+            // alert( wdDatas[i].x)
         }
         //画图形
         for (var i = 0; i < wdDatas.length; i++) {
@@ -589,6 +600,8 @@ function draw(){
             zr.add(DrawUtil.drawPointCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //肛温 type=2
           }else if(wdDatas[i].type==3){
             zr.add(DrawUtil.drawIsogon({x: wdDatas[i].x, y: wdDatas[i].y}, '#03a9f4')); //耳温 type=3
+          }else if (wdDatas[i].type==5){
+            zr.add(DrawUtil.drawCircle({x: wdDatas[i].x, y: wdDatas[i].y}, '#ff3223')); //额温 type=5
           }
         }
         //画连线
@@ -610,7 +623,7 @@ function draw(){
         //计算脉搏的每个的坐标
         for (var i = 0; i < mbDatas.length; i++) {
           if(Number(mbDatas[i].value)-yMbLow>=0 && Number(mbDatas[i].value)-yMbLow <=160 ){
-            mbDatas[i].y = DrawUtil.startY - (Number(mbDatas[i].value)-yMbLow)*75/20;
+            mbDatas[i].y = DrawUtil.startY - (Number(mbDatas[i].value)-yMbLow)*75/30
           }else{
             mbDatas.splice(i,1);
             i--;
@@ -618,7 +631,7 @@ function draw(){
           }
           var d1 = currentStartDate.replace(/\-/g, "/");
           var date1 = new Date(d1);
-          var d2 = mbDatas[i].createTime.replace(/\-/g, "/");
+          var d2 = mbDatas[i].handleTime.replace(/\-/g, "/");
           var date2 = new Date(d2);
           var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
           mbDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth/(4*60);
