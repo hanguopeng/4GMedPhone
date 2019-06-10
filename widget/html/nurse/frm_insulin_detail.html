@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>胰岛素泵记录单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
+
+        .sel {
+            display: inline-block !important;
+            width: inherit !important;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+        }
+
+        table td,
+        table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+
+        table thead th {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+
+        table tr {
+            background: #fff;
+        }
+
+        .trActive {
+            background: #F5FAFA;
+        }
+
+        #category {
+            width: 250%;
+            display: inline;
+            white-space: nowrap;
+            overflow-x: scroll;
+            float: left;
+        }
+
+        #category li {
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            padding-left: 10px;
+        }
+
+        #category {
+            margin-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        #categoryy {
+            width: 340%;
+            display: inline;
+            white-space: nowrap;
+            overflow-x: scroll;
+            float: left;
+        }
+
+        #categoryy li {
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            padding-left: 10px;
+        }
+
+        #categoryy {
+            margin-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+        <div id="content" class="aui-content">
+        </div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <section class="aui-content">
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                    <div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>患者姓名:</span>
+                            <span>{{=it.person.name||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>性别:</span>
+                            <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>年龄:</span>
+                            <span>{{=it.person.age||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>科室名称:</span>
+                            <span>{{=it.person.organizationName||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>病案号:</span>
+                            <span>{{=it.person.medicalNumber||' '}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>床号:</span>
+                            <span>{{=it.person.medBedName||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>出生日期:</span>
+                            <span>{{=it.person.birthday||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>身份证号:</span>
+                            <span>{{=it.person.idNumber||'-'}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>民族:</span>
+                            <span>{{=it.person.nationName||'-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">患者用泵记录</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 aui-text-justify">
+                    <div class="center" style="overflow-x: scroll;overflow-y: auto;">
+                        <table width="90%" class="table aui-font-size-14" id="category">
+                          <caption>患者用泵记录表</caption>
+                            <thead>
+                                <tr>
+                                    <th>用泵时间</th>
+                                    <th>创建日期</th>
+                                    <th>护士签名</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                  <td>
+                                  {{=it.params.userTime||''}}
+                                  </td>
+                                  <td>
+                                    {{=it.params.handleTime||''}}
+                                  </td>
+                                  <td>
+                                    {{=it.params.nurseName||''}}
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="90%" class="table aui-font-size-14" id="category">
+                           <caption>胰岛素泵强化治疗剂量记录表</caption>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">日期</th>
+                                    <th rowspan="2">基础量</th>
+                                    <th colspan="3">餐前追加剂量</th>
+                                    <th rowspan="2">护士签名</th>
+                                </tr>
+                                <tr>
+                                  <th>早</th>
+                                  <th>午</th>
+                                  <th>晚</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jltbody">
+
+                            </tbody>
+                        </table>
+                        <table width="90%" class="table aui-font-size-14" id="categoryy">
+                          <caption>胰岛素泵血糖动态监测(单位：mmol/L)表</caption>
+                            <thead>
+                                <tr>
+                                    <th>日期时间</th>
+                                    <th>空腹</th>
+                                    <th>早餐前2小时</th>
+                                    <th>午餐前</th>
+                                    <th>午餐后2小时</th>
+                                    <th>晚餐前</th>
+                                    <th>晚餐后2小时</th>
+                                    <th>睡前</th>
+                                    <th>0点</th>
+                                    <th>3点</th>
+                                    <th>备注</th>
+                                    <th>护士签名</th>
+                                </tr>
+                            </thead>
+                            <tbody id="xtbody" >
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </section>
+</script>
+
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            胰岛素泵记录单
+        </div>
+        <!-- <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <input type="text" readonly onclick="pickerSearch();" placeholder="时间查询" id="dateRange">
+        </div>
+        <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
+    </div> -->
+        <div id="recordContent" class="recordContent">
+        </div>
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin('{{=info.id}}');">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+            </div>
+            {{~}}
+        </div>
+    </div>
+    {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        var id = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url: config.patientDetailUrl + person.id,
+            isLoading: true,
+            success: function(ret) {
+                common.get({
+                    url: config.selectInsulindetail + "?id="+id,
+                    isLoading: false,
+                    success: function(data) {
+                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                        var map = {};
+                      //map[data.content.itemList[i].key] = data.content.itemList[i].value;
+                        map.userTime = data.content.userTime;
+                        map.handleTime = data.content.handleTime;
+                        map.nurseName = data.content.nurseName;
+                        map.basedBoList = data.content.basedBoList;
+                        map.monitoringBoList = data.content.monitoringBoList;
+
+                        $api.html($api.byId('content'), contentTmpl({
+                            person: ret.content,
+                            params: map
+                        }));
+
+                         var contentTmpltb = doT.template($api.text($api.byId('content-tmplb')));
+                         $api.html($api.byId('jltbody'), contentTmpltb(map.basedBoList));
+
+                         var contentTmpltm = doT.template($api.text($api.byId('content-tmplm')));
+                         $api.html($api.byId('xtbody'), contentTmpltm(map.monitoringBoList));
+
+                        api.parseTapmode();
+                        var collapse = new auiCollapse({
+                            autoHide: false //是否自动隐藏已经展开的容器
+                        });
+                        api.hideProgress();
+
+                    }
+                });
+            }
+        });
+
+
+
+    };
+</script>
+
+<script id="content-tmplb" type="text/template">
+    {{for(var i=0;i< it.length;i++){
+        var item = it[i];
+    }}
+    <tr data-id="{{=item.id||''}}">
+        <td>{{=item.handleTime||''}}</td>
+        <td>{{=item.basedAmount||''}}</td>
+        <td>{{=item.moring||''}}</td>
+        <td>{{=item.noon||''}}</td>
+        <td>{{=item.night||''}}</td>
+        <td>{{=item.nurseName||''}}</td>
+    </tr>
+    {{ } }}
+</script>
+
+<script id="content-tmplm" type="text/template">
+    {{for(var i=0;i< it.length;i++){
+        var item = it[i];
+    }}
+    <tr data-id="{{=item.id||''}}">
+        <td>{{=item.handleTime||''}}</td>
+        <td>{{=item.stomach||''}}</td>
+        <td>{{=item.moring||''}}</td>
+        <td>{{=item.noonBefore||''}}</td>
+        <td>{{=item.noonAfter||''}}</td>
+        <td>{{=item.nightBefore||''}}</td>
+        <td>{{=item.nigntAfter||''}}</td>
+        <td>{{=item.sleepBefore||''}}</td>
+        <td>{{=item.zero||''}}</td>
+        <td>{{=item.three||''}}</td>
+        <td>{{=item.memo||''}}</td>
+        <td>{{=item.nurseName||''}}</td>
+    </tr>
+    {{ } }}
+</script>
+</html>

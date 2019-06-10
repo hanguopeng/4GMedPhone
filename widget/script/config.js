@@ -80,6 +80,11 @@ var config={
     medCostSituationDownloadUrl: localServer+"/med/cost/situation/downLoad",  //费用信息
     medPatientDetailsDownloadUrl: localServer+"/med/patient/details/download",  //病人详情
     //lqhlws:localServer+"/nur/nursePlan/selectPlanMenu", //根据登录用户疗区不同显示不同护理单
+    saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
+    saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
+    saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
+    selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
+    selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail",//胰岛素记录表详情
 }
 
 var accessoryType={
