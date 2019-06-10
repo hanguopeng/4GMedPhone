@@ -99,11 +99,11 @@ function saveTZ(){
     params.medTemplateId= 222;
     params.name = "血糖监测报表";
     params.huanzhezicexuetang = huanzhezicexuetang;
-    // params.medTemplateVersion = 1;
+    params.medTemplateVersion = 1;
     params.qianzi = qianzi;
     params.xuetang = xuetang;
     params.xydate = xyDate;
-    params.xytime = xytime;
+    params.xytime = xytime + ':00';
     params.handleTime = xyDate + ' '+ xytime + ':00.000000';
 
     api.confirm({
