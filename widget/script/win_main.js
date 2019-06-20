@@ -206,3 +206,59 @@ function backSystem(){
       name: 'win_system_grid'
   });
 }
+function toggleMenu(){
+    // 保留
+    // api.openFrame({
+    //     name: 'win_layer_menu',
+    //     bounces:false,
+    //     rect : {
+    //       x : 0,
+    //       y : 0,
+    //       w : 'auto',
+    //       h : 'auto'
+    //     },
+    //     bgColor:'rgba(255, 255, 255, 0.4)',
+    //     url: './frm_layer_menu.html'
+    // });
+    api.actionSheet({
+        cancelTitle: '取消',
+        buttons: ['扫描','搜索','首页']
+    }, function(ret, err){
+        if(ret.buttonIndex==1){
+            scanner.start({
+            },function(ret,err){
+                if(ret.status===1){
+                    var value = ret.value;
+                    var persons = $api.getStorage(storageKey.persons);
+                    //遍历查询
+                    for (var i = 0; i < persons.length; i++) {
+                        if(persons[i].id==value){
+                            api.sendEvent({
+                                name: eventName.personChoosed,
+                                extra: {
+                                    index: i
+                                }
+                            });
+                            return;
+                        }
+                    }
+                    api.alert({
+                        title: '提示',
+                        msg: '系统未管理此病人，请刷新后重试',
+                    });
+                }else if(ret.status===0){
+                    api.toast({
+                        msg: '超时或解码失败，请重试！',
+                        duration: config.duration,
+                        location: 'bottom'
+                    });
+                }
+            });
+        }else if(ret.buttonIndex==2){
+            openPersonSearchFrame();
+        }else if(ret.buttonIndex==3){
+            api.closeWin();
+        }
+    });
+
+}

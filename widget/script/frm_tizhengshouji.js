@@ -402,7 +402,7 @@ function showDetail(idx){
 //历史记录上拉加载更多的选项
 function loadMore(){
   //判断是不是第二个tab页面，是的话才走
-  if(currIdx!=2){
+  if(currIdx!=5){
     return;
   }
   showHis();

@@ -15,7 +15,7 @@
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item aui-active">体征采集</div>
         <div class="aui-tab-item">历史记录</div>
-        <div class="aui-tab-item">温度曲线</div>
+        <div class="aui-tab-item">批量录入</div>
     </div>
     <div id="content">
     </div>
@@ -27,7 +27,17 @@
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    创建日期
+                    测量人
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="name" type="text" readOnly="true" value="{{=it.createUserName}}">
+                </div>
+            </div>
+
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    测量日期
                 </div>
                 <div class="aui-list-item-input">
                     <input id="currentDate" type="text" readOnly="true" value="{{=it.currentDate}}">
@@ -37,7 +47,7 @@
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    创建时间
+                    测量时间
                 </div>
                 <div class="aui-list-item-input">
                     <input id="currentTime" type="time" placeholder="小时:分钟(02:11)" style="padding-top:0.7em;">
@@ -271,26 +281,52 @@
     </ul>
 </script>
 <script id="hisRecord-tpl" type="text/template">
-    <ul id="hisRecordList" class="aui-list aui-media-list">
-        {{~it.list:info:index}}
-        <li class="aui-list-item aui-list-item-middle" tapmode onclick="showDetail({{=index}})">
-            <div class="aui-media-list-item-inner">
-                <div class="aui-list-item-inner aui-list-item-arrow">
-                    <div class="aui-list-item-text">
-                        <div class="aui-list-item-title aui-font-size-14">{{=info.createUserName}}</div>
-                        <div class="aui-list-item-right">{{=info.handleTime || '-'}}</div>
-                    </div>
-                    <!--<div class="aui-list-item-text">
-                        {{=info._map['currentDate'] || '-'}}
-                    </div>-->
-                </div>
-                <div id="content-{{=index}}" class="aui-hide">
-                    {{= JSON.stringify(info)}}
-                </div>
-            </div>
-        </li>
-        {{~}}
-    </ul>
+    <div class="center" style="overflow-x: scroll;overflow-y: auto;">
+        <table  class="table aui-font-size-14">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>时间</th>
+                <th>录入人</th>
+                <th>体温</th>
+                <th>呼吸</th>
+                <th>脉搏</th>
+                <th>心率</th>
+                <th>血压</th>
+                <th>痛感强度</th>
+                <th>大便</th>
+                <th>小便</th>
+                <th>尿量</th>
+                <th>总入量</th>
+                <th>总出量</th>
+                <th>身高</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <!--<ul id="hisRecordList" class="aui-list aui-media-list">-->
+        <!--{{~it.list:info:index}}-->
+        <!--<li class="aui-list-item aui-list-item-middle" tapmode onclick="showDetail({{=index}})">-->
+            <!--<div class="aui-media-list-item-inner">-->
+                <!--<div class="aui-list-item-inner aui-list-item-arrow">-->
+                    <!--<div class="aui-list-item-text">-->
+                        <!--<div class="aui-list-item-title aui-font-size-14">{{=info.createUserName}}</div>-->
+                        <!--<div class="aui-list-item-right">{{=info.handleTime || '-'}}</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="aui-list-item-text">-->
+                        <!--{{=info._map['currentDate'] || '-'}}-->
+                    <!--</div>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div id="content-{{=index}}" class="aui-hide">-->
+                    <!--{{= JSON.stringify(info)}}-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</li>-->
+        <!--{{~}}-->
+    <!--</ul>-->
 </script>
 <script id="chart-tpl" type="text/template">
     <div id="weekBtn" class="aui-row">

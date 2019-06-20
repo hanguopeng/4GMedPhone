@@ -35,31 +35,48 @@
     </footer>
 </body>
 <script id="header-tpl" type="text/template">
-  <div class="leftChooseIcon" tapmode onclick="prePerson()">
-      <img src="../image/u29318.png" >
-  </div>
-  <div class="personImg aui-margin-l-15" tapmode onclick="openFrameContent('frm_person_center')">
-  {{? it.person.sex=="1"}}
-      <img src="../image/u64.png">
-  {{??}}
-      <img src="../image/u37.png">
-  {{?}}
-  </div>
-  <div class="rightChooseIcon aui-margin-l-15" tapmode onclick="nextPerson()">
-      <img src="../image/u29318.png">
-  </div>
-  <div class="personInfo aui-margin-l-15 aui-padded-t-5 aui-padded-b-5" style="width:7rem;">
-      <div class="topInfo aui-font-size-12 aui-ellipsis-1">
-          <span>{{=it.person.medBedName || it.person.med_bed_name || '--'}}床</span>
-          <span>{{=it.person.name || '--'}}</span>
+  <!--<div class="leftChooseIcon" tapmode onclick="prePerson()">-->
+      <!--<img src="../image/u29318.png" >-->
+  <!--</div>-->
+  <!--<div class="personImg aui-margin-l-15" tapmode onclick="openFrameContent('frm_person_center')">-->
+  <!--{{? it.person.sex=="1"}}-->
+      <!--男&lt;!&ndash;<img src="../image/u64.png">&ndash;&gt;-->
+  <!--{{??}}-->
+      <!--女&lt;!&ndash;<img src="../image/u37.png">&ndash;&gt;-->
+  <!--{{?}}-->
+  <!--</div>-->
+  <!--<div class="rightChooseIcon aui-margin-l-15" tapmode onclick="nextPerson()">-->
+      <!--<img src="../image/u29318.png">-->
+  <!--</div>-->
+  <div class="personInfo aui-margin-l-15 aui-padded-t-5 aui-padded-b-5" onclick="openFrameContent('frm_person_center')">
+      <div class="topInfo aui-font-size-20 aui-ellipsis-1">
+          <span >{{=it.person.medBedName || it.person.med_bed_name || '--'}}床 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span>{{=it.person.name || '--'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span tapmode onclick="openFrameContent('frm_person_center')">
+              {{? it.person.sex=="1"}}
+                  男<!--<img src="../image/u64.png">-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              {{??}}
+                  女<!--<img src="../image/u37.png">-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              {{?}}
+          </span>
+          <span>
+              {{? it.person.nurse_level_code=="A" || it.person.nurseLevelCode=="A"}}
+              <span>特级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {{?? it.person.nurse_level_code=="B" || it.person.nurseLevelCode=="B"}}
+              <span>一级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {{?? it.person.nurse_level_code=="C" || it.person.nurseLevelCode=="C"}}
+              <span>二级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {{?? it.person.nurse_level_code=="D" || it.person.nurseLevelCode=="D"}}
+              <span>三级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {{?}}
+          </span>
       </div>
-      <div class="bottomInfo aui-font-size-12 aui-ellipsis-1">
-          <span>{{=it.person.age || '--'}}</span>
-          <span>({{=it.person.costType || it.person.costType || '--'}})</span>
-      </div>
+      <!--<div class="bottomInfo aui-font-size-12 aui-ellipsis-1">-->
+
+      <!--</div>-->
   </div>
-  <div class="aui-pull-right" style="line-height:3.5rem" tapmode onclick="toggleMenu();">
-      <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1rem;"></span>
+  <div class="aui-pull-right" tapmode onclick="toggleMenu();">
+      <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1.2rem;"></span>
   </div>
   <!-- <div class="homeIcon aui-padded-l-10" tapmode onclick="openPersonSearchFrame();">
       <span class="aui-iconfont aui-icon-search" style="font-size:1.5rem;color:white;"></span>
