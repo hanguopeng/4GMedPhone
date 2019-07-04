@@ -49,7 +49,7 @@
       <!--<img src="../image/u29318.png">-->
   <!--</div>-->
   <div class="personInfo aui-margin-l-15 aui-padded-t-5 aui-padded-b-5" onclick="openFrameContent('frm_person_center')">
-      <div class="topInfo aui-font-size-20 aui-ellipsis-1">
+      <div class="topInfo aui-font-size-15 aui-ellipsis-1">
           <span >{{=it.person.medBedName || it.person.med_bed_name || '--'}}床 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span>{{=it.person.name || '--'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span tapmode onclick="openFrameContent('frm_person_center')">
@@ -59,6 +59,7 @@
                   女<!--<img src="../image/u37.png">-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               {{?}}
           </span>
+          <span>{{=it.person.age || '--'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span>
               {{? it.person.nurse_level_code=="A" || it.person.nurseLevelCode=="A"}}
               <span>特级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

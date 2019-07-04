@@ -170,10 +170,24 @@ html,body{
     color:#000;
     float: right;
 }
-/*.bedContainer .topBenNum .itemStatusIcon{*/
-    /*float: right;*/
-/*}*/
-/*.bedContainer .topBenNum .itemStatusIcon .te{*/
+.bedContainer .topBenNum .itemStatusIcon{
+    float: right;
+}
+.bedContainer .topBenNum .itemStatusIcon .te{
+    border-top: 25px solid blueviolet;
+    border-left:25px solid transparent;
+    /*color: #fff;*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    padding: 0rem;
+    width: 1.08rem;
+    height: 1.08rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
     /*color: #fff;*/
     /*position: absolute;*/
     /*right: 0.25rem;*/
@@ -190,26 +204,38 @@ html,body{
     /*height: 1.2rem;*/
     /*font-size: 0.6rem;*/
     /*line-height: 0.6rem;*/
-/*}*/
-/*.bedContainer .topBenNum .itemStatusIcon .th{*/
+}
+.bedContainer .topBenNum .itemStatusIcon .th{
+    border-top: 25px solid red;
+    border-left:25px solid transparent;
     /*color: #fff;*/
-    /*position: absolute;*/
-    /*right: 0.25rem;*/
-    /*top: 0.2rem;*/
-    /*vertical-align: top;*/
-    /*display: inline-block;*/
-    /*background-color: #E6A23C;;*/
-    /*text-align: center;*/
-    /*-webkit-border-radius: 50%;*/
-    /*-moz-border-radius: 50%;*/
-    /*border-radius: 50%;*/
-    /*padding: 0.25rem;*/
-    /*width: 1.2rem;*/
-    /*height: 1.2rem;*/
-    /*font-size: 0.6rem;*/
-    /*line-height: 0.6rem;*/
-/*}*/
-/*.bedContainer .topBenNum .itemStatusIcon .er{*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    padding: 0rem;
+    width: 1.08rem;
+    height: 1.08rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+}
+.bedContainer .topBenNum .itemStatusIcon .er{
+    border-top: 25px solid green;
+    border-left:25px solid transparent;
+    /*color: #fff;*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    padding: 0rem;
+    width: 1.08rem;
+    height: 1.08rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
     /*color: #fff;*/
     /*position: absolute;*/
     /*right: 0.25rem;*/
@@ -226,8 +252,22 @@ html,body{
     /*height: 1.2rem;*/
     /*font-size: 0.6rem;*/
     /*line-height: 0.6rem;*/
-/*}*/
-/*.bedContainer .topBenNum .itemStatusIcon .san{*/
+}
+.bedContainer .topBenNum .itemStatusIcon .san{
+    border-top: 25px solid purple;
+    border-left:25px solid transparent;
+    /*color: #fff;*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    padding: 0rem;
+    width: 1.08rem;
+    height: 1.08rem;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
     /*color: #fff;*/
     /*position: absolute;*/
     /*right: 0.25rem;*/
@@ -244,7 +284,7 @@ html,body{
     /*height: 1.2rem;*/
     /*font-size: 0.6rem;*/
     /*line-height: 0.6rem;*/
-/*}*/
+}
 
 .bedContainer .bedItem{
     border: 2px solid #ccc;

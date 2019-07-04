@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body style="border: 2px dashed #23f8e5">
+<body>
   <div class="searchConditionContainer aui-padded-l-15 aui-padded-r-15 flex">
       <div class="flex-item flex">
           <div class="checkboxContainer">
@@ -64,7 +64,7 @@
           </select>
       </div>
   </div>
-  <div class="searchConditionContainer aui-padded-l-15 aui-padded-r-15 flex" style="border-bottom-color: #23f8e5;border-bottom-style: dashed;border-bottom-width: 1px">
+  <div class="aui-padded-l-15 aui-padded-r-15 flex" style="border-bottom-color: #ccc;border-bottom-style: dashed;border-bottom-width: 1px">
       <div>在院患者()</div>
       <div>空床()</div>
       <div>发热()</div>
@@ -101,23 +101,21 @@
   {{?}}
   <div class="bedItem flex-item1" tapmode onclick="openPersonCenter({{= index }})">
       <div class="topBenNum">
-          <div>
-              &nbsp
-          </div>
           <span class="bedNumTxt">{{= info.medBedName}}床</span>
-          <span class="bedNumTxt" style="float: right">{{= info.name || '-' }}</span>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          <span class="bedNumTxt" >{{= info.name || '-' }}</span>
+          <sapn class="itemStatusIcon aui-margin-r-5" style="float: right">
+              {{? info.nurse_level_code=="A" || info.nurseLevelCode=="A"}}
+              <span class="te"></span>
+              {{?? info.nurse_level_code=="B" || info.nurseLevelCode=="B"}}
+              <span class="th"></span>
+              {{?? info.nurse_level_code=="C" || info.nurseLevelCode=="C"}}
+              <span class="er"></span>
+              {{?? info.nurse_level_code=="D" || info.nurseLevelCode=="D"}}
+              <span class="san"></span>
+              {{?}}
+          </sapn>
           <!--<div class="aui-font-size-12 person-name-weight">{{= info.name || '-' }}</div>-->
-          <!--<div class="itemStatusIcon aui-margin-r-5">-->
-              <!--{{? info.nurse_level_code=="A" || info.nurseLevelCode=="A"}}-->
-              <!--<span class="te">特</span>-->
-              <!--{{?? info.nurse_level_code=="B" || info.nurseLevelCode=="B"}}-->
-              <!--<span class="th">I</span>-->
-              <!--{{?? info.nurse_level_code=="C" || info.nurseLevelCode=="C"}}-->
-              <!--<span class="er">II</span>-->
-              <!--{{?? info.nurse_level_code=="D" || info.nurseLevelCode=="D"}}-->
-              <!--<span class="san">III</span>-->
-              <!--{{?}}-->
-          <!--</div>-->
       </div>
       <!--<div class="bedContentContainer flex">-->
           <!--<div class="personImg aui-col-xs-5">-->
@@ -138,7 +136,7 @@
       <!--</div>-->
       <div class="bedContentContainer aui-font-size-15">
           <span style="width: 3rem;margin-left: 0.5rem;">{{=info.registerNumber || '-'}}</span>
-          <span style="width: 2rem;margin-left: 3rem;color: #2e20ff">{{? info.sex=="1"}}
+          <span style="width: 2rem;margin-left: 1rem;color: #2e20ff">{{? info.sex=="1"}}
               男
               {{??}}
               女
