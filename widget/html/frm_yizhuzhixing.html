@@ -491,15 +491,15 @@
         </tr>
         </thead>
         <tbody id="tbody">
-        {{ for(var i=0;i<15;i++){
-
+        {{for(var i=0;i<it.list.length;i++) {
+         var item = it.list[i];
         }}
         <tr>
-            <td>李红</td>
-            <td>2019-06-25 15:35:12</td>
-            <td>输液</td>
-            <td>张三</td>
-            <td>++++08</td>
+            <td>{{=item.nurseName}}</td>
+            <td>{{=item.inspectionTime}}</td>
+            <td>{{=item.inspectionType}}</td>
+            <td>{{=item.patientName}}</td>
+            <td>{{=item.medBedName}}</td>
         </tr>
         {{ } }}
         </tbody>
@@ -525,7 +525,7 @@
                  <select class="select" id="inspectionTypeId">
                      {{
                         if(it.list){
-                            for(var i=0;i<=it.list.length-1;i++) {
+                            for(var i=0;i<it.list.length;i++) {
                             var item = it.list[i];
                             }}
                         <option value="{{=item.id}}">{{=item.text}}</option>

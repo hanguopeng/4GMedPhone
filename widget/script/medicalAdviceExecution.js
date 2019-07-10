@@ -252,23 +252,17 @@ var closeAdviceExecuteDetail = function (obj) {
  */
 var tourRecords = function () {
     common.get({
-        url: config.skinTestQuery + patientId ,
+        url: config.inspectionQuery + patientId + '/' + $api.getStorage(storageKey.userId) ,
         isLoading: true,
         success: function (ret) {
-            $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
-            $api.html($api.byId('tourRecordsContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
-            $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(testData.content));
-            // if(ret&&ret.content&&ret.content.length>0){
-            //     $api.removeCls($api.dom($api.byId('tour_records'), '#tourRecords-result'), 'active');
-            //     $api.html($api.byId('tourRecordsContentContainer'), "");
-            //     var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
-            //     $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(ret.content));
-            //     alert(JSON.stringify(ret.content))
-            // }
+            if(ret&&ret.content&&ret.content.list.length>0){
+                $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
+                $api.html($api.byId('tourRecordsContentContainer'), "");
+                var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
+                $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(ret.content));
+            }
         }
     });
-    //alert(config.adviceExecute + patientId +"&skinTestFlag=true"+queryParam)
 };
 
 var paddingInputTourRecords = function () {
@@ -305,10 +299,7 @@ var paddingInputTourRecords = function () {
 var tourRecordsExecute = function () {
     var inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
     var inspectionMemo = $api.val($api.byId('inspectionMemo'));
-    console.log(inspectionTypeId)
-    console.log(inspectionMemo)
     var inspectionTime = $api.val($api.byId('inspectionTime'));
-    var nurseName = $api.val($api.byId('nurseName'));
     common.post({
         url: config.inspectionSave,
         data: {
@@ -317,7 +308,7 @@ var tourRecordsExecute = function () {
             medBedId: person.medBedId,
             medBedName: person.medBedName,
             nurseId: $api.getStorage(storageKey.userId),
-            nurseName: nurseName,
+            nurseName: $api.getStorage(storageKey.userName),
             inspectionTime: inspectionTime,
             inspectionTypeId: inspectionTypeId,
             inspectionMemo: inspectionMemo
