@@ -88,6 +88,7 @@ var config={
     // 20190709
     patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
     inspectionSave:localServer+"/med/inspection/inspectionSave", //执行记录保存
+    inspectionQuery:localServer+"/med/inspection/inspectionQuery/", //执行记录保存
 }
 
 var accessoryType={
