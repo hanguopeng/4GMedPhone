@@ -76,7 +76,7 @@
     </style>
 </head>
 <body style="background-color:#F0F0F0">
-  <header id="searchHeader" class="aui-bar aui-bar-nav" style="position:fixed;background-color:#67c23a !important;">
+  <header id="searchHeader" class="aui-bar aui-bar-nav" style="position:fixed;background-color:#004783 !important;">
     <div class="aui-title">患者列表</div>
     <div id="header-left" class="aui-pull-right" tapmode="active" onclick="closeCurrentFrame()">
       <i class="aui-iconfont aui-icon-close" ></i>
@@ -106,18 +106,6 @@
       </div>
     </div>
   </section>
-  <div class="aui-content">
-    <nav>
-    <ul id="personList" style="color: #08bad6;">
-        <!-- <li class="arrowD " tapmode="liActive" onclick="openMenu(this)">xxx科室</li> -->
-        <!-- <li class="menu aui-hide"> -->
-        <li class="menu">
-            <div id="searchList">
-            </div>
-        </li>
-    </ul>
-</nav>
-  </div>
 </body>
 <script id="persons-tpl" type="text/template">
   {{~it:info:index}}
@@ -215,12 +203,21 @@
   }
 
   function switchPerson(idx){
-    api.sendEvent({
-        name: eventName.personChoosed,
-        extra: {
-            index: idx
-        }
-    });
+      var allPersons = $api.getStorage(storageKey.persons);
+      var person = allPersons[idx];
+      $api.setStorage(storageKey.currentPerson, person);
+      $api.setStorage(storageKey.currentIdx, idx); //左右箭头的时候需要
+      $api.setStorage(storageKey.lastIdx, allPersons.length - 1); //设置最后一个索引的大小，length-1
+
+      api.openWin({
+          name: "win_person_center",
+          bounces: false,
+          slidBackEnabled: false,
+          reload: true,
+          url: '../html/win_person_center.html',
+          vScrollBarEnabled: true,
+          hScrollBarEnabled: false
+      });
     closeCurrentFrame();
   }
 

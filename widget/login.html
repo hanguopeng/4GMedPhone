@@ -60,7 +60,7 @@
                     <i class="aui-iconfont aui-icon-my"></i>
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="userName"  type="text" value="dongyingying" placeholder="请输入用户名">
+                    <input id="userName"  type="text" value="lihong" placeholder="请输入用户名">
                 </div>
             </div>
         </li>
@@ -77,25 +77,11 @@
             </div>
         </li>
     </ul>
-    <!-- <ul class="aui-list aui-form-list aui-margin-t-15">
-        <li class="aui-list-item" >
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label-icon">
-                    <i class="aui-iconfont aui-icon-info"></i>
-                </div>
-                <div class="aui-list-item-input">
-                    <select id="keShi">
-                        <option value="" disabled="true" selected="selected" style='display:none;'>请选择科室</option>
-                        <option value="1">产科</option>
-                        <option value="1">骨科</option>
-                    </select>
-                </div>
-            </div>
-        </li>
-    </ul> -->
     <div class="aui-row aui-padded-5 operatorContainer">
-        <div>
-            记住用户名 <input id="remMe" type="checkbox" class="aui-switch" style="margin-top: 0.4rem;">
+        <div style="color: white;float: left; padding-left: 20%" onclick="">注册
+        </div>
+        <div style="color: white;float: right;">
+            <input id="remMe" style="margin-top: 0.4rem;" type="checkbox">记住用户名
         </div>
     </div>
     <div class="aui-row">
@@ -113,24 +99,15 @@
     var fs;
     var scanner;
     apiready = function() {
-        //alert('加载开始')
         UIActionProgress = api.require('UIActionProgress');
         fs = api.require('fs');
         scanner = api.require('cmcScan');
-        //alert('login')
-        //login()
-        //alert('scanner')
         scanner.open();
-
-        //alert('监听加载开始')
         api.addEventListener({
             name: 'scanEvent'
         }, function(ret, err) {
-            //alert(ret)
             if (ret) {
-                //alert(JSON.stringify(ret));
                 if (ret.value.status===1){
-                    //alert(ret.value);
                     const value = ret.value.value;
                     //获取用户设备id
                     const deviceId = api.deviceId;
@@ -178,10 +155,8 @@
                     });
                 }
             } else {
-                //alert(JSON.stringify(err));
             }
         });
-        //alert('监听加载结束')
         api.setScreenOrientation({
             orientation : 'auto_portrait'
         });
@@ -511,7 +486,6 @@
     }
     // 我觉得直接start就可以，剩下的由监听做，但是不知道行不行
     function scanLogin(){
-        //lert("进来了")
         scanner.start();
     }
 </script>

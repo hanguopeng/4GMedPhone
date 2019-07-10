@@ -1,45 +1,10 @@
 var fs;
-var scanner;
 apiready = function() {
   fs = api.require('fs');
-  scanner = api.require('cmcScan');
   api.parseTapmode();
   getUserInfo();
-
   var header = document.querySelector('#header');
   immersive(header);
-  
-  scanner.open();
-    api.addEventListener({
-        name: 'scanEvent'
-    }, function(ret,err){
-        if(ret.value.status===1){
-            var value = ret.value.value;
-            var persons = $api.getStorage(storageKey.persons);
-            //遍历查询
-            for (var i = 0; i < persons.length; i++) {
-                if(persons[i].id==value){
-                    api.sendEvent({
-                        name: "scanSuccess",
-                        extra: {
-                            index: i
-                        }
-                    });
-                    return;
-                }
-            }
-            api.alert({
-                title: '提示',
-                msg: '系统未管理此病人，请刷新后重试',
-            });
-        }else if(ret.status===0){
-            api.toast({
-                msg: '超时或解码失败，请重试！',
-                duration: config.duration,
-                location: 'bottom'
-            });
-        }
-    });
 };
 
 function immersive(header) {
@@ -160,53 +125,12 @@ function sendAreaChangedEvent() {
         }
     });
 }
-
-//打开扫描
-function scan(){
-  scanner.start();
-    api.addEventListener({
-        name : 'keyback'
-    }, function(ret, err) {
-        scanner.stop();
-        api.closeWin();
-    });
- /*   scanner.start({
-    },function(ret,err){
-        if(ret.status===1){
-            var value = ret.value;
-            var persons = $api.getStorage(storageKey.persons);
-            //遍历查询
-            for (var i = 0; i < persons.length; i++) {
-                if(persons[i].id==value){
-                    api.sendEvent({
-                        name: "scanSuccess",
-                        extra: {
-                            index: i
-                        }
-                    });
-                    return;
-                }
-            }
-            api.alert({
-                title: '提示',
-                msg: '系统未管理此病人，请刷新后重试',
-            });
-        }else if(ret.status===0){
-            api.toast({
-                msg: '超时或解码失败，请重试！',
-                duration: config.duration,
-                location: 'bottom'
-            });
-        }
-    });*/
-}
-
 function backSystem(){
   api.closeToWin({
       name: 'win_system_grid'
   });
 }
-function toggleMenu(){
+function toggleMenu(daList){
     // 保留
     // api.openFrame({
     //     name: 'win_layer_menu',
@@ -222,43 +146,69 @@ function toggleMenu(){
     // });
     api.actionSheet({
         cancelTitle: '取消',
-        buttons: ['扫描','搜索','首页']
+        buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
     }, function(ret, err){
         if(ret.buttonIndex==1){
-            scanner.start({
-            },function(ret,err){
-                if(ret.status===1){
-                    var value = ret.value;
-                    var persons = $api.getStorage(storageKey.persons);
-                    //遍历查询
-                    for (var i = 0; i < persons.length; i++) {
-                        if(persons[i].id==value){
-                            api.sendEvent({
-                                name: eventName.personChoosed,
-                                extra: {
-                                    index: i
-                                }
-                            });
-                            return;
-                        }
-                    }
-                    api.alert({
-                        title: '提示',
-                        msg: '系统未管理此病人，请刷新后重试',
-                    });
-                }else if(ret.status===0){
-                    api.toast({
-                        msg: '超时或解码失败，请重试！',
-                        duration: config.duration,
-                        location: 'bottom'
-                    });
-                }
-            });
+            scanner.start();
         }else if(ret.buttonIndex==2){
             openPersonSearchFrame();
         }else if(ret.buttonIndex==3){
             api.closeWin();
+        }else if(ret.buttonIndex==4){
+            newDocAdvice();
         }
     });
+}
 
+//打开病人查询页面
+function openPersonSearchFrame(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'frm_person_search',
+        url: './frm_person_search.html',
+        rect: {
+            x: api.winWidth-300,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
+}
+//新开医嘱列表
+function newDocAdvice(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'new_doctor_advice',
+        url: './new_doctor_advice.html',
+        rect: {
+            x: api.winWidth-300,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
 }

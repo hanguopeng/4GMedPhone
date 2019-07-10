@@ -10,7 +10,7 @@ var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
     loginUrl: localServer+"/sys/login", //登录
-    dictUrl: localServer+"/sys/dictionary/getComboBoxList",
+    dictUrl: localServer+"/sys/dictionary/getComboBoxList", // 通用字段值查询
     loginUserInfoUrl: localServer+"/personnel/detailByOperator", //登陆人员信息
     organizationUrl: localServer+"/sys/organization/listByOperator", //疗区查询
     patientSearchUrl: localServer+"/med/patient", //病人查询
@@ -85,6 +85,9 @@ var config={
     saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
     selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
     selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail",//胰岛素记录表详情
+    // 20190709
+    patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
+    inspectionSave:localServer+"/med/inspection/inspectionSave", //执行记录保存
 }
 
 var accessoryType={

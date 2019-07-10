@@ -1,16 +1,125 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var patientId = person.id;
 var page = 1;
-// var db;
-
+var changePatient = true  //切换病人
 apiready = function () {
     api.parseTapmode();
-    // db = api.require('db');
-    loadJCST();
-
+    loadJCST()
+    api.OnscanEvent=function(ret,err){
+        if(ret.value.status===1){
+            if (changePatient){
+                var value = ret.value.value;
+                var persons = $api.getStorage(storageKey.persons);
+                //遍历查询
+                for (var i = 0; i < persons.length; i++) {
+                    if(persons[i].id==value){
+                        api.sendEvent({
+                            name: "scanSuccess",
+                            extra: {
+                                index: i
+                            }
+                        });
+                        return;
+                    }
+                }
+                api.alert({
+                    title: '提示',
+                    msg: '系统未管理此病人，请刷新后重试11111',
+                });
+            } else{
+                var value = ret.value.value;
+                changePatient = true
+                if(value == patientId){
+                    common.get({
+                        url: config.patientSaveUrl + patientId + '/' + person.homepageId,
+                        isLoading: true,
+                        text: "正在保存...",
+                        success: function (ret) {
+                            api.hideProgress();
+                            api.alert({
+                                title: '提示',
+                                msg: ret.content,
+                            }, function (ret, err) {
+                                loadJCST()
+                            });
+                        }
+                    });
+                }else{
+                    api.alert({
+                        title: '提示',
+                        msg: '扫描到的患者与当前患者不是同一个人',
+                    }, function (ret, err) {
+                        loadJCST()
+                    });
+                }
+            }
+        }else if(ret.status===0){
+            api.toast({
+                msg: '超时或解码失败，请重试！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+        }
+    };
+    // api.addEventListener({
+    //     name: 'scanEvent'
+    // }, function(ret,err){
+    //     if(ret.value.status===1){
+    //         if (changePatient){
+    //             var value = ret.value.value;
+    //             var persons = $api.getStorage(storageKey.persons);
+    //             //遍历查询
+    //             for (var i = 0; i < persons.length; i++) {
+    //                 if(persons[i].id==value){
+    //                     api.sendEvent({
+    //                         name: "scanSuccess",
+    //                         extra: {
+    //                             index: i
+    //                         }
+    //                     });
+    //                     return;
+    //                 }
+    //             }
+    //             api.alert({
+    //                 title: '提示',
+    //                 msg: '系统未管理此病人，请刷新后重试11111',
+    //             });
+    //         } else{
+    //             var value = ret.value.value;
+    //             changePatient = true
+    //             if(value == patientId){
+    //                 common.get({
+    //                     url: config.patientSaveUrl + patientId + '/' + person.homepageId,
+    //                     isLoading: true,
+    //                     text: "正在保存...",
+    //                     success: function (ret) {
+    //                         api.hideProgress();
+    //                         api.alert({
+    //                             title: '提示',
+    //                             msg: ret.content,
+    //                         }, function (ret, err) {
+    //                             loadJCST()
+    //                         });
+    //                     }
+    //                 });
+    //             }else{
+    //                 api.alert({
+    //                     title: '提示',
+    //                     msg: '扫描到的患者与当前患者不是同一个人',
+    //                 }, function (ret, err) {
+    //                     loadJCST()
+    //                 });
+    //             }
+    //         }
+    //     }else if(ret.status===0){
+    //         api.toast({
+    //             msg: '超时或解码失败，请重试！',
+    //             duration: config.duration,
+    //             location: 'bottom'
+    //         });
+    //     }
+    // });
 };
-
-
 
 /**
  * 基础信息
@@ -79,12 +188,25 @@ var changeTab = function (obj) {
 
 
 /**
+ *
+ */
+var changeInfoShow = function(obj){
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    if (isHide){
+        $api.removeCls($api.next(obj), 'hide');
+        $api.addCls($api.next(obj), 'show');
+    } else{
+        $api.removeCls($api.next(obj), 'show');
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
+/**
  * 基础信息
  * @param patientId
  */
 var searchPatientDetail = function (patientId) {
     common.get({
-        url: config.patientDetailUrl + patientId,
+        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('jcxxContentContainer'), "");
@@ -153,24 +275,25 @@ var searchMedExamine = function (patientId) {
  * @param examineId
  */
 var inspectionDetail = function (obj, examineId) {
-    //console.log("offlineFlag = " + $api.getStorage(storageKey.offlineFlag));
     if($api.hasCls($api.next(obj),'hide')){
         common.get({
             url: config.medExamineDetailUrl + examineId,
             isLoading: true,
             success: function (ret) {
                 var domAll = $api.domAll('.jcjgItemDetail');
-                //console.log(domAll.length);
                 for (var i = 0; i < domAll.length; i++) {
                     if (domAll[i]) {
                         $api.addCls(domAll[i], 'hide');
                     }
-
                 }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
-                    var contentTmpl = doT.template($api.text($api.byId('jcjgDetailTmpl')));
-                    $api.html($api.next(obj), contentTmpl(ret.content));
+                    if (ret.content.reportTime){
+                        var contentTmpl = doT.template($api.text($api.byId('jcjgDetailTmpl')));
+                        $api.html($api.next(obj), contentTmpl(ret.content));
+                    }else{
+                        alert("未开具报告，请耐心等待!")
+                    }
                 }
                 $api.removeCls($api.next(obj), 'hide');
             }
@@ -202,24 +325,25 @@ var searchMedAssay = function (patientId) {
  * @param examineId
  */
 var assayDetail = function(obj,assayId){
-    //console.log("offlineFlag = " + $api.getStorage(storageKey.offlineFlag));
     if($api.hasCls($api.next(obj),'hide')){
         common.get({
             url: config.medAssayDetailUrl+assayId,
             isLoading: true,
             success:function(ret){
                 var domAll = $api.domAll('.hyjgItemDetail');
-                //console.log(domAll.length);
                 for (var i = 0; i < domAll.length; i++) {
                     if (domAll[i]) {
                         $api.addCls(domAll[i], 'hide');
                     }
-
                 }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
-                    var contentTmpl = doT.template($api.text($api.byId('hyjgDetailTmpl')));
-                    $api.html($api.next(obj), contentTmpl(ret.content));
+                    if (ret.content.reportTime){
+                        var contentTmpl = doT.template($api.text($api.byId('hyjgDetailTmpl')));
+                        $api.html($api.next(obj), contentTmpl(ret.content));
+                    }else{
+                        alert("未开具报告，请耐心等待!")
+                    }
                 }
                 $api.removeCls($api.next(obj), 'hide');
             }
@@ -234,12 +358,10 @@ var assayDetail = function(obj,assayId){
  * @param patientId
  */
 var fymxList = function(patientId){
-    //alert(patientId);
     common.get({
         url: config.costItemStatisticsList + patientId,
         isLoading: true,
         success: function (ret) {
-            //console.log(JSON.stringify(ret));
             $api.html($api.byId('fymx'), "");
             if(ret && ret.content&&ret.content.length>0) {
                 var item = ret.content;
@@ -256,13 +378,11 @@ var fymxList = function(patientId){
  */
 var fymxDetail = function(obj){
     if($api.hasCls($api.next(obj),'hide')){
-        //alert(patientId);
         common.get({
             url: config.costItemStatisticsList + patientId,
             isLoading: true,
             success: function (ret) {
                 var domAll = $api.domAll('.fymxItemDetail');
-                //console.log(domAll.length);
                 for (var i = 0; i < domAll.length; i++) {
                     if (domAll[i]) {
                         $api.addCls(domAll[i], 'hide');
@@ -277,55 +397,11 @@ var fymxDetail = function(obj){
     }
 };
 function toggleMenu(){
-    // 保留
-    // api.openFrame({
-    //     name: 'win_layer_menu',
-    //     bounces:false,
-    //     rect : {
-    //       x : 0,
-    //       y : 0,
-    //       w : 'auto',
-    //       h : 'auto'
-    //     },
-    //     bgColor:'rgba(255, 255, 255, 0.4)',
-    //     url: './frm_layer_menu.html'
-    // });
-    api.actionSheet({
-        cancelTitle: '取消',
-        buttons: ['扫描']
-    }, function(ret, err){
-        if(ret.buttonIndex==1){
-            scanner.start({
-            },function(ret,err){
-                if(ret.status===1){
-                    var value = ret.value;
-                    var persons = $api.getStorage(storageKey.persons);
-                    //遍历查询
-                    for (var i = 0; i < persons.length; i++) {
-                        if(persons[i].id==value){
-                            api.sendEvent({
-                                name: eventName.personChoosed,
-                                extra: {
-                                    index: i
-                                }
-                            });
-                            return;
-                        }
-                    }
-                    api.alert({
-                        title: '提示',
-                        msg: '系统未管理此病人，请刷新后重试',
-                    });
-                }else if(ret.status===0){
-                    api.toast({
-                        msg: '超时或解码失败，请重试！',
-                        duration: config.duration,
-                        location: 'bottom'
-                    });
-                }
-            });
-        }
-    });
+    changePatient = false;
+    scanner.start()
 
 }
 
+function subStrDate(date) {
+    return date.slice(0, 11)
+}

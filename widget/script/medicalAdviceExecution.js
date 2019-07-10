@@ -1,70 +1,89 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var patientId = person.id;
 var page = 1;
+var testData
+var skinTestId = ''
+var currentTab = 'advice-records'
 apiready = function () {
     api.parseTapmode();
-    doctorAdvice();
+    adviceRecords();
 }
 
-
+/**
+ * 切换tab
+ * @param obj
+ */
 var changeTab = function (obj) {
+    // 给选中的tab添加aui-active样式
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
-        $api.removeCls($api.byId('tab-yzd'), 'aui-active');
-        $api.removeCls($api.byId('tab-dzx'), 'aui-active');
-        $api.removeCls($api.byId('tab-yzx'), 'aui-active');
-        $api.removeCls($api.byId('tab-psgc'), 'aui-active');
-
+        $api.removeCls($api.byId('tab-advice-records'), 'aui-active');
+        $api.removeCls($api.byId('tab-advice-execute'), 'aui-active');
+        $api.removeCls($api.byId('tab-tour-records'), 'aui-active');
+        $api.removeCls($api.byId('tab-skin-test'), 'aui-active');
         $api.addCls(obj, 'aui-active');
     }
-
-    var dataTo = $api.attr(obj, 'data-to');//获取化验ID
+    // 获取data-to，显示对应的tab
+    var dataTo = $api.attr(obj, 'data-to');
     var activeTab = $api.byId(dataTo);
-
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
-        $api.removeCls($api.byId('yzd'), 'active');
-        $api.removeCls($api.byId('dzx'), 'active');
-        $api.removeCls($api.byId('yzx'), 'active');
-        $api.removeCls($api.byId('psgc'), 'active');
+        $api.removeCls($api.byId('advice-records'), 'active');
+        $api.removeCls($api.byId('advice-execute'), 'active');
+        $api.removeCls($api.byId('tour-records'), 'active');
+        $api.removeCls($api.byId('skin-test'), 'active');
 
         $api.addCls(activeTab, 'active');
 
-        $api.removeCls($api.dom($api.byId('dzx'), '#shaiXuan'), 'active');
-        $api.removeCls($api.dom($api.byId('dzx'), '#zhiXing'), 'active');
+        // 移除医嘱执行、巡视记录、皮试结果的筛选等操作
+        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
 
-        $api.removeCls($api.dom($api.byId('yzx'), '#yzx-shaiXuan'), 'active');
-        $api.removeCls($api.dom($api.byId('yzx'), '#shuyexunshi'), 'active');
+        $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
 
-        $api.removeCls($api.dom($api.byId('psgc'), '#psgc-shaiXuan'), 'active');
-        $api.removeCls($api.dom($api.byId('psgc'), '#lurujieguo'), 'active');
+        $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+        $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
 
     }
 
-    if (dataTo == "yzd") {//基础视图
-        doctorAdvice();
-    } else if (dataTo == "dzx") {//待执行
-        waitExecuteDoctorAdvice();
-    } else if (dataTo == "yzx") {//已执行
-        hadExecuteDoctorAdvice();
-    } else if (dataTo == "psgc") {//皮试观察
-        psgcRecord();
+    if (dataTo == "advice-records") {// 医嘱记录
+        if (currentTab == "advice-records"){
+            $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
+        } else{
+            currentTab = 'advice-records'
+            adviceRecords();
+        }
+    } else if (dataTo == "advice-execute") {//医嘱执行
+        currentTab = 'advice-execute'
+        adviceExecute();
+    } else if (dataTo == "tour-records") {//巡视记录
+        currentTab = 'tour-records'
+        tourRecords();
+    } else if (dataTo == "skin-test") {//皮试结果
+        currentTab = 'skin-test'
+        skinTestRecord();
     }
 }
-
+/**
+ * 切换页面下端功能按钮显示
+ * @param parent
+ * @param id
+ */
 var clickBottomTab = function (parent, id) {
+   if (id == 'tourRecords-result'){
+       paddingInputTourRecords();
+   }
     var activeTab = $api.dom($api.byId(parent), '#' + id);
-
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
-        $api.removeCls($api.dom($api.byId(parent), '#shaiXuan'), 'active');
-        $api.removeCls($api.dom($api.byId(parent), '#zhiXing'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-selector'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-execute'), 'active');
 
-        $api.removeCls($api.dom($api.byId(parent), '#yzx-shaiXuan'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#tourRecords-result'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#shuyexunshi'), 'active');
 
-        $api.removeCls($api.dom($api.byId(parent), '#psgc-shaiXuan'), 'active');
-        $api.removeCls($api.dom($api.byId(parent), '#lurujieguo'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
         $api.addCls(activeTab, 'active');
 
 
@@ -77,33 +96,62 @@ var clickBottomTab = function (parent, id) {
 /**
  * 医嘱记录
  */
-var doctorAdvice = function () {
+var adviceRecords = function () {
     common.get({
         url: config.adviceDetail + patientId,
         isLoading: true,
         success: function (ret) {
-            //alert(JSON.stringify(ret));
-            $api.html($api.byId('yzdContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('yzlTmplList')));
-            $api.html($api.byId('yzdContentContainer'), contentTmpl(ret.content));
+            // alert(JSON.stringify(ret));
+            testData = ret
+            // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
+            $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
+            $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
+            $api.html($api.byId('adviceRecordsContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('adviceRecordsTmplList')));
+            $api.html($api.byId('adviceRecordsContentContainer'), contentTmpl(ret.content));
         }
     });
 };
 
 /**
- * 待执行医嘱记录
+ *  医嘱点击显示详情，再次点击隐藏
  */
-var notNullFlag = false;
-var waitExecuteDoctorAdvice = function () {
-    var priorityCode = $api.val($api.byId('dzx-yzyxj'));
+var changeAdviceShow = function (obj) {
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    if (isHide){
+        $api.removeCls($api.next(obj), 'hide');
+        $api.addCls($api.next(obj), 'show');
+    } else{
+        $api.removeCls($api.next(obj), 'show');
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
+
+/**
+ * 点击医嘱记录弹出下拉选，鼠标浮在哪条记录上哪条记录变成浅蓝色
+ * @param obj
+ */
+var changeBlue = function (obj) {
+    $api.removeCls($api.byId('allTold'), 'changeBlue');
+    $api.removeCls($api.byId('longTold'), 'changeBlue');
+    $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
+    $api.addCls(obj, 'changeBlue');
+    adviceRecords();
+}
+
+/**
+ * 医嘱执行记录查询
+ */
+var adviceExecute = function () {
+    // var priorityCode = $api.val($api.byId('dzx-yzyxj'));
     //var usageCode = $api.val($api.byId('dzx-yytj'));
-    var bigKindNumCode = $api.val($api.byId('dzx-yzcfdl'));
-    var beginFoundTime = $api.val($api.byId('dzx-yzsj-begin'));
-    var endFoundTime = $api.val($api.byId('dzx-yzsj-end'));
-    var dzjtime = new Date().getTime();
-    var curTime = new Date(dzjtime).format("yyyy-MM-dd hh:mm:ss");
-    var pretime = dzjtime-24*1000*3600;
-    var pttime = new Date(pretime).format("yyyy-MM-dd hh:mm:ss");
+    // var bigKindNumCode = $api.val($api.byId('dzx-yzcfdl'));
+    // var beginFoundTime = $api.val($api.byId('dzx-yzsj-begin'));
+    // var endFoundTime = $api.val($api.byId('dzx-yzsj-end'));
+    // var dzjtime = new Date().getTime();
+    // var curTime = new Date(dzjtime).format("yyyy-MM-dd hh:mm:ss");
+    // var pretime = dzjtime-24*1000*3600;
+    // var pttime = new Date(pretime).format("yyyy-MM-dd hh:mm:ss");
     /*if ("" != beginFoundTime){
         beginFoundTime = beginFoundTime+' 00:00:00';
     }
@@ -120,290 +168,259 @@ var waitExecuteDoctorAdvice = function () {
         beginFoundTime = beginFoundTime+' 00:00:00';
         endFoundTime = endFoundTime+' 00:00:00';
     }*/
-    var beginRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-begin'));
-    var endRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-end'));
-    var preHour = new Date(dzjtime-1*1000*3600);
-    var beHour = new Date(dzjtime+1*1000*3600);
-    preHour = new Date(preHour).format("yyyy-MM-dd hh:mm:ss");
-    beHour = new Date(beHour).format("yyyy-MM-dd hh:mm:ss");
+    // var beginRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-begin'));
+    // var endRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-end'));
+    // var preHour = new Date(dzjtime-1*1000*3600);
+    // var beHour = new Date(dzjtime+1*1000*3600);
+    // preHour = new Date(preHour).format("yyyy-MM-dd hh:mm:ss");
+    // beHour = new Date(beHour).format("yyyy-MM-dd hh:mm:ss");
     //alert("preHour:"+preHour+"beHour:"+beHour);
     var params = {};
-    var beginTime = pttime;
-    var endTime = curTime;
+    // var beginTime = pttime;
+    // var endTime = curTime;
 
 
-    beginFoundTime = ifNotNull(beginFoundTime);
-    endFoundTime=ifNotNullEnd(endFoundTime);
-    beginRequireExecuteTime=ifNotNull(beginRequireExecuteTime);
-    endRequireExecuteTime=ifNotNullEnd(endRequireExecuteTime);
-    if(beginFoundTime!=""||endFoundTime!=""||beginRequireExecuteTime!=""||endRequireExecuteTime!=""){
-        beginTime="";
-        endTime="";
-    }
-    params.beginTime = beginTime;
-    params.endTime = endTime;
-    params.patientId = patientId;
-    params.executeStatusCode = '0';
-    params.priorityCode = priorityCode;
-    //params.usage = usageCode;
-    params.bigKindNum = bigKindNumCode;
-    params.beginFoundTime = beginFoundTime;
-    params.endFoundTime = endFoundTime;
-    params.beginRequireExecuteTime = beginRequireExecuteTime;
-    params.endRequireExecuteTime = endRequireExecuteTime;
+    // beginFoundTime = ifNotNull(beginFoundTime);
+    // endFoundTime=ifNotNullEnd(endFoundTime);
+    // beginRequireExecuteTime=ifNotNull(beginRequireExecuteTime);
+    // endRequireExecuteTime=ifNotNullEnd(endRequireExecuteTime);
+    // if(beginFoundTime!=""||endFoundTime!=""||beginRequireExecuteTime!=""||endRequireExecuteTime!=""){
+    //     beginTime="";
+    //     endTime="";
+    // }
+    // params.beginTime = beginTime;
+    // params.endTime = endTime;
+    // params.patientId = patientId;
+    // params.executeStatusCode = '0';
+    // params.priorityCode = priorityCode;
+    // params.usage = usageCode;
+    // params.bigKindNum = bigKindNumCode;
+    // params.beginFoundTime = beginFoundTime;
+    // params.endFoundTime = endFoundTime;
+    // params.beginRequireExecuteTime = beginRequireExecuteTime;
+    // params.endRequireExecuteTime = endRequireExecuteTime;
     //alert(JSON.stringify(params))
     //alert(JSON.stringify(params));
+
+    $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+    $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+
+    $api.html($api.byId('adviceExecuteContentContainer'), "");
+    var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
+    $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.content));
+    // common.post({
+    //     url: config.adviceDetail + patientId,
+    //     isLoading: true,
+    //     success: function (ret) {
+    //         //alert(JSON.stringify(ret));
+    //         $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+    //         $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+    //
+    //         $api.html($api.byId('adviceExecuteContentContainer'), "");
+    //         var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
+    //         $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.context));
+    //     }
+    // });
+};
+
+/**
+ * 点击医嘱执行记录显示详细信息
+ * @param obj
+ */
+var changeAdviceExecuteShow = function (obj) {
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    if (isHide){
+        $api.removeCls($api.next(obj), 'hide');
+        $api.addCls($api.next(obj), 'show');
+    } else{
+        $api.removeCls($api.next(obj), 'show');
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
+
+/**
+ * 点击医嘱执行详细信息关闭详情
+ * @param obj
+ */
+var closeAdviceExecuteDetail = function (obj) {
+    $api.removeCls(obj, 'show');
+    $api.addCls(obj, 'hide');
+}
+
+/**
+ * 巡视记录列表
+ */
+var tourRecords = function () {
+    common.get({
+        url: config.skinTestQuery + patientId ,
+        isLoading: true,
+        success: function (ret) {
+            $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
+            $api.html($api.byId('tourRecordsContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
+            $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(testData.content));
+            // if(ret&&ret.content&&ret.content.length>0){
+            //     $api.removeCls($api.dom($api.byId('tour_records'), '#tourRecords-result'), 'active');
+            //     $api.html($api.byId('tourRecordsContentContainer'), "");
+            //     var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
+            //     $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(ret.content));
+            //     alert(JSON.stringify(ret.content))
+            // }
+        }
+    });
+    //alert(config.adviceExecute + patientId +"&skinTestFlag=true"+queryParam)
+};
+
+var paddingInputTourRecords = function () {
+
+    var params = {};
+    params.queryCode = "inspectionType";
+    params.addAllFlag = false;
+    params.loadSonFlag = false;
+    params.nullFlag = false;
     common.post({
-        url: config.adviceExecute ,
+        url:config.dictUrl,
         isLoading: true,
         data:JSON.stringify(params),
         dataType:JSON,
-        success: function (ret) {
-            //alert(JSON.stringify(ret));
-            $api.removeCls($api.dom($api.byId('dzx'), '#shaiXuan'), 'active');
-
-            $api.html($api.byId('dzxContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('dzxTmplList')));
-            $api.html($api.byId('dzxContentContainer'), contentTmpl(ret.content.list));
+        success:function(ret){
+            var data = {}
+            data.patientName = person.name;
+            data.medBedName = person.medBedName;
+            data.list = {}
+            data.time = currentTime();
+            data.nurseName = $api.getStorage(storageKey.userName);
+            data.list = ret.content
+            $api.html($api.byId('tourRecords-result'), "");
+            var contentTmpl = doT.template($api.text($api.byId('inputTourRecords')));
+            $api.html($api.byId('tourRecords-result'), contentTmpl(data));
         }
     });
-};
 
-/**
- * 打开待执行窗口
- * @param usage
- * @param adviceName
- * @param unit
- * @param dosage
- * @param createTime
- * @param frequency
- * @param beginDoctorName
- * @param requireExecuteTime
- */
-var showExecuteDoctorAdviceWindow = function(imstr){
-    $api.html($api.byId('zhiXing'), "");
-    var item =  JSON.parse(imstr);
-    var contentTmpl = doT.template($api.text($api.byId('dzxExecuteTmplList')));
-    $api.html($api.byId('zhiXing'), contentTmpl(item));
 
-};
+}
 /**
- * 执行待执行医嘱
+ * 巡视记录保存
  */
-var executeDoctorAdvice = function(id,relevanceFlag){
-    var implementResult = $("input[name='implementResult']:checked").val();
-    var implname ;
-    var memo = $api.val($api.byId('memo'));
-    if('0'==implementResult){
-        implname= '未执行';
-    }else if('1'==implementResult){
-        implname='完全执行';
-    }else if('2'==implementResult){
-        implname='拒绝执行';
-    }else{
-        implname='正在执行';
-    }
+var tourRecordsExecute = function () {
+    var inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
+    var inspectionMemo = $api.val($api.byId('inspectionMemo'));
+    console.log(inspectionTypeId)
+    console.log(inspectionMemo)
+    var inspectionTime = $api.val($api.byId('inspectionTime'));
+    var nurseName = $api.val($api.byId('nurseName'));
     common.post({
-        url: config.adviceExecuteUpdate + id,
-        data:{
-            relevanceFlag:relevanceFlag,
-            executeStatusCode:implementResult,
-            executeStatusName:implname,
-            remark:memo
+        url: config.inspectionSave,
+        data: {
+            patientId:  patientId,
+            patientName:  person.name,
+            medBedId: person.medBedId,
+            medBedName: person.medBedName,
+            nurseId: $api.getStorage(storageKey.userId),
+            nurseName: nurseName,
+            inspectionTime: inspectionTime,
+            inspectionTypeId: inspectionTypeId,
+            inspectionMemo: inspectionMemo
         },
         isLoading: true,
         success: function (ret) {
-            $api.removeCls($api.dom($api.byId('dzx'), '#zhiXing'), 'active');
+            $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
             api.alert({
                 title: '提示',
                 msg: '操作成功',
-            }, function(ret, err){
-                //common.clearStorage();
-                /*api.closeToWin({
-                    name: 'root'
-                });*/
             });
-        }
-    });
+        },
+    }); tourRecords();
 };
 
 /**
- * 已执行医嘱记录
+ * 皮试结果记录列表查询
  */
-var hadExecuteDoctorAdvice = function () {
-    var sixflag = true;
-    var exetime = "";
-    var priorityCode = $api.val($api.byId('yzx-yzyxj'));
-    var usageCode = $api.val($api.byId('yzx-yytj'));
-    var bigKindNumCode = $api.val($api.byId('yzx-yzcfdl'));
-    var beginFoundTime = $api.val($api.byId('yzx-yzsj-begin'));
-    var endFoundTime = $api.val($api.byId('yzx-yzsj-end'));
-    var dzjtime = new Date().getTime();
-    var curTime = new Date(dzjtime).format("yyyy-MM-dd hh:mm:ss");
-    var pretime = dzjtime - 6 * 1000 * 3600;
-    var pttime = new Date(pretime).format("yyyy-MM-dd hh:mm:ss");
-    var beginExecuteTime = $api.val($api.byId('yzx-yqzxsj-begin'));
-    var endExecuteTime = $api.val($api.byId('yzx-yqzxsj-end'));
-    var currentsecond = new Date().getTime();
-    var exeTimeSix = new Date(currentsecond - 6 * 1000 * 3600);
-    var curTimeSix = new Date(exeTimeSix).format("yyyy-MM-dd hh:mm:ss");
-    var begintime = "";
-    var endtime = "";
-
-
-    var params = {};
-    begintime = curTimeSix;
-    endtime = curTime;
-    beginFoundTime = ifNotNull(beginFoundTime);
-    endFoundTime = ifNotNullEnd(endFoundTime);
-    beginExecuteTime = ifNotNull(beginExecuteTime);
-    endExecuteTime = ifNotNullEnd(endExecuteTime);
-
-    if(beginFoundTime!=""||endFoundTime!=""){
-        params.beginTime = "";
-        params.endTime = "";
-    }
-    var params = {};
-    params.patientId = patientId;
-    params.executeStatusCode = '1';
-    params.priorityCode = priorityCode;
-    params.usage = usageCode;
-    params.bigKindNum = bigKindNumCode;
-    params.beginFoundTime = beginFoundTime;
-    params.endFoundTime = endFoundTime;
-    params.beginTime = beginExecuteTime;
-    params.endTime = endExecuteTime;
-    //alert(JSON.stringify(params));
-    common.post({
-        url: config.adviceExecute ,
-        isLoading: true,
-        data:JSON.stringify(params),
-        dataType:JSON,
-        success: function (ret) {
-            //alert(ret.content.list);
-            $api.removeCls($api.dom($api.byId('yzx'), '#yzx-shaiXuan'), 'active');
-            $api.html($api.byId('yzxContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('yzxTmplList')));
-            $api.html($api.byId('yzxContentContainer'), contentTmpl(ret.content.list));
-
-        }
-    });
-    $api.val($api.byId('yzx-xssj'), currentTime() + "");
-    //alert(config.adviceExecute + patientId +"&executeStatusCode=advice_execute_status_1"+queryParam);
-};
-
-
-/**
- * 打开已执行窗口
- * @param usage
- * @param adviceName
- * @param unit
- * @param dosage
- * @param createTime
- * @param frequency
- * @param beginDoctorName
- * @param requireExecuteTime
- */
-var showHadExecuteDoctorAdviceWindow = function (imstr) {
-    $api.html($api.byId('shuyexunshi'), "");
-    var item = JSON.parse(imstr);
-    item.currentTime = currentTime();
-    item.xsr = $api.getStorage(storageKey.userName);
-    var contentTmpl = doT.template($api.text($api.byId('yzxSyxsTmpl')));
-    $api.html($api.byId('shuyexunshi'), contentTmpl(item));
-
-};
-
-/**
- * 输液巡视
- */
-var executeSyxs = function (id, relevanceFlag) {
-    var ds = $api.val($api.byId('yzx-ds'));
-    var dz = $api.val($api.byId('yzx-dz'));
-    var xssj = $api.val($api.byId('yzx-xssj'));
-    var xsr = $api.val($api.byId('yzx-xsr'));
-    var memo = $api.val($api.byId('yzx-memo'));
-
-    common.post({
-        url: config.transfuseExecute + patientId,
-        isLoading: true,
-        success: function (ret) {
-            $api.removeCls($api.dom($api.byId('yzx'), '#shuyexunshi'), 'active');
-            api.alert({
-                title: '提示',
-                msg: '操作成功',
-            }, function (ret, err) {
-                common.clearStorage();
-                api.closeToWin({
-                    name: 'root'
-                });
-            });
-        }
-    });
-};
-
-/**
- * 皮试观察记录
- */
-var psgcRecord = function () {
-    var beginTime  = $api.val($api.byId('psgc-yqzxsj-begin'));
-    var endTime   = $api.val($api.byId('psgc-yqzxsj-end'));
-    if ("" != beginTime) {
+var skinTestRecord = function () {
+    var beginTime  = $api.val($api.byId('skin-test-begin-time'));
+    var endTime   = $api.val($api.byId('skin-test-end-time'));
+    var noInput   = $api.byId('noInput').checked;
+    var alreadyInput   = $api.byId('alreadyInput').checked;
+    if (!isEmpty(beginTime)) {
         beginTime = beginTime + " 00:00:00";
     }
-    if ("" != endTime) {
+    if (!isEmpty(endTime)) {
         endTime = endTime + " 00:00:00";
     }
-
+    // TODO 根据是否选中筛选符合查询条件的数据，需要跟小伟商量看怎么传不同情况的数据
     var queryParam = "&beginTime =" + beginTime
         + "&endTime=" + endTime;
     common.get({
         url: config.skinTestQuery + patientId ,
         isLoading: true,
         success: function (ret) {
-
-            if(ret&&ret.content&&ret.content.length>0){
-                $api.removeCls($api.dom($api.byId('psgc'), '#psgc-shaiXuan'), 'active');
-                $api.html($api.byId('psgcContentContainer'), "");
-                var contentTmpl = doT.template($api.text($api.byId('psgcTmplList')));
-                $api.html($api.byId('psgcContentContainer'), contentTmpl(ret.content));
-                alert(JSON.stringify(ret.content))
-            }
+            console.log(testData.content)
+            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
+            $api.html($api.byId('skinTestContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
+            $api.html($api.byId('skinTestContentContainer'), contentTmpl(testData.content));
+            // if(ret&&ret.content&&ret.content.length>0){
+            //     $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+            //     $api.html($api.byId('skinTestContentContainer'), "");
+            //     var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
+            //     $api.html($api.byId('skinTestContentContainer'), contentTmpl(ret.content));
+            //     alert(JSON.stringify(ret.content))
+            // }
         }
     });
     //alert(config.adviceExecute + patientId +"&skinTestFlag=true"+queryParam)
 };
+/**
+ * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
+ */
+var SkinTestSelect = function (obj,id) {
+    if (!isEmpty(skinTestId)){
+       $api.removeCls(obj, 'border-red');
+       skinTestId = ''
+    } else{
+       $api.addCls(obj, 'border-red');
+       skinTestId = id;
+    }
 
-var showPsgcAdviceWindow = function (id) {
-    $api.html($api.byId('lurujieguo'), "");
-    var contentTmpl = doT.template($api.text($api.byId('psgcExecuteTmplList')));
-    $api.html($api.byId('lurujieguo'), contentTmpl({
-        id: id
-    }));
-    $api.addCls($api.dom($api.byId('psgc'), '#lurujieguo'), 'active');
 };
 /**
- * 皮试结果
+ * 皮试结果保存或修改
  */
-var psgcExecute = function (id) {
-    var lurujieguo = $("input[name='lurujieguo']").val();
-    var skinTestRemark = $api.val($api.byId("psgc-memo"));
+var skinTestExecute = function () {
+    var skinTestResult = $("input[name='skinTestResult']").val();
+    if (isEmpty(skinTestId)){
+        $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
+        skinTestId = ''
+        api.alert({
+            title: '提示',
+            msg: '请选择一条皮试记录再操作',
+        });
+        return;
+    }
 
-    common.post({
-        url: config.skinTestExecute + id,
-        data: {
-            skinTestResult: lurujieguo,
-            skinTestRemark: skinTestRemark
-        },
-        isLoading: true,
-        success: function (ret) {
-            $api.removeCls($api.dom($api.byId('psgc'), '#lurujieguo'), 'active');
-            api.alert({
-                title: '提示',
-                msg: '操作成功',
-            });
-        }
+    skinTestRecord();
+    skinTestId = ''
+    api.alert({
+        title: '提示',
+        msg: '操作成功',
     });
+
+    // common.post({
+    //     url: config.skinTestExecute + skinTestId,
+    //     data: {
+    //         skinTestResult: skinTestResult,
+    //     },
+    //     isLoading: true,
+    //     success: function (ret) {
+    //         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+    //         skinTestId = ''
+    //         api.alert({
+    //             title: '提示',
+    //             msg: '操作成功',
+    //         });
+    //     }
+    // });
 };
 
 var currentTime = function () {
@@ -416,7 +433,7 @@ var currentTime = function () {
     var second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
-    return year + "-" + month + "-" + day + " " + hour + ":" + minute;
+    return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" +second;
 }
 
 function picker(obj) {
@@ -431,6 +448,33 @@ function picker(obj) {
         obj.value = startDate;
     });
 }
+function pickerWithTime(el){
+    api.openPicker({
+        type: 'date',
+        title: '日期'
+    }, function(ret, err){
+        var startYear = ret.year;
+        var startMonth = ret.month;
+        var startDay = ret.day;
+        var date = startYear + "-" + (startMonth<10? "0"+startMonth:startMonth) + "-" + (startDay<10?"0"+startDay:startDay);
+        api.openPicker({
+            type: 'time',
+            title: '时间'
+        }, function(ret1, err1){
+            var hour = ret1.hour;
+            if(hour < 10){
+                hour = "0"+hour;
+            }
+            var minute = ret1.minute;
+            if(minute < 10){
+                minute = "0"+minute;
+            }
+            var time = hour + ":" + minute+ ":00";
+            $api.val(el,date+" "+time);
+        });
+    });
+}
+
 
 Date.prototype.format = function (fmt) {
     var o = {
@@ -468,4 +512,10 @@ function ifNotNullEnd(timeStr){
         return timeStr = timeTip;
     }
     return timeStr;
+}
+
+function isEmpty(str){
+    if (str == null || str =='' || str == undefined){
+        return true
+    }
 }

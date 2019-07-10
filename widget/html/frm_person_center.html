@@ -25,23 +25,17 @@
         </div>
         <div class="tabBody">
             <div id="jcst" class="tab-body-item active aui-padded-l-15 aui-padded-r-15">
-                <!--<div class="title aui-font-size-16">-->
-                    <!--体征一览-->
-                <!--</div>-->
-                <!--<div class="content aui-font-size-14 flex aui-padded-t-15" id="tzylContentContainer">-->
-
-                <!--</div>-->
-                <div class="title aui-font-size-16">
+                <div class="title aui-font-size-16" style="color: #08bad6;" onclick="changeInfoShow(this)">
                     基础信息
+                    <span style="float: right; width: 10%; font-size: 0.7rem">∨</span>
                 </div>
-                <div class="baseInfo content aui-font-size-15 aui-padded-t-15" id="jcxxContentContainer">
-
+                <div class="content aui-font-size-15 aui-padded-t-15" id="jcxxContentContainer">
                 </div>
-                <div class="title aui-font-size-16">
+                <div class="title aui-font-size-16" style="color: #08bad6;"  onclick="changeInfoShow(this)">
                     费用汇总
+                    <span style="float: right; width: 10%;font-size: 0.7rem">∨</span>
                 </div>
-                <div class="content aui-font-size-15 aui-padded-t-15 flex" id="fyhzContentContainer">
-
+                <div class="content aui-font-size-15 aui-padded-t-15" id="fyhzContentContainer">
                 </div>
             </div>
             <div id="jcjg" class="tab-body-item">
@@ -82,29 +76,29 @@
             <div class="aui-font-size-12 aui-padded-t-5">心率（次/分）</div>
         </div>-->
     </script>
+    <!--基础信息-->
     <script id="jcxxTmpl" type="text/template">
-        <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <div class="keyValueItem aui-margin-l-15">
             <span class="key">科室：</span>
-            <span class="value">{{=it.organizationName||'-'}}</span>
+            <span class="value">{{=it.organizationName||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">入院时间：</span>
-            <span class="value">{{=it.inHospitalTime||'-'}}</span>
+            <span class="value">{{=it.inHospitalTime||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">入科时间：</span>
-            <span class="value">{{=it.inHospitalTime||'-'}}
-             <sapn class="aui-text-center">
+            {{if(it.organizationName){ }}
+            <span class="value">{{=it.organizationName}} </span>
+            {{}else{}}
+            <span class="value redInfo">待入科 &nbsp;&nbsp;&nbsp; </span>
             <span class="aui-btn aui-btn-info" tapmode onclick="toggleMenu();" >入科确认</span>
              </sapn>
-            </span>
+             {{}}}
         </div>
-        <!--<div class="aui-pull-right" style="float: right;margin-top: -0.2rem" tapmode onclick="toggleMenu();">-->
-        <!--<span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1rem;"></span>-->
-        <!--</div>-->
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">费别：</span>
-            <span class="value">{{=it.costType||'-'}}</span>
+            <span class="value">{{=it.costType||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">病人类型：</span>
@@ -112,15 +106,15 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">经治医生：</span>
-            <span class="value">{{=it.doctorName||'-'}}</span>
+            <span class="value">{{=it.doctorName||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">责任护士：</span>
-            <span class="value">{{=it.nationName||'-'}}</span>
+            <span class="value">{{=it.nationName||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">入院诊断：</span>
-            <span class="value">{{=it.diagnose||'-'}}</span>
+            <span class="value">{{=it.diagnose||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">药物过敏史：</span>
@@ -128,91 +122,59 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">联系电话：</span>
-            <span class="value"></span>
+            <span class="value">{{=it.contactsMobile||''}}</span>
         </div>
 
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">住院号：</span>
-            <span class="value">{{=it.registerNumber||'-'}}</span>
+            <span class="value">{{=it.registerNumber||''}}</span>
         </div>
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">出生日期：</span>-->
-            <!--<span class="value">{{=it.birthday||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">民族：</span>-->
-            <!--<span class="value">{{=it.nationName||'汉'}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
-            <span class="key">身份：</span>
-            <span class="value">{{=it.nationName||''}}</span>
-        </div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">婚姻状况：</span>-->
-            <!--<span class="value">{{=it.marriageName||'未婚'}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">籍贯：</span>-->
-            <!--<span class="value">{{=it.nativePlace||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">学历：</span>-->
-            <!--<span class="value">{{=it.educationName||'无'}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">联系人姓名：</span>-->
-            <!--<span class="value">{{=it.contactsName||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">联系人电话：</span>-->
-            <!--<span class="value">{{=it.contactsMobile||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">联系人关系：</span>-->
-            <!--<span class="value">{{=it.contactsRelationCode||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">-->
-            <!--<span class="key">身份证号：</span>-->
-            <!--<span class="value">{{=it.idNumber||''}}</span>-->
-        <!--</div>-->
-        <!--<div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
-            <span class="key">主管护士：</span>
-            <span class="value">{{=it.nationName||''}}</span>
-        </div>-->
     </script>
     <script id="fyhzTmpl" type="text/template">
-        <!--<div>-->
-            <!--<div>剩余款:</div>-->
-            <!--<div>-->
-                <!--<span>预交款:</span>-->
-                <!--<span style="float: right">未结费用:</span>-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<span>预结费用:</span>-->
-                <!--<span style="float: right">自付费用:</span>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div class="flex-item">
-            <div class="aui-font-size-14 aui-margin-t-5">余额(元)</div>
-            <div class="aui-font-size-12 aui-margin-t-5">{{=it.balance||'0'}}</div>
+        <div class="keyValueItem aui-margin-l-15">
+            <span class="key">剩余款：</span>
+            {{if(it.balance >= 0){ }}
+            <span class="value">{{=it.balance||'0'}}</span>
+            {{ }else{}}
+            <span class="value redInfo">{{=it.balance}}</span>
+            {{}}}
         </div>
-        <div class="flex-item">
-            <div class="aui-font-size-14 aui-margin-t-5">预交金额(元)</div>
-            <div class="aui-font-size-12 aui-margin-t-5">{{=it.prepayMoney||'0'}}</div>
+        <div class="keyValueItem aui-margin-l-15">
+            <div style="width:50%;float:left">
+                <span class="key">预交款：</span>
+                {{if(it.prepayMoney >= 0){ }}
+                <span class="value">{{=it.prepayMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.prepayMoney}}</span>
+                {{}}}
+            </div>
+            <div style="width:50%;float:right">
+                <span class="key">未结费用：</span>
+                {{if(it.consumeMoney >= 0){ }}
+                <span class="value">{{=it.consumeMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.consumeMoney}}</span>
+                {{}}}
+            </div>
         </div>
-        <div class="flex-item">
-            <div class="aui-font-size-14 aui-margin-t-5">未结费用</div>
-            <div class="aui-font-size-12 aui-margin-t-5">{{=it.consumeMoney||'0'}}</div>
+        <div class="keyValueItem aui-margin-l-15">
+            <div  style="width:50%;float:left">
+                <span class="key">预结费用：</span>
+                {{if(it.assureMoney >= 0){ }}
+                <span class="value">{{=it.assureMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.assureMoney}}</span>
+                {{}}}
+            </div>
+            <div style="width:50%;float: right">
+                <span class="key">自付费用：</span>
+                {{if(it.assureMoney >= 0){ }}
+                <span class="value">{{=it.assureMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.assureMoney}}</span>
+                {{}}}
+            </div>
         </div>
-        <div class="flex-item">
-            <div class="aui-font-size-14 aui-margin-t-5">预结费用(元)</div>
-            <div class="aui-font-size-12 aui-margin-t-5">{{=it.assureMoney||'0'}}</div>
-        </div>
-        <div class="flex-item">
-            <div class="aui-font-size-14 aui-margin-t-5">自付费用(元)</div>
-            <div class="aui-font-size-12 aui-margin-t-5">{{=it.assureMoney||'0'}}</div>
-        </div>
-
     </script>
     <script id="jcjgListTmpl" type="text/template">
         {{
@@ -220,24 +182,23 @@
         var item = it[i];
         }}
         <div onclick="inspectionDetail(this,'{{=item.id}}')" data-id="{{=item.id}}" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
-            <div class="flex-item aui-text-left">{{=i+1}}.{{=item.name||''}}</div>
-            <div class="flex-item aui-text-right"><div>{{=item.reportTime||''}}</div><div> {{=item.sendDoctorName||''}}</div></div>
+            <div style="float: left; width: 60%">{{=i+1}}.{{=item.name||''}}</div>
+            <div style="float: right; width: 38%">{{=subStrDate(item.reportTime)||''}}{{=item.sendDoctorName||''}}</div>
         </div>
         <div class="jcjgItemDetail hide" id="jcjg_{{=item.id}}">
-
         </div>
         {{ } }}
     </script>
     <script id="jcjgDetailTmpl" type="text/template">
         <div class="content">
             <div class="key aui-font-size-16 aui-margin-t-10">检查所见</div>
-            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
+            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10" style="text-indent:30px">
                 {{=it.discover||''}}
             </div>
         </div>
         <div class="content">
             <div class="key aui-font-size-16 aui-margin-t-10">检查结果</div>
-            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
+            <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10" style="text-indent:30px">
                 {{=it.result||''}}
             </div>
         </div>
@@ -259,11 +220,10 @@
         var item = it[i];
         }}
         <div onclick="assayDetail(this,'{{=item.id}}')" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
-            <div class="flex-item aui-text-left">{{=i+1}}.{{=item.name||''}}</div>
-            <div class="flex-item aui-text-right"><div>{{=item.reportTime||''}}</div><div>
-                {{=item.sendDoctorName||''}}</div></div>
+            <div style="float: left; width: 60%">{{=i+1}}.{{=item.name||''}}</div>
+            <div style="float: right; width: 38%">{{=subStrDate(item.reportTime)||''}}{{=item.sendDoctorName||''}}</div>
         </div>
-        <div class="hyjgItemDetail hide content aui-padded-b-15 aui-padded-t-15">
+        <div class="hyjgItemDetail hide content aui-padded-b-15 aui-padded-t-5">
 
         </div>
         {{ } }}
@@ -300,15 +260,8 @@
                     {{=item.exceptionsHint||''}}
                 </td>
             </tr>
-
             {{   }   }}
             {{   }   }}
-            <!--<tr class="red">
-                <td>γ-谷氨酸氨基转移酶</td>
-                <td>26.3</td>
-                <td>7&#45;&#45;45U/L</td>
-                <td>H</td>
-            </tr>-->
         </table>
     </script>
     <script id="fymxTmpl" type="text/template">

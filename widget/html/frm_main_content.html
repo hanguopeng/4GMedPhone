@@ -42,7 +42,7 @@
 </head>
 
 <body>
-  <div class="searchConditionContainer aui-padded-l-15 aui-padded-r-15 flex">
+  <div id="data" class="searchConditionContainer aui-padded-l-15 aui-padded-r-15 flex">
       <div class="flex-item flex">
           <div class="checkboxContainer">
               <input type="checkbox" onchange="searchPersons()" id="patientFlag"><label class="aui-margin-l-5">我的病人</label>
@@ -55,131 +55,68 @@
       </div>
       <div class="selectContainer flex-item">
           <select id="chooseType" onchange="searchPersons();">
-              <option value="-1">全部护理等级</option>
-              <option value="0">重症监护</option>
-              <option value="1">一级护理</option>
-              <option value="2">二级护理</option>
-              <option value="3">三级护理</option>
-              <option value="4">保护性隔离护理</option>
+              <option value="">全部护理等级</option>
+              <option value="120100002">重症监护</option>
+              <option value="120100003">一级护理</option>
+              <option value="120100004">二级护理</option>
+              <option value="120100005">三级护理</option>
+              <option value="1101005">保护性隔离护理</option>
           </select>
       </div>
   </div>
-  <div class="aui-padded-l-15 aui-padded-r-15 flex" style="border-bottom-color: #ccc;border-bottom-style: dashed;border-bottom-width: 1px">
-      <div>在院患者()</div>
-      <div>空床()</div>
-      <div>发热()</div>
-      <div>新开医嘱()</div>
+  <div id="countContent" class="aui-padded-l-15 aui-padded-r-15 flex" style="border-bottom-color: #ccc;border-bottom-style: dashed;border-bottom-width: 1px">
   </div>
-<section  class="aui-content aui-margin-t-0">
-  <div id="nurseLevelContent" class="aui-content-padded aui-font-size-12">
-
-  </div>
-</section>
-
-<section  class="aui-content aui-margin-t-0">
-  <div id="personContent" class="bedContainer aui-padded-t-15 aui-padded-l-5 aui-padded-r-5">
-
-  </div>
-</section>
-  <!--<div class="aui-col-xs-4">
-      <image src="../image/jiantou.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image><span class="aui-margin-l-5">发热病人</span><span>({{=it.feverNum || '0'}})</span>
-  </div>
-  <div class="aui-col-xs-4">
-      <image src="../image/jiahao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image><span  class="aui-margin-l-5">新开医嘱</span><span>({{=it.newAdviceNum || '0'}})</span>
-  </div>
-  <div class="aui-col-xs-4">
-      <image src="../image/tanhao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image></span><span  class="aui-margin-l-5">待办事项</span><span>({{=it.backlogNum || '0'}})</span>
-  </div>-->
+  <section  class="aui-content aui-margin-t-0">
+    <div id="personContent" class="bedContainer aui-padded-t-10 aui-padded-l-5 aui-padded-r-5">
+    </div>
+  </section>
 </body>
-<script id="nurse-level-tpl" type="text/template">
-
+<script id="count-info" type="text/template">
+    <div>在院患者({{= it.inHospital || '0'}})</div>
+    <div>空床({{= it.emptyBedNum|| '0'}})</div>
+    <div>发热({{= it.feverNum|| '0'}})</div>
+    <div>新开医嘱({{= it.newAdviceNum|| '0'}})</div>
 </script>
 <script id="person-info-tpl" type="text/template">
 {{~it.list:info:index}}
   {{? (index+1)%2==1}}
     <div class="flex aui-padded-b-10">
   {{?}}
-  <div class="bedItem flex-item1" tapmode onclick="openPersonCenter({{= index }})">
+  <div class="bedItem flex-item1" tapmode onclick="openPersonCenter({{=index}})">
       <div class="topBenNum">
-          <span class="bedNumTxt">{{= info.medBedName}}床</span>
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-          <span class="bedNumTxt" >{{= info.name || '-' }}</span>
-          <sapn class="itemStatusIcon aui-margin-r-5" style="float: right">
-              {{? info.nurse_level_code=="A" || info.nurseLevelCode=="A"}}
-              <span class="te"></span>
-              {{?? info.nurse_level_code=="B" || info.nurseLevelCode=="B"}}
-              <span class="th"></span>
-              {{?? info.nurse_level_code=="C" || info.nurseLevelCode=="C"}}
-              <span class="er"></span>
-              {{?? info.nurse_level_code=="D" || info.nurseLevelCode=="D"}}
-              <span class="san"></span>
-              {{?}}
-          </sapn>
-          <!--<div class="aui-font-size-12 person-name-weight">{{= info.name || '-' }}</div>-->
+          <span class="bedNumTxt" style="float: left;width: 50%;padding-left: 6%">{{= info.medBedName}}床</span>
+          <span class="bedNumTxt" style="float: right;width: 50%;">{{= info.name || '' }}</span>
+          <span class="itemStatusIcon" style="color:{{=info.nurseLevelColor}}">
+          </span>
       </div>
-      <!--<div class="bedContentContainer flex">-->
-          <!--<div class="personImg aui-col-xs-5">-->
-            <!--{{? info.sex=="1"}}-->
-              <!--男-->
-            <!--{{??}}-->
-              <!--女-->
-
-            <!--{{?}}-->
-
-          <!--</div>-->
-          <!--<div class="doctorContainer aui-col-xs-7 aui-font-size-12">-->
-              <!--<div>医生:{{=info.doctorName || '-'}}</div>-->
-              <!--<div>护士:{{=info.nurseName || '-'}}</div>-->
-              <!--&lt;!&ndash;<div>{{=info.costType|| '-'}}</div>&ndash;&gt;-->
-          <!--</div>-->
-
-      <!--</div>-->
-      <div class="bedContentContainer aui-font-size-15">
-          <span style="width: 3rem;margin-left: 0.5rem;">{{=info.registerNumber || '-'}}</span>
+      <div style="border-top: 3px solid;margin-top:1.2rem;color:{{=info.patientColor}}"></div>
+      <div class="bedContentContainer">
+          <span style="width: 3rem;margin-left: 0.5rem;">{{=info.registerNumber || ''}}</span>
           <span style="width: 2rem;margin-left: 1rem;color: #2e20ff">{{? info.sex=="1"}}
               男
               {{??}}
               女
-
               {{?}}</span>
-          <sapn style="width: 2rem;float: right;">{{=info.age || '-'}}</sapn>
+          <sapn style="width: 2rem;float: right;">{{=info.age || ''}}</sapn>
       </div>
-      <!--<div class="time aui-font-size-12">-->
-          <!--{{? info.sex=="1"}}-->
-          <!--男-->
-          <!--{{??}}-->
-          <!--女-->
-
-          <!--{{?}}-->
-      <!--</div>-->
-      <!--<div class="time aui-font-size-12">{{=info.age || '-'}}</div>-->
-      <div class="time aui-font-size-15">医生:{{=info.doctorName || '-'}}</div>
-      <div class="time aui-font-size-15">护士:{{=info.nurseName || '-'}}</div>
+      <div class="time aui-font-size-15">医生：{{=info.doctorName || ''}}</div>
+      <div class="time aui-font-size-15">护士：{{=info.nurseName || ''}}</div>
       <div class="time aui-font-size-15">
           <span>
-              {{= info.inHospitalTime}}
+             {{=subStrDate(info.inHospitalTime)}}
           </span>
-          <span style="float: right">xx天</span>
+          <span style="width: 2.5rem;float: right;color: blue">{{=info.hospitalizationDays}}天</span>
       </div>
       <div class="time aui-font-size-15">
           <span>余额</span>
-          <span style="float: right">1000元</span>
+          {{if(info.balance<0){}}
+            <span style="float: right;color: red">{{=info.balance}}</span>
+          {{}else{}}
+            <span style="width: 2rem;float: right">{{=info.balance|| '0'}}</span>
+          {{}}}
       </div>
-      <!--<div class="flex" style="height: 1.4rem;">-->
-          <!--<div class="flex-item bottomStatusItem">-->
-          <!--{{? info.feverFlag==true || info.fever_flag==="true"}}-->
-              <!--<image src="../image/jiantou.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>-->
-          <!--{{?}}-->
-          <!--{{? info.newAdviceFlag==true || info.new_advice_flag==="true"}}-->
-              <!--<image src="../image/jiahao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>-->
-          <!--{{?}}-->
-          <!--{{? info.backlogFlag==true || info.backlog_flag==="true"}}-->
-              <!--<image src="../image/tanhao.png" style="display:inline-block;vertical-align: middle;width: 0.95rem;height: 0.95rem;"></image>-->
-          <!--{{?}}-->
-          <!--</div>-->
-      <!--</div>-->
   </div>
-  {{? (index+1)%2==0 }}
+  {{?(index+1)%2==0 }}
     </div>
   {{?}}
   {{? (index+1)%2==1 }}

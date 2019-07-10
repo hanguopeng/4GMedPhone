@@ -1,8 +1,6 @@
 frames=["frm_person_center","frm_tizhengshouji","frm_yizhuzhixing","frm_huliwendang","frm_fuzhugongju","nurse/frm_nurse_hljld","nurse/frm_nurse_zyybtys","nurse/frm_nurse_dnzqtzs","nurse/frm_nurse_gczqtzs","nurse/frm_nurse_wcjyzqtzs","nurse/bloodGlucose"];
 currentFrame = 0;
 
-var scanner;
-
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
@@ -31,35 +29,7 @@ apiready = function(){
         name: eventName.layerEvent
     }, function(ret, err){
         if(ret.value.type==0){
-          scanner.start({
-          },function(ret,err){
-        			if(ret.status===1){
-                var value = ret.value;
-                var persons = $api.getStorage(storageKey.persons);
-                //遍历查询
-                for (var i = 0; i < persons.length; i++) {
-                  if(persons[i].id==value){
-                    api.sendEvent({
-                        name: eventName.personChoosed,
-                        extra: {
-                            index: i
-                        }
-                    });
-                    return;
-                  }
-                }
-                api.alert({
-                    title: '提示',
-                    msg: '系统未管理此病人，请刷新后重试',
-                });
-        			}else if(ret.status===0){
-                api.toast({
-                    msg: '超时或解码失败，请重试！',
-                    duration: config.duration,
-                    location: 'bottom'
-                });
-        			}
-        	});
+          scanner.start();
         }else if(ret.value.type==1){
           openPersonSearchFrame();
         }else if(ret.value.type==2){
@@ -74,68 +44,7 @@ apiready = function(){
       },function(ret, err) {
         api.closeWin();
     });
-    //没有设备的放最上面报错不能继续执行
-    scanner = api.require('cmcScan');
-    scanner.open();
 }
-
-function toggleMenu(){
-  // 保留
-  // api.openFrame({
-  //     name: 'win_layer_menu',
-  //     bounces:false,
-  //     rect : {
-  //       x : 0,
-  //       y : 0,
-  //       w : 'auto',
-  //       h : 'auto'
-  //     },
-  //     bgColor:'rgba(255, 255, 255, 0.4)',
-  //     url: './frm_layer_menu.html'
-  // });
-  api.actionSheet({
-      cancelTitle: '取消',
-      buttons: ['扫描','搜索','首页']
-  }, function(ret, err){
-      if(ret.buttonIndex==1){
-        scanner.start({
-        },function(ret,err){
-            if(ret.status===1){
-              var value = ret.value;
-              var persons = $api.getStorage(storageKey.persons);
-              //遍历查询
-              for (var i = 0; i < persons.length; i++) {
-                if(persons[i].id==value){
-                  api.sendEvent({
-                      name: eventName.personChoosed,
-                      extra: {
-                          index: i
-                      }
-                  });
-                  return;
-                }
-              }
-              api.alert({
-                  title: '提示',
-                  msg: '系统未管理此病人，请刷新后重试',
-              });
-            }else if(ret.status===0){
-              api.toast({
-                  msg: '超时或解码失败，请重试！',
-                  duration: config.duration,
-                  location: 'bottom'
-              });
-            }
-        });
-      }else if(ret.buttonIndex==2){
-        openPersonSearchFrame();
-      }else if(ret.buttonIndex==3){
-        api.closeWin();
-      }
-  });
-
-}
-
 function freshHeaderInfo(){
   //获取当前的病人信息
   var person = $api.getStorage(storageKey.currentPerson);

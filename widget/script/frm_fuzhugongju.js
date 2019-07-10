@@ -1,12 +1,9 @@
-var scanner=null;
 var calendar;
 var chooseDate=null; //当前月点击选择的日期
 var specialDates = []; //当前月的特殊日期
 
 apiready = function(){
     api.parseTapmode();
-    scanner = api.require('cmcScan');
-    scanner.open();
     calendar = api.require('UICalendar');
     var tab = new auiTab({
         element:document.getElementById("tab"),

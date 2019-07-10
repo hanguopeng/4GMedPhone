@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+</head>
+<style>
+    .aui-tab-item {
+        width:50%;
+    }
+    .czhl{
+        text-align: center;
+        line-height: 4.5rem;
+    }
+    .czhl{
+        background-color: #3e8f3e;
+    }
+    .bkys{
+        border:1px solid #5cb85c;
+    }
+    body{
+        font-size: 16px;
+    }
+</style>
+<body>
+    <div class="aui-tab" id="tab">
+            <div class="aui-tab-item aui-active">新开医嘱</div>
+            <div class="aui-tab-item"><div></div>新停医嘱</div>
+        </div>
+    <div class="" style="width:30%"><div></div>
+        <select>
+            <option>全部病人</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+    </div>
+    <div id="content">
+
+    </div>
+    <div id="contentAdvice">
+
+    </div>
+
+</body>
+<script id="newstart-tpl" type="text/template">
+    <div class="aui-margin-l-15 aui-margin-b-10">
+        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">在用医嘱
+        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">未记账
+        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">需要报告
+        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">全    部
+    </div>
+    <!--<div class="aui-col-xs-3 aui-margin-l-15">
+        <input type="checkbox" value="">在用医嘱
+    </div>
+    <div class="aui-col-xs-2">
+        <input type="checkbox" value="">  未记账
+    </div>
+    <div class=" aui-margin-t-10">
+        <input type="checkbox" value="">需要报告
+    </div>
+    <div class="">
+        <input type="checkbox" value="">全    部
+    </div>-->
+    </script>
+<script id="yzxx-tpl" type="text/template">
+    <div>
+        <div onclick="docAdvDetails(this)">
+            <div class="aui-col-xs-1 czhl" id="czhl" style="align-content: center">长<br>嘱</div>
+            <div class="aui-col-xs-11 bkys">
+                <div style="font-size: 20px;">患者姓名:</div>
+                <div style="font-size:20px;">床&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp号:</div>
+                <div>医嘱内容:</div>
+                <div>生效时间:</div>
+                <div>终止时间:</div>
+                <div>用&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp法:</div>
+                <div>医生托嘱:</div>
+                <div>执行科室:</div>
+                <div class="aui-col-xs-5">开嘱医生:</div>
+                <div class="aui-col-xs-5">状&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp态:</div>
+            </div>
+            <div class="aui-hide">
+                <div>总量:</div>
+                <div>单量:</div>
+                <div>天数:</div>
+                <div>频率:</div>
+                <div>执行性质:</div>
+                <div>上次执行:</div>
+                <div>开嘱时间:</div>
+                <div>校对护士:</div>
+                <div>校对时间:</div>
+                <div>停嘱医生:</div>
+                <div>停嘱时间:</div>
+                <div>确认停嘱时间:</div>
+                <div>基本药物:</div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div onclick="docAdvDetails(this)">
+            <div class="aui-col-xs-1 czhl" id="czhl" style="align-content: center">长<br>嘱</div>
+            <div class="aui-col-xs-11 bkys">
+                <div style="font-size: 20px;">患者姓名:</div>
+                <div style="font-size:20px;">床&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp号:</div>
+                <div>医嘱内容:</div>
+                <div>生效时间:</div>
+                <div>终止时间:</div>
+                <div>用&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp法:</div>
+                <div>医生托嘱:</div>
+                <div>执行科室:</div>
+                <div class="aui-col-xs-5">开嘱医生:</div>
+                <div class="aui-col-xs-5">状&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp态:</div>
+            </div>
+            <div class="aui-hide">
+                <div>总量:</div>
+                <div>单量:</div>
+                <div>天数:</div>
+                <div>频率:</div>
+                <div>执行性质:</div>
+                <div>上次执行:</div>
+                <div>开嘱时间:</div>
+                <div>校对护士:</div>
+                <div>校对时间:</div>
+                <div>停嘱医生:</div>
+                <div>停嘱时间:</div>
+                <div>确认停嘱时间:</div>
+                <div>基本药物:</div>
+            </div>
+        </div>
+
+    </div>
+
+    </script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui-tab.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/new_advice_details.js"></script>
+</html>

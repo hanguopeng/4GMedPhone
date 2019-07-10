@@ -86,3 +86,6 @@ clearfix:after{
     background-color: #74b35f;
     color: #fff;
 }
+.redInfo{
+    color: red;
+}

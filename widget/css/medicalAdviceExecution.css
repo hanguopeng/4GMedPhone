@@ -3,6 +3,12 @@
     border-right: 2px solid #fff;
     background-color: #67c23b;
 }
+.aui-tab-item .hide{
+    display: none;
+}
+.aui-tab-item .show{
+    display: block;
+}
 .aui-tab-item.aui-active {
     color: #fff;
     font-weight: bolder;
@@ -17,19 +23,110 @@
 .tab-body-item .doctorAdviceStatus .aui-label{
     float: right;
 }
+
+/* 医嘱记录最外层div*/
+.tab-body-item .itemContainer .adviceRecordsTmplList{
+    overflow: hidden;
+    height:fit-content;
+}
+/* 医嘱记录左侧样式*/
+.tab-body-item .itemContainer .adviceRecordsTmplList .left{
+    float:left;
+    width:7%;
+    height: auto;
+    writing-mode: tb-rl;
+    margin-top: 0.2rem;
+    padding-top: 20%;
+    border: 1px double #67c23b;
+    margin-bottom:-9999px;
+    padding-bottom:9999px;
+}
+/* 医嘱记录右侧样式*/
+.tab-body-item .itemContainer .adviceRecordsTmplList .right{
+    float:left;
+    width:93%;
+    padding-left: 0.3rem;
+    margin-top: 0.2rem;
+    border: 1px double #67c23b;
+}
+/* 医嘱记录不同状态背景颜色-绿色*/
+.tab-body-item .itemContainer .adviceRecordsTmplList .background-green{
+    background-color: #67c23b;
+}
+
+/* 医嘱详情隐藏*/
+.tab-body-item .itemContainer .detail{
+    padding-left: 0.3rem;
+    margin-top: 0.1rem;
+    border: 1px double #67c23b;
+}
+
+/* 医嘱详情隐藏*/
+.tab-body-item .itemContainer .hide{
+    display: none;
+}
+
+/* 医嘱详情隐藏*/
+.tab-body-item .itemContainer  .show{
+    display: block;
+}
+/* 医嘱筛选白色显示框*/
+.tab-body-item .bottomContainer .bottomBody .adviceInput{
+    width: 3.5rem;
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1.2rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
+.aui-tab-item .adviceRecordsDropdown{
+    color: black;
+    background-color: #cacaca;
+}
+/* 点击医嘱记录弹出下拉选，鼠标浮在哪条记录上哪条记录变成浅蓝色*/
+.aui-tab-item .changeBlue{
+    color: #27c5e7;
+}
+/* 医嘱样式结束*/
+
+/* 医嘱执行快捷查询下拉选样式*/
+.tabBody  #advice-execute .adviceExecuteDropdown{
+    width: 4rem;
+    border: 1px double #0d0202;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding: 0 0.6rem;
+    height: 1rem;
+    border-radius: 0.2rem;
+    display: -webkit-box;
+    float: right;
+    margin-right: 0.7rem;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
 .tab-body-item .itemContainer .item{
     position: relative;
     padding: 0.5rem 1rem 0.5rem 2rem;
     margin-top: 0.5rem;
 }
-.tab-body-item .itemContainer .item.yzxyz{
-    border: 1px double #67c23b;
-}
-.tab-body-item .itemContainer .item.xkyz{
+.tab-body-item .itemContainer .item.border-red{
     border: 1px double #e51c23;
 }
-.tab-body-item .itemContainer .item.ytyz{
-    border: 1px double #6f6f6f;
+.tab-body-item .itemContainer .item.border-green{
+    border: 1px double #67c23b;
+}
+
+/* 皮试结果执行完成，边框是绿色，背景是深绿色*/
+.tab-body-item .itemContainer .item.skinTestGreen{
+    border: 1px double #67c23b;
+    background-color: #24771c;
 }
 .tab-body-item .itemContainer .item .leftTop{
     position: absolute;
@@ -40,9 +137,11 @@
     border-width: 1rem;
     border-style: solid;
 }
-.tab-body-item .itemContainer .item.yzxyz .leftTop{
-    border-color: #00bcd4 transparent transparent #00bcd4;
+/* 医嘱左上角标颜色开始 */
+.tab-body-item .itemContainer .item .leftTop{
+    border-color: #67c23b transparent transparent #67c23b;
 }
+/* 医嘱左上角标颜色结束 */
 .tab-body-item .itemContainer .item.xkyz .leftTop{
     border-color: #e51c23 transparent transparent #e51c23;
 }
@@ -62,9 +161,6 @@
     -webkit-transform:rotate(-45deg); /* Safari 和 Chrome */
     -o-transform:rotate(-45deg); 	/* Opera */
 }
-.tab-body-item .itemContainer .item .useAmount{
-    float: right;
-}
 .tab-body-item .itemContainer .item .btn{
     float: right;
 }
@@ -78,7 +174,7 @@
     bottom: 0px;
     left: 0px;
     right: 0px;
-    height: 2rem;
+    height: 1.5rem;
 }
 .tab-body-item .bottomContainer{
     position: fixed;
@@ -102,7 +198,7 @@
     position: absolute;
     left: 0px;
     right: 0px;
-    bottom: 2rem;
+    bottom: 1rem;
     background-color: #e1e1e1;
     display: none;
 }
@@ -117,6 +213,14 @@
     border-bottom: 1px double #ccc;
     padding: 0px 5px;
 }
+.tab-body-item .bottomContainer .bottomBody#skinTest-selector .input{
+    width: 4rem;
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1.2rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
 
 .tab-body-item .bottomContainer .bottomBody#yzx-shaiXuan .input{
     width: 4rem;
@@ -126,6 +230,25 @@
     border-bottom: 1px double #ccc;
     padding: 0px 5px;
 }
+.tab-body-item .bottomContainer .bottomBody#tourRecords-result .select{
+    width: 10rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    height: 1.2rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
+
+.tab-body-item .bottomContainer .bottomBody#tourRecords-result .textarea{
+    width: 10rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    height: 3rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
+
+
 .tab-body-item .bottomContainer .bottomBody .input{
     width: 4rem;
     display: inline-block;
@@ -134,10 +257,13 @@
     border-bottom: 1px double #ccc;
     padding: 0px 5px;
 }
-.tab-body-item .bottomContainer .bottomBody#shaiXuan .flex-item{
+.tab-body-item .bottomContainer .bottomBody#tourRecords-result .flex-item{
     text-align: left;
 }
-.tab-body-item .bottomContainer .bottomBody#yzx-shaiXuan .flex-item{
+.tab-body-item .bottomContainer .bottomBody#adviceRecords-selector .flex-item{
+    text-align: left;
+}
+.tab-body-item .bottomContainer .bottomBody#adviceExecute-selector .flex-item{
     text-align: left;
 }
 textarea{

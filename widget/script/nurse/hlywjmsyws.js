@@ -102,7 +102,6 @@ function saveAddRecord() {
             params.name = '化疗药物静脉输液外渗告知书';
             params.medTemplateId = 217;
             params.itemList = data;
-            alert(JSON.stringify(params));
             common.post({
                 url:config.nursePlanUrl,
                 isLoading:true,
