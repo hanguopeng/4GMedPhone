@@ -88,8 +88,8 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">入科时间：</span>
-            {{if(it.organizationName){ }}
-            <span class="value">{{=it.organizationName}} </span>
+            {{if(it.inOrganizationTime){ }}
+            <span class="value">{{=it.inOrganizationTime}} </span>
             {{}else{}}
             <span class="value redInfo">待入科 &nbsp;&nbsp;&nbsp; </span>
             <span class="aui-btn aui-btn-info" tapmode onclick="toggleMenu();" >入科确认</span>
@@ -110,7 +110,7 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">责任护士：</span>
-            <span class="value">{{=it.nationName||''}}</span>
+            <span class="value">{{=it.nurseName||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">入院诊断：</span>
