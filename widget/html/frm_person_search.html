@@ -83,16 +83,6 @@
     </div>
   </header>
   <section class="aui-content" style="margin-top:2.5rem">
-    <!-- <div class="aui-row aui-text-center">
-      <div class="aui-col aui-list-item">
-        <div class="aui-list-item-inner">
-          <div class="aui-list-item-input">
-                  <label class="aui-margin-l-15"><input class="aui-radio" type="radio" name="paient" checked> 所有病人</label>
-                  <label class="aui-margin-l-15"><input class="aui-radio" type="radio" name="paient"> 我的病人</label>
-              </div>
-        </div>
-      </div>
-    </div> -->
     <div class="aui-row aui-list aui-form-list">
       <div class="aui-col-xs-12 aui-list-item">
         <div class="aui-list-item-inner am-input-autoclear">
@@ -106,6 +96,16 @@
       </div>
     </div>
   </section>
+  <div class="aui-content">
+      <nav>
+          <ul id="personList" style="color: #08bad6;">
+              <li class="menu">
+                  <div id="searchList">
+                  </div>
+              </li>
+          </ul>
+      </nav>
+  </div>
 </body>
 <script id="persons-tpl" type="text/template">
   {{~it:info:index}}
@@ -155,7 +155,6 @@
                   }, false);
                   clearInput.addEventListener('blur', function () { //失去焦点
                       setTimeout(function(){
-//                          clearTrigger.style.visibility = 'hidden';
                       },200);
                   }, false);
               }
