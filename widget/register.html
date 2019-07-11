@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="./css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/login.css"/>
+    <style>
+        /*其中，IOS状态栏高度为20px，Android为25px*/
+        /*兼容ios和Android*/
+        .headerIos{
+            padding-top: 20px;
+        }
+        .headerAnd{
+            padding-top: -25px;
+        }
+        body{
+            background-image:url(./image/log.png); background-repeat:no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 100%;"
+        }
+        footer {
+            height: 30px;
+            width: 100%;
+            background-color: #81a9c3;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+        }
+        .login-style {
+            width:60% ;
+            margin-left:20%;
+        }
+        #loginBtn {
+            height: 1.8rem;
+            line-height: 1.7rem
+        ;
+        }
+        #scanLoginBtn {
+            height: 1.8rem;
+            line-height: 1.7rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+</header>
+<div class="login-style" style="margin-top: 48%">
+    <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-my"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="userName"  type="text" value="" placeholder="请输入用户名">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item" >
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-lock"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="userPass"  type="password" value="" placeholder="请输入密码">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-form-list aui-margin-t-15">
+        <li class="aui-list-item" >
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-lock"></i>
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="userPass2"  type="password" value="" placeholder="请再次确认密码">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="aui-row aui-margin-t-15">
+        <div id="loginBtn" class="aui-btn aui-btn-block aui-btn-info" style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
+             tapmode onclick="register()">注册</div><br/>
+    </div>
+</div>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/config.js"></script>
+<script type="text/javascript" src="./script/common.js"></script>
+<script>
+    var UIActionProgress;
+    apiready = function() {
+        UIActionProgress = api.require('UIActionProgress');
+        api.setScreenOrientation({
+            orientation : 'auto_portrait'
+        });
+        api.parseTapmode();
+        var header = document.querySelector('#header');
+        immersive(header);
+    };
+
+    /*
+     * 沉浸式
+     */
+    function immersive(header) {
+        var systemType = api.systemType;  // 获取手机类型，比如： ios
+        if (systemType == 'ios') {//兼容ios和安卓
+            $api.addCls(header, 'headerIos');
+        } else {
+            $api.addCls(header, 'headerAnd');
+        }
+        api.setStatusBarStyle({
+            color: '#67c23a',//设置APP状态栏背景色
+            style: 'light'
+        });
+    }
+
+    function register(){
+        var userName = $api.trim($api.val($api.byId('userName')));
+        var userPass = $api.trim($api.val($api.byId('userPass')));
+        var userPass2 = $api.trim($api.val($api.byId('userPass2')));
+
+        if(userName==""){
+            api.toast({
+                msg: '用户名不能为空！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        if(userPass=="" || userPass2 == ""){
+            api.toast({
+                msg: '用户密码不能为空！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        if(userPass !== userPass2){
+            api.toast({
+                msg: '两次密码不一致请重新确认！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+            return;
+        }
+        common.post({
+            url:config.register,
+            isLoading:true,
+            text:"注册中...",
+            data: JSON.stringify({
+                username: userName,
+                password: userPass
+            }),
+            success:function(ret){
+                api.hideProgress();
+                if (ret.code==200){
+                    api.alert({
+                        title: '提示',
+                        msg: ret.msg + ",将跳转回主页",
+                    });
+                    //转到主页
+                    api.openWin({
+                        name: 'login',
+                        bounces: false,
+                        slidBackEnabled : false,
+                        reload:true,
+                        url: './login.html',
+                        vScrollBarEnabled:false,
+                        hScrollBarEnabled:false
+                    });
+                } else{
+                    api.alert({
+                        title: '提示',
+                        msg: ret.content,
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

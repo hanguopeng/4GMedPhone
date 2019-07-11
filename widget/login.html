@@ -78,7 +78,7 @@
         </li>
     </ul>
     <div class="aui-row aui-padded-5 operatorContainer">
-        <div style="color: white;float: left; padding-left: 20%" onclick="">注册
+        <div style="color: white;float: left; padding-left: 20%" onclick="register()">注册
         </div>
         <div style="color: white;float: right;">
             <input id="remMe" style="margin-top: 0.4rem;" type="checkbox">记住用户名
@@ -487,6 +487,20 @@
     // 我觉得直接start就可以，剩下的由监听做，但是不知道行不行
     function scanLogin(){
         scanner.start();
+    }
+
+
+    function register(){
+        // 点击注册跳转注册页面
+        api.openWin({
+            name: 'register',
+            bounces: false,
+            slidBackEnabled : false,
+            reload:true,
+            url: './register.html',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false
+        });
     }
 </script>
 </body>
