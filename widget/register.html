@@ -167,20 +167,23 @@
             success:function(ret){
                 api.hideProgress();
                 if (ret.code==200){
-                    api.alert({
-                        title: '提示',
-                        msg: ret.msg + ",将跳转回主页",
+                    api.toast({
+                        msg: ret.msg + ",将跳转回登录页",
+                        duration: 1200,
+                        location: 'bottom'
                     });
-                    //转到主页
-                    api.openWin({
-                        name: 'login',
-                        bounces: false,
-                        slidBackEnabled : false,
-                        reload:true,
-                        url: './login.html',
-                        vScrollBarEnabled:false,
-                        hScrollBarEnabled:false
-                    });
+                    setTimeout(function(){
+                        //转到主页
+                        api.openWin({
+                            name: 'login',
+                            bounces: false,
+                            slidBackEnabled : false,
+                            reload:true,
+                            url: './login.html',
+                            vScrollBarEnabled:false,
+                            hScrollBarEnabled:false
+                        });
+                    },1300);
                 } else{
                     api.alert({
                         title: '提示',
