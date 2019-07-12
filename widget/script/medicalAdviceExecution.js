@@ -54,12 +54,15 @@ var changeTab = function (obj) {
             adviceRecords();
         }
     } else if (dataTo == "advice-execute") {//医嘱执行
+        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'advice-execute'
         adviceExecute();
     } else if (dataTo == "tour-records") {//巡视记录
+        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'tour-records'
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
+        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'skin-test'
         skinTestRecord();
     }

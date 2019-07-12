@@ -191,10 +191,10 @@ function newDocAdvice(){
     var header = document.querySelector('#header');
     var pos = $api.offset(header);
     api.openFrame({
-        name: 'new_doctor_advice',
-        url: './new_doctor_advice.html',
+        name: 'new_advice_details',
+        url: './new_advice_details.html',
         rect: {
-            x: api.winWidth-300,
+            x: 0,
             y: pos.h,
             w: 'auto',
             h: api.winHeight-pos.h

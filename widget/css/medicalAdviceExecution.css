@@ -141,13 +141,7 @@
 .tab-body-item .itemContainer .item .leftTop{
     border-color: #67c23b transparent transparent #67c23b;
 }
-/* 医嘱左上角标颜色结束 */
-.tab-body-item .itemContainer .item.xkyz .leftTop{
-    border-color: #e51c23 transparent transparent #e51c23;
-}
-.tab-body-item .itemContainer .item.ytyz .leftTop{
-    border-color: #6F6F6F transparent transparent #6F6F6F;
-}
+
 .tab-body-item .itemContainer .item .leftTop div{
     transform:rotate(-45deg);
     color: #fff;
@@ -205,14 +199,7 @@
 .tab-body-item .bottomContainer .bottomBody.active{
     display: block;
 }
-.tab-body-item .bottomContainer .bottomBody#shaiXuan .input{
-    width: 4rem;
-    display: inline-block;
-    font-size: 0.6rem;
-    height: 1.2rem;
-    border-bottom: 1px double #ccc;
-    padding: 0px 5px;
-}
+
 .tab-body-item .bottomContainer .bottomBody#skinTest-selector .input{
     width: 4rem;
     display: inline-block;
@@ -222,14 +209,6 @@
     background-color: #fff;
 }
 
-.tab-body-item .bottomContainer .bottomBody#yzx-shaiXuan .input{
-    width: 4rem;
-    display: inline-block;
-    font-size: 0.6rem;
-    height: 1.2rem;
-    border-bottom: 1px double #ccc;
-    padding: 0px 5px;
-}
 .tab-body-item .bottomContainer .bottomBody#tourRecords-result .select{
     width: 10rem;
     display: inline-block;

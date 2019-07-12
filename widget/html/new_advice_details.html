@@ -2,139 +2,202 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>新开医嘱列表</title>
     <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/medicalAdviceExecution.css"/>
 </head>
+<body>
 <style>
-    .aui-tab-item {
-        width:50%;
-    }
-    .czhl{
+    .select{
+        width: 5rem;
+        border: 1px double #0d0202;
+        position: relative;
+        display: inline-block;
         text-align: center;
-        line-height: 4.5rem;
+        padding: 0 0.6rem;
+        height: 1.3rem;
+        border-radius: 0.2rem;
+        display: -webkit-box;
+        float: right;
+        margin-left: 0.6rem;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        -webkit-align-items: center;
+        align-items: center;
     }
-    .czhl{
-        background-color: #3e8f3e;
-    }
-    .bkys{
-        border:1px solid #5cb85c;
-    }
-    body{
-        font-size: 16px;
+    .closeIcon{
+        position: relative;
+        font-family:"aui_iconfont" !important;
+        font-size: 0.9rem;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
-<body>
+<div class="bodyContainer">
     <div class="aui-tab" id="tab">
-            <div class="aui-tab-item aui-active">新开医嘱</div>
-            <div class="aui-tab-item"><div></div>新停医嘱</div>
+        <div class="aui-tab-item aui-active" style="width: 30%" id="tab-new-start-advice"  onclick="newAdvice(0);">新开医嘱</div>
+        <div class="aui-tab-item" style="width: 30%" id="tab-new-end-advice" onclick="newAdvice(1);">新停医嘱</div>
+        <div class="select">
+            <select id="test">
+                <option value="0">全部患者</option>
+                <option value="1">我的患者</option>
+                <option value="2">请假</option>
+                <option value="3">稳定</option>
+                <option value="4">休息中</option>
+                <option value="5">进食</option>
+                <option value="6">手术</option>
+                <option value="7">检查中</option>
+                <option value="8">其它</option>
+            </select>
         </div>
-    <div class="" style="width:30%"><div></div>
-        <select>
-            <option>全部病人</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-        </select>
+        <div id="header-left" class="aui-pull-right" style="margin-left: 0.5rem" onclick="closeCurrentFrame()">
+            <i class="closeIcon aui-icon-close"  ></i>
+        </div>
     </div>
-    <div id="content">
-
-    </div>
-    <div id="contentAdvice">
-
-    </div>
-
-</body>
-<script id="newstart-tpl" type="text/template">
-    <div class="aui-margin-l-15 aui-margin-b-10">
-        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">在用医嘱
-        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">未记账
-        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">需要报告
-        <input class="aui-checkbox aui-margin-l-10" type="checkbox" name="" checked="">全    部
-    </div>
-    <!--<div class="aui-col-xs-3 aui-margin-l-15">
-        <input type="checkbox" value="">在用医嘱
-    </div>
-    <div class="aui-col-xs-2">
-        <input type="checkbox" value="">  未记账
-    </div>
-    <div class=" aui-margin-t-10">
-        <input type="checkbox" value="">需要报告
-    </div>
-    <div class="">
-        <input type="checkbox" value="">全    部
-    </div>-->
-    </script>
-<script id="yzxx-tpl" type="text/template">
-    <div>
-        <div onclick="docAdvDetails(this)">
-            <div class="aui-col-xs-1 czhl" id="czhl" style="align-content: center">长<br>嘱</div>
-            <div class="aui-col-xs-11 bkys">
-                <div style="font-size: 20px;">患者姓名:</div>
-                <div style="font-size:20px;">床&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp号:</div>
-                <div>医嘱内容:</div>
-                <div>生效时间:</div>
-                <div>终止时间:</div>
-                <div>用&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp法:</div>
-                <div>医生托嘱:</div>
-                <div>执行科室:</div>
-                <div class="aui-col-xs-5">开嘱医生:</div>
-                <div class="aui-col-xs-5">状&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp态:</div>
-            </div>
-            <div class="aui-hide">
-                <div>总量:</div>
-                <div>单量:</div>
-                <div>天数:</div>
-                <div>频率:</div>
-                <div>执行性质:</div>
-                <div>上次执行:</div>
-                <div>开嘱时间:</div>
-                <div>校对护士:</div>
-                <div>校对时间:</div>
-                <div>停嘱医生:</div>
-                <div>停嘱时间:</div>
-                <div>确认停嘱时间:</div>
-                <div>基本药物:</div>
+    <div class="tabBody">
+        <!--新开和新停都放在一起，上面得tab只当作筛选条件-->
+        <div id="new-advice" class="active tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
+            <div class="itemContainer" id="newAdviceContentContainer">
             </div>
         </div>
-
     </div>
-    <div>
-        <div onclick="docAdvDetails(this)">
-            <div class="aui-col-xs-1 czhl" id="czhl" style="align-content: center">长<br>嘱</div>
-            <div class="aui-col-xs-11 bkys">
-                <div style="font-size: 20px;">患者姓名:</div>
-                <div style="font-size:20px;">床&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp号:</div>
-                <div>医嘱内容:</div>
-                <div>生效时间:</div>
-                <div>终止时间:</div>
-                <div>用&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp法:</div>
-                <div>医生托嘱:</div>
-                <div>执行科室:</div>
-                <div class="aui-col-xs-5">开嘱医生:</div>
-                <div class="aui-col-xs-5">状&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp态:</div>
+</div>
+
+<!--医嘱记录-->
+<script id="newAdviceList" type="text/template">
+    {{
+    for(var i=0;i<6;i++) {
+    }}
+    <div class="adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
+        <div class="left background-green" >长嘱</div>
+        <div class="right" >
+            <div>
+                <span style="width: 30%">+8181床</span>
+                <span style="width: 30%">张三</span>
+                <span style="width: 40%">住院编号</span>
             </div>
-            <div class="aui-hide">
-                <div>总量:</div>
-                <div>单量:</div>
-                <div>天数:</div>
-                <div>频率:</div>
-                <div>执行性质:</div>
-                <div>上次执行:</div>
-                <div>开嘱时间:</div>
-                <div>校对护士:</div>
-                <div>校对时间:</div>
-                <div>停嘱医生:</div>
-                <div>停嘱时间:</div>
-                <div>确认停嘱时间:</div>
-                <div>基本药物:</div>
+            <div>
+                <span>医嘱内容：</span>
+                <span>XXXXXXXXXXXXXXXXXXXXXXX</span>
             </div>
+            <div>
+                <span>生效时间：</span>
+                <span>2019-07-03 12:25:20</span>
+            </div>
+            <div>
+                <span>终止时间：</span>
+                <span>2019-07-03 12:25:20</span>
+            </div>
+            <div>
+                <span>用法：</span>
+                <span>口服，一日两次</span>
+            </div>
+            <div>
+                <span>医生托嘱：</span>
+                <span>XXXXXXXXX</span>
+            </div>
+            <div>
+                <span>执行科室：</span>
+                <span>药房</span>
+            </div>
+            <div>
+                <div style="width: 50%">
+                    <span>开嘱医生：</span>
+                    <span>章阿三</span>
+                </div>
+                <div style="width: 50%">
+                    <span>状态：</span>
+                    <span>XXX</span>
+                </div>
+            </div>
+            <div>
+                <span>开嘱时间：</span>
+                <span>2019-07-03 12:25:20</span>
+            </div>
+
         </div>
-
     </div>
+    <div id="detail" class="detail hide">
+        <div>
+            <span>总量：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>单量：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>天数：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>频率：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>执行性质：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>上次执行：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>校对护士：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>校对时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>停嘱医生：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>停嘱时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>确认停嘱时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>基本药物：</span>
+            <span></span>
+        </div>
+    </div>
+    {{ } }}
+</script>
 
-    </script>
+<script id="selectList" type="text/template">
+    <select id="adviceExecuteItems">
+        <option value="0">输液</option>
+        <option value="1">外出</option>
+        <option value="2">请假</option>
+        <option value="3">稳定</option>
+        <option value="4">休息中</option>
+        <option value="5">进食</option>
+        <option value="6">手术</option>
+        <option value="7">检查中</option>
+        <option value="8">其它</option>
+    </select>
+</script>
+
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
 <script type="text/javascript" src="../script/aui-tab.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
 <script type="text/javascript" src="../script/new_advice_details.js"></script>
+</body>
 </html>
