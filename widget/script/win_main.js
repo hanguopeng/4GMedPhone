@@ -131,31 +131,23 @@ function backSystem(){
   });
 }
 function toggleMenu(daList){
-    // 保留
-    // api.openFrame({
-    //     name: 'win_layer_menu',
-    //     bounces:false,
-    //     rect : {
-    //       x : 0,
-    //       y : 0,
-    //       w : 'auto',
-    //       h : 'auto'
-    //     },
-    //     bgColor:'rgba(255, 255, 255, 0.4)',
-    //     url: './frm_layer_menu.html'
-    // });
     api.actionSheet({
         cancelTitle: '取消',
-        buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
+        // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
+        buttons: ['首页','搜索','新医嘱列表'+'('+daList+')','修改密码','切换账户','直接退出系统']
     }, function(ret, err){
         if(ret.buttonIndex==1){
-            scanner.start();
+            api.closeWin();
         }else if(ret.buttonIndex==2){
             openPersonSearchFrame();
         }else if(ret.buttonIndex==3){
-            api.closeWin();
-        }else if(ret.buttonIndex==4){
             newDocAdvice();
+        }else if(ret.buttonIndex==4){
+            changePwd();
+        }else if(ret.buttonIndex==5){
+            switchAccount();
+        }else if(ret.buttonIndex==6){
+            logOut();
         }
     });
 }
@@ -210,5 +202,32 @@ function newDocAdvice(){
         },
         vScrollBarEnabled: false,
         hScrollBarEnabled: false
+    });
+}
+// 修改密码
+function changePwd(){
+    api.openWin({
+        name: 'change_password',
+        url: './change_password.html',
+    });
+}
+
+// 登录页
+function switchAccount(){
+    common.clearStorage();
+    api.closeToWin({
+        name: 'root'
+    });
+}
+
+// 直接退出
+function logOut(){
+    common.clearStorage();
+    api.closeWidget({
+        id: api.appId,
+        retData: {
+            name: 'closeWidget'
+        },
+        silent: true
     });
 }

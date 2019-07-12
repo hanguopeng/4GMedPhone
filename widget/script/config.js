@@ -10,8 +10,6 @@ var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
     loginUrl: localServer+"/sys/login", //登录
-    // 20190711 添加注册
-    register: localServer+"/sys/user/register", //注册
     dictUrl: localServer+"/sys/dictionary/getComboBoxList", // 通用字段值查询
     loginUserInfoUrl: localServer+"/personnel/detailByOperator", //登陆人员信息
     organizationUrl: localServer+"/sys/organization/listByOperator", //疗区查询
@@ -91,6 +89,10 @@ var config={
     patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
     inspectionSave:localServer+"/med/inspection/inspectionSave", //执行记录保存
     inspectionQuery:localServer+"/med/inspection/inspectionQuery/", //执行记录保存
+    // 20190711 添加注册
+    register: localServer+"/sys/user/register", //注册
+    // 20190712 添加修改密码
+    changePassword: localServer+"/sys/user/password", //修改密码
 }
 
 var accessoryType={
