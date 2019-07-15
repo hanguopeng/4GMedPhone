@@ -159,4 +159,9 @@ var storageKey={
     offlineFlag:"offlineFlag",//是否是离线查询
     motion:"motionCache", //重要事件中的动作的缓存
     careSheet:"careSheet", //登录用户该疗区的护理文书
+    scannerStatus:"scannerStatus", // 扫码监听事件类型
+    newAdviceCount:"newAdviceCount", // 新开医嘱数量
+    cmcScan:"cmcScan",  // 扫描模块
+    createFlag:"createFlag", //websocket是否已经连接
+
 }

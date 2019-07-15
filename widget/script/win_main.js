@@ -1,10 +1,89 @@
 var fs;
+var scanner;
+var socketFlag = $api.getStorage(storageKey.createFlag);
 apiready = function() {
-  fs = api.require('fs');
-  api.parseTapmode();
-  getUserInfo();
-  var header = document.querySelector('#header');
-  immersive(header);
+    alert('win_main')
+    fs = api.require('fs');
+    // scanner =  $api.getStorage(storageKey.cmcScan);
+    scanner = api.require('cmcScan');
+    alert(scanner)
+    scanner.open();
+    api.parseTapmode();
+    getUserInfo();
+    var header = document.querySelector('#header');
+    immersive(header);
+    api.addEventListener({
+        name: 'scanEvent'
+    }, function(ret,err){
+        alert(22222)
+        if(ret.value.status===1){
+            var scannerStatus = $api.getStorage(storageKey.scannerStatus)
+            var value = ret.value.value;
+            if (scannerStatus == 'changePatient'){
+                var person = $api.getStorage(storageKey.currentPerson);
+                var patientId = person.id;
+                $api.setStorage(storageKey.scannerStatus, '');
+                if(value == patientId){
+                    common.get({
+                        url: config.patientSaveUrl + patientId + '/' + person.homepageId,
+                        isLoading: true,
+                        text: "正在保存...",
+                        success: function (ret) {
+                            api.hideProgress();
+                            api.alert({
+                                title: '提示',
+                                msg: ret.content,
+                            }, function (ret, err) {
+                                loadJCST()
+                            });
+                        }
+                    });
+                }else{
+                    api.alert({
+                        title: '提示',
+                        msg: '扫描到的患者与当前患者不是同一个人',
+                    }, function (ret, err) {
+                        loadJCST()
+                    });
+                }
+            } else{
+                alert(111)
+                var persons = $api.getStorage(storageKey.persons);
+                //遍历查询
+                for (var i = 0; i < persons.length; i++) {
+                    if(persons[i].id==value){
+                        api.sendEvent({
+                            name: "scanSuccess",
+                            extra: {
+                                index: i
+                            }
+                        });
+                        return;
+                    }
+                }
+                api.alert({
+                    title: '提示',
+                    msg: '系统未管理此病人，请刷新后重试',
+                });
+            }
+        }else if(ret.status===0){
+            api.toast({
+                msg: '超时或解码失败，请重试！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+        }
+    });
+
+    if("true"!=socketFlag){
+        nurerId();
+    }
+    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    if (parseInt(newAdviceCount)>0){
+        var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
+            "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+        $api.html($api.byId("caidanlan"), jiaobiao);
+    }
 };
 
 function immersive(header) {
@@ -232,3 +311,75 @@ function logOut(){
         silent: true
     });
 }
+
+
+var tokenRet = function(personId){
+    alert(personId)
+    common.get({
+        url:"http://192.168.1.112:8085/cmc-server/med/patient/getUserToken/"+personId,
+        isLoading: true,
+        success: function (ret) {
+            alert("tokenRet");
+            var wsdata = ret.data;
+            alert(wsdata);
+
+            createWs(wsdata);
+
+
+        }
+    });
+
+    //alert("end");
+}
+
+var nurerId = function(){
+
+    common.get({
+        url: config.loginUserInfoUrl,
+        isLoading: true,
+        success: function (ret) {
+            var personId = ret.content.id;
+            tokenRet(personId);
+
+        }
+    });
+
+}
+function createWs(wsdata) {
+    var WsUrl = "ws://192.168.1.112:8888/"+encodeURIComponent(wsdata);
+
+    wsClient = new WebSocket(WsUrl);
+    wsClient.onopen = function() {
+        onOpen()
+    };
+    wsClient.onclose = function() {
+        onClose();
+    };
+    wsClient.onmessage = function(evt) {
+        alert("onmessage");
+        onmessage(evt)
+    };
+    wsClient.onerror = function() {
+        alert("error");
+        onError()
+    };
+
+    $api.setStorage("createFlag","true");
+
+}
+function  onmessage(event) {
+    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
+    $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
+    var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
+        "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+    $api.html($api.byId("caidanlan"), jiaobiao);
+
+}
+function onOpen(){
+}
+function send(){
+
+}
+
+

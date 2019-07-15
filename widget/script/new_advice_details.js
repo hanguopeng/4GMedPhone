@@ -1,5 +1,5 @@
 var person = $api.getStorage(storageKey.currentPerson);
-var patientId = 31553376;
+var patientId = person.id;
 apiready = function () {
     api.parseTapmode();
     newAdvice();

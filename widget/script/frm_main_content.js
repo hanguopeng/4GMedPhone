@@ -19,10 +19,19 @@ apiready = function () {
         refresh();
     });
 };
+
+
 /*
  * 根据条件查询所有病人信息
  */
 function searchPersons() {
+    // api.removeEventListener({
+    //     name: 'scanEvent'
+    // },scanFun);
+    // 给dom元素加监听
+    // api.addEventListener({
+    //     name: 'scanEvent'
+    // },scanFun);
     $api.html($api.byId('nurseLevelContent'), "");
     $api.html($api.byId('personContent'), "");
 
@@ -63,6 +72,7 @@ function searchPersons() {
             }
         }
     });
+
 }
 
 
@@ -114,10 +124,12 @@ function refresh() {
 function openPersonCenter(idx) {
     var allPersons = $api.getStorage(storageKey.persons);
     var person = allPersons[idx];
-    console.log(person)
     $api.setStorage(storageKey.currentPerson, person);
     $api.setStorage(storageKey.currentIdx, idx); //左右箭头的时候需要
     $api.setStorage(storageKey.lastIdx, allPersons.length - 1); //设置最后一个索引的大小，length-1
+    // api.removeEventListener({
+    //     name: 'scanEvent'
+    // },scanFun);
     api.openWin({
         name: "win_person_center",
         bounces: false,

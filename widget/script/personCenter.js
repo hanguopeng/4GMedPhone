@@ -1,124 +1,18 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var patientId = person.id;
 var page = 1;
-var changePatient = true  //切换病人
+var scanner
 apiready = function () {
     api.parseTapmode();
     loadJCST()
-    api.OnscanEvent=function(ret,err){
-        if(ret.value.status===1){
-            if (changePatient){
-                var value = ret.value.value;
-                var persons = $api.getStorage(storageKey.persons);
-                //遍历查询
-                for (var i = 0; i < persons.length; i++) {
-                    if(persons[i].id==value){
-                        api.sendEvent({
-                            name: "scanSuccess",
-                            extra: {
-                                index: i
-                            }
-                        });
-                        return;
-                    }
-                }
-                api.alert({
-                    title: '提示',
-                    msg: '系统未管理此病人，请刷新后重试11111',
-                });
-            } else{
-                var value = ret.value.value;
-                changePatient = true
-                if(value == patientId){
-                    common.get({
-                        url: config.patientSaveUrl + patientId + '/' + person.homepageId,
-                        isLoading: true,
-                        text: "正在保存...",
-                        success: function (ret) {
-                            api.hideProgress();
-                            api.alert({
-                                title: '提示',
-                                msg: ret.content,
-                            }, function (ret, err) {
-                                loadJCST()
-                            });
-                        }
-                    });
-                }else{
-                    api.alert({
-                        title: '提示',
-                        msg: '扫描到的患者与当前患者不是同一个人',
-                    }, function (ret, err) {
-                        loadJCST()
-                    });
-                }
-            }
-        }else if(ret.status===0){
-            api.toast({
-                msg: '超时或解码失败，请重试！',
-                duration: config.duration,
-                location: 'bottom'
-            });
-        }
-    };
+    scanner =  $api.getStorage(storageKey.cmcScan);
+    // scanner = api.require('cmcScan');
+    // scanner.open();
+    // 扫码事件
     // api.addEventListener({
     //     name: 'scanEvent'
-    // }, function(ret,err){
-    //     if(ret.value.status===1){
-    //         if (changePatient){
-    //             var value = ret.value.value;
-    //             var persons = $api.getStorage(storageKey.persons);
-    //             //遍历查询
-    //             for (var i = 0; i < persons.length; i++) {
-    //                 if(persons[i].id==value){
-    //                     api.sendEvent({
-    //                         name: "scanSuccess",
-    //                         extra: {
-    //                             index: i
-    //                         }
-    //                     });
-    //                     return;
-    //                 }
-    //             }
-    //             api.alert({
-    //                 title: '提示',
-    //                 msg: '系统未管理此病人，请刷新后重试11111',
-    //             });
-    //         } else{
-    //             var value = ret.value.value;
-    //             changePatient = true
-    //             if(value == patientId){
-    //                 common.get({
-    //                     url: config.patientSaveUrl + patientId + '/' + person.homepageId,
-    //                     isLoading: true,
-    //                     text: "正在保存...",
-    //                     success: function (ret) {
-    //                         api.hideProgress();
-    //                         api.alert({
-    //                             title: '提示',
-    //                             msg: ret.content,
-    //                         }, function (ret, err) {
-    //                             loadJCST()
-    //                         });
-    //                     }
-    //                 });
-    //             }else{
-    //                 api.alert({
-    //                     title: '提示',
-    //                     msg: '扫描到的患者与当前患者不是同一个人',
-    //                 }, function (ret, err) {
-    //                     loadJCST()
-    //                 });
-    //             }
-    //         }
-    //     }else if(ret.status===0){
-    //         api.toast({
-    //             msg: '超时或解码失败，请重试！',
-    //             duration: config.duration,
-    //             location: 'bottom'
-    //         });
-    //     }
-    // });
+    // }, scanFun);
+    // alert(patientId)
 };
 
 /**
@@ -397,9 +291,8 @@ var fymxDetail = function(obj){
     }
 };
 function toggleMenu(){
-    changePatient = false;
+    $api.setStorage(storageKey.scannerStatus, 'changePatient');
     scanner.start()
-
 }
 
 function subStrDate(date) {
