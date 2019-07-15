@@ -3,6 +3,8 @@ var patientId = person.id;
 var page = 1;
 var testData
 var skinTestId = ''
+var skinTestStatus = true
+
 var currentTab = 'advice-records'
 apiready = function () {
     api.parseTapmode();
@@ -114,7 +116,6 @@ var adviceRecords = function () {
         url: config.adviceDetail + patientId,
         isLoading: true,
         success: function (ret) {
-            // alert(JSON.stringify(ret));
             testData = ret
             // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
             $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
@@ -292,6 +293,8 @@ var tourRecords = function () {
                 $api.html($api.byId('tourRecordsContentContainer'), "");
                 var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
                 $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(ret.content));
+            }else{
+                $api.html($api.byId('tourRecordsContentContainer'), "");
             }
         }
     });
@@ -391,13 +394,14 @@ var skinTestRecord = function () {
         }),
         dataType: "json",
         success: function (ret) {
-            alert(JSON.stringify(ret.content.list))
             if(ret&&ret.content&&ret.content.list.length>0){
                 $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
                 $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
                 $api.html($api.byId('skinTestContentContainer'), "");
                 var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
                 $api.html($api.byId('skinTestContentContainer'), contentTmpl(ret.content.list));
+            }else{
+                $api.html($api.byId('skinTestContentContainer'), "");
             }
         }
     });
@@ -405,15 +409,17 @@ var skinTestRecord = function () {
 /**
  * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
  */
-var SkinTestSelect = function (obj,id) {
+var SkinTestSelect = function (obj,id,status) {
     if (isEmpty(skinTestId)){
         $api.removeCls(obj, 'border-green');
         $api.addCls(obj, 'border-red');
         skinTestId = id;
+        skinTestStatus = status;
     } else{
         $api.removeCls(obj, 'border-red');
         $api.addCls(obj, 'border-green');
         skinTestId = ''
+        skinTestStatus = true
     }
 
 };
@@ -421,24 +427,26 @@ var SkinTestSelect = function (obj,id) {
  * 皮试结果保存或修改
  */
 var skinTestExecute = function () {
-    var skinTestResult = $("input[name='skinTestResult']").val();
+    var skinTestResult = $("input[name='skinTestResult']:checked").val();
     if (isEmpty(skinTestId)){
         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
         skinTestId = ''
         api.alert({
             title: '提示',
-            msg: '请选择一条皮试记录再操作',
+            msg: '请选择一条皮试记录再操作！',
         });
         return;
+    }else{
+        if (!skinTestStatus){
+            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
+            skinTestId = ''
+            api.alert({
+                title: '提示',
+                msg: '已经录入皮试结果不允许修改！',
+            });
+            return;
+        }
     }
-
-    skinTestRecord();
-    skinTestId = ''
-    api.alert({
-        title: '提示',
-        msg: '操作成功',
-    });
-
     common.post({
         url: config.updateSkin,
         data:JSON.stringify({
@@ -448,14 +456,21 @@ var skinTestExecute = function () {
         dataType: "json",
         isLoading: true,
         success: function (ret) {
-            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
-            skinTestId = ''
-            alert(ret.content)
-            api.alert({
-                title: '提示',
-                msg: ret.content,
-            });
-            skinTestRecord()
+            if (ret.code==200){
+                $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+                skinTestId = ''
+                api.alert({
+                    title: '提示',
+                    msg: ret.msg,
+                });
+                skinTestRecord()
+            } else{
+                api.alert({
+                    title: '提示',
+                    msg: ret.content,
+                });
+            }
+
         }
     });
 };

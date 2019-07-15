@@ -158,7 +158,6 @@
 
 /* 皮试结果执行完成，边框是绿色，背景是深绿色*/
 .tab-body-item .itemContainer .item.skinTestGreen{
-    border: 1px double #67c23b;
     background-color: #24771c;
 }
 .tab-body-item .itemContainer .item .leftTop{
