@@ -4,11 +4,8 @@ var alarmNotification;
 var socketFlag = $api.getStorage(storageKey.createFlag);
 apiready = function() {
     alarmNotification = api.require('alarmNotification');
-    //alert('win_main')
     fs = api.require('fs');
-    // scanner =  $api.getStorage(storageKey.cmcScan);
     scanner = api.require('cmcScan');
-    //alert(scanner)
     scanner.open();
     api.parseTapmode();
     getUserInfo();
@@ -282,6 +279,9 @@ function newDocAdvice(){
             type:"flip",
             subType:"from_bottom"
         },
+        pageParam: {
+            areaId: $api.byId('areaSel').value
+        },
         vScrollBarEnabled: false,
         hScrollBarEnabled: false
     });
@@ -316,22 +316,17 @@ function logOut(){
 
 
 var tokenRet = function(personId){
-    alert(personId)
     common.get({
         url:"http://192.168.1.112:8085/cmc-server/med/patient/getUserToken/"+personId,
         isLoading: true,
         success: function (ret) {
-            alert("tokenRet");
             var wsdata = ret.data;
-            alert(wsdata);
 
             createWs(wsdata);
 
 
         }
     });
-
-    //alert("end");
 }
 
 var nurerId = function(){
@@ -358,11 +353,9 @@ function createWs(wsdata) {
         onClose();
     };
     wsClient.onmessage = function(evt) {
-        alert("onmessage");
         onmessage(evt)
     };
     wsClient.onerror = function() {
-        alert("error");
         onError()
     };
 

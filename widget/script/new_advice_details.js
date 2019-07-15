@@ -1,7 +1,8 @@
-var person = $api.getStorage(storageKey.currentPerson);
-var patientId = person.id;
+var areaId;
+var userId = $api.getStorage(storageKey.userId);
 apiready = function () {
     api.parseTapmode();
+    areaId =  api.pageParam.areaId
     newAdvice();
 }
 /**
@@ -15,13 +16,18 @@ var newAdvice = function (status) {
     } else{
         $api.addCls($api.byId('tab-new-start-advice'), 'aui-active');
     }
+    if (isEmpty(status)){
+        status = 0
+    }
+    alert(config.adviceTipList + areaId + "/" + userId + "/" +status)
     common.get({
-        url: config.adviceDetail + patientId,
+        url: config.adviceTipList + areaId + "/" + userId + "/" +status,
         isLoading: true,
         success: function (ret) {
+            alert(JSON.parse(ret.content.list))
             $api.html($api.byId('newAdviceContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('newAdviceList')));
-            $api.html($api.byId('newAdviceContentContainer'), contentTmpl(ret.content));
+            $api.html($api.byId('newAdviceContentContainer'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -29,7 +35,19 @@ var newAdvice = function (status) {
 /**
  *  医嘱点击显示详情，再次点击隐藏
  */
-var changeAdviceShow = function (obj) {
+var changeAdviceShow = function (obj,id) {
+    // 第一次点击将框变成红色，以后每次进来判断是否有红色框，有红色框不再触发已读操作
+    var isGreen = $api.hasCls(obj, 'border-green');
+    if (isGreen) {
+        $api.removeCls(obj, 'border-green');
+        $api.addCls(obj, 'border-red');
+        common.get({
+                url: config.adviceTipRead + id + "/" + userId,
+                isLoading: true,
+                success: function (ret) {
+                }
+            });
+    }
     var isHide = $api.hasCls($api.next(obj), 'hide');
     if (isHide){
         $api.removeCls($api.next(obj), 'hide');
@@ -70,4 +88,11 @@ function isEmpty(str){
 
 function closeCurrentFrame(){
     api.closeFrame();
+}
+
+
+function isEmpty(str){
+    if (str == null || str =='' || str == undefined){
+        return true
+    }
 }

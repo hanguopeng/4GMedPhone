@@ -74,10 +74,12 @@
 <!--医嘱记录-->
 <script id="newAdviceList" type="text/template">
     {{
-    for(var i=0;i<6;i++) {
+    for(var i=0;i<it.length;i++) {
+        var item = it[0]
+
     }}
-    <div class="adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
-        <div class="left background-green" >长嘱</div>
+    <div class="item border-green adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this,{{=item.id}})">
+        <div class="left background-green" >{{=item.priorityCode}}</div>
         <div class="right" >
             <div>
                 <span style="width: 30%">+8181床</span>
@@ -86,27 +88,27 @@
             </div>
             <div>
                 <span>医嘱内容：</span>
-                <span>XXXXXXXXXXXXXXXXXXXXXXX</span>
+                <span>{{=item.name}}</span>
             </div>
             <div>
                 <span>生效时间：</span>
-                <span>2019-07-03 12:25:20</span>
+                <span>{{=item.adviceStart}}</span>
             </div>
             <div>
                 <span>终止时间：</span>
-                <span>2019-07-03 12:25:20</span>
+                <span>{{=item.TerminationTime}}</span>
             </div>
             <div>
                 <span>用法：</span>
-                <span>口服，一日两次</span>
+                <span>{{=item.usageCode}}</span>
             </div>
             <div>
                 <span>医生托嘱：</span>
-                <span>XXXXXXXXX</span>
+                <span>{{=item.Entrustment}}</span>
             </div>
             <div>
                 <span>执行科室：</span>
-                <span>药房</span>
+                <span>{{=item.acceptOrgName}}</span>
             </div>
             <div>
                 <div style="width: 50%">
@@ -115,12 +117,12 @@
                 </div>
                 <div style="width: 50%">
                     <span>状态：</span>
-                    <span>XXX</span>
+                    <span>{{=item.status}}</span>
                 </div>
             </div>
             <div>
                 <span>开嘱时间：</span>
-                <span>2019-07-03 12:25:20</span>
+                <span>{{=item.foundTime}}</span>
             </div>
 
         </div>
@@ -128,51 +130,51 @@
     <div id="detail" class="detail hide">
         <div>
             <span>总量：</span>
-            <span></span>
+            <span>{{=item.num}}</span>
         </div>
         <div>
             <span>单量：</span>
-            <span></span>
+            <span>{{=item.dosage}}</span>
         </div>
         <div>
             <span>天数：</span>
-            <span></span>
+            <span>{{=item.dateNum}}</span>
         </div>
         <div>
             <span>频率：</span>
-            <span></span>
+            <span>{{=item.frequencyCode}}</span>
         </div>
         <div>
             <span>执行性质：</span>
-            <span></span>
+            <span>{{=item.ExecutiveNature}}</span>
         </div>
         <div>
             <span>上次执行：</span>
-            <span></span>
+            <span>{{=item.lastExcecutiveTime}}</span>
         </div>
         <div>
             <span>校对护士：</span>
-            <span></span>
+            <span>{{=item.nurseName}}</span>
         </div>
         <div>
             <span>校对时间：</span>
-            <span></span>
+            <span>{{=item.checkTime}}</span>
         </div>
         <div>
             <span>停嘱医生：</span>
-            <span></span>
+            <span>{{=item.stopDocName}}</span>
         </div>
         <div>
             <span>停嘱时间：</span>
-            <span></span>
+            <span>{{=item.stopTime}}</span>
         </div>
         <div>
             <span>确认停嘱时间：</span>
-            <span></span>
+            <span>{{=item.stopConfirm}}</span>
         </div>
         <div>
             <span>基本药物：</span>
-            <span></span>
+            <span>{{=item.drugs}}</span>
         </div>
     </div>
     {{ } }}

@@ -1,11 +1,10 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 //var localServer = "http://140.143.143.150:8085/cmc-server";
-var localServer = "http://172.17.100.1:8083/cmc-server";
+// var localServer = "http://172.17.100.1:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
-//var localServer = "http://192.168.1.112:8085/cmc-server";
-// var localServer = "http://192.168.1.135:8085/cmc-server";
-var localServer = "http://192.168.1.112:8085/cmc-server";
+var localServer = "http://192.168.1.107:8085/cmc-server";
+//var localServer = "http://192.168.1.138:8085/cmc-server";
 var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
@@ -98,6 +97,10 @@ var config={
     // 20190714 添加 皮试列表/皮试保存
     querySkinList: localServer+"/med/advice/skin/querySkinList", //皮试列表
     updateSkin: localServer+"/med/advice/skin/updateSkin", //皮试保存
+    // 20190715 添加新开医嘱列表、新开医嘱已读、医嘱记录
+    adviceTipList: localServer+"/med/newadvicesend/adviceTipList/",  // 新开医嘱列表
+    adviceTipRead: localServer+"/med/newadvicesend/adviceTipRead/",  // 新开医嘱已读
+    queryAdviceList: localServer+"/med/advice/queryAdviceList/"  // 新开医嘱已读
 }
 
 var accessoryType={

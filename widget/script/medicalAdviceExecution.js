@@ -113,10 +113,11 @@ var clickBottomTab = function (parent, id) {
  */
 var adviceRecords = function () {
     common.get({
-        url: config.adviceDetail + patientId,
+        url: config.queryAdviceList + patientId,
         isLoading: true,
         success: function (ret) {
             testData = ret
+            alert(JSON.stringify(ret.content))
             // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
             $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
             $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');

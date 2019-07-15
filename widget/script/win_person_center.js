@@ -24,20 +24,6 @@ apiready = function(){
         openFrameContent(ret.value.name);
     });
 
-    //保留
-    api.addEventListener({
-        name: eventName.layerEvent
-    }, function(ret, err){
-        if(ret.value.type==0){
-          scanner.start();
-        }else if(ret.value.type==1){
-          openPersonSearchFrame();
-        }else if(ret.value.type==2){
-          api.closeWin();
-        }
-    });
-
-
     //点击返回键关闭当前window窗口
     api.addEventListener({
         name: 'keyback'

@@ -6,13 +6,49 @@ apiready = function () {
     api.parseTapmode();
     loadJCST()
     scanner =  $api.getStorage(storageKey.cmcScan);
-    // scanner = api.require('cmcScan');
-    // scanner.open();
+    scanner = api.require('cmcScan');
+    scanner.open();
     // 扫码事件
-    // api.addEventListener({
-    //     name: 'scanEvent'
-    // }, scanFun);
-    // alert(patientId)
+    api.addEventListener({
+        name: 'inOrganization'
+    }, function(ret,err){
+        if(ret.value.status===1){
+            var value = ret.value.value;
+            var person = $api.getStorage(storageKey.currentPerson);
+            var patientId = person.id;
+            $api.setStorage(storageKey.scannerStatus, '');
+            if(value == patientId){
+                common.get({
+                    url: config.patientSaveUrl + patientId + '/' + person.homepageId,
+                    isLoading: true,
+                    text: "正在保存...",
+                    success: function (ret) {
+                        api.hideProgress();
+                        scanner.changeEvent('scanEvent')
+                        api.alert({
+                            title: '提示',
+                            msg: ret.content,
+                        }, function (ret, err) {
+                            loadJCST()
+                        });
+                    }
+                });
+            }else{
+                api.alert({
+                    title: '提示',
+                    msg: '扫描到的患者与当前患者不是同一个人',
+                }, function (ret, err) {
+                    loadJCST()
+                });
+            }
+        }else if(ret.status===0){
+            api.toast({
+                msg: '超时或解码失败，请重试！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+        }
+    });
 };
 
 /**
@@ -291,7 +327,7 @@ var fymxDetail = function(obj){
     }
 };
 function toggleMenu(){
-    $api.setStorage(storageKey.scannerStatus, 'changePatient');
+    scanner.changeEvent("inOrganization");
     scanner.start()
 }
 
