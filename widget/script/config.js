@@ -93,6 +93,11 @@ var config={
     register: localServer+"/sys/user/register", //注册
     // 20190712 添加修改密码
     changePassword: localServer+"/sys/user/password", //修改密码
+    // 20190714 添加 新医嘱数量查询
+    adviceTipCount: localServer+"/med/newadvicesend/adviceTipCount/", //新医嘱数量查询
+    // 20190714 添加 皮试列表/皮试保存
+    querySkinList: localServer+"/med/advice/skin/querySkinList", //皮试列表
+    updateSkin: localServer+"/med/advice/skin/updateSkin", //皮试保存
 }
 
 var accessoryType={

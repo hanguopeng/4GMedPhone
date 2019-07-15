@@ -18,7 +18,8 @@ var changeTab = function (obj) {
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
         $api.removeCls($api.byId('tab-advice-records'), 'aui-active');
-        $api.removeCls($api.byId('tab-advice-execute'), 'aui-active');
+        // $api.removeCls($api.byId('tab-advice-execute'), 'aui-active');
+        $api.removeCls($api.byId('tab-advice-sends'), 'aui-active');
         $api.removeCls($api.byId('tab-tour-records'), 'aui-active');
         $api.removeCls($api.byId('tab-skin-test'), 'aui-active');
         $api.addCls(obj, 'aui-active');
@@ -29,15 +30,18 @@ var changeTab = function (obj) {
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
         $api.removeCls($api.byId('advice-records'), 'active');
-        $api.removeCls($api.byId('advice-execute'), 'active');
+        // $api.removeCls($api.byId('advice-execute'), 'active');
+        $api.removeCls($api.byId('advice-sends'), 'active');
         $api.removeCls($api.byId('tour-records'), 'active');
         $api.removeCls($api.byId('skin-test'), 'active');
 
         $api.addCls(activeTab, 'active');
 
-        // 移除医嘱执行、巡视记录、皮试结果的筛选等操作
-        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+        // 移除医嘱执行、医嘱发送、巡视记录、皮试结果的筛选等操作
+        // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+        // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+
+        $api.removeCls($api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
 
         $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
 
@@ -54,9 +58,13 @@ var changeTab = function (obj) {
             adviceRecords();
         }
     } else if (dataTo == "advice-execute") {//医嘱执行
+        // $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+        // currentTab = 'advice-execute'
+        // adviceExecute();
+    } else if (dataTo == "advice-sends") {//医嘱发送
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        currentTab = 'advice-execute'
-        adviceExecute();
+        currentTab = 'advice-sends'
+        adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'tour-records'
@@ -79,8 +87,10 @@ var clickBottomTab = function (parent, id) {
     var activeTab = $api.dom($api.byId(parent), '#' + id);
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
-        $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-selector'), 'active');
-        $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-execute'), 'active');
+        // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-selector'), 'active');
+        // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-execute'), 'active');
+
+        $api.removeCls($api.dom($api.byId(parent), '#adviceSends-selector'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#tourRecords-result'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#shuyexunshi'), 'active');
@@ -250,6 +260,25 @@ var closeAdviceExecuteDetail = function (obj) {
     $api.addCls(obj, 'hide');
 }
 
+
+/**
+ * 医嘱发送记录
+ */
+var adviceSends = function () {
+    common.get({
+        url: config.adviceDetail + patientId,
+        isLoading: true,
+        success: function (ret) {
+            testData = ret
+            $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
+            $api.html($api.byId('adviceSendsContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
+            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(testData.content));
+        }
+    });
+};
+
+
 /**
  * 巡视记录列表
  */
@@ -335,46 +364,56 @@ var skinTestRecord = function () {
     var endTime   = $api.val($api.byId('skin-test-end-time'));
     var noInput   = $api.byId('noInput').checked;
     var alreadyInput   = $api.byId('alreadyInput').checked;
-    if (!isEmpty(beginTime)) {
-        beginTime = beginTime + " 00:00:00";
+    var inputStatus = null;
+    if (noInput && !alreadyInput){
+        inputStatus = 0
+    } else if (!noInput && alreadyInput){
+        inputStatus = 1
     }
-    if (!isEmpty(endTime)) {
-        endTime = endTime + " 00:00:00";
+    if (!isEmpty(beginTime)){
+        beginTime  = beginTime + ":00";
+    }else{
+        beginTime = null
     }
-    // TODO 根据是否选中筛选符合查询条件的数据，需要跟小伟商量看怎么传不同情况的数据
-    var queryParam = "&beginTime =" + beginTime
-        + "&endTime=" + endTime;
-    common.get({
-        url: config.skinTestQuery + patientId ,
+    if (!isEmpty(endTime)){
+        endTime  = endTime + ":00";
+    }else{
+        endTime = null
+    }
+    common.post({
+        url: config.querySkinList ,
         isLoading: true,
+        data:JSON.stringify({
+            medPatientId:patientId,
+            beginTime: beginTime,
+            endTime: endTime,
+            inputStatus: inputStatus
+        }),
+        dataType: "json",
         success: function (ret) {
-            console.log(testData.content)
-            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
-            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
-            $api.html($api.byId('skinTestContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
-            $api.html($api.byId('skinTestContentContainer'), contentTmpl(testData.content));
-            // if(ret&&ret.content&&ret.content.length>0){
-            //     $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
-            //     $api.html($api.byId('skinTestContentContainer'), "");
-            //     var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
-            //     $api.html($api.byId('skinTestContentContainer'), contentTmpl(ret.content));
-            //     alert(JSON.stringify(ret.content))
-            // }
+            alert(JSON.stringify(ret.content.list))
+            if(ret&&ret.content&&ret.content.list.length>0){
+                $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+                $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
+                $api.html($api.byId('skinTestContentContainer'), "");
+                var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
+                $api.html($api.byId('skinTestContentContainer'), contentTmpl(ret.content.list));
+            }
         }
     });
-    //alert(config.adviceExecute + patientId +"&skinTestFlag=true"+queryParam)
 };
 /**
  * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
  */
 var SkinTestSelect = function (obj,id) {
-    if (!isEmpty(skinTestId)){
-       $api.removeCls(obj, 'border-red');
-       skinTestId = ''
+    if (isEmpty(skinTestId)){
+        $api.removeCls(obj, 'border-green');
+        $api.addCls(obj, 'border-red');
+        skinTestId = id;
     } else{
-       $api.addCls(obj, 'border-red');
-       skinTestId = id;
+        $api.removeCls(obj, 'border-red');
+        $api.addCls(obj, 'border-green');
+        skinTestId = ''
     }
 
 };
@@ -400,21 +439,25 @@ var skinTestExecute = function () {
         msg: '操作成功',
     });
 
-    // common.post({
-    //     url: config.skinTestExecute + skinTestId,
-    //     data: {
-    //         skinTestResult: skinTestResult,
-    //     },
-    //     isLoading: true,
-    //     success: function (ret) {
-    //         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
-    //         skinTestId = ''
-    //         api.alert({
-    //             title: '提示',
-    //             msg: '操作成功',
-    //         });
-    //     }
-    // });
+    common.post({
+        url: config.updateSkin,
+        data:JSON.stringify({
+            id:skinTestId,
+            skinResult:skinTestResult
+        }),
+        dataType: "json",
+        isLoading: true,
+        success: function (ret) {
+            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+            skinTestId = ''
+            alert(ret.content)
+            api.alert({
+                title: '提示',
+                msg: ret.content,
+            });
+            skinTestRecord()
+        }
+    });
 };
 
 var currentTime = function () {
@@ -463,7 +506,7 @@ function pickerWithTime(el){
             if(minute < 10){
                 minute = "0"+minute;
             }
-            var time = hour + ":" + minute+ ":00";
+            var time = hour + ":" + minute;
             $api.val(el,date+" "+time);
         });
     });

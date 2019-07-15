@@ -131,10 +131,11 @@ function backSystem(){
   });
 }
 function toggleMenu(daList){
+    var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
     api.actionSheet({
         cancelTitle: '取消',
         // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
-        buttons: ['首页','搜索','新医嘱列表'+'('+daList+')','修改密码','切换账户','直接退出系统']
+        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
     }, function(ret, err){
         if(ret.buttonIndex==1){
             api.closeWin();

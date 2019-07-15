@@ -20,14 +20,15 @@
                 <div id="temporaryTold" onclick="changeBlue(this)">临嘱医嘱单</div>
             </div>
         </div>
-        <div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>
+        <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
+        <div class="aui-tab-item" id="tab-advice-sends" data-to="advice-sends" onclick="changeTab(this);">医嘱发送</div>
         <div class="aui-tab-item" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
         <div class="aui-tab-item" id="tab-skin-test" data-to="skin-test" onclick="changeTab(this);">皮试结果</div>
     </div>
     <div class="tabBody">
         <!--医嘱记录-->
-        <div id="advice-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
-            <div>
+        <div id="advice-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
+            <div class="aui-padded-l-15">
                 <label><input class="aui-margin-t-5 " id="usingAdvice" type="checkbox" onclick="adviceRecords()"> 在用医嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " id="noCharge" type="checkbox" onclick="adviceRecords()"> 未记账</label>
@@ -39,37 +40,37 @@
             <div class="itemContainer" id="adviceRecordsContentContainer">
             </div>
             <div class="bottomContainer aui-font-size-14">
-                <div id="adviceRecords-selector" class="bottomBody aui-padded-15" style="bottom: 0rem">
+                <div id="adviceRecords-selector" class="bottomBody" style="bottom: 0rem;padding: 0.75rem 0">
                     <div class="flex aui-margin-t-5" >
                         <div class="flex-item">
-                            <span class="key">医嘱期效:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span class="key">医嘱期效：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="aa"></span>
                         </div>
                         <div class="flex-item">
-                            <span class="key">医嘱用法:</span>
+                            <span class="key">&nbsp;&nbsp;&nbsp;&nbsp;医嘱用法：</span>
                             <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="bb"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
-                            <span class="key">执行状态:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span class="key">执行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <span class="value"><input class="adviceInput" type="text" onclick="" placeholder="请输入内容" id="cc"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
-                            <span class="key">医嘱发送时间:</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="adviceRecordsSendBeginTime"></span>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="adviceRecordsSendEndTime"></span>
+                            <span class="key">医嘱发送时间：</span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsSendBeginTime"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsSendEndTime"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
-                            <span class="key">执行时间:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="adviceRecordsExecuteBeginTime"></span>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="adviceRecordsExecuteEndTime"></span>
+                            <span class="key">执行时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsExecuteBeginTime"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsExecuteEndTime"></span>
                         </div>
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
@@ -79,8 +80,8 @@
             </div>
         </div>
         <!--医嘱执行 -->
-        <div id="advice-execute" class="tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
-            <div>
+        <div id="advice-execute" class="tab-body-item aui-padded-t-10 aui-font-size-14  ">
+            <div class="aui-padded-l-15">
                 <label><input class="aui-margin-t-5 " id="yesterday" type="checkbox" onclick="adviceExecute()"> 昨天</label>
                 &nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " id="today" type="checkbox" onclick="adviceExecute()"> 今天</label>
@@ -108,39 +109,39 @@
             <div class="bottomContainer">
                 <div id="adviceExecute-selector" class="bottomBody aui-padded-15">
                     <div class="flex aui-margin-t-5" >
-                        <div class="flex-item">
-                            <span class="key">医嘱期效:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <div class="">
+                            <span class="key">医嘱期效：</span>
                             <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="11"></span>
                         </div>
-                        <div class="flex-item">
-                            <span class="key">医嘱用法:</span>
+                        <div class="">
+                            <span class="key">医嘱用法：</span>
                             <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="22"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
-                            <span class="key">医嘱执行科室:</span>
+                        <div class="">
+                            <span class="key">医嘱执行科室：</span>
                             <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="33"></span>
                         </div>
-                        <div class="flex-item">
-                            <span class="key">执行状态:</span>
+                        <div class="">
+                            <span class="key">执行状态：</span>
                             <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="44"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
-                            <span class="key">要求执行时间:</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="55"></span>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="66"></span>
+                        <div class="">
+                            <span class="key">要求执行时间：</span>
+                            <span class="value"><input class="adviceInputLong " type="text"  onclick="pickerWithTime(this)" placeholder="请输入内容" id="55"></span>
+                            <span>&nbsp;至&nbsp;</span>
+                            <span class="value"><input class="adviceInputLong " type="text"  onclick="pickerWithTime(this)" placeholder="请输入内容" id="66"></span>
                         </div>
                     </div>
                     <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
+                        <div class="">
                             <span class="key">医嘱发送时间: </span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="77"></span>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="88"></span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="77"></span>
+                            <span>至</span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="88"></span>
                         </div>
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
@@ -156,8 +157,58 @@
                 </div>
             </div>
         </div>
+        <!--医嘱发送-->
+        <div id="advice-sends" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
+            <div class="aui-padded-l-15">
+                <label><input class="aui-margin-t-5 " id="as-noCharge" type="checkbox" onclick="adviceSends()"> 未记账</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " id="as-skinTest" type="checkbox" onclick="adviceSends()"> 皮试</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " id="as-mergeAdvice" type="checkbox" onclick="adviceSends()"> 合并医嘱</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="aui-btn" style="background: #38afe6;" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
+            </div>
+            <div class="itemContainer" id="adviceSendsContentContainer">
+            </div>
+            <div class="bottomContainer aui-font-size-14">
+                <div id="adviceSends-selector" class="bottomBody aui-padded-15" style="bottom: 0rem">
+                    <div class="flex aui-margin-t-5">
+                        <div class="flex-item">
+                            <span class="key">发送时间：&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="111"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="222"></span>
+                        </div>
+                    </div>
+                    <div class="flex aui-margin-t-5">
+                        <div class="flex-item">
+                            <span class="key">首次时间：&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="333"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="444"></span>
+                        </div>
+                    </div>
+                    <div class="flex aui-margin-t-5">
+                        <div class="flex-item">
+                            <span class="key">末次时间：&nbsp; </span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="555"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="666"></span>
+                        </div>
+                    </div>
+                    <div class="flex aui-margin-t-5">
+                        <label style="margin-left: 3rem"><input class="aui-margin-t-5"  id="777" type="checkbox" onclick=""> 长嘱</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="margin-right: 4rem"><input class="aui-margin-t-5"  id="888" type="checkbox" onclick=""> 临嘱</label>
+                    </div>
+                    <div class="aui-text-center aui-margin-t-15">
+                        <div class="btn aui-btn aui-btn-success" onclick="adviceSends();">确定</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--巡视记录-->
-        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
+        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="itemContainer" id="tourRecordsContentContainer">
             </div>
             <div class="bottomContainer">
@@ -169,21 +220,21 @@
             </div>
         </div>
         <!--皮试结果-->
-        <div id="skin-test" class="tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
-            <div>
+        <div id="skin-test" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
+            <div class="aui-padded-l-15">
                 <label><input class="aui-margin-t-5 " id="noInput" type="checkbox" onclick="skinTestRecord()" checked> 未录入</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " id="alreadyInput" type="checkbox" onclick="skinTestRecord()"> 已录入</label>
             </div>
             <div class="itemContainer" id="skinTestContentContainer"></div>
             <div class="bottomContainer">
-                <div id="skinTest-selector" class="bottomBody aui-padded-15">
+                <div id="skinTest-selector" class="bottomBody " style="padding: 0.75rem 0">
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
                             <span class="key">医嘱执行时间： </span>
-                            <span class="value"><input class="input" type="text" onclick="picker(this)" placeholder="请输入内容" id="skin-test-begin-time"></span>
-                            <span>&nbsp;&nbsp; 至&nbsp;&nbsp; </span>
-                            <span class="value"><input class="input" type="text" onclick="picker(this)" placeholder="请输入内容" id="skin-test-end-time"></span>
+                            <span class="value"><input class="input" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="skin-test-begin-time"></span>
+                            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+                            <span class="value"><input class="input" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="skin-test-end-time"></span>
                         </div>
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
@@ -194,8 +245,8 @@
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
                             <span class="key">皮试结果：</span>
-                            <label><input class="aui-margin-t-15 aui-margin-l-15" type="radio" name="skinTestResult" value="0" checked>  阴性（-）</label>
-                            <label><input class="aui-margin-t-15 aui-margin-l-15" type="radio" name="skinTestResult" value="1">  阳性（+）</label>
+                            <label><input class="aui-margin-t-15 aui-margin-l-15" type="radio" name="skinTestResult" value="1" checked>  阴性（-）</label>
+                            <label><input class="aui-margin-t-15 aui-margin-l-15" type="radio" name="skinTestResult" value="2">  阳性（+）</label>
                         </div>
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
@@ -478,6 +529,150 @@
             </div>
             {{ } }}
 </script>
+<!--医嘱发送-->
+<script id="adviceSendsTmplList" type="text/template">
+    {{
+    for(var i=0;i<6;i++) {
+    }}
+    <div class="adviceSendsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
+        <div class="left background-green" >长嘱</div>
+        <div class="right" >
+            <div>
+                <span>医嘱内容：</span>
+                <span>XXXXXXXXXXXXXXXXXXXXXXX</span>
+            </div>
+            <div>
+                <span>开嘱医生：</span>
+                <span>张三</span>
+            </div>
+            <div>
+                <span>发送时间：</span>
+                <span></span>
+            </div>
+            <div>
+                <span>首次时间：</span>
+                <span></span>
+            </div>
+            <div>
+                <span>末次时间</span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <div id="adviceSendsDetail" class="detail hide">
+        <div> -------------收费项1--------------</div>
+        <div>
+            <span >单据号：</span>
+            <span style="padding-left: 5rem">计费状态</span>
+        </div>
+        <div>
+            <span>收费项目：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>发送次数：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>发送医嘱：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>执行科室：</span>
+            <span style="padding-left: 5rem">执行人：</span>
+        </div>
+        <div>
+            <span>执行人：</span>
+            <span style="padding-left: 4rem">执行时间</span>
+        </div>
+        <div>--------------医嘱内容--------------</div>
+        <div>
+            <span>医嘱内容：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>生效时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>用法：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>医生托嘱：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>执行科室：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>开嘱医生：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>开嘱时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>总量：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>单量：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>天数：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>频率：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>执行时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>执行性质：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>上次执行：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>状态：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>校对护士：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>校对时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>停嘱医生：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>停嘱时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>确认停嘱时间：</span>
+            <span></span>
+        </div>
+        <div>
+            <span>基本药物：</span>
+            <span></span>
+        </div>
+    </div>
+    {{ } }}
+</script>
 <!--巡视记录 -->
 <script id="tourRecordsList" type="text/template">
     <table class=" aui-font-size-14">
@@ -565,21 +760,14 @@
 <script id="skinTestList" type="text/template">
     {{
     if(it){
-    for(var i=0;i<6;i++) {
-    var item = it[i];
-    if(i==0){
+        var currentPerson = $api.getStorage(storageKey.currentPerson);
+        for(var i=0;i<it.length;i++) {
+        var item = it[i];
     }}
-    <div class="item border-green aui-font-size-14" onclick="SkinTestSelect(this,1111)">
-        {{
-        } else{
-        }}
-        <div class="item border-green aui-font-size-14" onclick="SkinTestSelect(this,1111)">
-        {{ } }}
-        <div class="leftTop">
-            <div>输液</div>
-        </div>
+    <div class="item border-green aui-font-size-14" onclick="SkinTestSelect(this,{{=item.id}})">
         <div class="rowItem">
-            <span>+0008床  张爱琴</span>
+            <span>{{=currentPerson.medBedName}}床 </span>
+            <span style="margin-right: 3rem">{{=currentPerson.name}}</span>
         </div>
         <div class="rowItem">
             <span>医嘱内容：</span>
@@ -587,31 +775,31 @@
         </div>
         <div class="rowItem">
             <span>皮试备注：</span>
-            <span>XXXXXXX</span>
+            <span>{{=item.skinMemo}}</span>
         </div>
         <div class="rowItem">
             <span>执行人：</span>
-            <span>李红</span>
+            <span>{{=item.implementNurseName}}</span>
         </div>
         <div class="rowItem">
             <span>执行时间：</span>
-            <span>2019-05-23 13:13:43</span>
+            <span>{{=item.implementTime}}</span>
         </div>
         <div class="rowItem">
             <span style="color: red">提醒时间：</span>
-            <span style="color: red">2019-05-23 13:43:43</span>
+            <span style="color: red">{{=item.remindTime}}</span>
         </div>
         <div class="rowItem">
             <span>皮试结果：</span>
-            <span>阴性（—）</span>
+            <span>{{=item.skinResult}}</span>
         </div>
         <div class="rowItem">
             <span>录入人：</span>
-            <span>李红</span>
+            <span>{{=item.inputNurseName}}</span>
         </div>
         <div class="rowItem">
             <span>录入时间：</span>
-            <span>2019-05-23 13:13:43</span>
+            <span>{{=item.inputTime}}</span>
         </div>
     </div>
     {{ } }}

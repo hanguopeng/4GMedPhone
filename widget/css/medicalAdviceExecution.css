@@ -20,10 +20,6 @@
 .bodyContainer .tabBody .tab-body-item.active{
     display: block;
 }
-.tab-body-item .doctorAdviceStatus .aui-label{
-    float: right;
-}
-
 /* 医嘱记录最外层div*/
 .tab-body-item .itemContainer .adviceRecordsTmplList{
     overflow: hidden;
@@ -37,6 +33,7 @@
     writing-mode: tb-rl;
     margin-top: 0.2rem;
     padding-top: 20%;
+    padding-left: 1%;
     border: 1px double #67c23b;
     margin-bottom:-9999px;
     padding-bottom:9999px;
@@ -49,8 +46,34 @@
     margin-top: 0.2rem;
     border: 1px double #67c23b;
 }
-/* 医嘱记录不同状态背景颜色-绿色*/
-.tab-body-item .itemContainer .adviceRecordsTmplList .background-green{
+
+/* 医嘱记录最外层div*/
+.tab-body-item .itemContainer .adviceSendsTmplList{
+    overflow: hidden;
+    height:fit-content;
+}
+/* 医嘱记录左侧样式*/
+.tab-body-item .itemContainer .adviceSendsTmplList .left{
+    float:left;
+    width:7%;
+    margin-top: 0.2rem;
+    padding-top: 10%;
+    padding-left: 1%;
+    border: 1px double #67c23b;
+    margin-bottom:-9999px;
+    padding-bottom:9999px;
+}
+/* 医嘱记录右侧样式*/
+.tab-body-item .itemContainer .adviceSendsTmplList .right{
+    float:left;
+    width:93%;
+    padding-left: 0.3rem;
+    margin-top: 0.2rem;
+    border: 1px double #67c23b;
+}
+
+/*不同状态背景颜色-绿色*/
+.tab-body-item .itemContainer  .background-green{
     background-color: #67c23b;
 }
 
@@ -79,6 +102,16 @@
     padding: 0px 5px;
     background-color: #fff;
 }
+
+.tab-body-item .bottomContainer .bottomBody .adviceInputLong{
+    width: 5.2rem;
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1.2rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
+
 .aui-tab-item .adviceRecordsDropdown{
     color: black;
     background-color: #cacaca;
@@ -201,7 +234,7 @@
 }
 
 .tab-body-item .bottomContainer .bottomBody#skinTest-selector .input{
-    width: 4rem;
+    width: 5.2rem;
     display: inline-block;
     font-size: 0.6rem;
     height: 1.2rem;
@@ -245,6 +278,7 @@
 .tab-body-item .bottomContainer .bottomBody#adviceExecute-selector .flex-item{
     text-align: left;
 }
+
 textarea{
     border: 1px double #ccc;
 }
