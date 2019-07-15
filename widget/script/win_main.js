@@ -1,12 +1,14 @@
 var fs;
 var scanner;
+var alarmNotification;
 var socketFlag = $api.getStorage(storageKey.createFlag);
 apiready = function() {
-    alert('win_main')
+    alarmNotification = api.require('alarmNotification');
+    //alert('win_main')
     fs = api.require('fs');
     // scanner =  $api.getStorage(storageKey.cmcScan);
     scanner = api.require('cmcScan');
-    alert(scanner)
+    //alert(scanner)
     scanner.open();
     api.parseTapmode();
     getUserInfo();
@@ -374,6 +376,20 @@ function  onmessage(event) {
     var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
         "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
     $api.html($api.byId("caidanlan"), jiaobiao);
+
+    alarmNotification.setAlarm({
+        title:"有新医嘱啦！",
+        tickerText:"有"+event.data+"条新增医嘱",
+        isViberate:true,
+        interval:500,
+        isLed: true
+    }, function(ret, err) {
+        if (ret) {
+            alert(JSON.stringify(ret));
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
 
 }
 function onOpen(){
