@@ -1,9 +1,10 @@
 var person = $api.getStorage(storageKey.currentPerson);
+var userId = $api.getStorage(storageKey.userId);
 var patientId = person.id;
-var page = 1;
 var testData
-var skinTestId = ''
+var skinTestId = ''   //最后一次选中的皮试id
 var skinTestStatus = true
+var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
 
 var currentTab = 'advice-records'
 apiready = function () {
@@ -83,8 +84,10 @@ var changeTab = function (obj) {
  * @param id
  */
 var clickBottomTab = function (parent, id) {
-   if (id == 'tourRecords-result'){
+   if (id === 'tourRecords-result'){
        paddingInputTourRecords();
+   }else if(id === 'adviceRecords-selector'){
+       paddingSelectAdviceRecords()
    }
     var activeTab = $api.dom($api.byId(parent), '#' + id);
     var active = $api.hasCls(activeTab, 'active');
@@ -111,10 +114,40 @@ var clickBottomTab = function (parent, id) {
 /**
  * 医嘱记录
  */
-var adviceRecords = function () {
-    common.get({
-        url: config.queryAdviceList + patientId,
+var adviceRecords = function (type) {
+    var inUse
+    var unbookedFlag
+    var reportFlag
+    if ($api.byId('inUse').checked){
+        inUse = 1
+    }
+    if ($api.byId('unbookedFlag').checked){
+        unbookedFlag = 0
+    }
+    if ($api.byId('reportFlag').checked){
+        reportFlag = 1
+    }
+    if (!isEmpty(type)){
+        priorityCode = $api.val($api.byId('priorityCode'))
+    }
+    common.post({
+        url: config.queryAdviceList,
         isLoading: true,
+        data: JSON.stringify({
+            nurseId:  userId,   //护士ID
+            patientId:  patientId,   //病人ID
+            inUse: inUse,   //在用医嘱，选中是1
+            unbookedFlag: unbookedFlag,   //未记账,  选中是0
+            reportFlag: reportFlag,   //需要报告,  选中是1
+            priorityCode:  status,    //医嘱优先级（期效）
+            typeCode:  $api.val($api.byId('typeCode')),    //病案费目
+            status:  status,   //医嘱状态
+            executionTimeBegin:  $api.val($api.byId('executionTimeBegin')),   //执行时间开始
+            executionTimeEnd:  $api.val($api.byId('executionTimeEnd')),   //执行时间结束
+            foundTimeBegin:  $api.val($api.byId('foundTimeBegin')),   //开嘱时间开始
+            foundTimeEnd: $api.val($api.byId('foundTimeEnd'))   //开嘱时间结束
+        }),
+        dataType: "json",
         success: function (ret) {
             testData = ret
             alert(JSON.stringify(ret.content))
@@ -127,6 +160,43 @@ var adviceRecords = function () {
         }
     });
 };
+
+/**
+ * 医嘱记录筛选
+ */
+var paddingSelectAdviceRecords = function () {
+    var params = {};
+    params.queryCode = "advice_status";
+    params.addAllFlag = false;
+    params.loadSonFlag = false;
+    params.nullFlag = false;
+    common.post({
+        url:config.dictUrl,
+        isLoading: true,
+        data:JSON.stringify(params),
+        dataType:JSON,
+        success:function(ret){
+            var data = {}
+            data.adviceStatus = ret.content
+            data.priorityCode = priorityCode;
+            params.queryCode = "advice_type"
+            common.post({
+                url:config.dictUrl,
+                isLoading: true,
+                data:JSON.stringify(params),
+                dataType:JSON,
+                success:function(ret){
+                    data.adviceType = ret.content
+                    $api.html($api.byId('adviceRecords-selector'), "");
+                    var contentTmpl = doT.template($api.text($api.byId('selectAdviceRecords')));
+                    $api.html($api.byId('adviceRecords-selector'), contentTmpl(data));
+                }
+            });
+        }
+    });
+
+
+}
 
 /**
  *  医嘱点击显示详情，再次点击隐藏
@@ -146,7 +216,14 @@ var changeAdviceShow = function (obj) {
  * 点击医嘱记录弹出下拉选，鼠标浮在哪条记录上哪条记录变成浅蓝色
  * @param obj
  */
-var changeBlue = function (obj) {
+var changeBlue = function (obj,id) {
+    if ('allTold' === id){
+        priorityCode = ''
+    } else if ('longTold' === id){
+        priorityCode = 0
+    } else if ('temporaryTold' === id){
+        priorityCode = 1
+    }
     $api.removeCls($api.byId('allTold'), 'changeBlue');
     $api.removeCls($api.byId('longTold'), 'changeBlue');
     $api.removeCls($api.byId('temporaryTold'), 'changeBlue');

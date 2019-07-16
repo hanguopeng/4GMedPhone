@@ -15,9 +15,9 @@
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item aui-active" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录
             <div id="adviceRecordsDropdown" class="adviceRecordsDropdown hide">
-                <div id="allTold" class="changeBlue" onclick="changeBlue(this)">全部医嘱单</div>
-                <div id="longTold" onclick="changeBlue(this)">长嘱医嘱单</div>
-                <div id="temporaryTold" onclick="changeBlue(this)">临嘱医嘱单</div>
+                <div id="allTold" class="changeBlue" onclick="changeBlue(this,'allTold')">全部医嘱单</div>
+                <div id="longTold" onclick="changeBlue(this,'longTold')">长嘱医嘱单</div>
+                <div id="temporaryTold" onclick="changeBlue(this,'temporaryTold')">临嘱医嘱单</div>
             </div>
         </div>
         <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
@@ -29,53 +29,18 @@
         <!--医嘱记录-->
         <div id="advice-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15">
-                <label><input class="aui-margin-t-5 " id="usingAdvice" type="checkbox" onclick="adviceRecords()"> 在用医嘱</label>
+                <label><input class="aui-margin-t-5 " id="inUse" type="checkbox" onclick="adviceRecords()"> 在用医嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="noCharge" type="checkbox" onclick="adviceRecords()"> 未记账</label>
+                <label><input class="aui-margin-t-5 " id="unbookedFlag" type="checkbox" onclick="adviceRecords()"> 未记账</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="needReport" type="checkbox" onclick="adviceRecords()"> 需要报告</label>
+                <label><input class="aui-margin-t-5 " id="reportFlag" type="checkbox" onclick="adviceRecords()"> 需要报告</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="aui-btn" style="background: #38afe6;" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
             </div>
             <div class="itemContainer" id="adviceRecordsContentContainer">
             </div>
             <div class="bottomContainer aui-font-size-14">
-                <div id="adviceRecords-selector" class="bottomBody" style="bottom: 0rem;padding: 0.75rem 0">
-                    <div class="flex aui-margin-t-5" >
-                        <div class="flex-item">
-                            <span class="key">医嘱期效：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="aa"></span>
-                        </div>
-                        <div class="flex-item">
-                            <span class="key">&nbsp;&nbsp;&nbsp;&nbsp;医嘱用法：</span>
-                            <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="bb"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
-                            <span class="key">执行状态：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="" placeholder="请输入内容" id="cc"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
-                            <span class="key">医嘱发送时间：</span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsSendBeginTime"></span>
-                            <span>&nbsp;&nbsp;至&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsSendEndTime"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="flex-item">
-                            <span class="key">执行时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsExecuteBeginTime"></span>
-                            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="adviceRecordsExecuteEndTime"></span>
-                        </div>
-                    </div>
-                    <div class="aui-text-center aui-margin-t-15">
-                        <div class="btn aui-btn aui-btn-success" onclick="adviceRecords();">确定</div>
-                    </div>
+                <div id="adviceRecords-selector" class="bottomBody aui-padded-15" style="bottom: 0rem;padding: 0.75rem 0">
                 </div>
             </div>
         </div>
@@ -370,6 +335,87 @@
         </div>
     </div>
     {{ } }}
+</script>
+<!--医嘱列表筛选-->
+<script id="selectAdviceRecords" type="text/template">
+    <div class="flex aui-margin-t-5" >
+        <div class="flex-item">
+            <span class="key">医嘱期效：</span>
+            <span class="value">
+                <select class="select" style="width: 3.5rem" id="priorityCode">
+                    {{if(it.priorityCode === ''){}}
+                     <option value="">
+                    {{ }else{ }}
+                     <option value="" selected>
+                    {{}}}
+                     全部医嘱</option>
+                    {{if(it.priorityCode === '0'){}}
+                     <option value="0">
+                    {{ }else{ }}
+                     <option value="0" selected>
+                    {{}}}
+                     长嘱医嘱</option>
+                    {{if(it.priorityCode === '1'){}}
+                     <option value="1">
+                    {{ }else{ }}
+                     <option value="1" selected>
+                    {{}}}
+                     临时医嘱</option>
+                </select>
+            </span>
+        </div>
+        <div class="flex-item">
+            <span class="key">&nbsp;&nbsp;病案费目：</span>
+            <span class="value">
+                 <select class="select" style="width: 3.5rem" id="typeCode">
+                      <option value="">请选择</option>
+                     {{
+                        if(it.adviceType){
+                            for(var i=0;i<it.adviceType.length;i++) {
+                            var item = it.adviceType[i];
+                            }}
+                        <option value="{{=item.id}}">{{=item.text}}</option>
+                     {{}}}}
+                 </select>
+            </span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key">医嘱状态：</span>
+            <span class="value">
+                 <select class="select" id="status" style="width: 5.2rem">
+                      <option value="">请选择</option>
+                     {{
+                        if(it.adviceStatus){
+                            for(var i=0;i<it.adviceStatus.length;i++) {
+                            var item = it.adviceStatus[i];
+                            }}
+                        <option value="{{=item.id}}">{{=item.text}}</option>
+                     {{}}}}
+                 </select>
+            </span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key">开嘱时间：</span>
+            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="foundTimeBegin"></span>
+            <span>&nbsp;&nbsp;至&nbsp;&nbsp; </span>
+            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="foundTimeEnd"></span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key">执行时间：</span>
+            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="executionTimeBegin"></span>
+            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="executionTimeEnd"></span>
+        </div>
+    </div>
+    <div class="aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" onclick="adviceRecords('select');">确定</div>
+    </div>
 </script>
 <!--医嘱执行-->
 <script id="adviceExecuteTmplList" type="text/template">
@@ -763,6 +809,7 @@
         <div class="btn aui-btn aui-btn-success" onclick="tourRecordsExecute();">保存</div>
     </div>
 </script>
+
 <!--皮试结果-->
 <script id="skinTestList" type="text/template">
     {{
