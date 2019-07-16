@@ -292,6 +292,15 @@ var fymxDetail = function(obj){
 };
 function toggleMenu(){
     $api.setStorage(storageKey.scannerStatus, 'changePatient');
+
+    scanner.changeEvent("inOffice");
+    api.removeEventListener("scanEvent");
+    api.addEventListener({
+        name:"inOffice",
+        function(ret,error){
+            alert("扫描开启");
+        }
+    });
     scanner.start()
 }
 

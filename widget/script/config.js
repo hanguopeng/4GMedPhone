@@ -5,7 +5,7 @@ var localServer = "http://172.17.100.1:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
 //var localServer = "http://192.168.1.112:8085/cmc-server";
 // var localServer = "http://192.168.1.135:8085/cmc-server";
-var localServer = "http://192.168.1.112:8085/cmc-server";
+var localServer = "http://192.168.1.107:8085/cmc-server";
 var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
