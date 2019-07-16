@@ -119,7 +119,7 @@ var changeTab = function (obj) {
 /**
  *
  */
-var changeInfoShow = function(obj){
+var changeNextShow = function(obj){
     var isHide = $api.hasCls($api.next(obj), 'hide');
     if (isHide){
         $api.removeCls($api.next(obj), 'hide');
@@ -127,6 +127,17 @@ var changeInfoShow = function(obj){
     } else{
         $api.removeCls($api.next(obj), 'show');
         $api.addCls($api.next(obj), 'hide');
+    }
+}
+
+var changeThisShow = function(obj){
+    var isHide = $api.hasCls(obj, 'hide');
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.addCls(obj, 'show');
+    } else{
+        $api.removeCls(obj, 'show');
+        $api.addCls(obj, 'hide');
     }
 }
 /**
@@ -288,15 +299,21 @@ var assayDetail = function(obj,assayId){
  */
 var fymxList = function(patientId){
     common.get({
-        url: config.costItemStatisticsList + patientId,
+        url: config.costSituationUrl +  patientId ,
         isLoading: true,
         success: function (ret) {
-            $api.html($api.byId('fymx'), "");
-            if(ret && ret.content&&ret.content.length>0) {
-                var item = ret.content;
-                var contentTmpl = doT.template($api.text($api.byId('fymxTmpl')));
-                $api.html($api.byId('fymx'), contentTmpl(item));
+            var data = {}
+            data.cost = ret.content
+            common.get({
+                url: config.costItemStatisticsList + "?patientId=" + patientId + "&homepageId=" + person.homepageId,
+                isLoading: true,
+                success: function (ret) {
+                    $api.html($api.byId('fymx'), "");
+                    data.list = ret.content
+                    var contentTmpl = doT.template($api.text($api.byId('fymxTmpl')));
+                    $api.html($api.byId('fymx'), contentTmpl(data));
                 }
+            });
         }
     });
 };
@@ -307,21 +324,10 @@ var fymxList = function(patientId){
  */
 var fymxDetail = function(obj){
     if($api.hasCls($api.next(obj),'hide')){
-        common.get({
-            url: config.costItemStatisticsList + patientId,
-            isLoading: true,
-            success: function (ret) {
-                var domAll = $api.domAll('.fymxItemDetail');
-                for (var i = 0; i < domAll.length; i++) {
-                    if (domAll[i]) {
-                        $api.addCls(domAll[i], 'hide');
-                    }
-
-                }
-                $api.removeCls($api.next(obj), 'hide');
-            }
-        });
+        $api.removeCls($api.next(obj),'hide');
+        $api.addCls($api.next(obj),'show');
     }else{
+        $api.removeCls($api.next(obj),'show');
         $api.addCls($api.next(obj),'hide');
     }
 };
@@ -332,4 +338,10 @@ function toggleMenu(){
 
 function subStrDate(date) {
     return date.slice(0, 11)
+}
+
+function isEmpty(str){
+    if (str === null || str ==='' || str === undefined){
+        return true
+    }
 }

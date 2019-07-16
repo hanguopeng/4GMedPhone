@@ -25,13 +25,13 @@
         </div>
         <div class="tabBody">
             <div id="jcst" class="tab-body-item active aui-padded-l-15 aui-padded-r-15">
-                <div class="title aui-font-size-16" style="color: #08bad6;" onclick="changeInfoShow(this)">
+                <div class="title aui-font-size-16" style="color: #08bad6;" onclick="changeNextShow(this)">
                     基础信息
                     <span style="float: right; width: 10%; font-size: 0.7rem">∨</span>
                 </div>
                 <div class="content aui-font-size-15 aui-padded-t-15" id="jcxxContentContainer">
                 </div>
-                <div class="title aui-font-size-16" style="color: #08bad6;"  onclick="changeInfoShow(this)">
+                <div class="title aui-font-size-16" style="color: #08bad6;"  onclick="changeNextShow(this)">
                     费用汇总
                     <span style="float: right; width: 10%;font-size: 0.7rem">∨</span>
                 </div>
@@ -133,7 +133,7 @@
     <script id="fyhzTmpl" type="text/template">
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">剩余款：</span>
-            {{if(it.balance >= 0){ }}
+            {{if(it.balance >= 0 || isEmpty(it.balance)){ }}
             <span class="value">{{=it.balance||'0'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.balance}}</span>
@@ -142,7 +142,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <div style="width:50%;float:left">
                 <span class="key">预交款：</span>
-                {{if(it.prepayMoney >= 0){ }}
+                {{if(it.prepayMoney >= 0 || isEmpty(it.prepayMoney)){ }}
                 <span class="value">{{=it.prepayMoney||'0'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.prepayMoney}}</span>
@@ -150,28 +150,28 @@
             </div>
             <div style="width:50%;float:right">
                 <span class="key">未结费用：</span>
-                {{if(it.consumeMoney >= 0){ }}
-                <span class="value">{{=it.consumeMoney||'0'}}</span>
+                {{if(it.unconsumeMoney >= 0 || isEmpty(it.unconsumeMoney)){ }}
+                <span class="value">{{=it.unconsumeMoney||'0'}}</span>
                 {{ }else{}}
-                <span class="value redInfo">{{=it.consumeMoney}}</span>
+                <span class="value redInfo">{{=it.unconsumeMoney}}</span>
                 {{}}}
             </div>
         </div>
         <div class="keyValueItem aui-margin-l-15">
             <div  style="width:50%;float:left">
                 <span class="key">预结费用：</span>
-                {{if(it.assureMoney >= 0){ }}
-                <span class="value">{{=it.assureMoney||'0'}}</span>
+                {{if(it.consumeMoney >= 0 || isEmpty(it.consumeMoney)){ }}
+                <span class="value">{{=it.consumeMoney||'0'}}</span>
                 {{ }else{}}
-                <span class="value redInfo">{{=it.assureMoney}}</span>
+                <span class="value redInfo">{{=it.consumeMoney}}</span>
                 {{}}}
             </div>
             <div style="width:50%;float: right">
                 <span class="key">自付费用：</span>
-                {{if(it.assureMoney >= 0){ }}
-                <span class="value">{{=it.assureMoney||'0'}}</span>
+                {{if(it.selfMoney >= 0 || isEmpty(it.selfMoney)){ }}
+                <span class="value">{{=it.selfMoney||'0'}}</span>
                 {{ }else{}}
-                <span class="value redInfo">{{=it.assureMoney}}</span>
+                <span class="value redInfo">{{=it.selfMoney}}</span>
                 {{}}}
             </div>
         </div>
@@ -266,29 +266,28 @@
     </script>
     <script id="fymxTmpl" type="text/template">
         <div>
-            <div>剩余款:</div>
+            <div>剩余款：{{=it.cost.balance||'0'}}</div>
             <div>
-                <span>预交款:</span>
-                <span style="float: right">未结费用:</span>
+                <span>预交款：{{=it.cost.prepayMoney||'0'}}</span>
+                <span style="float: right;">未结费用：{{=it.cost.unconsumeMoney||'0'}}</span>
             </div>
             <div>
-                <span>预结费用:</span>
-                <span style="float: right">自付费用:</span>
+                <span>预结费用：{{=it.cost.consumeMoney||'0'}}</span>
+                <span style="float: right">自付费用：{{=it.cost.selfMoney||'0'}}</span>
             </div>
         </div>
         {{
-        for(var i=0;i<it.length;i++) {
-            var item = it[i];
+        for(var i=0;i<it.list.length;i++) {
+            var item = it.list[i];
         }}
         <div onclick="fymxDetail(this)" class="title aui-margin-t-10 aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
-            <div class="flex-item aui-text-left">{{=item.bigKindNum||''}}</div>
-            <div class="flex-item aui-text-right">{{=item.cost||'0'}} 元</div>
+            <div class="flex-item aui-text-left">{{=item.costBigType||''}}</div>
+            <div class="flex-item aui-text-right">{{=item.costMoney||'0'}} 元</div>
         </div>
-        <div class="content aui-padded-b-15 aui-padded-t-15 fymxItemDetail hide">
+        <div onclick="changeThisShow(this)" class="content aui-padded-b-15 aui-padded-t-15 fymxItemDetail hide">
             <table>
                 <tr>
-                    <th>医嘱</th>
-                    <th>数量</th>
+                    <th>收费项</th>
                     <th>费用(元)</th>
                 </tr>
                 {{
@@ -296,9 +295,8 @@
                 var itemDetail = item.list[j];
                 }}
                 <tr>
-                    <td>{{=itemDetail.adviceName||'--'}}</td>
-                    <td>{{=itemDetail.num||'0'}}  {{=itemDetail.unit||'支'}}</td>
-                    <td>{{=itemDetail.subtotal||''}}</td>
+                    <td>{{=itemDetail.costListName}}</td>
+                    <td>{{=itemDetail.costListMoney}}</td>
                 </tr>
                 {{ } }}
             </table>
