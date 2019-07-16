@@ -331,16 +331,12 @@ var tokenRet = function(personId){
         isLoading: true,
         success: function (ret) {
             var wsdata = ret.data;
-
             createWs(wsdata);
-
-
         }
     });
 }
 
 var nurerId = function(){
-
     common.get({
         url: config.loginUserInfoUrl,
         isLoading: true,
@@ -374,24 +370,9 @@ function  onmessage(event) {
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
     $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
-    var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
-        "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-    $api.html($api.byId("caidanlan"), jiaobiao);
-
-    alarmNotification.setAlarm({
-        title:"有新医嘱啦！",
-        tickerText:"有"+event.data+"条新增医嘱",
-        isViberate:true,
-        interval:500,
-        isLed: true
-    }, function(ret, err) {
-        if (ret) {
-            alert(JSON.stringify(ret));
-        } else {
-            alert(JSON.stringify(err));
-        }
+    api.sendEvent({
+        name: 'changeNewAdviceNumber'
     });
-
 }
 function onOpen(){
 }

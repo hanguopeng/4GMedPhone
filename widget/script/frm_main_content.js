@@ -163,9 +163,6 @@ function openPersonCenter(idx) {
     $api.setStorage(storageKey.currentPerson, person);
     $api.setStorage(storageKey.currentIdx, idx); //左右箭头的时候需要
     $api.setStorage(storageKey.lastIdx, allPersons.length - 1); //设置最后一个索引的大小，length-1
-    // api.removeEventListener({
-    //     name: 'scanEvent'
-    // },scanFun);
     api.openWin({
         name: "win_person_center",
         bounces: false,

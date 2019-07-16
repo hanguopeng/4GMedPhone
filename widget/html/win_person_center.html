@@ -34,40 +34,35 @@
     </footer>
 </body>
 <script id="header-tpl" type="text/template">
-  <div class="personInfo aui-margin-l-15 aui-padded-t-5 aui-padded-b-5" onclick="openFrameContent('frm_person_center')">
+  <div class="personInfo aui-padded-t-5 aui-padded-b-5" onclick="openFrameContent('frm_person_center')">
       <div class="topInfo aui-font-size-15 aui-ellipsis-1">
-          <span >{{=it.person.medBedName || it.person.med_bed_name || '--'}}床 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span>{{=it.person.name || '--'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span >{{=it.person.medBedName || it.person.med_bed_name || '--'}}床 &nbsp;&nbsp;</span>
+          <span>{{=it.person.name || '--'}}&nbsp;&nbsp;</span>
           <span tapmode onclick="openFrameContent('frm_person_center')">
               {{? it.person.sex=="1"}}
-                  男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  男&nbsp;&nbsp;
               {{??}}
-                  女&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  女&nbsp;&nbsp;
               {{?}}
           </span>
-          <span>{{=it.person.age || '--'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span>{{=it.person.age || '--'}}&nbsp;&nbsp;</span>
           <span>
               {{? it.person.nurse_level_code=="A" || it.person.nurseLevelCode=="A"}}
-              <span>重症监护&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>重症监护&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="B" || it.person.nurseLevelCode=="B"}}
-              <span>一级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>一级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="C" || it.person.nurseLevelCode=="C"}}
-              <span>二级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>二级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="D" || it.person.nurseLevelCode=="D"}}
-              <span>三级护理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>三级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="E" || it.person.nurseLevelCode=="E"}}
               <span>保护性隔离护理</span>
               {{?}}
           </span>
-          <span>
-          <div class="aui-pull-right" style="float: right;margin-top: -0.2rem" id="caidanlan" tapmode onclick="toggleMenu();">
-              <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1rem;"></span>
-          </div>
-          </span>
       </div>
   </div>
-  <div class="aui-pull-right" tapmode onclick="toggleMenu();">
-      <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1.2rem;"></span>
+  <div class="aui-pull-right" id="icon" tapmode onclick="toggleMenu();">
+      <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1.0rem;"></span>
   </div>
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -76,5 +71,4 @@
 <script type="text/javascript" src="../script/common.js"></script>
 <script type="text/javascript" src="../script/aui-tab.js"></script>
 <script type="text/javascript" src="../script/win_person_center.js"></script>
-<script type="text/javascript" src="../script/win_main.js"></script>
 </html>

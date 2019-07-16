@@ -5,9 +5,8 @@ var scanner
 apiready = function () {
     api.parseTapmode();
     loadJCST()
-    scanner =  $api.getStorage(storageKey.cmcScan);
-    scanner = api.require('cmcScan');
-    scanner.open();
+    // scanner = api.require('cmcScan');
+    // scanner.open();
     // 扫码事件
     api.addEventListener({
         name: 'inOrganization'

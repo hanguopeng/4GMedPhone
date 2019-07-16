@@ -4,6 +4,25 @@ currentFrame = 0;
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
+    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    if (parseInt(newAdviceCount)>0){
+        var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
+            "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+        $api.html($api.byId("icon"), jiaobiao);
+    }
+    api.addEventListener({
+        name: 'changeNewAdviceNumber'
+    }, function(ret,err){
+        var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
+        if (parseInt(newAdviceCount1)>0){
+            var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
+                "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+            $api.html($api.byId("icon"), jiaobiao);
+        }else{
+            var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
+            $api.html($api.byId("icon"), jiaobiao);
+        }
+    });
     openMainFrame();
 
     //监听病人列表查询点击切换
@@ -63,68 +82,126 @@ function openMainFrame() {
     });
 }
 
-//左箭头点击选择上一个病人
-function prePerson(){
-  var personIndex = Number($api.getStorage(storageKey.currentIdx));
-  if(personIndex<=0){
-    api.toast({
-      msg : '已经是第一个病人了'
-    });
-  }else{
-    var allPersons = $api.getStorage(storageKey.persons);
-    personIndex = personIndex - 1;
-    while(personIndex>0 && !allPersons[personIndex].id /*空床位*/){
-      personIndex = personIndex - 1;
-    }
-    if(allPersons[personIndex].id){
-      $api.setStorage(storageKey.currentIdx, personIndex);
-      $api.setStorage(storageKey.currentPerson, allPersons[personIndex]);
-      freshHeaderInfo();
-      refreshCurrenFrame();
-    }else{
-      api.toast({
-        msg : '已经是第一个病人了'
-      });
-    }
-  }
-}
-
-//右箭头点击选择下一个病人
-function nextPerson(){
-  var idx = Number($api.getStorage('currentIdx'));
-  var lastIdx = Number($api.getStorage('lastIdx'));
-  if(idx>=lastIdx){
-    api.toast({
-      msg : '已经是最后一个病人了'
-    });
-  }else{
-    var allPersons = $api.getStorage('persons');
-    idx = idx+1;
-    while(idx<lastIdx && !allPersons[idx].id /*空床位*/){
-      idx = idx+1;
-    }
-    if(allPersons[idx].id){
-      $api.setStorage('currentIdx', idx);
-      $api.setStorage('currentPerson', allPersons[idx]);
-      freshHeaderInfo();
-      refreshCurrenFrame();
-    }else{
-      api.toast({
-        msg : '已经是最后一个病人了'
-      });
-    }
-  }
-}
-
 function closeWin() {
     api.closeWin();
 }
+
+function toggleMenu(){
+    var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
+    api.actionSheet({
+        cancelTitle: '取消',
+        // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
+        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
+    }, function(ret, err){
+        if(ret.buttonIndex==1){
+            api.closeWin();
+        }else if(ret.buttonIndex==2){
+            openPersonSearchFrame();
+        }else if(ret.buttonIndex==3){
+            newDocAdvice();
+        }else if(ret.buttonIndex==4){
+            changePwd();
+        }else if(ret.buttonIndex==5){
+            switchAccount();
+        }else if(ret.buttonIndex==6){
+            logOut();
+        }
+    });
+}
+
+//打开病人查询页面
+function openPersonSearchFrame(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'frm_person_search',
+        url: './frm_person_search.html',
+        rect: {
+            x: api.winWidth-300,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
+}
+//新开医嘱列表
+function newDocAdvice(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'new_advice_details',
+        url: './new_advice_details.html',
+        rect: {
+            x: 0,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
+}
+// 修改密码
+function changePwd(){
+    api.openWin({
+        name: 'change_password',
+        url: './change_password.html',
+    });
+}
+
+// 登录页
+function switchAccount(){
+    common.clearStorage();
+    api.closeToWin({
+        name: 'root'
+    });
+}
+
+// 直接退出
+function logOut(){
+    common.clearStorage();
+    api.closeWidget({
+        id: api.appId,
+        retData: {
+            name: 'closeWidget'
+        },
+        silent: true
+    });
+}
+
+
 
 function openFrameContent(page){
   api.closeFrame({
       name: 'frm_person_search'
   });
 
+  if (page === 'frm_tizhengshouji'||page === 'frm_huliwendang'||page === 'frm_fuzhugongju'){
+      api.toast({
+          msg: '功能暂未开放，敬请期待！'
+      });
+      return;
+  }
   var header = document.querySelector('#header');
   var pos = $api.offset(header);
   var footPos = $api.offset(document.querySelector('#footer'))
@@ -149,8 +226,6 @@ function openFrameContent(page){
         hidden: false
       });
       currentFrame = i;
-
-      //console.log("page="+page + ", currentFrame="+currentFrame);
     }else{
       api.setFrameAttr({
         name: frames[i],
