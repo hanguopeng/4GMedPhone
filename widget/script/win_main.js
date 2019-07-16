@@ -6,8 +6,8 @@ apiready = function() {
     alarmNotification = api.require('alarmNotification');
     fs = api.require('fs');
     scanner = api.require('cmcScan');
-    scanner.open();
-    api.parseTapmode();
+    // scanner.open();
+    // api.parseTapmode();
     getUserInfo();
     var header = document.querySelector('#header');
     immersive(header);
@@ -83,6 +83,19 @@ apiready = function() {
             "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
         $api.html($api.byId("caidanlan"), jiaobiao);
     }
+    api.addEventListener({
+        name: 'changeNewAdviceNumber'
+    }, function(ret,err){
+        var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
+        if (parseInt(newAdviceCount1)>0){
+            var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
+                "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+            $api.html($api.byId("caidanlan"), jiaobiao);
+        }else{
+            var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
+            $api.html($api.byId("caidanlan"), jiaobiao);
+        }
+    });
 };
 
 function immersive(header) {
@@ -279,9 +292,6 @@ function newDocAdvice(){
             type:"flip",
             subType:"from_bottom"
         },
-        pageParam: {
-            areaId: $api.byId('areaSel').value
-        },
         vScrollBarEnabled: false,
         hScrollBarEnabled: false
     });
@@ -350,13 +360,11 @@ function createWs(wsdata) {
         onOpen()
     };
     wsClient.onclose = function() {
-        onClose();
     };
     wsClient.onmessage = function(evt) {
         onmessage(evt)
     };
     wsClient.onerror = function() {
-        onError()
     };
 
     $api.setStorage("createFlag","true");

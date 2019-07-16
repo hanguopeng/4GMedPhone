@@ -45,18 +45,7 @@
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item aui-active" style="width: 30%" id="tab-new-start-advice"  onclick="newAdvice(0);">新开医嘱</div>
         <div class="aui-tab-item" style="width: 30%" id="tab-new-end-advice" onclick="newAdvice(1);">新停医嘱</div>
-        <div class="select">
-            <select id="test">
-                <option value="0">全部患者</option>
-                <option value="1">我的患者</option>
-                <option value="2">请假</option>
-                <option value="3">稳定</option>
-                <option value="4">休息中</option>
-                <option value="5">进食</option>
-                <option value="6">手术</option>
-                <option value="7">检查中</option>
-                <option value="8">其它</option>
-            </select>
+        <div class="select" id="select">
         </div>
         <div id="header-left" class="aui-pull-right" style="margin-left: 0.5rem" onclick="closeCurrentFrame()">
             <i class="closeIcon aui-icon-close"  ></i>
@@ -64,7 +53,7 @@
     </div>
     <div class="tabBody">
         <!--新开和新停都放在一起，上面得tab只当作筛选条件-->
-        <div id="new-advice" class="active tab-body-item aui-padded-t-10 aui-font-size-14 aui-padded-l-15 aui-padded-r-10">
+        <div id="new-advice" class="active tab-body-item  aui-font-size-14">
             <div class="itemContainer" id="newAdviceContentContainer">
             </div>
         </div>
@@ -74,17 +63,16 @@
 <!--医嘱记录-->
 <script id="newAdviceList" type="text/template">
     {{
-    for(var i=0;i<it.length;i++) {
-        var item = it[0]
-
+        for(var i=0;i<it.length;i++) {
+            var item = it[i];
     }}
-    <div class="item border-green adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this,{{=item.id}})">
+    <div class="border-green adviceRecordsTmplList aui-font-size-14"  onclick="changeAdviceShow(this,{{=item.id}})">
         <div class="left background-green" >{{=item.priorityCode}}</div>
         <div class="right" >
             <div>
-                <span style="width: 30%">+8181床</span>
-                <span style="width: 30%">张三</span>
-                <span style="width: 40%">住院编号</span>
+                <span>{{=item.medBedName}}床</span>
+                <span style="padding-left: 3rem">{{=item.patientName}}</span>
+                <span style="padding-left: 5rem">{{=item.registerNumber}}</span>
             </div>
             <div>
                 <span>医嘱内容：</span>
@@ -96,7 +84,7 @@
             </div>
             <div>
                 <span>终止时间：</span>
-                <span>{{=item.TerminationTime}}</span>
+                <span>{{=item.terminationTime}}</span>
             </div>
             <div>
                 <span>用法：</span>
@@ -104,7 +92,7 @@
             </div>
             <div>
                 <span>医生托嘱：</span>
-                <span>{{=item.Entrustment}}</span>
+                <span>{{=item.entrustment}}</span>
             </div>
             <div>
                 <span>执行科室：</span>
@@ -113,7 +101,7 @@
             <div>
                 <div style="width: 50%">
                     <span>开嘱医生：</span>
-                    <span>章阿三</span>
+                    <span>{{=item.doctorName}}</span>
                 </div>
                 <div style="width: 50%">
                     <span>状态：</span>
@@ -146,7 +134,7 @@
         </div>
         <div>
             <span>执行性质：</span>
-            <span>{{=item.ExecutiveNature}}</span>
+            <span>{{=item.executiveNature}}</span>
         </div>
         <div>
             <span>上次执行：</span>
@@ -181,16 +169,15 @@
 </script>
 
 <script id="selectList" type="text/template">
-    <select id="adviceExecuteItems">
-        <option value="0">输液</option>
-        <option value="1">外出</option>
-        <option value="2">请假</option>
-        <option value="3">稳定</option>
-        <option value="4">休息中</option>
-        <option value="5">进食</option>
-        <option value="6">手术</option>
-        <option value="7">检查中</option>
-        <option value="8">其它</option>
+    <select id="selectValue" onchange="newAdvice()">
+        <option value="all">全部患者</option>
+        <option value="mine">我的患者</option>
+        {{
+            for(var i=0;i<it.length;i++) {
+            var item = it[i];
+        }}
+        <option value="{{=item.id}}">{{=item.name}}</option>
+        {{}}}
     </select>
 </script>
 

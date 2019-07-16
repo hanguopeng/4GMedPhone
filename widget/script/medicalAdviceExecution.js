@@ -568,7 +568,7 @@ function ifNotNullEnd(timeStr){
 }
 
 function isEmpty(str){
-    if (str == null || str =='' || str == undefined){
+    if (str === null || str ==='' || str === undefined){
         return true
     }
 }

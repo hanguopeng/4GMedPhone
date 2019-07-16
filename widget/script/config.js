@@ -98,7 +98,7 @@ var config={
     querySkinList: localServer+"/med/advice/skin/querySkinList", //皮试列表
     updateSkin: localServer+"/med/advice/skin/updateSkin", //皮试保存
     // 20190715 添加新开医嘱列表、新开医嘱已读、医嘱记录
-    adviceTipList: localServer+"/med/newadvicesend/adviceTipList/",  // 新开医嘱列表
+    adviceTipList: localServer+"/med/newadvicesend/adviceTipList",  // 新开医嘱列表
     adviceTipRead: localServer+"/med/newadvicesend/adviceTipRead/",  // 新开医嘱已读
     queryAdviceList: localServer+"/med/advice/queryAdviceList/"  // 新开医嘱已读
 }

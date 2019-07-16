@@ -1,14 +1,25 @@
-var areaId;
 var userId = $api.getStorage(storageKey.userId);
+var adviceStatus  = 0
 apiready = function () {
     api.parseTapmode();
-    areaId =  api.pageParam.areaId
+    $api.html($api.byId('select'), "");
+    var personInfo = doT.template($api.text($api.byId('selectList')));
+    var persons = $api.getStorage(storageKey.persons);
+    $api.html($api.byId('select'), personInfo(persons));
+
     newAdvice();
+
+
 }
 /**
  * 医嘱记录
  */
 var newAdvice = function (status) {
+    if (isEmpty(status)){
+        status = adviceStatus
+    }else{
+        adviceStatus = status
+    }
     $api.removeCls($api.byId('tab-new-start-advice'), 'aui-active');
     $api.removeCls($api.byId('tab-new-end-advice'), 'aui-active');
     if (status==1){
@@ -16,15 +27,17 @@ var newAdvice = function (status) {
     } else{
         $api.addCls($api.byId('tab-new-start-advice'), 'aui-active');
     }
-    if (isEmpty(status)){
-        status = 0
-    }
-    alert(config.adviceTipList + areaId + "/" + userId + "/" +status)
-    common.get({
-        url: config.adviceTipList + areaId + "/" + userId + "/" +status,
+    var selectValue = $api.val($api.byId('selectValue'));
+    common.post({
+        url: config.adviceTipList,
         isLoading: true,
+        data: JSON.stringify({
+            nurseId:  userId,
+            type:  status,
+            factor: selectValue
+        }),
+        dataType: "json",
         success: function (ret) {
-            alert(JSON.parse(ret.content.list))
             $api.html($api.byId('newAdviceContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('newAdviceList')));
             $api.html($api.byId('newAdviceContentContainer'), contentTmpl(ret.content.list));
@@ -47,6 +60,11 @@ var changeAdviceShow = function (obj,id) {
                 success: function (ret) {
                 }
             });
+        var newAdviceCount = $api.getStorage(storageKey.newAdviceCount);
+        $api.setStorage(storageKey.newAdviceCount,parseInt(newAdviceCount)-1);
+        api.sendEvent({
+            name: 'changeNewAdviceNumber'
+        });
     }
     var isHide = $api.hasCls($api.next(obj), 'hide');
     if (isHide){
@@ -80,19 +98,13 @@ Date.prototype.format = function (fmt) {
 
 
 
-function isEmpty(str){
-    if (str == null || str =='' || str == undefined){
-        return true
-    }
-}
-
 function closeCurrentFrame(){
     api.closeFrame();
 }
 
 
 function isEmpty(str){
-    if (str == null || str =='' || str == undefined){
+    if (str === null || str ==='' || str === undefined){
         return true
     }
 }
