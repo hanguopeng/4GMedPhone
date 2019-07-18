@@ -32,9 +32,6 @@ apiready = function() {
                                 title: '提示',
                                 msg: '入科成功！',
                             }, function (ret, err) {
-                                api.notification({
-                                    sound:'widget://music/Global.mp3'
-                                });
                                 var persons = $api.getStorage(storageKey.persons);
                                 //遍历查询
                                 for (var i = 0; i < persons.length; i++) {
@@ -270,6 +267,10 @@ function createWs(wsdata) {
     wsClient.onclose = function() {
     };
     wsClient.onmessage = function(evt) {
+        api.startPlay({
+            path : 'widget://res/Global.mp3'
+        }, function() {
+        });
         onmessage(evt)
     };
     wsClient.onerror = function() {
