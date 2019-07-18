@@ -1,16 +1,9 @@
 var fs;
 var scanner ;
 var socketFlag = $api.getStorage(storageKey.createFlag);
-var indexNum = $api.getStorage(storageKey.indexNum);
 apiready = function() {
-    //alert('win_main')
     fs = api.require('fs');
-    // scanner =  $api.getStorage(storageKey.cmcScan);
     scanner = api.require('cmcScan');
-    //alert(scanner)
-    //alert(666);
-    //scanner.open();
-
     api.parseTapmode();
 
     getUserInfo();
@@ -21,11 +14,9 @@ apiready = function() {
     api.addEventListener({
         name: 'scanEvent'
     }, function(ret,err){
-        //alert(22222)
         if(ret.value.status===1){
             var scannerStatus = $api.getStorage(storageKey.scannerStatus);
             var value = ret.value.value;
-            //alert(value);
             if (scannerStatus == 'changePatient'){
                 var person = $api.getStorage(storageKey.currentPerson);
                 var patientId = person.id;
@@ -44,7 +35,6 @@ apiready = function() {
                                 api.notification({
                                     sound:'widget://music/Global.mp3'
                                 });
-                                //openPersonCenter(indexNum);
                                 var persons = $api.getStorage(storageKey.persons);
                                 //遍历查询
                                 for (var i = 0; i < persons.length; i++) {
@@ -70,11 +60,7 @@ apiready = function() {
                         //loadJCST();
                     });
                 }
-            }else if(scannerStatus == 'rukequeren'){
-                $api.setStorage(storageKey.scannerStatus, '');
-                alert("入科确认");
-            }  else{
-                //alert(111)
+            }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
                 for (var i = 0; i < persons.length; i++) {
@@ -111,24 +97,22 @@ apiready = function() {
             "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
         $api.html($api.byId("caidanlan"), jiaobiao);
     }
+
+    api.addEventListener({
+        name: 'changeNewAdviceNumber'
+    }, function(ret,err){
+        var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
+        if (parseInt(newAdviceCount1)>0){
+            var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
+                "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+            $api.html($api.byId("caidanlan"), jiaobiao);
+        }else{
+            var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
+            $api.html($api.byId("caidanlan"), jiaobiao);
+        }
+    });
 };
 
-function openPersonCenter(idx) {
-    var allPersons = $api.getStorage(storageKey.persons);
-    var person = allPersons[idx];
-    $api.setStorage(storageKey.currentPerson, person);
-
-    api.openWin({
-        name: "win_person_center",
-        bounces: false,
-        slidBackEnabled: false,
-        reload: true,
-        url: '../html/win_person_center.html',
-        vScrollBarEnabled: true,
-        hScrollBarEnabled: false,
-
-    });
-}
 function immersive(header) {
     var systemType = api.systemType;  // 获取手机类型，比如： ios
     if (systemType == 'ios') {//兼容ios和安卓
@@ -252,153 +236,15 @@ function backSystem(){
       name: 'win_system_grid'
   });
 }
-/*function toggleMenu(daList){
-    var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
-    api.actionSheet({
-        cancelTitle: '取消',
-        // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
-        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统','扫描']
-    }, function(ret, err){
-        if(ret.buttonIndex==1){
-            api.closeWin();
-        }else if(ret.buttonIndex==2){
-            openPersonSearchFrame();
-        }else if(ret.buttonIndex==3){
-            newDocAdvice();
-        }else if(ret.buttonIndex==4){
-            changePwd();
-        }else if(ret.buttonIndex==5){
-            switchAccount();
-        }else if(ret.buttonIndex==6){
-            logOut();
-        }else if(ret.buttonIndex==7){
-            listenerChange();
-        }
-    });
-}*/
-
-/*function listenerChange(){
-
-    //alert("进入change");
-    //scanner.setEventName({eventName:"inOffice"});
-    //alert("改变EVENT_NAME:");
-    //alert(scanner.getEventName());
-    //alert("移除scanEvent");
-    testOffice();
-}
-
-function testOffice(){
-    //alert("添加监听");
-    api.addEventListener({
-            name:'inOffice'
-        },function(ret,error){
-            alert("扫描开启");
-
-        }
-    );
-    scanner.start({eventName:"inOffice"});
-    alert("方法结束");
-
-}*/
-
-//打开病人查询页面
-function openPersonSearchFrame(){
-    var header = document.querySelector('#header');
-    var pos = $api.offset(header);
-    api.openFrame({
-        name: 'frm_person_search',
-        url: './frm_person_search.html',
-        rect: {
-            x: api.winWidth-300,
-            y: pos.h,
-            w: 'auto',
-            h: api.winHeight-pos.h
-        },
-        progress: {
-            type:"default",
-            title:"",
-            text:"正在加载数据"
-        },
-        animation:{
-            type:"flip",
-            subType:"from_bottom"
-        },
-        vScrollBarEnabled: false,
-        hScrollBarEnabled: false
-    });
-}
-//新开医嘱列表
-function newDocAdvice(){
-    var header = document.querySelector('#header');
-    var pos = $api.offset(header);
-    api.openFrame({
-        name: 'new_advice_details',
-        url: './new_advice_details.html',
-        rect: {
-            x: 0,
-            y: pos.h,
-            w: 'auto',
-            h: api.winHeight-pos.h
-        },
-        progress: {
-            type:"default",
-            title:"",
-            text:"正在加载数据"
-        },
-        animation:{
-            type:"flip",
-            subType:"from_bottom"
-        },
-        vScrollBarEnabled: false,
-        hScrollBarEnabled: false
-    });
-}
-// 修改密码
-function changePwd(){
-    api.openWin({
-        name: 'change_password',
-        url: './change_password.html',
-    });
-}
-
-// 登录页
-function switchAccount(){
-    common.clearStorage();
-    api.closeToWin({
-        name: 'root'
-    });
-}
-
-// 直接退出
-function logOut(){
-    common.clearStorage();
-    api.closeWidget({
-        id: api.appId,
-        retData: {
-            name: 'closeWidget'
-        },
-        silent: true
-    });
-}
-
-
 var tokenRet = function(personId){
-    //alert(personId)
     common.get({
         url:"http://192.168.1.112:8085/cmc-server/med/patient/getUserToken/"+personId,
         isLoading: true,
         success: function (ret) {
-            //alert("tokenRet");
             var wsdata = ret.data;
-            //alert(wsdata);
-
             createWs(wsdata);
-
-
         }
     });
-
-    //alert("end");
 }
 
 var nurerId = function(){
@@ -422,15 +268,11 @@ function createWs(wsdata) {
         onOpen()
     };
     wsClient.onclose = function() {
-        onClose();
     };
     wsClient.onmessage = function(evt) {
-        alert("onmessage");
         onmessage(evt)
     };
     wsClient.onerror = function() {
-        alert("error");
-        onError()
     };
 
     $api.setStorage("createFlag","true");
@@ -440,9 +282,9 @@ function  onmessage(event) {
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
     $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
-    var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
-        "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-    $api.html($api.byId("caidanlan"), jiaobiao);
+    api.sendEvent({
+        name: 'changeNewAdviceNumber'
+    });
 
 }
 function onOpen(){
@@ -450,21 +292,3 @@ function onOpen(){
 function send(){
 
 }
-
-
-
-
-
-var costDetailInfo = function (patientId) {
-    common.get({
-        url: config.costSituationUrl + patientId,
-        isLoading: true,
-        success: function (ret) {
-            $api.html($api.byId('fyhzContentContainer'), "");
-            if(ret && ret.content) {
-                var contentTmpl = doT.template($api.text($api.byId('fyhzTmpl')));
-                $api.html($api.byId('fyhzContentContainer'), contentTmpl(ret.content));
-            }
-        }
-    });
-};

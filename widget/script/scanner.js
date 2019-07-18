@@ -1,6 +1,3 @@
-
-
-
 function toggleMenu(daList){
     var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
     api.actionSheet({
@@ -23,79 +20,82 @@ function toggleMenu(daList){
         }
     });
 }
-
-
-
-/*function listenerChange(){
-
-    api.addEventListener({
-        name: 'scanEvent'
-    }, function(ret,err){
-        //alert(22222)
-        if(ret.value.status===1){
-            var scannerStatus = $api.getStorage(storageKey.scannerStatus)
-            var value = ret.value.value;
-            alert(value);
-            if (scannerStatus == 'changePatient'){
-                var person = $api.getStorage(storageKey.currentPerson);
-                var patientId = person.id;
-                $api.setStorage(storageKey.scannerStatus, '');
-                if(value == patientId){
-                    common.get({
-                        url: config.patientSaveUrl + patientId + '/' + person.homepageId,
-                        isLoading: true,
-                        text: "正在保存...",
-                        success: function (ret) {
-                            api.hideProgress();
-                            api.alert({
-                                title: '提示',
-                                msg: ret.content,
-                            }, function (ret, err) {
-                                loadJCST()
-                            });
-                        }
-                    });
-                }else{
-                    api.alert({
-                        title: '提示',
-                        msg: '扫描到的患者与当前患者不是同一个人',
-                    }, function (ret, err) {
-                        loadJCST()
-                    });
-                }
-            }else if(scannerStatus == 'rukequeren'){
-                    alert("入科确认");
-            } else{
-                //alert(111)
-                var persons = $api.getStorage(storageKey.persons);
-                //遍历查询
-                for (var i = 0; i < persons.length; i++) {
-                    if(persons[i].id==value){
-                        api.sendEvent({
-                            name: "scanSuccess",
-                            extra: {
-                                index: i
-                            }
-                        });
-                        return;
-                    }
-                }
-                api.alert({
-                    title: '提示',
-                    msg: '系统未管理此病人，请刷新后重试',
-                });
-            }
-        }else if(ret.status===0){
-            api.toast({
-                msg: '超时或解码失败，请重试！',
-                duration: config.duration,
-                location: 'bottom'
-            });
-        }
+//打开病人查询页面
+function openPersonSearchFrame(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'frm_person_search',
+        url: './frm_person_search.html',
+        rect: {
+            x: api.winWidth-300,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
     });
-
-    scanner.start();
-    api.removeEventListener({
-        name:'scanEvent'
+}
+//新开医嘱列表
+function newDocAdvice(){
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'new_advice_details',
+        url: './new_advice_details.html',
+        rect: {
+            x: 0,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
     });
-}*/
+}
+// 修改密码
+function changePwd(){
+    api.openWin({
+        name: 'change_password',
+        url: './change_password.html',
+    });
+}
+
+// 登录页
+function switchAccount(){
+    common.clearStorage();
+    api.closeToWin({
+        name: 'root'
+    });
+}
+
+// 直接退出
+function logOut(){
+    common.clearStorage();
+    api.closeWidget({
+        id: api.appId,
+        retData: {
+            name: 'closeWidget'
+        },
+        silent: true
+    });
+}

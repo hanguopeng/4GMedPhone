@@ -40,6 +40,8 @@ var changeTab = function (obj) {
 
         $api.addCls(activeTab, 'active');
 
+        $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
+
         // 移除医嘱执行、医嘱发送、巡视记录、皮试结果的筛选等操作
         // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
         // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
@@ -55,9 +57,20 @@ var changeTab = function (obj) {
 
     if (dataTo == "advice-records") {// 医嘱记录
         if (currentTab == "advice-records"){
+            $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
         } else{
+            // todo 还是不对啊
+
             currentTab = 'advice-records'
+            adviceRecordsReset()
+            priorityCode = ''
+            $api.addCls($api.byId('allTold'), 'changeBlue');
+            $api.removeCls($api.byId('longTold'), 'changeBlue');
+            $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
+            $api.attr($api.byId('inUse'), 'checked','true');
+            $api.attr($api.byId('unbookedFlag'), 'checked','true');
+            $api.attr($api.byId('reportFlag'), 'checked','true');
             adviceRecords();
         }
     } else if (dataTo == "advice-execute") {//医嘱执行
@@ -87,6 +100,7 @@ var clickBottomTab = function (parent, id) {
    if (id === 'tourRecords-result'){
        paddingInputTourRecords();
    }else if(id === 'adviceRecords-selector'){
+       $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
        paddingSelectAdviceRecords()
    }
     var activeTab = $api.dom($api.byId(parent), '#' + id);
@@ -129,6 +143,32 @@ var adviceRecords = function (type) {
     }
     if (!isEmpty(type)){
         priorityCode = $api.val($api.byId('priorityCode'))
+        //并将上面的期效下拉选更改为这里选中的条件
+        $api.removeCls($api.byId('allTold'), 'changeBlue');
+        $api.removeCls($api.byId('longTold'), 'changeBlue');
+        $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
+        if (priorityCode === ''){
+            $api.addCls($api.byId('allTold'), 'changeBlue');
+        } else if(priorityCode === 0){
+            $api.addCls($api.byId('longTold'), 'changeBlue');
+        } else if(priorityCode === 1){
+            $api.addCls($api.byId('temporaryTold'), 'changeBlue');
+        }
+    }
+    var executionTimeBegin = $api.val($api.byId('executionTimeBegin')) //执行时间开始
+    var executionTimeEnd =   $api.val($api.byId('executionTimeEnd'))  //执行时间结束
+    var foundTimeBegin = $api.val($api.byId('foundTimeBegin'))  //开嘱时间开始
+    var foundTimeEnd = $api.val($api.byId('foundTimeEnd'))
+    if (!isEmpty(executionTimeBegin)){
+        executionTimeBegin = executionTimeBegin + ":00"
+    }
+    if (!isEmpty(executionTimeEnd)){
+        executionTimeEnd = executionTimeEnd + ":00"
+    }
+    if (!isEmpty(foundTimeBegin)){
+        foundTimeBegin = foundTimeBegin + ":00"
+    }if (!isEmpty(foundTimeEnd)){
+        foundTimeEnd = foundTimeEnd + ":00"
     }
     common.post({
         url: config.queryAdviceList,
@@ -139,18 +179,17 @@ var adviceRecords = function (type) {
             inUse: inUse,   //在用医嘱，选中是1
             unbookedFlag: unbookedFlag,   //未记账,  选中是0
             reportFlag: reportFlag,   //需要报告,  选中是1
-            priorityCode:  status,    //医嘱优先级（期效）
+            priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode')),    //病案费目
-            status:  status,   //医嘱状态
-            executionTimeBegin:  $api.val($api.byId('executionTimeBegin')),   //执行时间开始
-            executionTimeEnd:  $api.val($api.byId('executionTimeEnd')),   //执行时间结束
-            foundTimeBegin:  $api.val($api.byId('foundTimeBegin')),   //开嘱时间开始
-            foundTimeEnd: $api.val($api.byId('foundTimeEnd'))   //开嘱时间结束
+            status:  $api.val($api.byId('status')),   //医嘱状态
+            executionTimeBegin:  executionTimeBegin,   //执行时间开始
+            executionTimeEnd:  executionTimeEnd,   //执行时间结束
+            foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
+            foundTimeEnd: foundTimeEnd   //开嘱时间结束
         }),
         dataType: "json",
         success: function (ret) {
             testData = ret
-            alert(JSON.stringify(ret.content))
             // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
             $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
             $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
@@ -178,7 +217,7 @@ var paddingSelectAdviceRecords = function () {
         success:function(ret){
             var data = {}
             data.adviceStatus = ret.content
-            data.priorityCode = priorityCode;
+            data.priorityCode = priorityCode
             params.queryCode = "advice_type"
             common.post({
                 url:config.dictUrl,
@@ -224,6 +263,7 @@ var changeBlue = function (obj,id) {
     } else if ('temporaryTold' === id){
         priorityCode = 1
     }
+
     $api.removeCls($api.byId('allTold'), 'changeBlue');
     $api.removeCls($api.byId('longTold'), 'changeBlue');
     $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
@@ -344,15 +384,20 @@ var closeAdviceExecuteDetail = function (obj) {
  * 医嘱发送记录
  */
 var adviceSends = function () {
-    common.get({
-        url: config.adviceDetail + patientId,
+    common.post({
+        url: config.querySendList,
         isLoading: true,
+        data: JSON.stringify({
+            patientId:  patientId,   //病人ID
+            homepageId: person.homepageId
+        }),
+        dataType: "json",
         success: function (ret) {
-            testData = ret
+            alert(JSON.stringify(ret.content.list))
             $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
             $api.html($api.byId('adviceSendsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
-            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(testData.content));
+            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -648,4 +693,15 @@ function isEmpty(str){
     if (str === null || str ==='' || str === undefined){
         return true
     }
+}
+
+
+function adviceRecordsReset(){
+    $api.val($api.byId('executionTimeBegin'),'')
+    $api.val($api.byId('executionTimeEnd'),'')
+    $api.val($api.byId('foundTimeBegin'),'')
+    $api.val($api.byId('foundTimeEnd'),'')
+    $api.attr($api.byId('typeCodeOne'), 'selected','true');
+    $api.attr($api.byId('statusOne'), 'selected','true');
+
 }
