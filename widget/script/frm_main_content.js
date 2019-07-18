@@ -57,6 +57,7 @@ function searchPersons() {
                 var personInfo = doT.template($api.text($api.byId('person-info-tpl')));
                 var countInfo = doT.template($api.text($api.byId('count-info')));
                 var params = ret.content;
+                alert(JSON.stringify(ret.content))
                 params._listCount = ret.content.list.length;
                 $api.html($api.byId('personContent'), personInfo(params));
                 $api.html($api.byId('countContent'), countInfo(params));
@@ -137,7 +138,10 @@ function openPersonCenter(idx) {
         reload: true,
         url: '../html/win_person_center.html',
         vScrollBarEnabled: true,
-        hScrollBarEnabled: false
+        hScrollBarEnabled: false,
+        pageParam:{
+            idx:idx,
+        }
     });
 }
 

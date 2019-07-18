@@ -1,11 +1,10 @@
 frames=["frm_person_center","frm_tizhengshouji","frm_yizhuzhixing","frm_huliwendang","frm_fuzhugongju","nurse/frm_nurse_hljld","nurse/frm_nurse_zyybtys","nurse/frm_nurse_dnzqtzs","nurse/frm_nurse_gczqtzs","nurse/frm_nurse_wcjyzqtzs","nurse/bloodGlucose"];
 currentFrame = 0;
-
+var idx;
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
     openMainFrame();
-
     //监听病人列表查询点击切换
     api.addEventListener({
         name: eventName.personChoosed

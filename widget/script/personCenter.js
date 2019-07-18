@@ -4,9 +4,10 @@ var page = 1;
 var scanner
 apiready = function () {
     api.parseTapmode();
-    loadJCST()
+    loadJCST();
     scanner =  $api.getStorage(storageKey.cmcScan);
-    // scanner = api.require('cmcScan');
+    scanner = api.require('cmcScan');
+    //alert(patientId);
     // scanner.open();
     // 扫码事件
     // api.addEventListener({
@@ -293,14 +294,6 @@ var fymxDetail = function(obj){
 function toggleMenu(){
     $api.setStorage(storageKey.scannerStatus, 'changePatient');
 
-    scanner.changeEvent("inOffice");
-    api.removeEventListener("scanEvent");
-    api.addEventListener({
-        name:"inOffice",
-        function(ret,error){
-            alert("扫描开启");
-        }
-    });
     scanner.start()
 }
 

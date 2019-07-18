@@ -104,7 +104,7 @@
         scanner = api.require('cmcScan');
         scanner.open();
         $api.setStorage(storageKey.cmcScan, scanner);
-        api.addEventListener({
+        /*api.addEventListener({
             name: 'scanEvent'
         }, function(ret, err) {
             if (ret) {
@@ -157,7 +157,7 @@
                 }
             } else {
             }
-        });
+        });*/
 
         api.setScreenOrientation({
             orientation : 'auto_portrait'

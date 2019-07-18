@@ -1,13 +1,14 @@
 var fs;
-var scanner;
+var scanner ;
 var socketFlag = $api.getStorage(storageKey.createFlag);
+var indexNum = $api.getStorage(storageKey.indexNum);
 apiready = function() {
     //alert('win_main')
     fs = api.require('fs');
     // scanner =  $api.getStorage(storageKey.cmcScan);
     scanner = api.require('cmcScan');
     //alert(scanner)
-    alert(666);
+    //alert(666);
     //scanner.open();
 
     api.parseTapmode();
@@ -16,13 +17,15 @@ apiready = function() {
     var header = document.querySelector('#header');
     immersive(header);
 
+
     api.addEventListener({
         name: 'scanEvent'
     }, function(ret,err){
-        alert(22222)
+        //alert(22222)
         if(ret.value.status===1){
-            var scannerStatus = $api.getStorage(storageKey.scannerStatus)
+            var scannerStatus = $api.getStorage(storageKey.scannerStatus);
             var value = ret.value.value;
+            //alert(value);
             if (scannerStatus == 'changePatient'){
                 var person = $api.getStorage(storageKey.currentPerson);
                 var patientId = person.id;
@@ -36,9 +39,26 @@ apiready = function() {
                             api.hideProgress();
                             api.alert({
                                 title: '提示',
-                                msg: ret.content,
+                                msg: '入科成功！',
                             }, function (ret, err) {
-                                loadJCST()
+                                api.notification({
+                                    sound:'widget://music/Global.mp3'
+                                });
+                                //openPersonCenter(indexNum);
+                                var persons = $api.getStorage(storageKey.persons);
+                                //遍历查询
+                                for (var i = 0; i < persons.length; i++) {
+                                    if(persons[i].id==value){
+                                        api.sendEvent({
+                                            name: "scanSuccess",
+                                            extra: {
+                                                index: i
+                                            }
+                                        });
+                                        return;
+                                    }
+                                }
+
                             });
                         }
                     });
@@ -47,11 +67,14 @@ apiready = function() {
                         title: '提示',
                         msg: '扫描到的患者与当前患者不是同一个人',
                     }, function (ret, err) {
-                        loadJCST()
+                        //loadJCST();
                     });
                 }
-            } else{
-                alert(111)
+            }else if(scannerStatus == 'rukequeren'){
+                $api.setStorage(storageKey.scannerStatus, '');
+                alert("入科确认");
+            }  else{
+                //alert(111)
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
                 for (var i = 0; i < persons.length; i++) {
@@ -78,7 +101,7 @@ apiready = function() {
             });
         }
     });
-
+    //api.removeEventListener('scanEvent');
     if("true"!=socketFlag){
         nurerId();
     }
@@ -90,6 +113,22 @@ apiready = function() {
     }
 };
 
+function openPersonCenter(idx) {
+    var allPersons = $api.getStorage(storageKey.persons);
+    var person = allPersons[idx];
+    $api.setStorage(storageKey.currentPerson, person);
+
+    api.openWin({
+        name: "win_person_center",
+        bounces: false,
+        slidBackEnabled: false,
+        reload: true,
+        url: '../html/win_person_center.html',
+        vScrollBarEnabled: true,
+        hScrollBarEnabled: false,
+
+    });
+}
 function immersive(header) {
     var systemType = api.systemType;  // 获取手机类型，比如： ios
     if (systemType == 'ios') {//兼容ios和安卓
@@ -213,12 +252,12 @@ function backSystem(){
       name: 'win_system_grid'
   });
 }
-function toggleMenu(daList){
+/*function toggleMenu(daList){
     var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
     api.actionSheet({
         cancelTitle: '取消',
         // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
-        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
+        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统','扫描']
     }, function(ret, err){
         if(ret.buttonIndex==1){
             api.closeWin();
@@ -232,9 +271,35 @@ function toggleMenu(daList){
             switchAccount();
         }else if(ret.buttonIndex==6){
             logOut();
+        }else if(ret.buttonIndex==7){
+            listenerChange();
         }
     });
+}*/
+
+/*function listenerChange(){
+
+    //alert("进入change");
+    //scanner.setEventName({eventName:"inOffice"});
+    //alert("改变EVENT_NAME:");
+    //alert(scanner.getEventName());
+    //alert("移除scanEvent");
+    testOffice();
 }
+
+function testOffice(){
+    //alert("添加监听");
+    api.addEventListener({
+            name:'inOffice'
+        },function(ret,error){
+            alert("扫描开启");
+
+        }
+    );
+    scanner.start({eventName:"inOffice"});
+    alert("方法结束");
+
+}*/
 
 //打开病人查询页面
 function openPersonSearchFrame(){
@@ -318,14 +383,14 @@ function logOut(){
 
 
 var tokenRet = function(personId){
-    alert(personId)
+    //alert(personId)
     common.get({
         url:"http://192.168.1.112:8085/cmc-server/med/patient/getUserToken/"+personId,
         isLoading: true,
         success: function (ret) {
-            alert("tokenRet");
+            //alert("tokenRet");
             var wsdata = ret.data;
-            alert(wsdata);
+            //alert(wsdata);
 
             createWs(wsdata);
 
@@ -387,3 +452,19 @@ function send(){
 }
 
 
+
+
+
+var costDetailInfo = function (patientId) {
+    common.get({
+        url: config.costSituationUrl + patientId,
+        isLoading: true,
+        success: function (ret) {
+            $api.html($api.byId('fyhzContentContainer'), "");
+            if(ret && ret.content) {
+                var contentTmpl = doT.template($api.text($api.byId('fyhzTmpl')));
+                $api.html($api.byId('fyhzContentContainer'), contentTmpl(ret.content));
+            }
+        }
+    });
+};
