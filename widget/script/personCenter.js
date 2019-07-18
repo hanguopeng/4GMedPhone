@@ -1,13 +1,9 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var patientId = person.id;
 var page = 1;
-var scanner
 apiready = function () {
     api.parseTapmode();
     loadJCST();
-    scanner =  $api.getStorage(storageKey.cmcScan);
-    scanner = api.require('cmcScan');
-
 };
 
 /**
@@ -289,6 +285,7 @@ var fymxDetail = function(obj){
 };
 
 function toggleMenu(){
+    var scanner = api.require('cmcScan');
     $api.setStorage(storageKey.scannerStatus, 'changePatient');
     scanner.start()
 }

@@ -61,7 +61,6 @@ var changeTab = function (obj) {
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
         } else{
             // todo 还是不对啊
-
             currentTab = 'advice-records'
             adviceRecordsReset()
             priorityCode = ''
@@ -275,84 +274,18 @@ var changeBlue = function (obj,id) {
  * 医嘱执行记录查询
  */
 var adviceExecute = function () {
-    // var priorityCode = $api.val($api.byId('dzx-yzyxj'));
-    //var usageCode = $api.val($api.byId('dzx-yytj'));
-    // var bigKindNumCode = $api.val($api.byId('dzx-yzcfdl'));
-    // var beginFoundTime = $api.val($api.byId('dzx-yzsj-begin'));
-    // var endFoundTime = $api.val($api.byId('dzx-yzsj-end'));
-    // var dzjtime = new Date().getTime();
-    // var curTime = new Date(dzjtime).format("yyyy-MM-dd hh:mm:ss");
-    // var pretime = dzjtime-24*1000*3600;
-    // var pttime = new Date(pretime).format("yyyy-MM-dd hh:mm:ss");
-    /*if ("" != beginFoundTime){
-        beginFoundTime = beginFoundTime+' 00:00:00';
-    }
-    if(""!= endFoundTime){
-        endFoundTime = endFoundTime+' 00:00:00';
-    }*/
-    /*else if ("" != beginFoundTime&&""==endFoundTime){
-        beginFoundTime = beginFoundTime+' 00:00:00';
-        endFoundTime = curTime;
-    }else if("" == beginFoundTime&&""==endFoundTime){
-        beginFoundTime = pttime;
-        endFoundTime = endFoundTime+' 00:00:00';
-    }else{
-        beginFoundTime = beginFoundTime+' 00:00:00';
-        endFoundTime = endFoundTime+' 00:00:00';
-    }*/
-    // var beginRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-begin'));
-    // var endRequireExecuteTime = $api.val($api.byId('dzx-yqzxsj-end'));
-    // var preHour = new Date(dzjtime-1*1000*3600);
-    // var beHour = new Date(dzjtime+1*1000*3600);
-    // preHour = new Date(preHour).format("yyyy-MM-dd hh:mm:ss");
-    // beHour = new Date(beHour).format("yyyy-MM-dd hh:mm:ss");
-    //alert("preHour:"+preHour+"beHour:"+beHour);
-    var params = {};
-    // var beginTime = pttime;
-    // var endTime = curTime;
+    common.post({
+        url: config.adviceDetail + patientId,
+        isLoading: true,
+        success: function (ret) {
+            $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+            $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
 
-
-    // beginFoundTime = ifNotNull(beginFoundTime);
-    // endFoundTime=ifNotNullEnd(endFoundTime);
-    // beginRequireExecuteTime=ifNotNull(beginRequireExecuteTime);
-    // endRequireExecuteTime=ifNotNullEnd(endRequireExecuteTime);
-    // if(beginFoundTime!=""||endFoundTime!=""||beginRequireExecuteTime!=""||endRequireExecuteTime!=""){
-    //     beginTime="";
-    //     endTime="";
-    // }
-    // params.beginTime = beginTime;
-    // params.endTime = endTime;
-    // params.patientId = patientId;
-    // params.executeStatusCode = '0';
-    // params.priorityCode = priorityCode;
-    // params.usage = usageCode;
-    // params.bigKindNum = bigKindNumCode;
-    // params.beginFoundTime = beginFoundTime;
-    // params.endFoundTime = endFoundTime;
-    // params.beginRequireExecuteTime = beginRequireExecuteTime;
-    // params.endRequireExecuteTime = endRequireExecuteTime;
-    //alert(JSON.stringify(params))
-    //alert(JSON.stringify(params));
-
-    $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-    $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
-
-    $api.html($api.byId('adviceExecuteContentContainer'), "");
-    var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
-    $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.content));
-    // common.post({
-    //     url: config.adviceDetail + patientId,
-    //     isLoading: true,
-    //     success: function (ret) {
-    //         //alert(JSON.stringify(ret));
-    //         $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-    //         $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
-    //
-    //         $api.html($api.byId('adviceExecuteContentContainer'), "");
-    //         var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
-    //         $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.context));
-    //     }
-    // });
+            $api.html($api.byId('adviceExecuteContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
+            $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.context));
+        }
+    });
 };
 
 /**
@@ -384,12 +317,68 @@ var closeAdviceExecuteDetail = function (obj) {
  * 医嘱发送记录
  */
 var adviceSends = function () {
+    var skinTestFlag
+    var unbookedFlag
+    var related
+    if ($api.byId('skinTestFlag').checked){
+        skinTestFlag = 1
+    }
+    if ($api.byId('unbookedFlag2').checked){
+        unbookedFlag = 0
+    }
+    if ($api.byId('related').checked){
+        related = 1
+    }
+    var changzhu = $api.byId('changzhu').checked
+    var linzhu = $api.byId('linzhu').checked
+
+    var status = ''   // 医嘱发送筛选条件医嘱期效
+    if (changzhu && !linzhu){
+        status = 0;
+    } else if(!changzhu && linzhu){
+        status = 1;
+    }
+
+    var sendTimeStart = $api.val($api.byId('sendTimeStart'))
+    var sendTimeEnd =   $api.val($api.byId('sendTimeEnd'))
+    var firstTimeStart = $api.val($api.byId('firstTimeStart'))
+    var firstTimeEnd = $api.val($api.byId('firstTimeEnd'))
+    var lastTimeStart = $api.val($api.byId('lastTimeStart'))
+    var lastTimeEnd = $api.val($api.byId('lastTimeEnd'))
+    if (!isEmpty(sendTimeStart)){
+        sendTimeStart = sendTimeStart + ":00"
+    }
+    if (!isEmpty(sendTimeEnd)){
+        sendTimeEnd = sendTimeEnd + ":00"
+    }
+    if (!isEmpty(firstTimeStart)){
+        firstTimeStart = firstTimeStart + ":00"
+    }
+    if (!isEmpty(firstTimeEnd)){
+        firstTimeEnd = firstTimeEnd + ":00"
+    }
+    if (!isEmpty(lastTimeStart)){
+        lastTimeStart = lastTimeStart + ":00"
+    }
+    if (!isEmpty(lastTimeEnd)){
+        lastTimeEnd = lastTimeEnd + ":00"
+    }
     common.post({
         url: config.querySendList,
         isLoading: true,
         data: JSON.stringify({
             patientId:  patientId,   //病人ID
-            homepageId: person.homepageId
+            homepageId:  person.homepageId,
+            sendTimeStart: sendTimeStart,   //发送时间开始
+            sendTimeEnd: sendTimeEnd,   //发送时间结束
+            firstTimeStart: firstTimeStart,   //首次时间开始
+            firstTimeEnd: firstTimeEnd,   //首次时间结束
+            lastTimeStart: lastTimeStart,   //末次时间开始
+            lastTimeEnd: lastTimeEnd,   //末次时间结束
+            priorityCode: status,   //医嘱期效
+            skinTestFlag:  skinTestFlag,   //皮试标识
+            unbookedFlag:  unbookedFlag,   //未记账
+            related:  related     //是否为合并医嘱
         }),
         dataType: "json",
         success: function (ret) {
