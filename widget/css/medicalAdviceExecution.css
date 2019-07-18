@@ -24,6 +24,7 @@
 .tab-body-item .itemContainer .adviceRecordsTmplList{
     overflow: hidden;
     height:fit-content;
+    margin-top: 0.2rem;
 }
 /* 医嘱记录左侧样式*/
 .tab-body-item .itemContainer .adviceRecordsTmplList .left{
@@ -31,7 +32,6 @@
     width:7%;
     height: auto;
     writing-mode: tb-rl;
-    margin-top: 0.2rem;
     padding-top: 20%;
     padding-left: 1%;
     border: 1px double #67c23b;
@@ -43,7 +43,6 @@
     float:left;
     width:93%;
     padding-left: 0.3rem;
-    margin-top: 0.2rem;
     border: 1px double #67c23b;
 }
 
@@ -149,13 +148,19 @@
     padding: 0.5rem 1rem 0.5rem 2rem;
     margin-top: 0.5rem;
 }
-.tab-body-item .itemContainer .item.border-red{
+.tab-body-item .itemContainer .item .border-red{
     border: 1px double #e51c23;
 }
-.tab-body-item .itemContainer .item.border-green{
+.tab-body-item .itemContainer .item .border-green{
     border: 1px double #67c23b;
 }
 
+.tab-body-item .itemContainer .border-red{
+    border: 1px double #e51c23;
+}
+.tab-body-item .itemContainer .border-green{
+    border: 1px double #67c23b;
+}
 /* 皮试结果执行完成，边框是绿色，背景是深绿色*/
 .tab-body-item .itemContainer .item.skinTestGreen{
     background-color: #24771c;
@@ -241,7 +246,7 @@
     background-color: #fff;
 }
 
-.tab-body-item .bottomContainer .bottomBody#tourRecords-result .select{
+.tab-body-item .bottomContainer .bottomBody .select{
     width: 10rem;
     display: inline-block;
     font-size: 0.7rem;

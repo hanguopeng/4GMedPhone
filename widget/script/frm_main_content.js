@@ -1,5 +1,6 @@
 var persons = [];
 var areaId;
+var scanner;
 apiready = function () {
     api.parseTapmode();
     areaId = api.pageParam.areaId;
@@ -17,6 +18,41 @@ apiready = function () {
         showTime: false
     }, function (ret, err) {
         refresh();
+    });
+
+
+    //扫码监听事件
+    scanner = api.require('cmcScan');
+    scanner.open();
+    api.addEventListener({
+        name: 'scanEvent'
+    }, function(ret,err){
+        if(ret.value.status===1){
+            var value = ret.value.value;
+            var persons = $api.getStorage(storageKey.persons);
+            //遍历查询
+            for (var i = 0; i < persons.length; i++) {
+                if(persons[i].id==value){
+                    api.sendEvent({
+                        name: "scanSuccess",
+                        extra: {
+                            index: i
+                        }
+                    });
+                    return;
+                }
+            }
+            api.alert({
+                title: '提示',
+                msg: '系统未管理此病人，请刷新后重试',
+            });
+        }else if(ret.status===0){
+            api.toast({
+                msg: '超时或解码失败，请重试！',
+                duration: config.duration,
+                location: 'bottom'
+            });
+        }
     });
 };
 
@@ -128,9 +164,6 @@ function openPersonCenter(idx) {
     $api.setStorage(storageKey.currentPerson, person);
     $api.setStorage(storageKey.currentIdx, idx); //左右箭头的时候需要
     $api.setStorage(storageKey.lastIdx, allPersons.length - 1); //设置最后一个索引的大小，length-1
-    // api.removeEventListener({
-    //     name: 'scanEvent'
-    // },scanFun);
     api.openWin({
         name: "win_person_center",
         bounces: false,

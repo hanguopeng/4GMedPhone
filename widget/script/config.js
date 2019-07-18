@@ -1,11 +1,10 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 //var localServer = "http://140.143.143.150:8085/cmc-server";
-var localServer = "http://172.17.100.1:8083/cmc-server";
+// var localServer = "http://172.17.100.1:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
-//var localServer = "http://192.168.1.112:8085/cmc-server";
-// var localServer = "http://192.168.1.135:8085/cmc-server";
-var localServer = "http://192.168.1.107:8085/cmc-server";
+var localServer = "http://192.168.1.112:8085/cmc-server";
+//var localServer = "http://192.168.1.138:8085/cmc-server";
 var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
@@ -16,7 +15,7 @@ var config={
     patientSearchUrl: localServer+"/med/patient", //病人查询
     patientDetailUrl: localServer+"/med/patient/", //病人详情
     patientLastExamineUrl: localServer+"/nur/nurseLog/lastExamine/", //护理检查信息
-    costSituationUrl: localServer+"/med/cost/situation/", //费用情况
+    costSituationUrl: localServer+"/med/cost/situation/", //费用情况（金额汇总）
     animalHeatSituationUrl: localServer+"/nur/nurseLog/animalHeat/situation/{patientId}", //体温变化
     transfuseSituationUrl: localServer+"/med/transfuse/situation/", //输液情况
     nursePlanSituationUrl: cmcServer+"/med/nursePlan/situation/{patientId}", //护理文书
@@ -31,9 +30,6 @@ var config={
     bloodGlucose: localServer+"/nur/nurseLog?templateCode=xtjchl&templateVersion=1&patientId=", //血糖监测查询
     bloodGlucoseDetail: localServer+"/nur/nurseLog/", //血糖监测明细
     costItemDetail: localServer+"/med/costItem?patientId=", //费用明细-分页
-    //costDetail: localServer+"/med/cost/detailByPatientId/", //费用详情按人员查询，带明细不分页
-    //costDetail: localServer+"/med/cost/detailByPatientIdByPda/list?patientId=",
-    costItemStatisticsList: localServer+"/med/cost/detailByPatientIdByPda/list?patientId=", //费用明细 按医嘱大类拆分
     nurseLogCommon: localServer+"/nur/nurseLog/listDetails", //护理记录
     nurseSMTZhljld: localServer+"/nur/VitalSigns"  ,//生命体征护理记录单
     nurseLogWZHZ: localServer + "/nur/boneCriticallyIll", //骨科危重患者
@@ -98,6 +94,12 @@ var config={
     // 20190714 添加 皮试列表/皮试保存
     querySkinList: localServer+"/med/advice/skin/querySkinList", //皮试列表
     updateSkin: localServer+"/med/advice/skin/updateSkin", //皮试保存
+    // 20190715 添加新开医嘱列表、新开医嘱已读、医嘱记录
+    adviceTipList: localServer+"/med/newadvicesend/adviceTipList",  // 新开医嘱列表
+    adviceTipRead: localServer+"/med/newadvicesend/adviceTipRead/",  // 新开医嘱已读
+    queryAdviceList: localServer+"/med/advice/queryAdviceList",  // 医嘱记录
+    // 20190716 添加费用明细
+    costItemStatisticsList: localServer+"/med/cost/detailByPatientIdByPda/list", //费用明细 按医嘱大类拆分
 }
 
 var accessoryType={
