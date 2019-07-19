@@ -17,7 +17,7 @@ apiready = function() {
         if(ret.value.status===1){
             var scannerStatus = $api.getStorage(storageKey.scannerStatus);
             var value = ret.value.value;
-            if (scannerStatus == 'changePatient'){
+            if (scannerStatus === 'changePatient'){
                 var person = $api.getStorage(storageKey.currentPerson);
                 var patientId = person.id;
                 $api.setStorage(storageKey.scannerStatus, '');
@@ -56,6 +56,11 @@ apiready = function() {
                     }, function (ret, err) {
                     });
                 }
+            } else if (scannerStatus === 'tour-records'){
+                api.sendEvent({
+                    name: 'tourRecordsResultShow'
+                });
+                $api.setStorage(storageKey.tourRecordsPersonId,value)
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询

@@ -1,5 +1,6 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var userId = $api.getStorage(storageKey.userId);
+var tourRecordsPerson = person   // 巡视扫码得到的病人
 var patientId = person.id;
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestStatus = true
@@ -38,6 +39,28 @@ apiready = function () {
         changeTab($api.dom('#'+id))
         if (currentTab === 0 ){
             $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+        }
+    });
+    // 监控巡视扫码事件
+    api.addEventListener({
+        name: 'tourRecordsResultShow'
+    }, function(ret,err){
+        var tourRecordsPersonId = $api.getStorage(storageKey.tourRecordsPersonId);
+        var persons = $api.getStorage(storageKey.persons);
+        var status = true
+        //遍历查询
+        for (var i = 0; i < persons.length; i++) {
+            if(persons[i].id == tourRecordsPersonId){
+                status = false
+                tourRecordsPerson = persons[i]
+                clickBottomTab('tour-records','tourRecords-result',persons[i].name, persons[i].medBedName);
+            }
+        }
+        if (status){
+            api.alert({
+                title: '提示',
+                msg: '系统未管理此病人，请刷新后重试',
+            });
         }
     });
 }
@@ -86,6 +109,7 @@ var changeTab = function (obj) {
     }
 
     if (dataTo == "advice-records") {// 医嘱记录
+        $api.setStorage(storageKey.scannerStatus, '');
         if (currentTab === 0 ){
             $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
@@ -114,6 +138,7 @@ var changeTab = function (obj) {
         // currentTab = 'advice-execute'
         // adviceExecute();
     } else if (dataTo == "advice-sends") {//医嘱发送
+        $api.setStorage(storageKey.scannerStatus, '');
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 1
         // 切换tab时将所有选中条件都清空
@@ -131,10 +156,12 @@ var changeTab = function (obj) {
 
         adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
+        $api.setStorage(storageKey.scannerStatus, 'tour-records');
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 2
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
+        $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 3
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
 
@@ -154,13 +181,7 @@ var changeTab = function (obj) {
  * @param parent
  * @param id
  */
-var clickBottomTab = function (parent, id) {
-   if (id === 'tourRecords-result'){
-       paddingInputTourRecords();
-   }else if(id === 'adviceRecords-selector'){
-       $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-       paddingSelectAdviceRecords()
-   }
+var clickBottomTab = function (parent, id, name ,medBedName) {
     var activeTab = $api.dom($api.byId(parent), '#' + id);
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
@@ -174,6 +195,18 @@ var clickBottomTab = function (parent, id) {
 
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
+
+        if (id === 'tourRecords-result'){
+            if (!isEmpty(name)){
+                paddingInputTourRecords(name, medBedName);
+            } else {
+                paddingInputTourRecords(person.name, person.medBedName);
+            }
+        }else if(id === 'adviceRecords-selector'){
+            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+            paddingSelectAdviceRecords()
+        }
+
         $api.addCls(activeTab, 'active');
 
 
@@ -498,7 +531,7 @@ var tourRecords = function () {
     });
 };
 
-var paddingInputTourRecords = function () {
+var paddingInputTourRecords = function (name,medBedName) {
 
     var params = {};
     params.queryCode = "inspectionType";
@@ -512,8 +545,8 @@ var paddingInputTourRecords = function () {
         dataType:JSON,
         success:function(ret){
             var data = {}
-            data.patientName = person.name;
-            data.medBedName = person.medBedName;
+            data.patientName = name;
+            data.medBedName = medBedName;
             data.list = {}
             data.time = currentTime();
             data.nurseName = $api.getStorage(storageKey.userName);
@@ -536,10 +569,10 @@ var tourRecordsExecute = function () {
     common.post({
         url: config.inspectionSave,
         data: {
-            patientId:  patientId,
-            patientName:  person.name,
-            medBedId: person.medBedId,
-            medBedName: person.medBedName,
+            patientId:  tourRecordsPerson.id,
+            patientName:  tourRecordsPerson.name,
+            medBedId: tourRecordsPerson.medBedId,
+            medBedName: tourRecordsPerson.medBedName,
             nurseId: $api.getStorage(storageKey.userId),
             nurseName: $api.getStorage(storageKey.userName),
             inspectionTime: inspectionTime,
@@ -566,11 +599,11 @@ var skinTestRecord = function () {
     var endTime   = $api.val($api.byId('skin-test-end-time'));
     var noInput   = $api.byId('noInput').checked;
     var alreadyInput   = $api.byId('alreadyInput').checked;
-    var inputStatus = null;
+    var inputStatus = 3;
     if (noInput && !alreadyInput){
-        inputStatus = 0
-    } else if (!noInput && alreadyInput){
         inputStatus = 1
+    } else if (!noInput && alreadyInput){
+        inputStatus = 2
     }
     if (!isEmpty(beginTime)){
         beginTime  = beginTime + ":00";
