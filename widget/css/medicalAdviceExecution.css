@@ -31,10 +31,8 @@
     float:left;
     width:7%;
     height: auto;
-    writing-mode: tb-rl;
     padding-top: 11%;
-    padding-left: 1%;
-    border: 1px double #67c23b;
+    padding-left: 0.3rem;
     margin-bottom:-9999px;
     padding-bottom:9999px;
 }
@@ -57,8 +55,7 @@
     width:7%;
     margin-top: 0.2rem;
     padding-top: 10%;
-    padding-left: 1%;
-    border: 1px double #67c23b;
+    padding-left: 0.3rem;
     margin-bottom:-9999px;
     padding-bottom:9999px;
 }
@@ -72,8 +69,9 @@
 }
 
 /*不同状态背景颜色-绿色*/
-.tab-body-item .itemContainer  .background-green{
-    background-color: #67c23b;
+.tab-body-item .itemContainer  .background-white{
+    background-color: white;
+    /*background-color: #67c23b;*/
 }
 
 /* 医嘱详情隐藏*/

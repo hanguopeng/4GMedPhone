@@ -236,7 +236,11 @@
     var item = it[i];
     }}
     <div class="adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
-        <div class="left background-green" >{{=item.priorityName}}</div>
+        {{?item.fieldENName}}
+        <div class="left" style="color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
+        {{??}}
+        <div class="left background-white" >{{=item.priorityName}}</div>
+        {{?}}
         <div class="right" >
             <div>
                 <span>医嘱内容：</span>
@@ -310,7 +314,7 @@
         </div>
         <div>
             <span>状态：</span>
-            <span>{{=item.status||''}}</span>
+            <span>{{=item.statusName||''}}</span>
         </div>
         <div>
             <span>校对护士：</span>
@@ -591,7 +595,11 @@
     var item = it[i];
     }}
     <div class="adviceSendsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
-        <div class="left background-green" >{{=item.priorityName}}</div>
+        {{?item.fieldENName}}
+        <div class="left" style="color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
+        {{??}}
+        <div class="left background-white" >{{=item.priorityName}}</div>
+        {{?}}
         <div class="right" >
             <div>
                 <span>医嘱内容：</span>
@@ -697,7 +705,7 @@
         </div>
         <div>
             <span>状态：</span>
-            <span>{{=item.status||''}}</span>
+            <span>{{=item.statusName||''}}</span>
         </div>
         <div>
             <span>校对护士：</span>
