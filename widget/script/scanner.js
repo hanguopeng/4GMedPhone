@@ -6,7 +6,7 @@ function toggleMenu(daList){
         buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
     }, function(ret, err){
         if(ret.buttonIndex==1){
-            api.closeWin();
+            winMain();
         }else if(ret.buttonIndex==2){
             openPersonSearchFrame();
         }else if(ret.buttonIndex==3){
@@ -20,6 +20,14 @@ function toggleMenu(daList){
         }
     });
 }
+
+// 首页
+function winMain(){
+    api.closeToWin({
+        name: 'win_main'
+    });
+}
+
 //打开病人查询页面
 function openPersonSearchFrame(){
     var header = document.querySelector('#header');
