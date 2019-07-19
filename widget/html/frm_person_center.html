@@ -265,17 +265,55 @@
         </table>
     </script>
     <script id="fymxTmpl" type="text/template">
+        {{? it.cost}}
         <div>
-            <div>剩余款：{{=it.cost.balance||'0'}}</div>
-            <div>
-                <span>预交款：{{=it.cost.prepayMoney||'0'}}</span>
-                <span style="float: right;">未结费用：{{=it.cost.unconsumeMoney||'0'}}</span>
+            <div class="keyValueItem aui-margin-l-15">
+                <span class="key">剩余款：</span>
+                {{if(it.cost.balance >= 0 || isEmpty(it.cost.balance)){ }}
+                <span class="value">{{=it.cost.balance||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.balance}}</span>
+                {{}}}
             </div>
-            <div>
-                <span>预结费用：{{=it.cost.consumeMoney||'0'}}</span>
-                <span style="float: right">自付费用：{{=it.cost.selfMoney||'0'}}</span>
+            <div class="keyValueItem aui-margin-l-15">
+                <div style="width:50%;float:left">
+                    <span class="key">预交款：</span>
+                    {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
+                    <span class="value">{{=it.cost.prepayMoney||'0'}}</span>
+                    {{ }else{}}
+                    <span class="value redInfo">{{=it.cost.prepayMoney}}</span>
+                    {{}}}
+                </div>
+                <div style="width:50%;float:right">
+                    <span class="key">未结费用：</span>
+                    {{if(it.cost.unconsumeMoney >= 0 || isEmpty(it.cost.unconsumeMoney)){ }}
+                    <span class="value">{{=it.cost.unconsumeMoney||'0'}}</span>
+                    {{ }else{}}
+                    <span class="value redInfo">{{=it.cost.unconsumeMoney}}</span>
+                    {{}}}
+                </div>
+            </div>
+            <div class="keyValueItem aui-margin-l-15">
+                <div  style="width:50%;float:left">
+                    <span class="key">预结费用：</span>
+                    {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
+                    <span class="value">{{=it.cost.consumeMoney||'0'}}</span>
+                    {{ }else{}}
+                    <span class="value redInfo">{{=it.cost.consumeMoney}}</span>
+                    {{}}}
+                </div>
+                <div style="width:50%;float: right">
+                    <span class="key">自付费用：</span>
+                    {{if(it.cost.selfMoney >= 0 || isEmpty(it.cost.selfMoney)){ }}
+                    <span class="value">{{=it.cost.selfMoney||'0'}}</span>
+                    {{ }else{}}
+                    <span class="value redInfo">{{=it.cost.selfMoney}}</span>
+                    {{}}}
+                </div>
             </div>
         </div>
+        {{?}}
+        {{?it.list && it.list.length>0}}
         {{
         for(var i=0;i<it.list.length;i++) {
             var item = it.list[i];
@@ -302,6 +340,9 @@
             </table>
         </div>
         {{ } }}
+        {{??}}
+        <div class="aui-margin-l-15  aui-font-size-14" style="margin-top: 3rem;color: #5e5e5e">（无费用明细）</div>
+        {{?}}
     </script>
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/config.js"></script>

@@ -54,7 +54,6 @@ apiready = function() {
                         title: '提示',
                         msg: '扫描到的患者与当前患者不是同一个人',
                     }, function (ret, err) {
-                        //loadJCST();
                     });
                 }
             }else{
@@ -84,7 +83,6 @@ apiready = function() {
             });
         }
     });
-    //api.removeEventListener('scanEvent');
     if("true"!=socketFlag){
         nurerId();
     }
@@ -108,6 +106,8 @@ apiready = function() {
             $api.html($api.byId("caidanlan"), jiaobiao);
         }
     });
+
+    ExitApp();
 };
 
 function immersive(header) {
@@ -235,7 +235,7 @@ function backSystem(){
 }
 var tokenRet = function(personId){
     common.get({
-        url:"http://192.168.1.112:8085/cmc-server/med/patient/getUserToken/"+personId,
+        url: localServer + "/med/patient/getUserToken/"+personId,
         isLoading: true,
         success: function (ret) {
             var wsdata = ret.data;
@@ -258,7 +258,7 @@ var nurerId = function(){
 
 }
 function createWs(wsdata) {
-    var WsUrl = "ws://192.168.1.112:8888/"+encodeURIComponent(wsdata);
+    var WsUrl = ws + encodeURIComponent(wsdata);
 
     wsClient = new WebSocket(WsUrl);
     wsClient.onopen = function() {
@@ -292,4 +292,41 @@ function onOpen(){
 }
 function send(){
 
+}
+
+
+/**
+ * 绑定退出事件
+ */
+function ExitApp() {
+    var ci = 0;
+    var time1, time2;
+    api.addEventListener({
+        name: 'keyback'
+    }, function (ret, err) {
+        if (ci == 0) {
+            time1 = new Date().getTime();
+            ci = 1;
+            api.toast({
+                msg: '再按一次返回键退出'
+            });
+        } else if (ci == 1) {
+            time2 = new Date().getTime();
+            if (time2 - time1 < 2000) {
+                common.clearStorage();
+                api.closeWidget({
+                    id: api.appId,
+                    retData: {
+                        name: 'closeWidget'
+                    },
+                    silent: true
+                });
+            } else {
+                ci = 0;
+                api.toast({
+                    msg: '再按一次返回键退出'
+                });
+            }
+        }
+    });
 }

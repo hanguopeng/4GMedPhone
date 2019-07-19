@@ -28,12 +28,12 @@
     <div class="tabBody">
         <!--医嘱记录-->
         <div id="advice-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
-            <div class="aui-padded-l-15">
-                <label><input class="aui-margin-t-5 " id="inUse" type="checkbox" onclick="adviceRecords()"> 在用医嘱</label>
+            <div class="aui-padded-l-15" id="advice-records-header">
+                <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()"> 在用医嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="unbookedFlag" type="checkbox" onclick="adviceRecords()"> 未记账</label>
+                <label><input class="aui-margin-t-5 " name="unbookedFlag" id="unbookedFlag" type="checkbox" tapmode  onchange="adviceRecords()"> 未记账</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="reportFlag" type="checkbox" onclick="adviceRecords()"> 需要报告</label>
+                <label><input class="aui-margin-t-5 " name="reportFlag" id="reportFlag" type="checkbox" tapmode   onchange="adviceRecords()"> 需要报告</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="aui-btn" style="background: #38afe6;" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
             </div>
@@ -124,7 +124,7 @@
         </div>
         <!--医嘱发送-->
         <div id="advice-sends" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
-            <div class="aui-padded-l-15">
+            <div class="aui-padded-l-15" id="advice-sends-header">
                 <label><input class="aui-margin-t-5 " type="checkbox" onclick="adviceSends()" id = "unbookedFlag2"> 未记账</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " type="checkbox" onclick="adviceSends()" id="skinTestFlag"> 皮试</label>
@@ -161,13 +161,14 @@
                             <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="lastTimeEnd"></span>
                         </div>
                     </div>
-                    <div class="flex aui-margin-t-5">
+                    <div class="flex aui-margin-t-5" id="advice-header">
                         <label style="margin-left: 3rem"><input class="aui-margin-t-5"  id="changzhu" type="checkbox"> 长嘱</label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <label style="margin-right: 4rem"><input class="aui-margin-t-5"  id="linzhu" type="checkbox"> 临嘱</label>
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
                         <div class="btn aui-btn aui-btn-success" onclick="adviceSends();">确定</div>
+                        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceSendsReset();">重置</div>
                     </div>
                 </div>
             </div>
@@ -186,7 +187,7 @@
         </div>
         <!--皮试结果-->
         <div id="skin-test" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
-            <div class="aui-padded-l-15">
+            <div class="aui-padded-l-15" id="skinTest-header">
                 <label><input class="aui-margin-t-5 " id="noInput" type="checkbox" onclick="skinTestRecord()" checked> 未录入</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " id="alreadyInput" type="checkbox" onclick="skinTestRecord()"> 已录入</label>
@@ -204,6 +205,7 @@
                     </div>
                     <div class="aui-text-center aui-margin-t-15">
                         <div class="btn aui-btn aui-btn-success" onclick="skinTestRecord();">确定</div>
+                        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="skinTestRecordReset();">重置</div>
                     </div>
                 </div>
                 <div id="skinTest-result" class="bottomBody aui-padded-15">
@@ -277,7 +279,7 @@
 
         </div>
     </div>
-    <div id="detail" class="detail hide">
+    <div id="detail" class="detail hide" onclick="changeThisShow(this)">
         <div>
             <span>总量：</span>
             <span>{{=item.num||''}}</span>
@@ -343,7 +345,7 @@
         <div class="flex-item">
             <span class="key">医嘱期效：</span>
             <span class="value">
-                <select class="select" style="width: 3.5rem" id="priorityCode">
+                <select class="select" style="width: 4rem" id="priorityCode">
                     {{?it.priorityCode === ''}}
                      <option value="" id="priorityCodeOne" selected>全部医嘱</option>
                     {{??}}
@@ -364,9 +366,9 @@
             </span>
         </div>
         <div class="flex-item">
-            <span class="key">&nbsp;&nbsp;病案费目：</span>
+            <span class="key">病案费目：</span>
             <span class="value">
-                 <select class="select" style="width: 3.5rem" id="typeCode">
+                 <select class="select" style="width:4rem" id="typeCode">
                       <option value="" id="typeCodeOne">请选择</option>
                      {{
                         if(it.adviceType){
@@ -613,7 +615,7 @@
             </div>
         </div>
     </div>
-    <div id="adviceSendsDetail" class="detail hide">
+    <div id="adviceSendsDetail" class="detail hide"  onclick="changeThisShow(this)">
 
         {{?item.costList!==null}}
         {{for(var j=0;j<item.costList.length;j++) { }}

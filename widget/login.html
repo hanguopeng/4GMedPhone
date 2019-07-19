@@ -60,7 +60,7 @@
                     <i class="aui-iconfont aui-icon-my"></i>
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="userName"  type="text" value="lihong" placeholder="请输入用户名">
+                    <input id="userName"  type="text" value="" placeholder="请输入用户名">
                 </div>
             </div>
         </li>
@@ -72,7 +72,7 @@
                     <i class="aui-iconfont aui-icon-lock"></i>
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="userPass"  type="password" value="admin" placeholder="请输入密码">
+                    <input id="userPass"  type="password" value="" placeholder="请输入密码">
                 </div>
             </div>
         </li>
@@ -97,11 +97,10 @@
 <script>
     var UIActionProgress;
     var fs;
-    var scanner;
     apiready = function() {
         UIActionProgress = api.require('UIActionProgress');
         fs = api.require('fs');
-        scanner = api.require('cmcScan');
+        var scanner = api.require('cmcScan');
         scanner.open();
         $api.setStorage(storageKey.cmcScan, scanner);
         api.addEventListener({
@@ -135,17 +134,7 @@
                             $api.setStorage(storageKey.token, ret.token);
                             //设置登录有效,后续登录失效时使用
                             common.loginInvalid = false;
-                            //转到主页
-                            api.openWin({
-                                name: 'win_system_grid',
-                                bounces: false,
-                                slidBackEnabled: false,
-                                reload: true,
-                                url: './html/win_system_grid.html',
-                                vScrollBarEnabled: false,
-                                hScrollBarEnabled: false
-                            });
-
+                            openWin()
                         }
                     });
                 }else{
@@ -481,26 +470,29 @@
                         $api.setStorage(storageKey.newAdviceCount,ret.content);
                     }
                 });
-                //转到主页
-                api.openWin({
-                    name: 'win_system_grid',
-                    bounces: false,
-                    slidBackEnabled : false,
-                    reload:true,
-                    url: './html/win_system_grid.html',
-                    vScrollBarEnabled:false,
-                    hScrollBarEnabled:false
-                });
+
+               openWin();
             }
         });
-        //careSheetTable();
-    }
-    // 我觉得直接start就可以，剩下的由监听做，但是不知道行不行
-    function scanLogin(){
-        scanner.start();
     }
 
-
+    function openWin() {
+        // 跳转之前将密码清空，用户名是否清空看是否记住用户名
+        $api.val($api.byId('userPass'),'')
+        if (!$api.byId('remMe').checked){
+            $api.val($api.byId('userName'),'')
+        }
+        // 跳转病人首页
+        api.openWin({
+            name: 'win_main',
+            bounces: false,
+            slidBackEnabled : false,
+            reload:true,
+            url: './html/win_main.html',
+            vScrollBarEnabled:true,
+            hScrollBarEnabled:false
+        });
+    }
     function register(){
         // 点击注册跳转注册页面
         api.openWin({

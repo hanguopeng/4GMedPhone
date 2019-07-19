@@ -60,16 +60,23 @@ var changeTab = function (obj) {
             $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
         } else{
-            // todo 还是不对啊
             currentTab = 'advice-records'
-            adviceRecordsReset()
+            // 切换tab时将所有选中条件都清空
             priorityCode = ''
+            adviceRecordsReset()
             $api.addCls($api.byId('allTold'), 'changeBlue');
             $api.removeCls($api.byId('longTold'), 'changeBlue');
             $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
-            $api.attr($api.byId('inUse'), 'checked','true');
-            $api.attr($api.byId('unbookedFlag'), 'checked','true');
-            $api.attr($api.byId('reportFlag'), 'checked','true');
+            var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
+                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "                <label><input class=\"aui-margin-t-5 \" name=\"unbookedFlag\" id=\"unbookedFlag\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 未记账</label>\n" +
+                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag\" id=\"reportFlag\" type=\"checkbox\" tapmode   onchange=\"adviceRecords()\"> 需要报告</label>\n" +
+                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "                <div class=\"aui-btn\" style=\"background: #38afe6;\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+            $api.html($api.byId('advice-records-header'), "");
+            $api.html($api.byId('advice-records-header'), el);
+
             adviceRecords();
         }
     } else if (dataTo == "advice-execute") {//医嘱执行
@@ -79,14 +86,36 @@ var changeTab = function (obj) {
     } else if (dataTo == "advice-sends") {//医嘱发送
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'advice-sends'
+        // 切换tab时将所有选中条件都清空
+        adviceSendsReset()
+        var el = "<label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id = \"unbookedFlag2\"> 未记账</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id=\"skinTestFlag\"> 皮试</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id=\"related\"> 合并医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+        $api.html($api.byId('advice-sends-header'), "");
+        $api.html($api.byId('advice-sends-header'), el);
+
+
         adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'tour-records'
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
-        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 'skin-test'
+        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+
+        // 切换tab时将所有选中条件都清空
+        skinTestRecordReset()
+        var el = "<label><input class=\"aui-margin-t-5 \" id=\"noInput\" type=\"checkbox\" onclick=\"skinTestRecord()\" checked> 未录入</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" id=\"alreadyInput\" type=\"checkbox\" onclick=\"skinTestRecord()\"> 已录入</label>"
+        $api.html($api.byId('skinTest-header'), "");
+        $api.html($api.byId('skinTest-header'), el);
+
         skinTestRecord();
     }
 }
@@ -148,9 +177,9 @@ var adviceRecords = function (type) {
         $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
         if (priorityCode === ''){
             $api.addCls($api.byId('allTold'), 'changeBlue');
-        } else if(priorityCode === 0){
+        } else if(priorityCode === '0'){
             $api.addCls($api.byId('longTold'), 'changeBlue');
-        } else if(priorityCode === 1){
+        } else if(priorityCode === '1'){
             $api.addCls($api.byId('temporaryTold'), 'changeBlue');
         }
     }
@@ -169,6 +198,21 @@ var adviceRecords = function (type) {
     }if (!isEmpty(foundTimeEnd)){
         foundTimeEnd = foundTimeEnd + ":00"
     }
+
+    // alert(JSON.stringify({
+    //     nurseId:  userId,   //护士ID
+    //     patientId:  patientId,   //病人ID
+    //     inUse: inUse,   //在用医嘱，选中是1
+    //     unbookedFlag: unbookedFlag,   //未记账,  选中是0
+    //     reportFlag: reportFlag,   //需要报告,  选中是1
+    //     priorityCode:  priorityCode,    //医嘱优先级（期效）
+    //     typeCode:  $api.val($api.byId('typeCode')),    //病案费目
+    //     status:  $api.val($api.byId('status')),   //医嘱状态
+    //     executionTimeBegin:  executionTimeBegin,   //执行时间开始
+    //     executionTimeEnd:  executionTimeEnd,   //执行时间结束
+    //     foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
+    //     foundTimeEnd: foundTimeEnd   //开嘱时间结束
+    // }))
     common.post({
         url: config.queryAdviceList,
         isLoading: true,
@@ -363,6 +407,20 @@ var adviceSends = function () {
     if (!isEmpty(lastTimeEnd)){
         lastTimeEnd = lastTimeEnd + ":00"
     }
+    // alert(JSON.stringify({
+    //     patientId:  patientId,   //病人ID
+    //     homepageId:  person.homepageId,
+    //     sendTimeStart: sendTimeStart,   //发送时间开始
+    //     sendTimeEnd: sendTimeEnd,   //发送时间结束
+    //     firstTimeStart: firstTimeStart,   //首次时间开始
+    //     firstTimeEnd: firstTimeEnd,   //首次时间结束
+    //     lastTimeStart: lastTimeStart,   //末次时间开始
+    //     lastTimeEnd: lastTimeEnd,   //末次时间结束
+    //     priorityCode: status,   //医嘱期效
+    //     skinTestFlag:  skinTestFlag,   //皮试标识
+    //     unbookedFlag:  unbookedFlag,   //未记账
+    //     related:  related     //是否为合并医嘱
+    // }))
     common.post({
         url: config.querySendList,
         isLoading: true,
@@ -382,7 +440,6 @@ var adviceSends = function () {
         }),
         dataType: "json",
         success: function (ret) {
-            alert(JSON.stringify(ret.content.list))
             $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
             $api.html($api.byId('adviceSendsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
@@ -684,7 +741,7 @@ function isEmpty(str){
     }
 }
 
-
+// 医嘱记录筛选重置
 function adviceRecordsReset(){
     $api.val($api.byId('executionTimeBegin'),'')
     $api.val($api.byId('executionTimeEnd'),'')
@@ -693,4 +750,47 @@ function adviceRecordsReset(){
     $api.attr($api.byId('typeCodeOne'), 'selected','true');
     $api.attr($api.byId('statusOne'), 'selected','true');
 
+}
+
+// 医嘱发送筛选重置
+function adviceSendsReset(){
+    $api.val($api.byId('sendTimeStart'),'')
+    $api.val($api.byId('sendTimeEnd'),'')
+    $api.val($api.byId('firstTimeStart'),'')
+    $api.val($api.byId('firstTimeEnd'),'')
+    $api.val($api.byId('lastTimeStart'),'')
+    $api.val($api.byId('lastTimeEnd'),'')
+    var el ="<label style=\"margin-left: 3rem\"><input class=\"aui-margin-t-5\"  id=\"changzhu\" type=\"checkbox\"> 长嘱</label>\n" +
+        "                        &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+        "                        <label style=\"margin-right: 4rem\"><input class=\"aui-margin-t-5\"  id=\"linzhu\" type=\"checkbox\"> 临嘱</label>"
+    $api.html($api.byId('advice-header'), "");
+    $api.html($api.byId('advice-header'), el);
+
+}
+
+// 皮试筛选重置
+function skinTestRecordReset() {
+    $api.val($api.byId('skin-test-begin-time'),'')
+    $api.val($api.byId('skin-test-end-time'),'')
+}
+
+var changeThisShow = function(obj){
+    var isHide = $api.hasCls(obj, 'hide');
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.addCls(obj, 'show');
+    } else{
+        $api.removeCls(obj, 'show');
+        $api.addCls(obj, 'hide');
+    }
+}
+var changeThisShow = function(obj){
+    var isHide = $api.hasCls(obj, 'hide');
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.addCls(obj, 'show');
+    } else{
+        $api.removeCls(obj, 'show');
+        $api.addCls(obj, 'hide');
+    }
 }

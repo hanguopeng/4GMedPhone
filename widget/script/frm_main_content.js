@@ -59,6 +59,13 @@ function searchPersons() {
                 api.hideProgress();
             } else if (ret.content && ret.content.list && ret.content.list.length == 0) {
                 api.hideProgress();
+                var params = {}
+                params.inHospital = 0
+                params.emptyBedNum = 0
+                params.feverNum = 0
+                params.newAdviceNum = 0
+                var countInfo = doT.template($api.text($api.byId('count-info')));
+                $api.html($api.byId('countContent'), countInfo(params));
                 api.toast({
                     msg: '无患者'
                 });
@@ -108,7 +115,7 @@ function refresh() {
 function refresh() {
     api.refreshHeaderLoadDone(); //复位下拉刷新
     $api.byId("patientFlag").checked = false;
-    $api.byId('chooseType').value = -1;
+    $api.byId('chooseType').value = '';
     $api.val($api.byId("medBedCode"), "");
     searchPersons();
 }
