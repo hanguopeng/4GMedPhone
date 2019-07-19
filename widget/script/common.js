@@ -157,7 +157,6 @@ var common = {
                 if (param.fail) {
                     param.fail(err);
                 }else{
-                    alert(JSON.stringify(ret))
                   api.toast({
                       msg: ret.msg,
                       duration: config.duration,
@@ -190,7 +189,7 @@ var common = {
                   msg: '系统错误，请联系管理员'
               });
               //调试的时候使用
-              alert( JSON.stringify( err ) );
+              // alert( JSON.stringify( err ) );
             }
           }
         }
@@ -293,7 +292,7 @@ var common = {
                   msg: '系统错误，请联系管理员'
               });
               //调试的时候使用
-              alert("get" + JSON.stringify( err ) );
+              // alert("get" + JSON.stringify( err ) );
             }
           }
         }
