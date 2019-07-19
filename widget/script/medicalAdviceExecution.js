@@ -1,15 +1,45 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var userId = $api.getStorage(storageKey.userId);
 var patientId = person.id;
-var testData
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestStatus = true
 var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
-
-var currentTab = 'advice-records'
+var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
+var currentTab = 0
 apiready = function () {
     api.parseTapmode();
     adviceRecords();
+    // 监控左划事件
+
+    api.addEventListener({
+        name:'swipeleft'
+    }, function(ret, err){
+        if (currentTab === 3){
+            currentTab = 0
+        } else {
+            currentTab = currentTab + 1
+        }
+        var id = tabList[currentTab]
+        changeTab($api.dom('#'+id))
+        if (currentTab === 0){
+            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+        }
+    });
+    // 监控右划事件
+    api.addEventListener({
+        name:'swiperight'
+    }, function(ret, err){
+        if (currentTab === 0){
+            currentTab = 3
+        } else {
+            currentTab = currentTab - 1
+        }
+        var id = tabList[currentTab]
+        changeTab($api.dom('#'+id))
+        if (currentTab === 0 ){
+            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
+        }
+    });
 }
 
 /**
@@ -56,11 +86,11 @@ var changeTab = function (obj) {
     }
 
     if (dataTo == "advice-records") {// 医嘱记录
-        if (currentTab == "advice-records"){
+        if (currentTab === 0 ){
             $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
         } else{
-            currentTab = 'advice-records'
+            currentTab = 0
             // 切换tab时将所有选中条件都清空
             priorityCode = ''
             adviceRecordsReset()
@@ -85,7 +115,7 @@ var changeTab = function (obj) {
         // adviceExecute();
     } else if (dataTo == "advice-sends") {//医嘱发送
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        currentTab = 'advice-sends'
+        currentTab = 1
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
         var el = "<label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id = \"unbookedFlag2\"> 未记账</label>\n" +
@@ -102,10 +132,10 @@ var changeTab = function (obj) {
         adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        currentTab = 'tour-records'
+        currentTab = 2
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
-        currentTab = 'skin-test'
+        currentTab = 3
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
 
         // 切换tab时将所有选中条件都清空
@@ -232,7 +262,6 @@ var adviceRecords = function (type) {
         }),
         dataType: "json",
         success: function (ret) {
-            testData = ret
             // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
             $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
             $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
@@ -322,12 +351,12 @@ var adviceExecute = function () {
         url: config.adviceDetail + patientId,
         isLoading: true,
         success: function (ret) {
-            $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-            $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
-
-            $api.html($api.byId('adviceExecuteContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
-            $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(testData.context));
+            // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+            // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+            //
+            // $api.html($api.byId('adviceExecuteContentContainer'), "");
+            // var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
+            // $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(ret.context));
         }
     });
 };
@@ -520,12 +549,13 @@ var tourRecordsExecute = function () {
         isLoading: true,
         success: function (ret) {
             $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
+            tourRecords();
             api.alert({
                 title: '提示',
                 msg: '操作成功',
             });
         },
-    }); tourRecords();
+    });
 };
 
 /**
