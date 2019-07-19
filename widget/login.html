@@ -477,6 +477,9 @@
     }
 
     function openWin() {
+        api.removeEventListener({
+            name: 'scanEvent'
+        });
         // 跳转之前将密码清空，用户名是否清空看是否记住用户名
         $api.val($api.byId('userPass'),'')
         if (!$api.byId('remMe').checked){
