@@ -186,7 +186,7 @@
             <div style="float: left; width: 60%">{{=i+1}}.{{=item.name||''}}</div>
             <div style="float: right; width: 38%">{{=subStrDate(item.reportTime)||''}}{{=item.sendDoctorName||''}}</div>
         </div>
-        <div class="jcjgItemDetail hide" id="jcjg_{{=item.id}}">
+        <div onclick="changeThisShow(this)" class="jcjgItemDetail hide" id="jcjg_{{=item.id}}">
         </div>
         {{ } }}
         {{?}}
@@ -228,7 +228,7 @@
             <div style="float: left; width: 60%">{{=i+1}}.{{=item.name||''}}</div>
             <div style="float: right; width: 38%">{{=subStrDate(item.reportTime)||''}}{{=item.sendDoctorName||''}}</div>
         </div>
-        <div class="hyjgItemDetail hide content aui-padded-b-15 aui-padded-t-5">
+        <div onclick="changeThisShow(this)" class="hyjgItemDetail hide content aui-padded-b-15 aui-padded-t-5">
 
         </div>
         {{ } }}
@@ -326,7 +326,7 @@
         for(var i=0;i<it.list.length;i++) {
             var item = it.list[i];
         }}
-        <div onclick="fymxDetail(this)" class="title aui-margin-t-10 aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+        <div onclick="changeNextShow(this)" class="title aui-margin-t-10 aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
             <div class="flex-item aui-text-left">{{=item.costBigType||''}}</div>
             <div class="flex-item aui-text-right">{{=item.costMoney||'0'}} 元</div>
         </div>

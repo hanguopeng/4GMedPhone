@@ -831,31 +831,33 @@
         var currentPerson = $api.getStorage(storageKey.currentPerson);
         for(var i=0;i<it.length;i++) {
         var item = it[i];
-        if(!isEmpty(item.skinResult)){
     }}
-    <div class="item skinTestGreen border-green aui-font-size-14" onclick="SkinTestSelect(this,{{=item.id}},false)">
-        {{ }else{}}
-        <div class="item border-green aui-font-size-14" onclick="SkinTestSelect(this,{{=item.id}},true)">
-        {{}}}
+    {{?!isEmpty(item.skinResult)}}
+    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false,true)">
+        {{??isEmpty(item.implementTime)}}
+        <div class="item border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true,true)">
+        {{??}}
+            <div class="item border-green aui-font-size-14"  id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true,false)">
+        {{?}}
         <div class="rowItem">
-            <span>{{=currentPerson.medBedName}}床 </span>
-            <span style="margin-right: 3rem">{{=currentPerson.name}}</span>
+            <span>{{=currentPerson.medBedName||''}}床 </span>
+            <span style="margin-right: 3rem">{{=currentPerson.name||''}}</span>
         </div>
         <div class="rowItem">
             <span>医嘱内容：</span>
-            <span>0.9注射液</span>
+            <span>{{=item.medAdviceName||''}}</span>
         </div>
         <div class="rowItem">
             <span>皮试备注：</span>
-            <span>{{=item.skinMemo}}</span>
+            <span>{{=item.skinMemo||''}}</span>
         </div>
         <div class="rowItem">
             <span>执行人：</span>
-            <span>{{=item.implementNurseName}}</span>
+            <span>{{=item.implementNurseName||''}}</span>
         </div>
         <div class="rowItem">
             <span>执行时间：</span>
-            <span>{{=item.implementTime}}</span>
+            <span>{{=item.implementTime||''}}</span>
         </div>
         {{
          if((Date.now()-new Date(item.remindTime))>0){
@@ -865,19 +867,19 @@
         <div class="rowItem">
         {{ }}}
             <span>提醒时间：</span>
-            <span>{{=item.remindTime}}</span>
+            <span>{{=item.remindTime||''}}</span>
         </div>
         <div class="rowItem">
             <span>皮试结果：</span>
-            <span>{{=item.skinResult}}</span>
+            <span>{{=item.skinResult||''}}</span>
         </div>
         <div class="rowItem">
             <span>录入人：</span>
-            <span>{{=item.inputNurseName}}</span>
+            <span>{{=item.inputNurseName||''}}</span>
         </div>
         <div class="rowItem">
             <span>录入时间：</span>
-            <span>{{=item.inputTime}}</span>
+            <span>{{=item.inputTime||''}}</span>
         </div>
     </div>
     {{ } }}

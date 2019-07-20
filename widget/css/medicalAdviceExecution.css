@@ -48,24 +48,26 @@
 .tab-body-item .itemContainer .adviceSendsTmplList{
     overflow: hidden;
     height:fit-content;
+    margin-top: 0.2rem;
 }
 /* 医嘱记录左侧样式*/
 .tab-body-item .itemContainer .adviceSendsTmplList .left{
     float:left;
     width:7%;
-    margin-top: 0.2rem;
-    padding-top: 10%;
+    height: auto;
+    padding-top: 3%;
     padding-left: 0.3rem;
     margin-bottom:-9999px;
     padding-bottom:9999px;
+
 }
 /* 医嘱记录右侧样式*/
 .tab-body-item .itemContainer .adviceSendsTmplList .right{
     float:left;
     width:93%;
     padding-left: 0.3rem;
-    margin-top: 0.2rem;
     border: 1px double #67c23b;
+
 }
 
 /*不同状态背景颜色-绿色*/

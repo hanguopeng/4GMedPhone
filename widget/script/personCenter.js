@@ -202,12 +202,12 @@ var inspectionDetail = function (obj, examineId) {
             url: config.medExamineDetailUrl + examineId,
             isLoading: true,
             success: function (ret) {
-                var domAll = $api.domAll('.jcjgItemDetail');
-                for (var i = 0; i < domAll.length; i++) {
-                    if (domAll[i]) {
-                        $api.addCls(domAll[i], 'hide');
-                    }
-                }
+                // var domAll = $api.domAll('.jcjgItemDetail');
+                // for (var i = 0; i < domAll.length; i++) {
+                //     if (domAll[i]) {
+                //         $api.addCls(domAll[i], 'hide');
+                //     }
+                // }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
                     if (ret.content.reportTime){
@@ -252,12 +252,12 @@ var assayDetail = function(obj,assayId){
             url: config.medAssayDetailUrl+assayId,
             isLoading: true,
             success:function(ret){
-                var domAll = $api.domAll('.hyjgItemDetail');
-                for (var i = 0; i < domAll.length; i++) {
-                    if (domAll[i]) {
-                        $api.addCls(domAll[i], 'hide');
-                    }
-                }
+                // var domAll = $api.domAll('.hyjgItemDetail');
+                // for (var i = 0; i < domAll.length; i++) {
+                //     if (domAll[i]) {
+                //         $api.addCls(domAll[i], 'hide');
+                //     }
+                // }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
                     if (ret.content.reportTime){
@@ -298,20 +298,6 @@ var fymxList = function(patientId){
             });
         }
     });
-};
-
-/**
- * 费用详情
- * @param obj
- */
-var fymxDetail = function(obj){
-    if($api.hasCls($api.next(obj),'hide')){
-        $api.removeCls($api.next(obj),'hide');
-        $api.addCls($api.next(obj),'show');
-    }else{
-        $api.removeCls($api.next(obj),'show');
-        $api.addCls($api.next(obj),'hide');
-    }
 };
 
 function toggleMenu(){

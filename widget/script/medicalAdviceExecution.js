@@ -2,8 +2,12 @@ var person = $api.getStorage(storageKey.currentPerson);
 var userId = $api.getStorage(storageKey.userId);
 var tourRecordsPerson = person   // 巡视扫码得到的病人
 var patientId = person.id;
+
 var skinTestId = ''   //最后一次选中的皮试id
+var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
+var implementTime = true //最后一次选中的皮试的执行时间是否为空
+
 var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
 var currentTab = 0
@@ -263,20 +267,6 @@ var adviceRecords = function (type) {
         foundTimeEnd = foundTimeEnd + ":00"
     }
 
-    // alert(JSON.stringify({
-    //     nurseId:  userId,   //护士ID
-    //     patientId:  patientId,   //病人ID
-    //     inUse: inUse,   //在用医嘱，选中是1
-    //     unbookedFlag: unbookedFlag,   //未记账,  选中是0
-    //     reportFlag: reportFlag,   //需要报告,  选中是1
-    //     priorityCode:  priorityCode,    //医嘱优先级（期效）
-    //     typeCode:  $api.val($api.byId('typeCode')),    //病案费目
-    //     status:  $api.val($api.byId('status')),   //医嘱状态
-    //     executionTimeBegin:  executionTimeBegin,   //执行时间开始
-    //     executionTimeEnd:  executionTimeEnd,   //执行时间结束
-    //     foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
-    //     foundTimeEnd: foundTimeEnd   //开嘱时间结束
-    // }))
     common.post({
         url: config.queryAdviceList,
         isLoading: true,
@@ -470,20 +460,6 @@ var adviceSends = function () {
     if (!isEmpty(lastTimeEnd)){
         lastTimeEnd = lastTimeEnd + ":00"
     }
-    // alert(JSON.stringify({
-    //     patientId:  patientId,   //病人ID
-    //     homepageId:  person.homepageId,
-    //     sendTimeStart: sendTimeStart,   //发送时间开始
-    //     sendTimeEnd: sendTimeEnd,   //发送时间结束
-    //     firstTimeStart: firstTimeStart,   //首次时间开始
-    //     firstTimeEnd: firstTimeEnd,   //首次时间结束
-    //     lastTimeStart: lastTimeStart,   //末次时间开始
-    //     lastTimeEnd: lastTimeEnd,   //末次时间结束
-    //     priorityCode: status,   //医嘱期效
-    //     skinTestFlag:  skinTestFlag,   //皮试标识
-    //     unbookedFlag:  unbookedFlag,   //未记账
-    //     related:  related     //是否为合并医嘱
-    // }))
     common.post({
         url: config.querySendList,
         isLoading: true,
@@ -644,17 +620,42 @@ var skinTestRecord = function () {
 /**
  * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
  */
-var SkinTestSelect = function (obj,id,status) {
-    if (isEmpty(skinTestId)){
+var SkinTestSelect = function (medAdviceId,status,time) {
+    var obj = $api.dom('#skinTest'+medAdviceId)
+    if (!obj){
+        return
+    }
+    var id = $(obj).attr('name');
+    if (isEmpty(skinTestAdviceId)){
         $api.removeCls(obj, 'border-green');
         $api.addCls(obj, 'border-red');
         skinTestId = id;
+        skinTestAdviceId = medAdviceId
         skinTestStatus = status;
+        implementTime = time
     } else{
-        $api.removeCls(obj, 'border-red');
-        $api.addCls(obj, 'border-green');
-        skinTestId = ''
-        skinTestStatus = true
+        if (medAdviceId!==skinTestAdviceId){
+            var oldObj = $api.dom('#skinTest'+skinTestAdviceId)
+            if (!oldObj){
+                return
+            }
+            $api.removeCls($api.dom('#skinTest'+skinTestAdviceId), 'border-red');
+            $api.addCls($api.dom('#skinTest'+skinTestAdviceId), 'border-green');
+            $api.removeCls(obj, 'border-green');
+            $api.addCls(obj, 'border-red');
+            skinTestId = id
+            skinTestAdviceId = medAdviceId
+            skinTestStatus = status
+            implementTime = time
+        }else{
+            $api.removeCls(obj, 'border-red');
+            $api.addCls(obj, 'border-green');
+            skinTestId = ''
+            skinTestAdviceId = ''
+            skinTestStatus = true
+            implementTime = true
+        }
+
     }
 
 };
@@ -666,6 +667,8 @@ var skinTestExecute = function () {
     if (isEmpty(skinTestId)){
         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
         skinTestId = ''
+        $api.removeCls($api.dom('#skinTest'+skinTestAdviceId), 'border-red');
+        $api.addCls($api.dom('#skinTest'+skinTestAdviceId), 'border-green');
         api.alert({
             title: '提示',
             msg: '请选择一条皮试记录再操作！',
@@ -675,9 +678,21 @@ var skinTestExecute = function () {
         if (!skinTestStatus){
             $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
             skinTestId = ''
+            $api.removeCls($api.dom('#skinTest'+skinTestAdviceId), 'border-red');
+            $api.addCls($api.dom('#skinTest'+skinTestAdviceId), 'border-green');
             api.alert({
                 title: '提示',
-                msg: '已经录入皮试结果不允许修改！',
+                msg: '已经录入皮试结果不允许修改！'
+            });
+            return;
+        } else if(implementTime){
+            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
+            skinTestId = ''
+            $api.removeCls($api.dom('#skinTest'+skinTestAdviceId), 'border-red');
+            $api.addCls($api.dom('#skinTest'+skinTestAdviceId), 'border-green');
+            api.alert({
+                title: '提示',
+                msg: '该医嘱未执行，无法录入皮试结果！'
             });
             return;
         }
@@ -686,6 +701,9 @@ var skinTestExecute = function () {
         url: config.updateSkin,
         data:JSON.stringify({
             id:skinTestId,
+            implementNurseId: userId,
+            implementNurseName: $api.getStorage(storageKey.loginName),
+            medAdviceId: skinTestAdviceId,
             skinResult:skinTestResult
         }),
         dataType: "json",
@@ -694,12 +712,13 @@ var skinTestExecute = function () {
             if (ret.code==200){
                 $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
                 skinTestId = ''
+                skinTestRecord()
                 api.alert({
                     title: '提示',
                     msg: ret.msg,
                 });
-                skinTestRecord()
             } else{
+                skinTestRecord()
                 api.alert({
                     title: '提示',
                     msg: ret.content,
