@@ -69,7 +69,7 @@
     }}
     <div class="border-green adviceRecordsTmplList aui-font-size-14"  onclick="changeAdviceShow(this,{{=item.id}})">
         {{?item.fieldENName}}
-        <div class="left" style="color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
+        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
         {{??}}
         <div class="left background-white" >{{=item.priorityName}}</div>
         {{?}}

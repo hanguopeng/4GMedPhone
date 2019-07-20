@@ -238,7 +238,7 @@
     }}
     <div class="adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
         {{?item.fieldENName}}
-        <div class="left" style="color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
+        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
         {{??}}
         <div class="left background-white" >{{=item.priorityName}}</div>
         {{?}}
@@ -381,7 +381,7 @@
                             for(var i=0;i<it.adviceType.length;i++) {
                             var item = it.adviceType[i];
                             }}
-                        <option value="{{=item.id}}">{{=item.text}}</option>
+                        <option value="{{=item.code}}">{{=item.text}}</option>
                      {{}}}}
                  </select>
             </span>
@@ -398,7 +398,7 @@
                             for(var i=0;i<it.adviceStatus.length;i++) {
                             var item = it.adviceStatus[i];
                             }}
-                        <option value="{{=item.id}}">{{=item.text}}</option>
+                        <option value="{{=item.code}}">{{=item.text}}</option>
                      {{}}}}
                  </select>
             </span>
@@ -599,7 +599,7 @@
     }}
     <div class="adviceSendsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
         {{?item.fieldENName}}
-        <div class="left" style="color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
+        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
         {{??}}
         <div class="left background-white" >{{=item.priorityName}}</div>
         {{?}}
@@ -790,7 +790,7 @@
                             for(var i=0;i<it.list.length;i++) {
                             var item = it.list[i];
                             }}
-                        <option value="{{=item.id}}">{{=item.text}}</option>
+                        <option value="{{=item.code}}">{{=item.text}}</option>
                      {{}}}}
                  </select>
             </span>

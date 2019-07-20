@@ -63,6 +63,8 @@ apiready = function () {
             });
         }
     });
+
+    paddingSelectAdviceRecords();
 }
 
 /**
@@ -204,7 +206,6 @@ var clickBottomTab = function (parent, id, name ,medBedName) {
             }
         }else if(id === 'adviceRecords-selector'){
             $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-            paddingSelectAdviceRecords()
         }
 
         $api.addCls(activeTab, 'active');
@@ -633,6 +634,8 @@ var skinTestRecord = function () {
                 var contentTmpl = doT.template($api.text($api.byId('skinTestList')));
                 $api.html($api.byId('skinTestContentContainer'), contentTmpl(ret.content.list));
             }else{
+                $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
+                $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
                 $api.html($api.byId('skinTestContentContainer'), "");
             }
         }
