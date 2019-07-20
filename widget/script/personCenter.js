@@ -1,8 +1,34 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var patientId = person.id;
 var page = 1;
+var tabList = ['tab-jcst','tab-jcjg','tab-hyjg','tab-fymx']
+var currentTab = 0
 apiready = function () {
     api.parseTapmode();
+    // 监控左划事件
+    api.addEventListener({
+        name:'swipeleft'
+    }, function(ret, err){
+        if (currentTab === 3){
+            currentTab = 0
+        } else {
+            currentTab = currentTab + 1
+        }
+        var id = tabList[currentTab]
+        changeTab($api.dom('#'+id))
+    });
+    // 监控右划事件
+    api.addEventListener({
+        name:'swiperight'
+    }, function(ret, err){
+        if (currentTab === 0){
+            currentTab = 3
+        } else {
+            currentTab = currentTab - 1
+        }
+        var id = tabList[currentTab]
+        changeTab($api.dom('#'+id))
+    });
     loadJCST();
 };
 
@@ -61,12 +87,16 @@ var changeTab = function (obj) {
         $api.addCls(activeTab, 'active');
     }
     if (dataTo == "jcst") {//基础视图
+        currentTab = 0
         loadJCST();
     } else if (dataTo == "jcjg") {//检查结果
+        currentTab = 1
         loadJCJG();
     } else if (dataTo == "hyjg") {//化验结果
+        currentTab = 2
         loadHYJG();
     } else if (dataTo == "fymx") {//费用明细
+        currentTab = 3
         loadFYMX();
     }
 }

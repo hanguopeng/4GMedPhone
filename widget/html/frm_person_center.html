@@ -267,7 +267,7 @@
     <script id="fymxTmpl" type="text/template">
         {{? it.cost}}
         <div>
-            <div class="keyValueItem aui-margin-l-15">
+            <div class="aui-margin-l-15">
                 <span class="key">剩余款：</span>
                 {{if(it.cost.balance >= 0 || isEmpty(it.cost.balance)){ }}
                 <span class="value">{{=it.cost.balance||'0'}}</span>
@@ -275,7 +275,7 @@
                 <span class="value redInfo">{{=it.cost.balance}}</span>
                 {{}}}
             </div>
-            <div class="keyValueItem aui-margin-l-15">
+            <div class="aui-margin-l-15">
                 <div style="width:50%;float:left">
                     <span class="key">预交款：</span>
                     {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
@@ -293,7 +293,7 @@
                     {{}}}
                 </div>
             </div>
-            <div class="keyValueItem aui-margin-l-15">
+            <div class="aui-margin-l-15">
                 <div  style="width:50%;float:left">
                     <span class="key">预结费用：</span>
                     {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
@@ -341,7 +341,7 @@
         </div>
         {{ } }}
         {{??}}
-        <div class="aui-margin-l-15  aui-font-size-14" style="margin-top: 3rem;color: #5e5e5e">（无费用明细）</div>
+        <div class="aui-margin-l-15  aui-font-size-14" style="padding-top: 0.5rem;color: #5e5e5e">（无费用明细）</div>
         {{?}}
     </script>
     <script type="text/javascript" src="../script/api.js"></script>
