@@ -231,6 +231,7 @@
 
 <!--医嘱记录-->
 <script id="adviceRecordsTmplList" type="text/template">
+    {{?it}}
     {{
     for(var i=0;i<it.length;i++) {
     var item = it[i];
@@ -342,6 +343,7 @@
         </div>
     </div>
     {{ } }}
+    {{?}}
 </script>
 <!--医嘱列表筛选-->
 <script id="selectAdviceRecords" type="text/template">
@@ -590,6 +592,7 @@
 </script>
 <!--医嘱发送-->
 <script id="adviceSendsTmplList" type="text/template">
+    {{?it}}
     {{
     for(var i=0;i<it.length;i++) {
     var item = it[i];
@@ -733,6 +736,7 @@
         </div>
     </div>
     {{ } }}
+    {{?}}
 </script>
 <!--巡视记录 -->
 <script id="tourRecordsList" type="text/template">
@@ -747,6 +751,7 @@
         </tr>
         </thead>
         <tbody id="tbody">
+        {{?it}}
         {{for(var i=0;i<it.list.length;i++) {
          var item = it.list[i];
         }}
@@ -758,6 +763,7 @@
             <td>{{=item.medBedName}}</td>
         </tr>
         {{ } }}
+        {{?}}
         </tbody>
     </table>
 </script>

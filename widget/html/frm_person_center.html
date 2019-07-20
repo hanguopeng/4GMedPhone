@@ -177,6 +177,7 @@
         </div>
     </script>
     <script id="jcjgListTmpl" type="text/template">
+        {{?it}}
         {{
         for(var i=0;i<it.length;i++) {
         var item = it[i];
@@ -188,6 +189,7 @@
         <div class="jcjgItemDetail hide" id="jcjg_{{=item.id}}">
         </div>
         {{ } }}
+        {{?}}
     </script>
     <script id="jcjgDetailTmpl" type="text/template">
         <div class="content">
@@ -217,6 +219,7 @@
         </div>
     </script>
     <script id="hyjgListTmpl" type="text/template">
+        {{?it}}
         {{
         for(var i=0;i<it.length;i++) {
         var item = it[i];
@@ -229,6 +232,7 @@
 
         </div>
         {{ } }}
+        {{?}}
     </script>
     <script id="hyjgDetailTmpl" type="text/template">
         <table>
@@ -332,6 +336,7 @@
                     <th>收费项</th>
                     <th>费用(元)</th>
                 </tr>
+                {{?item.list}}
                 {{
                 for(var j=0;j< item.list.length;j++) {
                 var itemDetail = item.list[j];
@@ -341,6 +346,7 @@
                     <td>{{=itemDetail.costListMoney}}</td>
                 </tr>
                 {{ } }}
+                {{?}}
             </table>
         </div>
         {{ } }}
