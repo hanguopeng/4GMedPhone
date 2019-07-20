@@ -203,6 +203,7 @@
             </div>
         </div>
         <div class="content">
+            {{?it.accessoryList}}
             <div class="key aui-font-size-16 aui-margin-t-10">检查图像</div>
             <div class="value aui-font-size-14 aui-padded-l-15 aui-margin-t-10">
                 {{
@@ -212,6 +213,7 @@
                 <img src="{{=item.path||''}}" alt="{{=item.name||''}}" style="width: 80%;margin: auto;">
                 {{ } }}
             </div>
+            {{?}}
         </div>
     </script>
     <script id="hyjgListTmpl" type="text/template">
@@ -236,6 +238,7 @@
                 <th>参考值</th>
                 <th>异常指示</th>
             </tr>
+            {{?it.itemList}}
             {{
             for(var i=0;i<it.itemList.length;i++) {
             var item = it.itemList[i];
@@ -262,6 +265,7 @@
             </tr>
             {{   }   }}
             {{   }   }}
+            {{?}}
         </table>
     </script>
     <script id="fymxTmpl" type="text/template">
