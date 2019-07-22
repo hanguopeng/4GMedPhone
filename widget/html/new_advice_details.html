@@ -14,12 +14,12 @@
 <style>
     .select{
         width: 5rem;
-        border: 1px double #0d0202;
         position: relative;
         display: inline-block;
         text-align: center;
         padding: 0 0.6rem;
         height: 1.3rem;
+        font-size: 0.7rem;
         border-radius: 0.2rem;
         display: -webkit-box;
         float: right;
@@ -31,6 +31,7 @@
         justify-content: space-between;
         -webkit-align-items: center;
         align-items: center;
+        background-color: #67c23b;
     }
     .closeIcon{
         position: relative;
@@ -40,19 +41,33 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+    .btn{
+        background: #38afe6;
+        float: right;
+        margin-right: 1rem;
+        margin-top: 0.5rem;
+        font-size: 0.7rem;
+    }
+    .font-black{
+        color: black;
+    }
+    .font-gray{
+        color: gray;
+    }
 </style>
 <div class="bodyContainer">
     <div class="aui-tab" id="tab">
-        <div class="aui-tab-item aui-active" style="width: 30%" id="tab-new-start-advice"  onclick="newAdvice(0);">新开医嘱</div>
-        <div class="aui-tab-item" style="width: 30%" id="tab-new-end-advice" onclick="newAdvice(1);">新停医嘱</div>
-        <div class="select" id="select">
-        </div>
-        <div id="header-left" class="aui-pull-right" style="margin-left: 0.5rem" onclick="closeCurrentFrame()">
+        <div class="aui-tab-item aui-active" style="width: 45%" id="tab-new-start-advice"  onclick="newAdvice(0);">新开医嘱</div>
+        <div class="aui-tab-item" style="width: 45%" id="tab-new-end-advice" onclick="newAdvice(1);">新停医嘱</div>
+        <!--<div class="select"  id="select">-->
+        <!--</div>-->
+        <div id="header-left" class="aui-pull-right" style="margin-left: 0.5rem;" onclick="closeCurrentFrame()">
             <i class="closeIcon aui-icon-close"  ></i>
         </div>
     </div>
-    <div class="tabBody">
-        <!--新开和新停都放在一起，上面得tab只当作筛选条件-->
+    <!--新开和新停都放在一起，上面得tab只当作筛选条件-->
+    <div class="aui-btn btn" onclick="changeAllRead()">全部已读</div>
+    <div class="tabBody" style="margin-top: 2.3rem">
         <div id="new-advice" class="active tab-body-item  aui-font-size-14">
             <div class="itemContainer" id="newAdviceContentContainer">
             </div>
@@ -67,7 +82,7 @@
         for(var i=0;i<it.length;i++) {
             var item = it[i];
     }}
-    <div class="border-green adviceRecordsTmplList aui-font-size-14"  onclick="changeAdviceShow(this,{{=item.id}})">
+    <div class="border-green font-black adviceRecordsTmplList aui-font-size-14" id="newAdvice{{=item.id}}" onclick="changeAdviceShow(this,{{=item.id}})">
         {{?item.fieldENName}}
         <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
         {{??}}
@@ -75,99 +90,99 @@
         {{?}}
         <div class="right" >
             <div>
-                <span>{{=item.medBedName}}床</span>
-                <span style="padding-left: 3rem">{{=item.patientName}}</span>
-                <span style="padding-left: 3rem">{{=item.registerNumber}}</span>
+                <span>{{=item.medBedName||''}}床</span>
+                <span style="padding-left: 3rem">{{=item.patientName||''}}</span>
+                <span style="padding-left: 3rem">{{=item.registerNumber||''}}</span>
             </div>
             <div>
                 <span>医嘱内容：</span>
-                <span>{{=item.name}}</span>
+                <span>{{=item.name||''}}</span>
             </div>
             <div>
                 <span>生效时间：</span>
-                <span>{{=item.adviceStart}}</span>
+                <span>{{=item.adviceStart||''}}</span>
             </div>
             <div>
                 <span>终止时间：</span>
-                <span>{{=item.terminationTime}}</span>
+                <span>{{=item.terminationTime||''}}</span>
             </div>
             <div>
                 <span>用法：</span>
-                <span>{{=item.usageCode}}</span>
+                <span>{{=item.usageCode||''}}</span>
             </div>
             <div>
                 <span>医生托嘱：</span>
-                <span>{{=item.entrustment}}</span>
+                <span>{{=item.entrustment||''}}</span>
             </div>
             <div>
                 <span>执行科室：</span>
-                <span>{{=item.acceptOrgName}}</span>
+                <span>{{=item.acceptOrgName||''}}</span>
             </div>
             <div>
                 <div style="width: 50%">
                     <span>开嘱医生：</span>
-                    <span>{{=item.doctorName}}</span>
+                    <span>{{=item.doctorName||''}}</span>
                 </div>
                 <div style="width: 50%">
                     <span>状态：</span>
-                    <span>{{=item.statusName}}</span>
+                    <span>{{=item.statusName||''}}</span>
                 </div>
             </div>
             <div>
                 <span>开嘱时间：</span>
-                <span>{{=item.foundTime}}</span>
+                <span>{{=item.foundTime||''}}</span>
             </div>
 
         </div>
     </div>
-    <div id="detail" class="detail hide">
+    <div id="detail" class="detail hide" onclick="changeThisShow(this)">
         <div>
             <span>总量：</span>
-            <span>{{=item.num}}</span>
+            <span>{{=item.num||''}}</span>
         </div>
         <div>
             <span>单量：</span>
-            <span>{{=item.dosage}}</span>
+            <span>{{=item.dosage||''}}</span>
         </div>
         <div>
             <span>天数：</span>
-            <span>{{=item.dateNum}}</span>
+            <span>{{=item.dateNum||''}}</span>
         </div>
         <div>
             <span>频率：</span>
-            <span>{{=item.frequencyCode}}</span>
+            <span>{{=item.frequencyCode||''}}</span>
         </div>
         <div>
             <span>执行性质：</span>
-            <span>{{=item.executiveNature}}</span>
+            <span>{{=item.executiveNature||''}}</span>
         </div>
         <div>
             <span>上次执行：</span>
-            <span>{{=item.lastExcecutiveTime}}</span>
+            <span>{{=item.lastExcecutiveTime||''}}</span>
         </div>
         <div>
             <span>校对护士：</span>
-            <span>{{=item.nurseName}}</span>
+            <span>{{=item.nurseName||''}}</span>
         </div>
         <div>
             <span>校对时间：</span>
-            <span>{{=item.checkTime}}</span>
+            <span>{{=item.checkTime||''}}</span>
         </div>
         <div>
             <span>停嘱医生：</span>
-            <span>{{=item.stopDocName}}</span>
+            <span>{{=item.stopDocName||''}}</span>
         </div>
         <div>
             <span>停嘱时间：</span>
-            <span>{{=item.stopTime}}</span>
+            <span>{{=item.stopTime||''}}</span>
         </div>
         <div>
             <span>确认停嘱时间：</span>
-            <span>{{=item.stopConfirm}}</span>
+            <span>{{=item.stopConfirm||''}}</span>
         </div>
         <div>
             <span>基本药物：</span>
-            <span>{{=item.drugs}}</span>
+            <span>{{=item.drugs||''}}</span>
         </div>
     </div>
     {{ } }}

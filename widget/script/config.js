@@ -105,7 +105,8 @@ var config={
     costItemStatisticsList: localServer+"/med/cost/detailByPatientIdByPda/list", //费用明细 按医嘱大类拆分
     // 20190717 添加医嘱发送记录
     querySendList: localServer+"/med/V4gMedicalAdviceSendList/querySendList", //医嘱发送记录
-
+    // 20190722 添加新开新停医嘱全部已读
+    adviceAllRead: localServer+"/med/newadvicesend/adviceAllRead/"     //新开新停医嘱全部已读
 }
 
 var accessoryType={

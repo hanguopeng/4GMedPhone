@@ -1,11 +1,12 @@
 var userId = $api.getStorage(storageKey.userId);
 var adviceStatus  = 0
+var thisList=null
 apiready = function () {
     api.parseTapmode();
-    $api.html($api.byId('select'), "");
-    var personInfo = doT.template($api.text($api.byId('selectList')));
-    var persons = $api.getStorage(storageKey.persons);
-    $api.html($api.byId('select'), personInfo(persons));
+    // $api.html($api.byId('select'), "");
+    // var personInfo = doT.template($api.text($api.byId('selectList')));
+    // var persons = $api.getStorage(storageKey.persons);
+    // $api.html($api.byId('select'), personInfo(persons));
 
     newAdvice();
 
@@ -15,6 +16,7 @@ apiready = function () {
  * 医嘱记录
  */
 var newAdvice = function (status) {
+    thisList=null
     if (isEmpty(status)){
         status = adviceStatus
     }else{
@@ -27,7 +29,8 @@ var newAdvice = function (status) {
     } else{
         $api.addCls($api.byId('tab-new-start-advice'), 'aui-active');
     }
-    var selectValue = $api.val($api.byId('selectValue'));
+    // var selectValue = $api.val($api.byId('selectValue'));
+    var selectValue = 'all';
     common.post({
         url: config.adviceTipList,
         isLoading: true,
@@ -40,6 +43,7 @@ var newAdvice = function (status) {
         success: function (ret) {
             $api.html($api.byId('newAdviceContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('newAdviceList')));
+            thisList = ret.content.list
             $api.html($api.byId('newAdviceContentContainer'), contentTmpl(ret.content.list));
         }
     });
@@ -49,22 +53,23 @@ var newAdvice = function (status) {
  *  医嘱点击显示详情，再次点击隐藏
  */
 var changeAdviceShow = function (obj,id) {
-    // 第一次点击将框变成红色，以后每次进来判断是否有红色框，有红色框不再触发已读操作
-    var isGreen = $api.hasCls(obj, 'border-green');
-    if (isGreen) {
-        $api.removeCls(obj, 'border-green');
-        $api.addCls(obj, 'border-red');
+    var isBlack = $api.hasCls(obj, 'font-black');
+    if (isBlack) {
         common.get({
                 url: config.adviceTipRead + id + "/" + userId,
                 isLoading: true,
                 success: function (ret) {
+                    if (ret.type==='success') {
+                        $api.removeCls(obj, 'font-black');
+                        $api.addCls(obj, 'font-gray');
+                        var newAdviceCount = $api.getStorage(storageKey.newAdviceCount);
+                        $api.setStorage(storageKey.newAdviceCount,parseInt(newAdviceCount)-1);
+                        api.sendEvent({
+                            name: 'changeNewAdviceNumber'
+                        });
+                    }
                 }
             });
-        var newAdviceCount = $api.getStorage(storageKey.newAdviceCount);
-        $api.setStorage(storageKey.newAdviceCount,parseInt(newAdviceCount)-1);
-        api.sendEvent({
-            name: 'changeNewAdviceNumber'
-        });
     }
     var isHide = $api.hasCls($api.next(obj), 'hide');
     if (isHide){
@@ -75,6 +80,41 @@ var changeAdviceShow = function (obj,id) {
         $api.addCls($api.next(obj), 'hide');
     }
 }
+
+function changeAllRead(){
+    common.get({
+        url: config.adviceAllRead + userId+ "/" + adviceStatus,
+        isLoading: true,
+        success: function (ret) {
+            if (ret.type==='success') {
+                for (var i=0 ; i<thisList.length; i++){
+                    var item = thisList[i]
+                    var obj = $api.dom('#newAdvice'+ item.id)
+                    var isBlack = $api.hasCls(obj, 'font-black');
+                    if (isBlack) {
+                        $api.removeCls(obj, 'font-black');
+                        $api.addCls(obj, 'font-gray');
+                    }
+                }
+                var newAdviceCount = $api.getStorage(storageKey.newAdviceCount);
+                var num = parseInt(newAdviceCount) - parseInt(ret.num)
+                $api.setStorage(storageKey.newAdviceCount,num);
+                api.sendEvent({
+                    name: 'changeNewAdviceNumber'
+                });
+                api.alert({
+                    title: '提示',
+                    msg: '操作成功！'});
+
+            }else{
+                api.alert({
+                    title: '提示',
+                    msg: '操作失败，请刷新后重试！'});
+            }
+        }
+    });
+}
+
 Date.prototype.format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1,                 //月份
@@ -94,6 +134,16 @@ Date.prototype.format = function (fmt) {
         }
     }
     return fmt;
+}
+var changeThisShow = function(obj){
+    var isHide = $api.hasCls(obj, 'hide');
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.addCls(obj, 'show');
+    } else{
+        $api.removeCls(obj, 'show');
+        $api.addCls(obj, 'hide');
+    }
 }
 
 

@@ -869,13 +869,4 @@ var changeThisShow = function(obj){
         $api.addCls(obj, 'hide');
     }
 }
-var changeThisShow = function(obj){
-    var isHide = $api.hasCls(obj, 'hide');
-    if (isHide){
-        $api.removeCls(obj, 'hide');
-        $api.addCls(obj, 'show');
-    } else{
-        $api.removeCls(obj, 'show');
-        $api.addCls(obj, 'hide');
-    }
-}
+
