@@ -1,13 +1,13 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 //var localServer = "http://140.143.143.150:8085/cmc-server";
-// var localServer = "http://172.17.100.1:8083/cmc-server";
+var localServer = "http://172.17.100.1:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
-var localServer = "http://192.168.1.112:8085/cmc-server";
+// var localServer = "http://192.168.1.112:8085/cmc-server";
 //var localServer = "http://192.168.1.138:8085/cmc-server";
 
 
-var ws = "ws://192.168.1.112:8888/";
+var ws = "ws://172.17.100.1:8888/";
 var config={
     duration:3000,
     versionUpdateUrl: localServer+"/sys/appVersion/verification", //版本更新
@@ -86,8 +86,8 @@ var config={
     selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail",//胰岛素记录表详情
     // 20190709添加
     patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
-    inspectionSave:localServer+"/med/inspection/inspectionSave", //执行记录保存
-    inspectionQuery:localServer+"/med/inspection/inspectionQuery/", //执行记录保存
+    inspectionSave:localServer+"/med/inspection/inspectionSave", //巡视记录保存
+    inspectionQuery:localServer+"/med/inspection/inspectionQuery/", //巡视记录查询
     // 20190711 添加注册
     register: localServer+"/sys/user/register", //注册
     // 20190712 添加修改密码
@@ -171,5 +171,5 @@ var storageKey={
     newAdviceCount:"newAdviceCount", // 新开医嘱数量
     cmcScan:"cmcScan",  // 扫描模块
     createFlag:"createFlag", //websocket是否已经连接
-
+    tourRecordsPersonId: "tourRecordsPersonId"
 }
