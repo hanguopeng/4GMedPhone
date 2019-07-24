@@ -1,5 +1,7 @@
 html,body{
-    background: linear-gradient(180deg, rgba(0, 71, 131, 1) 0%, rgba(0, 71, 131, 1) 0%, rgba(0, 71, 131, 1) 100%, rgba(0, 71, 131, 1) 100%);
+/*(62, 180, 250)*/
+    /*background: linear-gradient(180deg, rgb(62, 180, 250) 0%, rgb(62, 180, 250) 0%, rgb(62, 180, 250) 100%, rgb(62, 180, 250) 100%);*/
+    background: linear-gradient(180deg, rgb(78, 158, 219) 0%, rgb(78, 158, 219) 0%, rgb(78, 158, 219) 100%, rgb(78, 158, 219) 100%);
     border: none;
     color: #fff;
     width: 100%;
