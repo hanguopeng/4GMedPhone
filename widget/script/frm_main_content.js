@@ -1,7 +1,6 @@
 var persons = [];
-var areaId;
+var areaId
 apiready = function () {
-    api.parseTapmode();
     areaId = api.pageParam.areaId;
     searchPersons();
     addInpatientAreaChangedListener();
@@ -25,12 +24,7 @@ apiready = function () {
  * 根据条件查询所有病人信息
  */
 function searchPersons() {
-    $api.html($api.byId('nurseLevelContent'), "");
-    $api.html($api.byId('personContent'), "");
-
-    $api.rmStorage(storageKey.currentPerson);
     $api.rmStorage(storageKey.currentIdx);
-    $api.rmStorage(storageKey.lastIdx);
     $api.rmStorage(storageKey.persons);
 
     // 床号
@@ -44,8 +38,10 @@ function searchPersons() {
     common.get({
         url: requestUrl,
         isLoading: true,
+        timeout: 20,
         success: function (ret) {
             //动态添加病人信息
+            $api.html($api.byId('personContent'), "");
             if (ret.content && ret.content.list && ret.content.list.length > 0) {
                 var personInfo = doT.template($api.text($api.byId('person-info-tpl')));
                 var countInfo = doT.template($api.text($api.byId('count-info')));
@@ -97,20 +93,6 @@ function addScanSuccessListener() {
     });
 }
 
-
-/**
- * 重置查询条件，查询病人信息
- */
-function refresh() {
-    //设置所有选项为初始值
-    $api.val($api.byId("doctorName"), "");
-    $api.val($api.byId("nurseName"), "");
-    $api.byId("emptyBed").checked = false;
-    $api.dom("input[name='patientFlag'][value='0']").checked = true;
-    searchPersons();
-}
-
-
 //下拉刷新
 function refresh() {
     api.refreshHeaderLoadDone(); //复位下拉刷新
@@ -125,8 +107,6 @@ function openPersonCenter(idx) {
     var allPersons = $api.getStorage(storageKey.persons);
     var person = allPersons[idx];
     $api.setStorage(storageKey.currentPerson, person);
-    $api.setStorage(storageKey.currentIdx, idx); //左右箭头的时候需要
-    $api.setStorage(storageKey.lastIdx, allPersons.length - 1); //设置最后一个索引的大小，length-1
     api.openWin({
         name: "win_person_center",
         bounces: false,

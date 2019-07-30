@@ -12,27 +12,6 @@
 </head>
 <body>
 <style>
-    .select{
-        width: 5rem;
-        position: relative;
-        display: inline-block;
-        text-align: center;
-        padding: 0 0.6rem;
-        height: 1.3rem;
-        font-size: 0.7rem;
-        border-radius: 0.2rem;
-        display: -webkit-box;
-        float: right;
-        margin-left: 0.6rem;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        justify-content: space-between;
-        -webkit-align-items: center;
-        align-items: center;
-        background-color: #67c23b;
-    }
     .closeIcon{
         position: relative;
         font-family:"aui_iconfont" !important;
@@ -59,8 +38,6 @@
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item aui-active" style="width: 45%" id="tab-new-start-advice"  onclick="newAdvice(0);">新开医嘱</div>
         <div class="aui-tab-item" style="width: 45%" id="tab-new-end-advice" onclick="newAdvice(1);">新停医嘱</div>
-        <!--<div class="select"  id="select">-->
-        <!--</div>-->
         <div id="header-left" class="aui-pull-right" style="margin-left: 0.5rem;" onclick="closeCurrentFrame()">
             <i class="closeIcon aui-icon-close"  ></i>
         </div>

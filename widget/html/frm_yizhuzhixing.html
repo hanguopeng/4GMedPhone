@@ -31,11 +31,8 @@
             <div class="aui-padded-l-15" id="advice-records-header">
                 <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()"> 在用医嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " name="unbookedFlag" id="unbookedFlag" type="checkbox" tapmode  onchange="adviceRecords()"> 未记账</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " name="reportFlag" id="reportFlag" type="checkbox" tapmode   onchange="adviceRecords()"> 需要报告</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="aui-btn" style="background: #38afe6;" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
+                <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
             </div>
             <div class="itemContainer" id="adviceRecordsContentContainer">
             </div>
@@ -124,19 +121,10 @@
         </div>
         <!--医嘱发送-->
         <div id="advice-sends" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
-            <div class="aui-padded-l-15" id="advice-sends-header">
-                <label><input class="aui-margin-t-5 " type="checkbox" onclick="adviceSends()" id = "unbookedFlag2"> 未记账</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " type="checkbox" onclick="adviceSends()" id="skinTestFlag"> 皮试</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " type="checkbox" onclick="adviceSends()" id="related"> 合并医嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="aui-btn" style="background: #38afe6;" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
-            </div>
             <div class="itemContainer" id="adviceSendsContentContainer">
             </div>
             <div class="bottomContainer aui-font-size-14">
-                <div id="adviceSends-selector" class="bottomBody aui-padded-15" style="bottom: 0rem">
+                <div id="adviceSends-selector" class="bottomBody aui-padded-15">
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
                             <span class="key">发送时间：&nbsp; </span>
@@ -170,6 +158,9 @@
                         <div class="btn aui-btn aui-btn-success" onclick="adviceSends();">确定</div>
                         <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceSendsReset();">重置</div>
                     </div>
+                </div>
+                <div class="bottomBtn aui-font-size-16 flex">
+                    <div class="btn flex-item border-right" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
                 </div>
             </div>
         </div>
@@ -755,12 +746,16 @@
         {{for(var i=0;i<it.list.length;i++) {
          var item = it.list[i];
         }}
-        <tr>
+        <tr onclick="changeNextShow(this)">
             <td>{{=item.nurseName}}</td>
             <td>{{=item.inspectionTime}}</td>
             <td>{{=item.inspectionType}}</td>
             <td>{{=item.patientName}}</td>
             <td>{{=item.medBedName}}</td>
+        </tr>
+        <tr class="hide" id="{{=item.id}}">
+            <td>巡视备注</td>
+            <td colspan="4">{{=item.inspectionMemo||''}}</td>
         </tr>
         {{ } }}
         {{?}}
@@ -833,7 +828,7 @@
         var item = it[i];
     }}
     {{?!isEmpty(item.skinResult)}}
-    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false,true)">
+    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false,true)">
         {{??isEmpty(item.implementTime)}}
         <div class="item border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true,true)">
         {{??}}

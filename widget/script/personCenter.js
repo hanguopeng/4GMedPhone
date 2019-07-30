@@ -163,7 +163,7 @@ var searchLastExamineInfo = function (patientId) {
  */
 var costDetailInfo = function (patientId) {
     common.get({
-        url: config.costSituationUrl + patientId,
+        url: config.costSituationUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('fyhzContentContainer'), "");
@@ -184,10 +184,8 @@ var searchMedExamine = function (patientId) {
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('jcjg'), "");
-            if(ret && ret.content && ret.content.list){
-                var contentTmpl = doT.template($api.text($api.byId('jcjgListTmpl')));
-                $api.html($api.byId('jcjg'), contentTmpl(ret.content.list));
-            }
+            var contentTmpl = doT.template($api.text($api.byId('jcjgListTmpl')));
+            $api.html($api.byId('jcjg'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -202,12 +200,6 @@ var inspectionDetail = function (obj, examineId) {
             url: config.medExamineDetailUrl + examineId,
             isLoading: true,
             success: function (ret) {
-                // var domAll = $api.domAll('.jcjgItemDetail');
-                // for (var i = 0; i < domAll.length; i++) {
-                //     if (domAll[i]) {
-                //         $api.addCls(domAll[i], 'hide');
-                //     }
-                // }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
                     if (ret.content.reportTime){
@@ -234,10 +226,8 @@ var searchMedAssay = function (patientId) {
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('hyjg'), "");
-            if(ret && ret.content && ret.content.list) {
-                var contentTmpl = doT.template($api.text($api.byId('hyjgListTmpl')));
-                $api.html($api.byId('hyjg'), contentTmpl(ret.content.list));
-            }
+            var contentTmpl = doT.template($api.text($api.byId('hyjgListTmpl')));
+            $api.html($api.byId('hyjg'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -281,8 +271,8 @@ var assayDetail = function(obj,assayId){
  */
 var fymxList = function(patientId){
     common.get({
-        url: config.costSituationUrl +  patientId ,
-        isLoading: true,
+        url: config.costSituationUrl + patientId + '/' + person.homepageId,
+        isLoading: false,
         success: function (ret) {
             var data = {}
             data.cost = ret.content

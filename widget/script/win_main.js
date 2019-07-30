@@ -134,9 +134,8 @@ function immersive(header) {
 function getUserInfo() {
     common.get({
         url: config.loginUserInfoUrl,
-        isLoading: true,
+        isLoading: false,
         success: function (ret) {
-            //alert(JSON.stringify(ret));
             //不关闭遮罩，还要获取疗区信息
             //填写欢迎信息
             $api.text($api.byId('welcomeContent'), common.notNull(ret.content.name));
@@ -175,7 +174,6 @@ function getOrganizationInfo() {
         url: config.organizationUrl,
         isLoading: false,
         success: function (ret) {
-            api.hideProgress();
             //填写疗区信息
             if (ret.content.length > 0) {
                 //排序
@@ -201,7 +199,6 @@ function getOrganizationInfo() {
 function openMainFrame() {
     var header = document.querySelector('#header');
     var pos = $api.offset(header);
-    // var footPos = $api.offset(document.querySelector('#footer'))
     api.openFrame({ // 打开Frame
         name: 'frm_main_content',
         url: 'frm_main_content.html',
@@ -241,7 +238,7 @@ function backSystem(){
 var tokenRet = function(personId){
     common.get({
         url: localServer + "/med/patient/getUserToken/"+personId,
-        isLoading: true,
+        isLoading: false,
         success: function (ret) {
             var wsdata = ret.data;
             createWs(wsdata);
@@ -253,7 +250,7 @@ var nurerId = function(){
 
     common.get({
         url: config.loginUserInfoUrl,
-        isLoading: true,
+        isLoading: false,
         success: function (ret) {
             var personId = ret.content.id;
             tokenRet(personId);

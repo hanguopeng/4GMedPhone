@@ -129,11 +129,9 @@ var changeTab = function (obj) {
             $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
             var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
                 "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                "                <label><input class=\"aui-margin-t-5 \" name=\"unbookedFlag\" id=\"unbookedFlag\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 未记账</label>\n" +
-                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
                 "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag\" id=\"reportFlag\" type=\"checkbox\" tapmode   onchange=\"adviceRecords()\"> 需要报告</label>\n" +
                 "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                "                <div class=\"aui-btn\" style=\"background: #38afe6;\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+                "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
             $api.html($api.byId('advice-records-header'), "");
             $api.html($api.byId('advice-records-header'), el);
 
@@ -149,15 +147,6 @@ var changeTab = function (obj) {
         currentTab = 1
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
-        var el = "<label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id = \"unbookedFlag2\"> 未记账</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id=\"skinTestFlag\"> 皮试</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <label><input class=\"aui-margin-t-5 \" type=\"checkbox\" onclick=\"adviceSends()\" id=\"related\"> 合并医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
-        $api.html($api.byId('advice-sends-header'), "");
-        $api.html($api.byId('advice-sends-header'), el);
 
 
         adviceSends();
@@ -226,13 +215,9 @@ var clickBottomTab = function (parent, id, name ,medBedName) {
  */
 var adviceRecords = function (type) {
     var inUse
-    var unbookedFlag
     var reportFlag
     if ($api.byId('inUse').checked){
         inUse = 1
-    }
-    if ($api.byId('unbookedFlag').checked){
-        unbookedFlag = 0
     }
     if ($api.byId('reportFlag').checked){
         reportFlag = 1
@@ -274,7 +259,6 @@ var adviceRecords = function (type) {
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
-            unbookedFlag: unbookedFlag,   //未记账,  选中是0
             reportFlag: reportFlag,   //需要报告,  选中是1
             priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode')),    //病案费目
@@ -282,7 +266,8 @@ var adviceRecords = function (type) {
             executionTimeBegin:  executionTimeBegin,   //执行时间开始
             executionTimeEnd:  executionTimeEnd,   //执行时间结束
             foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
-            foundTimeEnd: foundTimeEnd   //开嘱时间结束
+            foundTimeEnd: foundTimeEnd,   //开嘱时间结束
+            homepageId: person.homepageId
         }),
         dataType: "json",
         success: function (ret) {
@@ -414,18 +399,6 @@ var closeAdviceExecuteDetail = function (obj) {
  * 医嘱发送记录
  */
 var adviceSends = function () {
-    var skinTestFlag
-    var unbookedFlag
-    var related
-    if ($api.byId('skinTestFlag').checked){
-        skinTestFlag = 1
-    }
-    if ($api.byId('unbookedFlag2').checked){
-        unbookedFlag = 0
-    }
-    if ($api.byId('related').checked){
-        related = 1
-    }
     var changzhu = $api.byId('changzhu').checked
     var linzhu = $api.byId('linzhu').checked
 
@@ -472,10 +445,7 @@ var adviceSends = function () {
             firstTimeEnd: firstTimeEnd,   //首次时间结束
             lastTimeStart: lastTimeStart,   //末次时间开始
             lastTimeEnd: lastTimeEnd,   //末次时间结束
-            priorityCode: status,   //医嘱期效
-            skinTestFlag:  skinTestFlag,   //皮试标识
-            unbookedFlag:  unbookedFlag,   //未记账
-            related:  related     //是否为合并医嘱
+            priorityCode: status   //医嘱期效
         }),
         dataType: "json",
         success: function (ret) {
@@ -870,3 +840,13 @@ var changeThisShow = function(obj){
     }
 }
 
+var changeNextShow = function(obj){
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    if (isHide){
+        $api.removeCls($api.next(obj), 'hide');
+        $api.addCls($api.next(obj), 'show');
+    } else{
+        $api.removeCls($api.next(obj), 'show');
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
