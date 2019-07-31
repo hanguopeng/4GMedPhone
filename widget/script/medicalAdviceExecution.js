@@ -844,9 +844,7 @@ var changeNextShow = function(obj){
     var isHide = $api.hasCls($api.next(obj), 'hide');
     if (isHide){
         $api.removeCls($api.next(obj), 'hide');
-        $api.addCls($api.next(obj), 'show');
     } else{
-        $api.removeCls($api.next(obj), 'show');
         $api.addCls($api.next(obj), 'hide');
     }
 }

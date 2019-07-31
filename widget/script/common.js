@@ -103,7 +103,6 @@ var common = {
         var timeout = 10
         if (param.timeout) {
             timeout = param.timeout
-            alert(timeout)
         }
         //获取离线读取标示
         var offline = $api.getStorage(storageKey.offlineFlag) == "on" ? true : false;
