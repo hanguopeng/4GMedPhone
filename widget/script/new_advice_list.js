@@ -52,6 +52,12 @@ var changeAdviceRead = function (obj,id) {
 }
 
 function changeAllRead(){
+    var number = $api.getStorage(storageKey.newAdviceCount);
+    if (number <= 0){
+        api.alert({
+            title: '提示',
+            msg: '没有可操作已读的记录！'});
+    }
     common.get({
         url: config.adviceAllRead + userId,
         isLoading: true,
