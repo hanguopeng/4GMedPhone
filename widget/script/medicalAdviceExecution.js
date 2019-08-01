@@ -147,9 +147,16 @@ var changeTab = function (obj) {
         currentTab = 1
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
+        var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag1\" id=\"reportFlag1\" type=\"checkbox\" tapmode   onchange=\"adviceRecordsForAdviceSends()\"> 需要报告</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+        $api.html($api.byId('advice-sends-header'), "");
+        $api.html($api.byId('advice-sends-header'), el);
 
-
-        adviceSends();
+        adviceRecordsForAdviceSends()
+        // adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
         $api.setStorage(storageKey.scannerStatus, 'tour-records');
         $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
@@ -183,10 +190,11 @@ var clickBottomTab = function (parent, id, name ,medBedName) {
         // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-selector'), 'active');
         // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-execute'), 'active');
 
+        $api.removeCls($api.dom($api.byId(parent), '#adviceRecords-selector'), 'active');
+
         $api.removeCls($api.dom($api.byId(parent), '#adviceSends-selector'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#tourRecords-result'), 'active');
-        $api.removeCls($api.dom($api.byId(parent), '#shuyexunshi'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
@@ -307,9 +315,12 @@ var paddingSelectAdviceRecords = function () {
                 dataType:JSON,
                 success:function(ret){
                     data.adviceType = ret.content
-                    $api.html($api.byId('adviceRecords-selector'), "");
                     var contentTmpl = doT.template($api.text($api.byId('selectAdviceRecords')));
+                    $api.html($api.byId('adviceRecords-selector'), "");
                     $api.html($api.byId('adviceRecords-selector'), contentTmpl(data));
+                    var contentTmpl1 = doT.template($api.text($api.byId('selectAdviceSends')));
+                    $api.html($api.byId('adviceSends-selector'), "");
+                    $api.html($api.byId('adviceSends-selector'), contentTmpl1(data));
                 }
             });
         }
@@ -396,63 +407,82 @@ var closeAdviceExecuteDetail = function (obj) {
 
 
 /**
+ * 医嘱记录
+ */
+var adviceRecordsForAdviceSends = function () {
+    var inUse
+    var reportFlag
+    if ($api.byId('inUse1').checked){
+        inUse = 1
+    }
+    if ($api.byId('reportFlag1').checked){
+        reportFlag = 1
+    }
+    var priorityCode1 = $api.val($api.byId('priorityCode1'))
+    var executionTimeBegin = $api.val($api.byId('executionTimeBegin1')) //执行时间开始
+    var executionTimeEnd =   $api.val($api.byId('executionTimeEnd1'))  //执行时间结束
+    var foundTimeBegin = $api.val($api.byId('foundTimeBegin1'))  //开嘱时间开始
+    var foundTimeEnd = $api.val($api.byId('foundTimeEnd1'))
+    if (!isEmpty(executionTimeBegin)){
+        executionTimeBegin = executionTimeBegin + ":00"
+    }
+    if (!isEmpty(executionTimeEnd)){
+        executionTimeEnd = executionTimeEnd + ":00"
+    }
+    if (!isEmpty(foundTimeBegin)){
+        foundTimeBegin = foundTimeBegin + ":00"
+    }if (!isEmpty(foundTimeEnd)){
+        foundTimeEnd = foundTimeEnd + ":00"
+    }
+
+    common.post({
+        url: config.queryAdviceList,
+        isLoading: true,
+        data: JSON.stringify({
+            nurseId:  userId,   //护士ID
+            patientId:  patientId,   //病人ID
+            inUse: inUse,   //在用医嘱，选中是1
+            reportFlag: reportFlag,   //需要报告,  选中是1
+            priorityCode:  priorityCode1,    //医嘱优先级（期效）
+            typeCode:  $api.val($api.byId('typeCode1')),    //病案费目
+            status:  $api.val($api.byId('status1')),   //医嘱状态
+            executionTimeBegin:  executionTimeBegin,   //执行时间开始
+            executionTimeEnd:  executionTimeEnd,   //执行时间结束
+            foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
+            foundTimeEnd: foundTimeEnd,   //开嘱时间结束
+            homepageId: person.homepageId
+        }),
+        dataType: "json",
+        success: function (ret) {
+            $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceRecords-selector'), 'active');
+            $api.html($api.byId('adviceSendsContentContainer'), "");
+            var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
+            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content));
+        }
+    });
+};
+
+
+
+/**
  * 医嘱发送记录
  */
-var adviceSends = function () {
-    var changzhu = $api.byId('changzhu').checked
-    var linzhu = $api.byId('linzhu').checked
-
-    var status = ''   // 医嘱发送筛选条件医嘱期效
-    if (changzhu && !linzhu){
-        status = 0;
-    } else if(!changzhu && linzhu){
-        status = 1;
-    }
-
-    var sendTimeStart = $api.val($api.byId('sendTimeStart'))
-    var sendTimeEnd =   $api.val($api.byId('sendTimeEnd'))
-    var firstTimeStart = $api.val($api.byId('firstTimeStart'))
-    var firstTimeEnd = $api.val($api.byId('firstTimeEnd'))
-    var lastTimeStart = $api.val($api.byId('lastTimeStart'))
-    var lastTimeEnd = $api.val($api.byId('lastTimeEnd'))
-    if (!isEmpty(sendTimeStart)){
-        sendTimeStart = sendTimeStart + ":00"
-    }
-    if (!isEmpty(sendTimeEnd)){
-        sendTimeEnd = sendTimeEnd + ":00"
-    }
-    if (!isEmpty(firstTimeStart)){
-        firstTimeStart = firstTimeStart + ":00"
-    }
-    if (!isEmpty(firstTimeEnd)){
-        firstTimeEnd = firstTimeEnd + ":00"
-    }
-    if (!isEmpty(lastTimeStart)){
-        lastTimeStart = lastTimeStart + ":00"
-    }
-    if (!isEmpty(lastTimeEnd)){
-        lastTimeEnd = lastTimeEnd + ":00"
-    }
+var adviceSendsDetail = function (obj,adviceId) {
     common.post({
         url: config.querySendList,
         isLoading: true,
         data: JSON.stringify({
             patientId:  patientId,   //病人ID
             homepageId:  person.homepageId,
-            sendTimeStart: sendTimeStart,   //发送时间开始
-            sendTimeEnd: sendTimeEnd,   //发送时间结束
-            firstTimeStart: firstTimeStart,   //首次时间开始
-            firstTimeEnd: firstTimeEnd,   //首次时间结束
-            lastTimeStart: lastTimeStart,   //末次时间开始
-            lastTimeEnd: lastTimeEnd,   //末次时间结束
-            priorityCode: status   //医嘱期效
+            adviceId: adviceId
         }),
         dataType: "json",
         success: function (ret) {
             $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
-            $api.html($api.byId('adviceSendsContentContainer'), "");
-            var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
-            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content.list));
+            $api.html($api.dom("#adviceSendsDetail" + adviceId), "");
+            var contentTmpl = doT.template($api.text($api.byId('adviceSendsDetail')));
+            $api.html($api.dom("#adviceSendsDetail" + adviceId), contentTmpl(ret.content.list));
+
         }
     });
 };
@@ -672,7 +702,7 @@ var skinTestExecute = function () {
         data:JSON.stringify({
             id:skinTestId,
             implementNurseId: userId,
-            implementNurseName: $api.getStorage(storageKey.loginName),
+            implementNurseName: $api.getStorage(storageKey.userName),
             medAdviceId: skinTestAdviceId,
             skinResult:skinTestResult
         }),
@@ -809,19 +839,31 @@ function adviceRecordsReset(){
 
 // 医嘱发送筛选重置
 function adviceSendsReset(){
-    $api.val($api.byId('sendTimeStart'),'')
-    $api.val($api.byId('sendTimeEnd'),'')
-    $api.val($api.byId('firstTimeStart'),'')
-    $api.val($api.byId('firstTimeEnd'),'')
-    $api.val($api.byId('lastTimeStart'),'')
-    $api.val($api.byId('lastTimeEnd'),'')
-    var el ="<label style=\"margin-left: 3rem\"><input class=\"aui-margin-t-5\"  id=\"changzhu\" type=\"checkbox\"> 长嘱</label>\n" +
-        "                        &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-        "                        <label style=\"margin-right: 4rem\"><input class=\"aui-margin-t-5\"  id=\"linzhu\" type=\"checkbox\"> 临嘱</label>"
-    $api.html($api.byId('advice-header'), "");
-    $api.html($api.byId('advice-header'), el);
+    $api.val($api.byId('executionTimeBegin1'),'')
+    $api.val($api.byId('executionTimeEnd1'),'')
+    $api.val($api.byId('foundTimeBegin1'),'')
+    $api.val($api.byId('foundTimeEnd1'),'')
+    $api.attr($api.byId('priorityCodeOne1'), 'selected','true');
+    $api.attr($api.byId('typeCodeOne1'), 'selected','true');
+    $api.attr($api.byId('statusOne1'), 'selected','true');
 
 }
+//
+//
+// function adviceSendsReset(){
+//     $api.val($api.byId('sendTimeStart'),'')
+//     $api.val($api.byId('sendTimeEnd'),'')
+//     $api.val($api.byId('firstTimeStart'),'')
+//     $api.val($api.byId('firstTimeEnd'),'')
+//     $api.val($api.byId('lastTimeStart'),'')
+//     $api.val($api.byId('lastTimeEnd'),'')
+//     var el ="<label style=\"margin-left: 3rem\"><input class=\"aui-margin-t-5\"  id=\"changzhu\" type=\"checkbox\"> 长嘱</label>\n" +
+//         "                        &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+//         "                        <label style=\"margin-right: 4rem\"><input class=\"aui-margin-t-5\"  id=\"linzhu\" type=\"checkbox\"> 临嘱</label>"
+//     $api.html($api.byId('advice-header'), "");
+//     $api.html($api.byId('advice-header'), el);
+//
+// }
 
 // 皮试筛选重置
 function skinTestRecordReset() {
