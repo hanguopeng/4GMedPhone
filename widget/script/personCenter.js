@@ -189,7 +189,7 @@ var costDetailInfo = function (patientId) {
  */
 var searchMedExamine = function (patientId) {
     common.get({
-        url: config.medExaminelUrl + patientId + "&page=" + page,
+        url: config.medExaminelUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('jcjg'), "");
@@ -231,7 +231,7 @@ var inspectionDetail = function (obj, examineId) {
 var searchMedAssay = function (patientId) {
     //在线
     common.get({
-        url: config.medAssayUrl + patientId + "&page=" + page,
+        url: config.medAssayUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('hyjg'), "");
