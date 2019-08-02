@@ -279,6 +279,9 @@
 .tab-body-item .bottomContainer .bottomBody#adviceRecords-selector .flex-item{
     text-align: left;
 }
+.tab-body-item .bottomContainer .bottomBody#adviceSends-selector .flex-item{
+    text-align: left;
+}
 .tab-body-item .bottomContainer .bottomBody#adviceExecute-selector .flex-item{
     text-align: left;
 }

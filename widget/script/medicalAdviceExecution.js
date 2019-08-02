@@ -12,9 +12,8 @@ var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-s
 var currentTab = 0
 apiready = function () {
     api.parseTapmode();
-    adviceRecords();
+    paddingSelectAdviceRecords();
     // 监控左划事件
-
     api.addEventListener({
         name:'swipeleft'
     }, function(ret, err){
@@ -66,8 +65,7 @@ apiready = function () {
             });
         }
     });
-
-    paddingSelectAdviceRecords();
+    adviceRecords();
 }
 
 /**
@@ -299,7 +297,7 @@ var paddingSelectAdviceRecords = function () {
     params.nullFlag = false;
     common.post({
         url:config.dictUrl,
-        isLoading: true,
+        isLoading: false,
         data:JSON.stringify(params),
         dataType:JSON,
         success:function(ret){
@@ -324,8 +322,6 @@ var paddingSelectAdviceRecords = function () {
             });
         }
     });
-
-
 }
 
 /**
@@ -780,6 +776,32 @@ function pickerWithTime(el){
     });
 }
 
+function pickerWithSecond(el){
+    api.openPicker({
+        type: 'date',
+        title: '日期'
+    }, function(ret, err){
+        var startYear = ret.year;
+        var startMonth = ret.month;
+        var startDay = ret.day;
+        var date = startYear + "-" + (startMonth<10? "0"+startMonth:startMonth) + "-" + (startDay<10?"0"+startDay:startDay);
+        api.openPicker({
+            type: 'time',
+            title: '时间'
+        }, function(ret1, err1){
+            var hour = ret1.hour;
+            if(hour < 10){
+                hour = "0"+hour;
+            }
+            var minute = ret1.minute;
+            if(minute < 10){
+                minute = "0"+minute;
+            }
+            var time = hour + ":" + minute;
+            $api.val(el,date+" "+time+":00");
+        });
+    });
+}
 
 Date.prototype.format = function (fmt) {
     var o = {
