@@ -128,7 +128,7 @@ var changeTab = function (obj) {
                 "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
                 "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag\" id=\"reportFlag\" type=\"checkbox\" tapmode   onchange=\"adviceRecords()\"> 需要报告</label>\n" +
                 "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+                "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
             $api.html($api.byId('advice-records-header'), "");
             $api.html($api.byId('advice-records-header'), el);
 
