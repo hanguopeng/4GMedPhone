@@ -191,6 +191,7 @@ var searchMedExamine = function (patientId) {
     common.get({
         url: config.medExaminelUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
         isLoading: true,
+        timeout: 30,
         success: function (ret) {
             $api.html($api.byId('jcjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('jcjgListTmpl')));
@@ -233,6 +234,7 @@ var searchMedAssay = function (patientId) {
     common.get({
         url: config.medAssayUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
         isLoading: true,
+        timeout: 30,
         success: function (ret) {
             $api.html($api.byId('hyjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('hyjgListTmpl')));

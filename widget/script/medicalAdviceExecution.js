@@ -12,6 +12,7 @@ var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-s
 var currentTab = 0
 apiready = function () {
     api.parseTapmode();
+    adviceRecords();
     paddingSelectAdviceRecords();
     // 监控左划事件
     api.addEventListener({
@@ -65,7 +66,6 @@ apiready = function () {
             });
         }
     });
-    adviceRecords();
 }
 
 /**
@@ -148,7 +148,7 @@ var changeTab = function (obj) {
             "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
             "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag1\" id=\"reportFlag1\" type=\"checkbox\" tapmode   onchange=\"adviceRecordsForAdviceSends()\"> 需要报告</label>\n" +
             "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
         $api.html($api.byId('advice-sends-header'), el);
 
@@ -307,7 +307,7 @@ var paddingSelectAdviceRecords = function () {
             params.queryCode = "advice_type"
             common.post({
                 url:config.dictUrl,
-                isLoading: true,
+                isLoading: false,
                 data:JSON.stringify(params),
                 dataType:JSON,
                 success:function(ret){
