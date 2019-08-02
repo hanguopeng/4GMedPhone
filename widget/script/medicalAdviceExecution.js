@@ -244,15 +244,15 @@ var adviceRecords = function (type) {
             $api.addCls($api.byId('temporaryTold'), 'changeBlue');
         }
     }
-    var executionTimeBegin = $api.val($api.byId('executionTimeBegin')) //执行时间开始
-    var executionTimeEnd =   $api.val($api.byId('executionTimeEnd'))  //执行时间结束
+    var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin')) //上次执行时间开始
+    var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd'))  //上次执行时间结束
     var foundTimeBegin = $api.val($api.byId('foundTimeBegin'))  //开嘱时间开始
     var foundTimeEnd = $api.val($api.byId('foundTimeEnd'))
-    if (!isEmpty(executionTimeBegin)){
-        executionTimeBegin = executionTimeBegin + ":00"
+    if (!isEmpty(lastExcecutiveTimeBegin)){
+        lastExcecutiveTimeBegin = lastExcecutiveTimeBegin + ":00"
     }
-    if (!isEmpty(executionTimeEnd)){
-        executionTimeEnd = executionTimeEnd + ":00"
+    if (!isEmpty(lastExcecutiveTimeEnd)){
+        lastExcecutiveTimeEnd = lastExcecutiveTimeEnd + ":00"
     }
     if (!isEmpty(foundTimeBegin)){
         foundTimeBegin = foundTimeBegin + ":00"
@@ -271,8 +271,8 @@ var adviceRecords = function (type) {
             priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode')),    //病案费目
             status:  $api.val($api.byId('status')),   //医嘱状态
-            executionTimeBegin:  executionTimeBegin,   //执行时间开始
-            executionTimeEnd:  executionTimeEnd,   //执行时间结束
+            lastExcecutiveTimeBegin:  lastExcecutiveTimeBegin,   //上次执行时间开始
+            lastExcecutiveTimeEnd:  lastExcecutiveTimeEnd,   //上次执行时间结束
             foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
             foundTimeEnd: foundTimeEnd,   //开嘱时间结束
             homepageId: person.homepageId
@@ -419,15 +419,15 @@ var adviceRecordsForAdviceSends = function () {
         reportFlag = 1
     }
     var priorityCode1 = $api.val($api.byId('priorityCode1'))
-    var executionTimeBegin = $api.val($api.byId('executionTimeBegin1')) //执行时间开始
-    var executionTimeEnd =   $api.val($api.byId('executionTimeEnd1'))  //执行时间结束
+    var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin1')) //上次执行时间开始
+    var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd1'))  //上次执行时间结束
     var foundTimeBegin = $api.val($api.byId('foundTimeBegin1'))  //开嘱时间开始
     var foundTimeEnd = $api.val($api.byId('foundTimeEnd1'))
-    if (!isEmpty(executionTimeBegin)){
-        executionTimeBegin = executionTimeBegin + ":00"
+    if (!isEmpty(lastExcecutiveTimeBegin)){
+        lastExcecutiveTimeBegin = lastExcecutiveTimeBegin + ":00"
     }
-    if (!isEmpty(executionTimeEnd)){
-        executionTimeEnd = executionTimeEnd + ":00"
+    if (!isEmpty(lastExcecutiveTimeEnd)){
+        lastExcecutiveTimeEnd = lastExcecutiveTimeEnd + ":00"
     }
     if (!isEmpty(foundTimeBegin)){
         foundTimeBegin = foundTimeBegin + ":00"
@@ -446,8 +446,8 @@ var adviceRecordsForAdviceSends = function () {
             priorityCode:  priorityCode1,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode1')),    //病案费目
             status:  $api.val($api.byId('status1')),   //医嘱状态
-            executionTimeBegin:  executionTimeBegin,   //执行时间开始
-            executionTimeEnd:  executionTimeEnd,   //执行时间结束
+            lastExcecutiveTimeBegin:  lastExcecutiveTimeBegin,   //上次执行时间开始
+            lastExcecutiveTimeEnd:  lastExcecutiveTimeEnd,   //上次执行时间结束
             foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
             foundTimeEnd: foundTimeEnd,   //开嘱时间结束
             homepageId: person.homepageId
@@ -828,8 +828,8 @@ function isEmpty(str){
 
 // 医嘱记录筛选重置
 function adviceRecordsReset(){
-    $api.val($api.byId('executionTimeBegin'),'')
-    $api.val($api.byId('executionTimeEnd'),'')
+    $api.val($api.byId('lastExcecutiveTimeBegin'),'')
+    $api.val($api.byId('lastExcecutiveTimeEnd'),'')
     $api.val($api.byId('foundTimeBegin'),'')
     $api.val($api.byId('foundTimeEnd'),'')
     $api.attr($api.byId('typeCodeOne'), 'selected','true');
@@ -839,8 +839,8 @@ function adviceRecordsReset(){
 
 // 医嘱发送筛选重置
 function adviceSendsReset(){
-    $api.val($api.byId('executionTimeBegin1'),'')
-    $api.val($api.byId('executionTimeEnd1'),'')
+    $api.val($api.byId('lastExcecutiveTimeBegin1'),'')
+    $api.val($api.byId('lastExcecutiveTimeEnd1'),'')
     $api.val($api.byId('foundTimeBegin1'),'')
     $api.val($api.byId('foundTimeEnd1'),'')
     $api.attr($api.byId('priorityCodeOne1'), 'selected','true');
