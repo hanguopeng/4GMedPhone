@@ -140,40 +140,36 @@
             {{}}}
         </div>
         <div class="keyValueItem aui-margin-l-15">
-            <div style="width:50%;float:left">
-                <span class="key">预交款：</span>
-                {{if(it.prepayMoney >= 0 || isEmpty(it.prepayMoney)){ }}
-                <span class="value">{{=it.prepayMoney||'0'}}</span>
-                {{ }else{}}
-                <span class="value redInfo">{{=it.prepayMoney}}</span>
-                {{}}}
-            </div>
-            <div style="width:50%;float:right">
-                <span class="key">未结费用：</span>
-                {{if(it.unconsumeMoney >= 0 || isEmpty(it.unconsumeMoney)){ }}
-                <span class="value">{{=it.unconsumeMoney||'0'}}</span>
-                {{ }else{}}
-                <span class="value redInfo">{{=it.unconsumeMoney}}</span>
-                {{}}}
-            </div>
+            <span class="key">预交款：</span>
+            {{if(it.prepayMoney >= 0 || isEmpty(it.prepayMoney)){ }}
+            <span class="value">{{=it.prepayMoney||'0'}}</span>
+            {{ }else{}}
+            <span class="value redInfo">{{=it.prepayMoney}}</span>
+            {{}}}
         </div>
         <div class="keyValueItem aui-margin-l-15">
-            <div  style="width:50%;float:left">
-                <span class="key">预结费用：</span>
-                {{if(it.consumeMoney >= 0 || isEmpty(it.consumeMoney)){ }}
-                <span class="value">{{=it.consumeMoney||'0'}}</span>
-                {{ }else{}}
-                <span class="value redInfo">{{=it.consumeMoney}}</span>
-                {{}}}
-            </div>
-            <div style="width:50%;float: right">
-                <span class="key">自付费用：</span>
-                {{if(it.selfMoney >= 0 || isEmpty(it.selfMoney)){ }}
-                <span class="value">{{=it.selfMoney||'0'}}</span>
-                {{ }else{}}
-                <span class="value redInfo">{{=it.selfMoney}}</span>
-                {{}}}
-            </div>
+            <span class="key">未结费用：</span>
+            {{if(it.unconsumeMoney >= 0 || isEmpty(it.unconsumeMoney)){ }}
+            <span class="value">{{=it.unconsumeMoney||'0'}}</span>
+            {{ }else{}}
+            <span class="value redInfo">{{=it.unconsumeMoney}}</span>
+            {{}}}
+        </div>
+        <div class="keyValueItem aui-margin-l-15">
+            <span class="key">预结费用：</span>
+            {{if(it.consumeMoney >= 0 || isEmpty(it.consumeMoney)){ }}
+            <span class="value">{{=it.consumeMoney||'0'}}</span>
+            {{ }else{}}
+            <span class="value redInfo">{{=it.consumeMoney}}</span>
+            {{}}}
+        </div>
+        <div class="keyValueItem aui-margin-l-15">
+            <span class="key">自付费用：</span>
+            {{if(it.selfMoney >= 0 || isEmpty(it.selfMoney)){ }}
+            <span class="value">{{=it.selfMoney||'0'}}</span>
+            {{ }else{}}
+            <span class="value redInfo">{{=it.selfMoney}}</span>
+            {{}}}
         </div>
     </script>
     <script id="jcjgListTmpl" type="text/template">
@@ -288,40 +284,36 @@
                 {{}}}
             </div>
             <div class="aui-margin-l-15">
-                <div style="width:50%;float:left">
-                    <span class="key">预交款：</span>
-                    {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
-                    <span class="value">{{=it.cost.prepayMoney||'0'}}</span>
-                    {{ }else{}}
-                    <span class="value redInfo">{{=it.cost.prepayMoney}}</span>
-                    {{}}}
-                </div>
-                <div style="width:50%;float:right">
-                    <span class="key">未结费用：</span>
-                    {{if(it.cost.unconsumeMoney >= 0 || isEmpty(it.cost.unconsumeMoney)){ }}
-                    <span class="value">{{=it.cost.unconsumeMoney||'0'}}</span>
-                    {{ }else{}}
-                    <span class="value redInfo">{{=it.cost.unconsumeMoney}}</span>
-                    {{}}}
-                </div>
+                <span class="key">预交款：</span>
+                {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
+                <span class="value">{{=it.cost.prepayMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.prepayMoney}}</span>
+                {{}}}
             </div>
             <div class="aui-margin-l-15">
-                <div  style="width:50%;float:left">
-                    <span class="key">预结费用：</span>
-                    {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
-                    <span class="value">{{=it.cost.consumeMoney||'0'}}</span>
-                    {{ }else{}}
-                    <span class="value redInfo">{{=it.cost.consumeMoney}}</span>
-                    {{}}}
-                </div>
-                <div style="width:50%;float: right">
-                    <span class="key">自付费用：</span>
-                    {{if(it.cost.selfMoney >= 0 || isEmpty(it.cost.selfMoney)){ }}
-                    <span class="value">{{=it.cost.selfMoney||'0'}}</span>
-                    {{ }else{}}
-                    <span class="value redInfo">{{=it.cost.selfMoney}}</span>
-                    {{}}}
-                </div>
+                <span class="key">未结费用：</span>
+                {{if(it.cost.unconsumeMoney >= 0 || isEmpty(it.cost.unconsumeMoney)){ }}
+                <span class="value">{{=it.cost.unconsumeMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.unconsumeMoney}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">预结费用：</span>
+                {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
+                <span class="value">{{=it.cost.consumeMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.consumeMoney}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">自付费用：</span>
+                {{if(it.cost.selfMoney >= 0 || isEmpty(it.cost.selfMoney)){ }}
+                <span class="value">{{=it.cost.selfMoney||'0'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.selfMoney}}</span>
+                {{}}}
             </div>
         </div>
         {{?}}

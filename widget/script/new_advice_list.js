@@ -57,30 +57,31 @@ function changeAllRead(){
         api.alert({
             title: '提示',
             msg: '没有可操作已读的记录！'});
-    }
-    common.get({
-        url: config.adviceAllRead + userId,
-        isLoading: true,
-        success: function (ret) {
-            if (ret.type==='success') {
-                $api.setStorage(storageKey.newAdviceCount,0);
-                api.sendEvent({
-                    name: 'changeNewAdviceNumber'
-                });
-                api.alert({
-                    title: '提示',
-                    msg: '操作成功！'}
-                    , function (ret, err) {
-                        closeCurrentFrame()
+    }else{
+        common.get({
+            url: config.adviceAllRead + userId,
+            isLoading: true,
+            success: function (ret) {
+                if (ret.type==='success') {
+                    $api.setStorage(storageKey.newAdviceCount,0);
+                    api.sendEvent({
+                        name: 'changeNewAdviceNumber'
                     });
+                    api.alert({
+                        title: '提示',
+                        msg: '操作成功！'}
+                        , function (ret, err) {
+                            closeCurrentFrame()
+                        });
 
-            }else{
-                api.alert({
-                    title: '提示',
-                    msg: '操作失败，请刷新后重试！'});
+                }else{
+                    api.alert({
+                        title: '提示',
+                        msg: '操作失败，请刷新后重试！'});
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function closeCurrentFrame(){

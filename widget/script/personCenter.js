@@ -170,6 +170,15 @@ var costDetailInfo = function (patientId) {
             if(ret && ret.content) {
                 var contentTmpl = doT.template($api.text($api.byId('fyhzTmpl')));
                 $api.html($api.byId('fyhzContentContainer'), contentTmpl(ret.content));
+            }else{
+                var contentTmpl = doT.template($api.text($api.byId('fyhzTmpl')));
+                var list = {}
+                list.balance = 0;
+                list.prepayMoney = 0;
+                list.unconsumeMoney = 0;
+                list.consumeMoney = 0;
+                list.selfMoney = 0;
+                $api.html($api.byId('fyhzContentContainer'), contentTmpl(list));
             }
         }
     });

@@ -6,7 +6,6 @@ var patientId = person.id;
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
-var implementTime = true //最后一次选中的皮试的执行时间是否为空
 
 var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
@@ -468,26 +467,39 @@ var adviceRecordsForAdviceSends = function () {
  * 医嘱发送记录
  */
 var adviceSendsDetail = function (obj,adviceId) {
-    common.post({
-        url: config.querySendList,
-        isLoading: true,
-        data: JSON.stringify({
-            patientId:  patientId,   //病人ID
-            homepageId:  person.homepageId,
-            adviceId: adviceId
-        }),
-        dataType: "json",
-        success: function (ret) {
-            $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
-            $api.html($api.dom("#adviceSendsDetail" + adviceId), "");
-            var contentTmpl = doT.template($api.text($api.byId('adviceSendsDetail')));
-            $api.html($api.dom("#adviceSendsDetail" + adviceId), contentTmpl(ret.content.list));
+    var noDetail = $api.hasCls(obj, 'noDetail');
+    if (noDetail){
+        common.post({
+            url: config.querySendList,
+            isLoading: true,
+            data: JSON.stringify({
+                patientId:  patientId,   //病人ID
+                homepageId:  person.homepageId,
+                adviceId: adviceId
+            }),
+            dataType: "json",
+            success: function (ret) {
+                $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
+                $api.removeCls(obj, 'noDetail');
+                $api.html($api.dom("#adviceSendsDetail" + adviceId), "");
+                var contentTmpl = doT.template($api.text($api.byId('adviceSendsDetail')));
+                $api.html($api.dom("#adviceSendsDetail" + adviceId), contentTmpl(ret.content.list));
 
-        }
-    });
+            }
+        });
+    } else{
+        $api.addCls(obj, 'noDetail');
+        $api.html($api.dom("#adviceSendsDetail" + adviceId), "");
+    }
+
 };
 
-
+/**
+ * 医嘱发送记录详情收回
+ */
+var closeDetail = function (obj) {
+    $api.html(obj, "");
+}
 /**
  * 巡视记录列表
  */
@@ -620,7 +632,7 @@ var skinTestRecord = function () {
 /**
  * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
  */
-var SkinTestSelect = function (medAdviceId,status,time) {
+var SkinTestSelect = function (medAdviceId,status) {
     var obj = $api.dom('#skinTest'+medAdviceId)
     if (!obj){
         return
@@ -632,7 +644,6 @@ var SkinTestSelect = function (medAdviceId,status,time) {
         skinTestId = id;
         skinTestAdviceId = medAdviceId
         skinTestStatus = status;
-        implementTime = time
     } else{
         if (medAdviceId!==skinTestAdviceId){
             var oldObj = $api.dom('#skinTest'+skinTestAdviceId)
@@ -646,14 +657,12 @@ var SkinTestSelect = function (medAdviceId,status,time) {
             skinTestId = id
             skinTestAdviceId = medAdviceId
             skinTestStatus = status
-            implementTime = time
         }else{
             $api.removeCls(obj, 'border-red');
             $api.addCls(obj, 'border-green');
             skinTestId = ''
             skinTestAdviceId = ''
             skinTestStatus = true
-            implementTime = true
         }
 
     }
@@ -683,16 +692,6 @@ var skinTestExecute = function () {
             api.alert({
                 title: '提示',
                 msg: '已经录入皮试结果不允许修改！'
-            });
-            return;
-        } else if(implementTime){
-            $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
-            skinTestId = ''
-            $api.removeCls($api.dom('#skinTest'+skinTestAdviceId), 'border-red');
-            $api.addCls($api.dom('#skinTest'+skinTestAdviceId), 'border-green');
-            api.alert({
-                title: '提示',
-                msg: '该医嘱未执行，无法录入皮试结果！'
             });
             return;
         }

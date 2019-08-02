@@ -198,7 +198,7 @@
                 <div id="skinTest-selector" class="bottomBody " style="padding: 0.75rem 0">
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
-                            <span class="key">医嘱执行时间： </span>
+                            <span class="key">医嘱生效时间： </span>
                             <span class="value"><input class="input" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="skin-test-begin-time"></span>
                             <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
                             <span class="value"><input class="input" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="skin-test-end-time"></span>
@@ -794,7 +794,7 @@
             {{?}}
         </div>
     </div>
-    <div id="adviceSendsDetail{{=item.id}}"></div>
+    <div id="adviceSendsDetail{{=item.id}}"  onclick="closeDetail(this)"></div>
     {{ } }}
     {{?}}
 </script>
@@ -824,25 +824,28 @@
         </div>
         <div>
             <span>发送医嘱：{{=data1.sendName||''}}</span>
-            <span>发送次数：{{=data1.sendNum||''}}</span>
         </div>
         <div>
             <span>收费项目：{{=data1.costListType||''}}</span>
-            <span>计费状态：{{=data1.sendBillStatus||''}}</span>
+        </div>
+        <div>
+            <span>发送次数：{{=data1.sendNum||''}}</span>
+            <span style="width:60%;float:right">计费状态：{{=data1.sendBillStatus||''}}</span>
         </div>
         <div>
             <span>执行状态：{{=data1.executeStatus||''}}</span>
-            <span>执行科室：{{=data1.executeDepartment||''}}</span>
+            <span style="width:60%;float:right">执行科室：{{=data1.executeDepartment||''}}</span>
         </div>
         <div>
             <span>执行人：{{=data1.executor||''}}</span>
-            <span>执行时间：{{=data1.executeTime||''}}</span>
+            <span style="width:60%;float:right">执行时间：{{=data1.executeTime||''}}</span>
         </div>
         {{ } }}
         {{?}}
     {{ } }}
     {{?}}
 </script>
+<!--新医嘱发送记录列表筛选-->
 <script id="selectAdviceSends" type="text/template">
     <div class="flex aui-margin-t-5" >
         <div class="flex-item">
@@ -1021,11 +1024,9 @@
         var item = it[i];
     }}
     {{?!isEmpty(item.skinResult)}}
-    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false,true)">
-        {{??isEmpty(item.implementTime)}}
-        <div class="item border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true,true)">
+    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false)">
         {{??}}
-            <div class="item border-green aui-font-size-14"  id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true,false)">
+            <div class="item border-green aui-font-size-14"  id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true)">
         {{?}}
         <div class="rowItem">
             <span>{{=currentPerson.medBedName||''}}床 </span>
@@ -1044,7 +1045,7 @@
             <span>{{=item.implementNurseName||''}}</span>
         </div>
         <div class="rowItem">
-            <span>执行时间：</span>
+            <span>生效时间：</span>
             <span>{{=item.implementTime||''}}</span>
         </div>
         {{
