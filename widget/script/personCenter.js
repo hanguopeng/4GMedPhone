@@ -308,7 +308,9 @@ function toggleMenu(){
 }
 
 function subStrDate(date) {
-    return date.slice(0, 11)
+    if (!isEmpty(date)){
+        return date.slice(0, 11)
+    }
 }
 
 function isEmpty(str){

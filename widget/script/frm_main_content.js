@@ -119,5 +119,7 @@ function openPersonCenter(idx) {
 }
 
 function subStrDate(date) {
-    return date.slice(0, 11)
+    if (!isEmpty(date)){
+        return date.slice(0, 11)
+    }
 }
