@@ -195,7 +195,7 @@ var searchMedExamine = function (patientId) {
         success: function (ret) {
             $api.html($api.byId('jcjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('jcjgListTmpl')));
-            $api.html($api.byId('jcjg'), contentTmpl(ret.content.list));
+            $api.html($api.byId('jcjg'), contentTmpl(ret.content));
         }
     });
 };
@@ -238,7 +238,7 @@ var searchMedAssay = function (patientId) {
         success: function (ret) {
             $api.html($api.byId('hyjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('hyjgListTmpl')));
-            $api.html($api.byId('hyjg'), contentTmpl(ret.content.list));
+            $api.html($api.byId('hyjg'), contentTmpl(ret.content));
         }
     });
 };
