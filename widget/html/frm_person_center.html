@@ -178,7 +178,7 @@
         for(var i=0;i<it.length;i++) {
         var item = it[i];
         }}
-        <div onclick="inspectionDetail(this,'{{=item.id}}')" data-id="{{=item.id}}" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+        <div onclick="inspectionDetail(this,{{=item.id}},{{=item.medAdviceExecuteId}})" data-id="{{=item.id}}" class="title aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
             <div style="float: left; width: 60%">{{=i+1}}.{{=item.name||''}}</div>
             <div style="float: right; width: 38%">{{=subStrDate(item.reportTime)||''}}{{=item.sendDoctorName||''}}</div>
         </div>

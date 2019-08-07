@@ -189,13 +189,13 @@ var costDetailInfo = function (patientId) {
  */
 var searchMedExamine = function (patientId) {
     common.get({
-        url: config.medExaminelUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
+        url: config.medExaminelUrl + patientId + "&homepageId=" + person.homepageId + "&page=" + page + "&limit=-1",
         isLoading: true,
         timeout: 30,
         success: function (ret) {
             $api.html($api.byId('jcjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('jcjgListTmpl')));
-            $api.html($api.byId('jcjg'), contentTmpl(ret.content));
+            $api.html($api.byId('jcjg'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -204,10 +204,10 @@ var searchMedExamine = function (patientId) {
  * 检查结果详情
  * @param examineId
  */
-var inspectionDetail = function (obj, examineId) {
+var inspectionDetail = function (obj, id,examineId) {
     if($api.hasCls($api.next(obj),'hide')){
         common.get({
-            url: config.medExamineDetailUrl + examineId,
+            url: config.medExamineDetailUrl + id + "/" + examineId,
             isLoading: true,
             success: function (ret) {
                 $api.html($api.next(obj), "");
@@ -232,13 +232,13 @@ var inspectionDetail = function (obj, examineId) {
 var searchMedAssay = function (patientId) {
     //在线
     common.get({
-        url: config.medAssayUrl + patientId + "&page=" + page + "&homepageId=" + person.homepageId,
+        url: config.medAssayUrl + patientId + "&homepageId=" + person.homepageId + "&page=" + page + "&limit=-1",
         isLoading: true,
         timeout: 30,
         success: function (ret) {
             $api.html($api.byId('hyjg'), "");
             var contentTmpl = doT.template($api.text($api.byId('hyjgListTmpl')));
-            $api.html($api.byId('hyjg'), contentTmpl(ret.content));
+            $api.html($api.byId('hyjg'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -253,12 +253,6 @@ var assayDetail = function(obj,assayId){
             url: config.medAssayDetailUrl+assayId,
             isLoading: true,
             success:function(ret){
-                // var domAll = $api.domAll('.hyjgItemDetail');
-                // for (var i = 0; i < domAll.length; i++) {
-                //     if (domAll[i]) {
-                //         $api.addCls(domAll[i], 'hide');
-                //     }
-                // }
                 $api.html($api.next(obj), "");
                 if(ret && ret.content) {
                     if (ret.content.reportTime){
