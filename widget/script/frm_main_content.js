@@ -123,3 +123,9 @@ function subStrDate(date) {
         return date.slice(0, 11)
     }
 }
+
+function isEmpty(str){
+    if (str === null || str ==='' || str === undefined){
+        return true
+    }
+}
