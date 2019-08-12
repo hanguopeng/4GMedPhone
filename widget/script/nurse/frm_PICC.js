@@ -22,7 +22,7 @@ apiready = function () {
 
 function showAdd() {
     common.get({
-        url: config.patientDetailUrl + patientId,
+        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
             ret.content.pgrq = currentTime();

@@ -48,7 +48,7 @@ function checkBox() {
 function showAdd() {
 
     common.get({
-        url: config.patientDetailUrl + patientId,
+        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
             ret.content.rqsj = currentDate();

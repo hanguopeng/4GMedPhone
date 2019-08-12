@@ -8,7 +8,7 @@ apiready = function () {
 
 var searchPatientDetail = function (patientId) {
     common.get({
-        url: config.patientDetailUrl + patientId,
+        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
             //alert(JSON.stringify(ret.content));

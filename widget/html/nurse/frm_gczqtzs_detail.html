@@ -192,7 +192,7 @@ apiready = function(){
     var id = api.pageParam.data;
     var person = $api.getStorage(storageKey.currentPerson);
     common.get({
-        url: config.patientDetailUrl+person.id,
+        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success:function(ret){
           common.get({

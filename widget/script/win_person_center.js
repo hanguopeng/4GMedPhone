@@ -89,12 +89,6 @@ function openFrameContent(page){
       name: 'frm_person_search'
   });
 
-  if (page === 'frm_tizhengshouji'||page === 'frm_huliwendang'||page === 'frm_fuzhugongju'){
-      api.toast({
-          msg: '功能暂未开放，敬请期待！'
-      });
-      return;
-  }
   var header = document.querySelector('#header');
   var pos = $api.offset(header);
   var footPos = $api.offset(document.querySelector('#footer'))
