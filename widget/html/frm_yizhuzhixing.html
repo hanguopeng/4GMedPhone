@@ -237,14 +237,10 @@
     for(var i=0;i<it.length;i++) {
     var item = it[i];
     }}
-    <div class="adviceRecordsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
-        {{?item.fieldENName}}
-        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
-        {{??}}
-        <div class="left background-white" >{{=item.priorityName}}</div>
-        {{?}}
-        <div class="right" >
-            <div>
+    <div class="adviceRecordsTmplList aui-font-size-14" style="color:{{=item.fieldENName}}" onclick="changeAdviceShow(this)">
+        <div class="left" >{{=item.priorityName}}</div>
+        <div class="right">
+            <div >
                 <span>医嘱内容：</span>
                 <span>{{=item.name||''}}</span>
             </div>
@@ -747,12 +743,8 @@
     for(var i=0;i<it.length;i++) {
     var item = it[i];
     }}
-    <div class="adviceRecordsTmplList aui-font-size-14 noDetail" onclick="adviceSendsDetail(this,{{=item.id}})">
-        {{?item.fieldENName}}
-        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
-        {{??}}
-        <div class="left background-white" >{{=item.priorityName}}</div>
-        {{?}}
+    <div class="adviceRecordsTmplList aui-font-size-14 noDetail"   style="color:{{=item.fieldENName}}"  onclick="adviceSendsDetail(this,{{=item.id}})">
+        <div class="left" >{{=item.priorityName}}</div>
         <div class="right" >
             <div>
                 <span>医嘱内容：</span>

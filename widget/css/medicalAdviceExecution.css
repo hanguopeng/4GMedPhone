@@ -25,6 +25,7 @@
     overflow: hidden;
     height:fit-content;
     margin-top: 0.2rem;
+    border: 1px double #67c23b;
 }
 /* 医嘱记录左侧样式*/
 .tab-body-item .itemContainer .adviceRecordsTmplList .left{
@@ -41,7 +42,7 @@
     float:left;
     width:93%;
     padding-left: 0.3rem;
-    border: 1px double #67c23b;
+    border: 1px solid #67c23b;
 }
 
 /* 医嘱记录最外层div*/
@@ -66,7 +67,7 @@
     float:left;
     width:93%;
     padding-left: 0.3rem;
-    border: 1px double #67c23b;
+    border: 1px solid #67c23b;
 
 }
 

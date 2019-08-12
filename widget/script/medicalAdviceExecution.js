@@ -272,7 +272,8 @@ var adviceRecords = function (type) {
             lastExcecutiveTimeEnd:  lastExcecutiveTimeEnd,   //上次执行时间结束
             foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
             foundTimeEnd: foundTimeEnd,   //开嘱时间结束
-            homepageId: person.homepageId
+            homepageId: person.homepageId,
+            limit: -1
         }),
         dataType: "json",
         success: function (ret) {
@@ -281,7 +282,7 @@ var adviceRecords = function (type) {
             $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.html($api.byId('adviceRecordsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceRecordsTmplList')));
-            $api.html($api.byId('adviceRecordsContentContainer'), contentTmpl(ret.content));
+            $api.html($api.byId('adviceRecordsContentContainer'), contentTmpl(ret.content.list));
         }
     });
 };
@@ -445,14 +446,15 @@ var adviceRecordsForAdviceSends = function () {
             lastExcecutiveTimeEnd:  lastExcecutiveTimeEnd,   //上次执行时间结束
             foundTimeBegin:  foundTimeBegin,   //开嘱时间开始
             foundTimeEnd: foundTimeEnd,   //开嘱时间结束
-            homepageId: person.homepageId
+            homepageId: person.homepageId,
+            limit: -1
         }),
         dataType: "json",
         success: function (ret) {
             $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceRecords-selector'), 'active');
             $api.html($api.byId('adviceSendsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
-            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content));
+            $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content.list));
         }
     });
 };

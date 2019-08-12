@@ -118,7 +118,7 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">药物过敏史：</span>
-            <span class="value">{{=it.drugAllergy||'无'}}</span>
+            <span class="value">{{=it.drugAllergy||''}}</span>
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">联系电话：</span>
@@ -134,7 +134,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">剩余款：</span>
             {{if(it.balance >= 0 || isEmpty(it.balance)){ }}
-            <span class="value">{{=it.balance||'0'}}</span>
+            <span class="value">{{=it.balance||'-'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.balance}}</span>
             {{}}}
@@ -142,7 +142,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">预交款：</span>
             {{if(it.prepayMoney >= 0 || isEmpty(it.prepayMoney)){ }}
-            <span class="value">{{=it.prepayMoney||'0'}}</span>
+            <span class="value">{{=it.prepayMoney||'-'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.prepayMoney}}</span>
             {{}}}
@@ -150,7 +150,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">未结费用：</span>
             {{if(it.unconsumeMoney >= 0 || isEmpty(it.unconsumeMoney)){ }}
-            <span class="value">{{=it.unconsumeMoney||'0'}}</span>
+            <span class="value">{{=it.unconsumeMoney||'-'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.unconsumeMoney}}</span>
             {{}}}
@@ -158,7 +158,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">预结费用：</span>
             {{if(it.consumeMoney >= 0 || isEmpty(it.consumeMoney)){ }}
-            <span class="value">{{=it.consumeMoney||'0'}}</span>
+            <span class="value">{{=it.consumeMoney||'-'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.consumeMoney}}</span>
             {{}}}
@@ -166,7 +166,7 @@
         <div class="keyValueItem aui-margin-l-15">
             <span class="key">自付费用：</span>
             {{if(it.selfMoney >= 0 || isEmpty(it.selfMoney)){ }}
-            <span class="value">{{=it.selfMoney||'0'}}</span>
+            <span class="value">{{=it.selfMoney||'-'}}</span>
             {{ }else{}}
             <span class="value redInfo">{{=it.selfMoney}}</span>
             {{}}}
@@ -278,7 +278,7 @@
             <div class="aui-margin-l-15">
                 <span class="key">剩余款：</span>
                 {{if(it.cost.balance >= 0 || isEmpty(it.cost.balance)){ }}
-                <span class="value">{{=it.cost.balance||'0'}}</span>
+                <span class="value">{{=it.cost.balance||'-'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.cost.balance}}</span>
                 {{}}}
@@ -286,7 +286,7 @@
             <div class="aui-margin-l-15">
                 <span class="key">预交款：</span>
                 {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
-                <span class="value">{{=it.cost.prepayMoney||'0'}}</span>
+                <span class="value">{{=it.cost.prepayMoney||'-'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.cost.prepayMoney}}</span>
                 {{}}}
@@ -294,7 +294,7 @@
             <div class="aui-margin-l-15">
                 <span class="key">未结费用：</span>
                 {{if(it.cost.unconsumeMoney >= 0 || isEmpty(it.cost.unconsumeMoney)){ }}
-                <span class="value">{{=it.cost.unconsumeMoney||'0'}}</span>
+                <span class="value">{{=it.cost.unconsumeMoney||'-'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.cost.unconsumeMoney}}</span>
                 {{}}}
@@ -302,7 +302,7 @@
             <div class="aui-margin-l-15">
                 <span class="key">预结费用：</span>
                 {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
-                <span class="value">{{=it.cost.consumeMoney||'0'}}</span>
+                <span class="value">{{=it.cost.consumeMoney||'-'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.cost.consumeMoney}}</span>
                 {{}}}
@@ -310,7 +310,7 @@
             <div class="aui-margin-l-15">
                 <span class="key">自付费用：</span>
                 {{if(it.cost.selfMoney >= 0 || isEmpty(it.cost.selfMoney)){ }}
-                <span class="value">{{=it.cost.selfMoney||'0'}}</span>
+                <span class="value">{{=it.cost.selfMoney||'-'}}</span>
                 {{ }else{}}
                 <span class="value redInfo">{{=it.cost.selfMoney}}</span>
                 {{}}}
