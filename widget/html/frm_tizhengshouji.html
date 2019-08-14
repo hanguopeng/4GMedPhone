@@ -14,8 +14,8 @@
 <div class="aui-content">
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item aui-active">体征采集</div>
-        <div class="aui-tab-item">历史记录</div>
-        <div class="aui-tab-item">批量录入</div>
+        <!--<div class="aui-tab-item">历史记录</div>-->
+        <!--<div class="aui-tab-item">批量录入</div>-->
     </div>
     <div id="content">
     </div>
@@ -40,7 +40,7 @@
                     测量日期
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="currentDate" type="text" readOnly="true" value="{{=it.currentDate}}">
+                    <input id="measureDate" type="text" readOnly="true" value="{{=it.currentDate}}">
                 </div>
             </div>
         </li>
@@ -50,23 +50,32 @@
                     测量时间
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="currentTime" type="time" placeholder="小时:分钟(02:11)" style="padding-top:0.7em;">
+                    <input id="measureTime" type="text"  onclick="chooseTime(this)" value="{{=it.currentTime}}">
                 </div>
             </div>
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    测量部位
+                    时点
                 </div>
                 <div class="aui-list-item-input">
-                    <select id="tempKey">
-                        <option value="temperature">腋温</option>
-                        <option value="temperature1">口温</option>
-                        <option value="temperature2">肛温</option>
-                        <option value="temperature3">耳温</option>
-                        <option value="temperature4">额温</option>
+                    <select id="measureTimeSection" class="aui-pull-left" onchange="changeMeasureTime(this)" style="width:47%">
+                        <option value="" selected></option>
+                        <option id="measureTimeSection2" value="2">2
+                        </option>
+                        <option id="measureTimeSection6" value="6">6
+                        </option>
+                        <option id="measureTimeSection10" value="10">10
+                        </option>
+                        <option id="measureTimeSection14" value="14">14
+                        </option>
+                        <option id="measureTimeSection18" value="18">18
+                        </option>
+                        <option id="measureTimeSection22" value="22">22
+                        </option>
                     </select>
+                    <input id="measureTimeSectionRemark" class="aui-pull-right"  type="text" readOnly="true" style="color: red;width:47%;" value="">
                 </div>
             </div>
         </li>
@@ -76,12 +85,15 @@
                     体温(°C)
                 </div>
                 <div class="aui-list-item-input">
-                    <!--<input id="tempVal" type="number">-->
-                    <input id="temp-sw" type="number" class="aui-pull-left" style="width:47%"
-                            placeholder="请输入内容">
-                    <!--<input id="temp-fw" type="number" class="aui-pull-right" style="width:47%;margin-left: 0.1rem;"-->
-                           <!--oninput="if(value.length>1)value=value.slice(0,1)" placeholder="请输入内容">-->
-                    <!--<input type="text" class="aui-pull-left" style="width:2%" value="." readOnly="true">-->
+                    <input id="temperature_value" type="text" class="aui-pull-left" style="width:47%"
+                            placeholder="请输入体温值">
+                    <select id="temperature_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
+                        <option value="5">腋温</option>
+                        <option value="4">口温</option>
+                        <option value="3">肛温</option>
+                        <option value="2">耳温</option>
+                        <option value="1">额温</option>
+                    </select>
                 </div>
             </div>
         </li>
@@ -91,12 +103,11 @@
                     脉搏(次/min)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="pulse" type="number"  class="aui-pull-left" style="width:47%;"
-                           oninput="if(value.length>3)value=value.slice(0,3)"
-                           placeholder="请输入内容">
-                    <select id="pulseKey" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
-                        <option value="pulse">自测</option>
-                        <option value="pulse1">起搏器</option>
+                    <input id="pulse_value" type="text"  class="aui-pull-left" style="width:47%;"
+                           placeholder="请输入脉搏值">
+                    <select id="pulse_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
+                        <option value="">自测脉搏</option>
+                        <option value="6">起搏器脉搏</option>
                     </select>
                 </div>
             </div>
@@ -107,8 +118,8 @@
                     心率(次/min)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="heartRate" type="number" oninput="if(value.length>3)value=value.slice(0,3)"
-                           placeholder="请输入内容">
+                    <input id="heartRate_value" type="text"
+                           placeholder="请输入心率值">
                 </div>
             </div>
         </li>
@@ -118,31 +129,23 @@
                     呼吸(次/min)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="breathRate" type="number" oninput="if(value.length>3)value=value.slice(0,3)"
-                           placeholder="请输入内容">
+                    <input id="breathRate_value" type="text"  class="aui-pull-left" placeholder="请输入呼吸值" style="width:47%;">
+                    <select id="breathRate_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
+                        <option value="">自主呼吸</option>
+                        <option value="7">呼吸机</option>
+                    </select>
                 </div>
             </div>
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 40%;">
-                    高血压(mmHg)
+                    血压(mmHg)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="bloodPressureHigh" type="number" class="aui-pull-left"
-                           style="width:47%;margin-left: 0.1rem;" oninput="if(value.length>3)value=value.slice(0,3)"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    低血压(mmHg)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="bloodPressureLow" type="number" class="aui-pull-left" style="width:47%"
-                           oninput="if(value.length>3)value=value.slice(0,3)" placeholder="请输入内容">
+                    <input id="bloodPressure_value" type="text" class="aui-pull-left"
+                           style="margin-left: 0.1rem;"
+                           placeholder="高压在前低压在后由/隔开">
                 </div>
             </div>
         </li>
@@ -152,8 +155,8 @@
                     疼痛强度(分)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="painIntensity" type="number" oninput="if(value.length>2)value=value.slice(0,2)"
-                           placeholder="请输入内容">
+                    <input id="painIntensity_value" type="text"
+                           placeholder="请输入疼痛强度">
                 </div>
             </div>
         </li>
@@ -163,8 +166,8 @@
                     大便次数
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="shitTime" type="number" oninput="if(value.length>2)value=value.slice(0,2)"
-                           placeholder="请输入内容">
+                    <input id="shitTime_value" type="text"
+                           placeholder="请输入大便次数">
                 </div>
             </div>
         </li>
@@ -174,86 +177,8 @@
                     小便次数
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="urineTime" type="number" oninput="if(value.length>2)value=value.slice(0,2)"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    体重Kg
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="weight" type="number"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    身高cm
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="height" type="number"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    总入量(ml)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="totalInput" type="number" oninput="if(value.length>5)value=value.slice(0,5)"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    总出量(ml)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="totalOutput" type="number" oninput="if(value.length>4)value=value.slice(0,4)"
-                           placeholder="请输入内容">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    入量(ml)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="inputMl" type="number"  class="aui-pull-left" style="width:47%;"
-                           oninput="if(value.length>4)value=value.slice(0,4)"
-                           placeholder="请输入内容" >
-                    <select id="input"  class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
-                        <option value="饮水">饮水</option>
-                        <option value="输液">输液</option>
-                        <option value="鼻饲">鼻饲</option>
-                    </select>
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    出量(ml)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="outputMl" type="number"  class="aui-pull-left" style="width:47%;"
-                           oninput="if(value.length>4)value=value.slice(0,4)"
-                           placeholder="请输入内容">
-                    <select id="output" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
-                        <option value="引流液">引流液</option>
-                        <option value="尿">尿</option>
-                        <option value="便">便</option>
-                    </select>
+                    <input id="urineTime_value" type="text"
+                           placeholder="请输入小便次数">
                 </div>
             </div>
         </li>
@@ -263,8 +188,52 @@
                     尿量(ml)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="upd" type="number" oninput="if(value.length>4)value=value.slice(0,4)"
-                           placeholder="请输入内容">
+                    <input id="upd_value" type="text"
+                           placeholder="请输入尿量">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    总入量(ml)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="totalInput_value" type="text"
+                           placeholder="请输入总入量">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    总出量(ml)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="totalOutput_value" type="text"
+                           placeholder="请输入总出量">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    体重Kg
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="weight_value" type="text"
+                           placeholder="请输入体重">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    身高cm
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="height_value" type="text"
+                           placeholder="请输入身高">
                 </div>
             </div>
         </li>
