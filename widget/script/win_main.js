@@ -5,10 +5,12 @@ apiready = function() {
     fs = api.require('fs');
     scanner = api.require('cmcScan');
     api.parseTapmode();
+    if(storageKey.scannerStatus !== 'checkDetail'){
+        getUserInfo();
+        var header = document.querySelector('#header');
+        immersive(header);
 
-    getUserInfo();
-    var header = document.querySelector('#header');
-    immersive(header);
+    }
 
 
     api.addEventListener({
@@ -61,6 +63,32 @@ apiready = function() {
                     name: 'tourRecordsResultShow'
                 });
                 $api.setStorage(storageKey.tourRecordsPersonId,value)
+            }else if(scannerStatus === 'checkDetail'){
+                //alert("试管核对");
+                var persons = $api.getStorage(storageKey.persons);
+                //遍历查询
+                for (var i = 0; i < persons.length; i++) {
+                    if(persons[i].id==value){
+                        $api.setStorage(storageKey.currentPerson, persons[i]);
+                    }
+                }
+                api.openWin({
+                    name: "win_person_center",
+                    bounces: false,
+                    slidBackEnabled: false,
+                    reload: true,
+                    url: '../html/win_person_center.html',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: false
+                });
+                api.sendEvent({
+                    name: 'scanPersonComplete',
+                });
+            }else if(scannerStatus === 'medScan'){
+                //alert('medScan')
+                api.sendEvent({
+                    name: 'medScan',
+                });
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询

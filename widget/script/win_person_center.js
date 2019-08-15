@@ -1,5 +1,6 @@
 frames=["frm_person_center","frm_tizhengshouji","frm_yizhuzhixing","frm_huliwendang","frm_fuzhugongju","nurse/frm_nurse_hljld","nurse/frm_nurse_zyybtys","nurse/frm_nurse_dnzqtzs","nurse/frm_nurse_gczqtzs","nurse/frm_nurse_wcjyzqtzs","nurse/bloodGlucose"];
 currentFrame = 0;
+var scannerStatus = $api.getStorage(storageKey.scannerStatus);
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
@@ -22,6 +23,34 @@ apiready = function(){
             $api.html($api.byId("icon"), jiaobiao);
         }
     });
+    if(scannerStatus === 'checkDetail'){
+        //alert("return方法");
+        $api.setStorage(storageKey.scannerStatus, '');
+        api.addEventListener({
+            name: eventName.personChoosed
+        }, function(ret, err){
+            $api.setStorage(storageKey.currentIdx, ret.value.index);
+            var allPersons = $api.getStorage(storageKey.persons);
+            $api.setStorage(storageKey.currentPerson, allPersons[ret.value.index]);
+            freshHeaderInfo();
+            refreshCurrenFrame();
+        });
+
+        //添加其它页面打开某个frm的监听，需要在 frames 变量中添加对应的值
+        api.addEventListener({
+            name: eventName.openFrame
+        }, function(ret, err){
+            openFrameContent(ret.value.name);
+        });
+
+        //点击返回键关闭当前window窗口
+        api.addEventListener({
+            name: 'keyback'
+        },function(ret, err) {
+            api.closeWin();
+        });
+            return;
+    }
     openMainFrame();
     //监听病人列表查询点击切换
     api.addEventListener({
@@ -89,12 +118,12 @@ function openFrameContent(page){
       name: 'frm_person_search'
   });
 
-  if (page === 'frm_tizhengshouji'||page === 'frm_huliwendang'||page === 'frm_fuzhugongju'){
+  /*if (page === 'frm_tizhengshouji'||page === 'frm_huliwendang'||page === 'frm_fuzhugongju'){
       api.toast({
           msg: '功能暂未开放，敬请期待！'
       });
       return;
-  }
+  }*/
   var header = document.querySelector('#header');
   var pos = $api.offset(header);
   var footPos = $api.offset(document.querySelector('#footer'))

@@ -1,10 +1,14 @@
 var calendar;
 var chooseDate=null; //当前月点击选择的日期
 var specialDates = []; //当前月的特殊日期
-
+var clendarId ;
+var scanner;
+var objId;
 apiready = function(){
     api.parseTapmode();
+    scanner = api.require('cmcScan');
     calendar = api.require('UICalendar');
+
     var tab = new auiTab({
         element:document.getElementById("tab"),
         index: 1,
@@ -15,11 +19,42 @@ apiready = function(){
           //重要事件提醒
           showCalendar();
         }else if(ret.index==2){
+            $api.html($api.byId('content'), '');
+            $api.html($api.byId('scanContentContainer'), '');
+            $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
+          $api.setStorage(storageKey.scannerStatus,'checkDetail');
+
           //试管核对
           //关闭日历
-          calendar.close();
+          calendar.close({id:clendarId});
           showScan();
+        }else if(ret.index==3){
+            $api.setStorage(storageKey.scannerStatus,'checkDetail');
+            $api.html($api.byId('content'), '');
+            $api.html($api.byId('scanContentContainer'), '');
+            $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
+            //试管核对
+            //关闭日历
+            calendar.close({id:clendarId});
+            showScan();
         }
+    });
+    api.addEventListener({
+        name:'scanPersonComplete'
+    },function(ret,err){
+        $api.removeCls($api.byId(objId),'smUncomplete');
+        $api.addCls($api.byId(objId),'smComplete');
+    });
+
+    api.addEventListener({
+        name:'medScan'
+    },function(ret,err){
+        $api.removeCls($api.byId(objId),'smUncomplete');
+        $api.addCls($api.byId(objId),'smComplete');
+
+        var patientInfo = doT.template($api.text($api.byId('scanMed-tmpl')));
+        $api.html($api.byId('scanContentContainer'),patientInfo($api.getStorage(storageKey.currentPerson)) );
+        $api.addCls($api.byId('scanContentContainer'),'borderScanComplete');
     });
 
     showCalendar();
@@ -163,6 +198,8 @@ function showCalendar(){
         }
         //console.log(JSON.stringify(ret));
         if(ret.eventType=="show"){
+            clendarId = ret.id;
+            //alert(clendarId);
           setCurDate(ret.year,ret.month,false);
         }else if (ret.eventType==="normal" || ret.eventType==="special") {
           if(ret.month<10){
@@ -282,9 +319,15 @@ function showScan(){
   $api.html($api.byId('content'), contentTmpl({}));
   api.parseTapmode();
 }
+function showScanMedical(){
+    var contentTmpl = doT.template($api.text($api.byId('medical-tpl')));
+    $api.html($api.byid('content'),contentTmpl({}));
+}
 
-function scan(){
-  scanner.start({
+function scan(obj){
+    scanner.start();
+    objId= $api.attr(obj, 'id');
+  /*scanner.start({
   },function(ret,err){
 			if(ret.status===1){
         var value = ret.value;
@@ -317,7 +360,13 @@ function scan(){
             location: 'bottom'
         });
 			}
-	});
+	});*/
+}
+
+function medScan(obj){
+    objId = $api.attr(obj, 'id');
+    $api.setStorage(storageKey.scannerStatus,'medScan');
+    scanner.start();
 }
 
 function currentMonth(){

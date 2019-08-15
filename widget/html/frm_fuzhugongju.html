@@ -8,17 +8,40 @@
     <title>辅助工具</title>
     <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
     <link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
+    <style type="text/css">
+        .smComplete{
+            background: #55dc03
+        }
+        .smUncomplete{
+            background: #fa7d3e;
+        }
+        .borderScanComplete{
+            border: 2px solid #00bcd4;
+        }
+        .order .line {
+            display: inline-block;
+            width: 32%;
+            border-top: 1px solid #ccc ;
+        }
+        .order .txt {
+            color: #686868;
+            vertical-align: -4px;
+        }
+    </style>
 </head>
 <body>
 <div class="aui-content">
   <div class="aui-tab" id="tab">
       <div class="aui-tab-item aui-active">重要事件提醒</div>
       <div class="aui-tab-item">试管核对</div>
+      <div class="aui-tab-item">药品核对</div>
   </div>
   <div id="content">
 
   </div>
+    <div class="content aui-font-size-15 aui-padded-t-15" id="scanContentContainer">
+
+    </div>
 </div>
 
 </body>
@@ -40,9 +63,21 @@
   <a href="#" class="add-btn" tapmode onclick="addNotice();"></a>
 </script>
 <script id="check-tpl" type="text/template">
-  <div class="aui-text-center aui-content-padded" style="margin-top: 6rem !important;">
-      <div class="aui-btn aui-btn-block aui-btn-warning" tapmode onclick="scan();">扫一扫</div>
+  <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+      <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanPatient" tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者</div>
   </div>
+  <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+      <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed" tapmode onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签</div>
+  </div>
+</script>
+
+<script id="medical-tpl" type="text/template">
+    <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanPatient-first" tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者</div>
+    </div>
+    <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed-second" tapmode onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签</div>
+    </div>
 </script>
 <script id="record-tpl" type="text/template">
   {{~ it.content:info:index}}
@@ -57,6 +92,106 @@
       </div>
   </div>
   {{~}}
+</script>
+<script id="scanMed-tmpl" type="text/template">
+    <div class="keyValueItem aui-margin-l-15">
+        <span class="" style="color: red">第三步:核对结果(信息一致)</span>
+    </div>
+    <div class="keyValueItem aui-margin-l-15 order">
+        <span class="line"></span>
+        <span class="txt" style="background: #00bcd4">患者基本信息</span>
+        <span class="line"></span>
+    </div>
+    <div class="keyValueItem aui-margin-l-15">
+        <span class="key">科室：</span>
+        <span class="value">{{=it.organizationName||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">入院时间：</span>
+        <span class="value">{{=it.inHospitalTime||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">入科时间：</span>
+        {{if(it.inOrganizationTime){ }}
+        <span class="value">{{=it.inOrganizationTime}} </span>
+        {{}else{}}
+        <span class="value redInfo">待入科 &nbsp;&nbsp;&nbsp; </span>
+        </sapn>
+        {{}}}
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">费别：</span>
+        <span class="value">{{=it.costType||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">病人类型：</span>
+        <span class="value">{{=it.patientType||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">经治医生：</span>
+        <span class="value">{{=it.doctorName||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">责任护士：</span>
+        <span class="value">{{=it.nurseName||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">入院诊断：</span>
+        <span class="value">{{=it.diagnose||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">药物过敏史：</span>
+        <span class="value">{{=it.drugAllergy||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">联系电话：</span>
+        <span class="value">{{=it.contactsMobile||''}}</span>
+    </div>
+
+    <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
+        <span class="key">住院号：</span>
+        <span class="value">{{=it.registerNumber||''}}</span>
+    </div>
+    <div class="keyValueItem aui-margin-l-15 order">
+        <span class="line" style="width: 35%;"></span>
+        <span class="txt" style="background: #00bcd4">医嘱信息</span>
+        <span class="line" style="width: 35%;"></span>
+    </div>
+    <div style="border:2px solid #0ad452">
+        <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
+            <div class="left" ></div>
+            <div class="right">
+                <div >
+                    <span>医嘱内容：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>生效时间：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>用法：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>医生托嘱：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>执行科室：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>开嘱医生：</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>开嘱时间：</span>
+                    <span></span>
+                </div>
+            </div>
+    </div>
+    </div>
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
