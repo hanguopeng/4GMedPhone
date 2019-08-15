@@ -20,7 +20,7 @@ apiready = function() {
 function showAdd() {
     var person = $api.getStorage(storageKey.currentPerson);
     common.get({
-        url: config.patientDetailUrl + person.id,
+        url: config.patientDetailUrl + person.id + '/' + person.homepageId,
         isLoading: true,
         success: function(ret) {
             var userName = $api.getStorage(storageKey.userName)

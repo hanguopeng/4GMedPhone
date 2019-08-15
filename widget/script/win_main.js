@@ -1,6 +1,7 @@
 var fs;
 var scanner ;
 var socketFlag = $api.getStorage(storageKey.createFlag);
+var area_name
 apiready = function() {
     fs = api.require('fs');
     scanner = api.require('cmcScan');
@@ -208,6 +209,7 @@ function getOrganizationInfo() {
                 ret.content.sort(common.sortAsc);
                 for (var i = 0; i < ret.content.length; i++) {
                     if (i == 0) {
+                        area_name = ret.content[i].name
                         $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '" selected="selected">' + ret.content[i].name + '</option>');
                     } else {
                         $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '">' + ret.content[i].name + '</option>');
@@ -225,6 +227,10 @@ function getOrganizationInfo() {
 }
 
 function openMainFrame() {
+    var areaId = $api.byId('areaSel').value;
+    $api.setStorage(storageKey.areaId, areaId);
+    $api.setStorage(storageKey.areaName, area_name);
+
     var header = document.querySelector('#header');
     var pos = $api.offset(header);
     api.openFrame({ // 打开Frame
@@ -250,7 +256,11 @@ function openMainFrame() {
  */
 function sendAreaChangedEvent() {
     var areaId = $api.byId('areaSel').value;
+    var index = $api.byId('areaSel').selectedIndex; // 选中索引
+    var areaName = $api.byId('areaSel').options[index].text;
+
     $api.setStorage(storageKey.areaId, areaId);
+    $api.setStorage(storageKey.areaName, areaName);
     api.sendEvent({
         name: eventName.InpatientAreaChanged,
         extra: {
@@ -258,6 +268,8 @@ function sendAreaChangedEvent() {
         }
     });
 }
+
+
 function backSystem(){
   api.closeToWin({
       name: 'win_system_grid'
