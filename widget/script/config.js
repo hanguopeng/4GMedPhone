@@ -1,12 +1,10 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 //var localServer = "http://140.143.143.150:8085/cmc-server";
-
-//var localServer = "http://172.17.100.2:8083/cmc-server";
+// var localServer = "http://172.17.100.2:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
-// var localServer = "http://192.168.43.51:8085/cmc-server";
-var localServer = "http://192.168.1.138:8085/cmc-server";
-
+var localServer = "http://192.168.1.137:8085/cmc-server";
+//var localServer = "http://192.168.1.138:8085/cmc-server";
 
 
 // var ws = "ws://172.17.100.2:8889/";
@@ -50,7 +48,10 @@ var config={
     querySendList: localServer+"/med/V4gMedicalAdviceSendList/querySendList", //医嘱发送记录
     // 20190722 添加新开新停医嘱全部已读
     adviceAllRead: localServer+"/med/newadvicesend/adviceAllRead/",     //新开新停医嘱全部已读
-
+    // 20190814 添加保存所有体征项
+    saveNurseTemperatureChart: localServer+"/nur/nurseTemperatureChart/saveAllPda",     //添加保存所有体征项
+    getFileId: localServer+"/nur/nurseTemperatureChart/getFileId",     //获取病人护理文件ID
+    getSelfDefining: localServer+"/nur/nurseTemperatureChart/queryItems",     //查询其他体征项
 
     // 未用+护理单
     animalHeatSituationUrl: localServer+"/nur/nurseLog/animalHeat/situation/{patientId}", //体温变化

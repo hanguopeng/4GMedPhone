@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>自定义体征项列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+</head>
+<body style="background-color:#F0F0F0">
+<style>
+    .font-green{
+        color: green;
+    }
+</style>
+<div class="tabBody">
+    <div id="self-defining_list" class="active aui-margin-t-15 tab-body-item  aui-font-size-14 aui-list aui-form-list" style="padding-top: 0.2rem">
+        <div class="itemContainer" id="selfDefiningContentContainer">
+        </div>
+        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="save();">
+            <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>确定</div>
+        </div>
+    </div>
+</div>
+</body>
+<script id="selfDefiningList" type="text/template">
+    <table class=" aui-font-size-14" width="99%">
+        <tbody id="tbody">
+        {{?it}}
+        {{for(var i=0;i<it.length;i=i+4) {
+        }}
+        <tr>
+            {{?it[i]}}
+            <td style="width: 33%" id="self{{=it[i].key}}" name="{{=it[i].value}}" onclick="changeKey(this)">{{=it[i].value||''}}</td>
+            {{?}}
+            {{?it[i+1]}}
+            <td style="width: 33%" id="self{{=it[i+1].key}}" name="{{=it[i+1].value}}"  onclick="changeKey(this)">{{=it[i+1].value||''}}</td>
+            {{?}}
+            {{?it[i+2]}}
+            <td style="width: 33%" id="self{{=it[i+2].key}}" name="{{=it[i+2].value}}"  onclick="changeKey(this)">{{=it[i+2].value||''}}</td>
+            {{?}}
+        </tr>
+        {{ } }}
+        {{?}}
+        </tbody>
+    </table>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/nurse/self_defining_list.js"></script>
+</html>

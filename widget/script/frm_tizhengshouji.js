@@ -23,7 +23,7 @@ apiready = function () {
             homePageID: homePageID
         }),
         success: function (ret) {
-            if (isEmpty(ret.content)) {
+            if (!isEmpty(ret.content)) {
                 fileId = ret.content
             }
         }
@@ -77,13 +77,14 @@ function initPager() {
 function showTZCJ() {
     $api.html($api.byId('content'), "");
     var contentTmpl = doT.template($api.text($api.byId('tzRecord-tpl')));
-    var currentTime = this.currentTime()
+    var time = currentTime()
+
     $api.html($api.byId('content'), contentTmpl({
         "currentDate": currentDate(),
-        "currentTime": currentTime,
+        "currentTime": time,
         'createUserName': $api.getStorage(storageKey.userName)
     }));
-    getMeasureTimeSection(currentTime.split(0, 2))
+    getMeasureTimeSection(time.substring(0, 2))
     api.parseTapmode();
 }
 
@@ -161,6 +162,17 @@ function saveTZ() {
     addMapIfNotNull(data, "总出量", "9", totalOutput_value, null);
     addMapIfNotNull(data, "体重", "19", weight_value, null);
     addMapIfNotNull(data, "身高", "20", height_value, null);
+    var selfKey = $("input[name='selfKey']");
+    var selfValue = $("input[name='selfValue']");
+    for (var i = 0; i<selfKey.length;i++){
+        var key = (selfKey[i].id)
+        var keyName = (selfKey[i].value)
+        var value = (selfValue[i].value)
+        if (!isEmpty(key)&&!isEmpty(value)) {
+            addMapIfNotNull(data, keyName, key, value, null);
+        }
+    }
+
     if (data.length <= 0) {
         api.toast({
             msg: '没有可保存的项',
@@ -271,26 +283,26 @@ function loadMore() {
 function addField() {
     $("#fieldAdd").after('' +
         '<div class="custom-field">' +
-          '<li class="aui-list-item">' +
-              '<div class="aui-list-item-inner">' +
-                  '<div class="aui-list-item-label" style="width: 40%;">自定义内容</div>' +
-                  '<div class="aui-list-item-input">' +
-                      '<input type="text" class="aui-pull-left custom-key" ' +
-                            'style="width:90%"  placeholder="请输入内容">' +
-                          '<i class="aui-iconfont aui-icon-minus aui-pull-right" ' +
-                               'style="line-height: 2.2rem;" tapmode onclick="delField(this);">' +
-                          '</i>' +
-                  '</div>' +
-              '</div>' +
-          '</li>' +
-          '<li class="aui-list-item">' +
-              '<div class="aui-list-item-inner">' +
-                 '<div class="aui-list-item-label" style="width: 40%;">值</div>' +
-                 '<div class="aui-list-item-input"><input class="custom-val"' +
-                       ' type="text" placeholder="请输入内容">' +
-                 '</div>' +
-              '</div>' +
-          '</li>' +
+        '<li class="aui-list-item">' +
+        '<div class="aui-list-item-inner">' +
+        '<div class="aui-list-item-label" style="width: 40%;">自定义内容</div>' +
+        '<div class="aui-list-item-input">' +
+        '<input type="text" class="aui-pull-left"  name="selfKey" ' +
+        'style="width:90%;"  placeholder="请输入内容" onclick="openSelfDefiningListPage(this)">' +
+        '<i class="aui-iconfont aui-icon-minus aui-pull-right" ' +
+        'style="line-height: 2.2rem;" tapmode onclick="delField(this);">' +
+        '</i>' +
+        '</div>' +
+        '</div>' +
+        '</li>' +
+        '<li class="aui-list-item">' +
+        '<div class="aui-list-item-inner">' +
+        '<div class="aui-list-item-label" style="width: 40%;">值</div>' +
+        '<div class="aui-list-item-input">' +
+        '<input class="custom-val" type="text" name="selfValue" placeholder="请输入内容">' +
+        '</div>' +
+        '</div>' +
+        '</li>' +
         '</div>');
     api.parseTapmode();
 }
@@ -301,6 +313,39 @@ function delField(el) {
     //这里有坑，需要使用两次next，具体查看https://www.cnblogs.com/lijinwen/p/5690223.html
     $api.remove(cur.nextElementSibling);
     $api.remove(cur);
+}
+
+function openSelfDefiningListPage(obj) {
+    api.openFrame({
+        name: 'self_defining_list',
+        url: './nurse/self_defining_list.html',
+        rect: {
+            x: 0,
+            y: 80,
+            w: 'auto',
+            h: 500
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
+
+    api.addEventListener({
+        name:'chooseSelfDefining'
+    }, function(ret, err){
+        if (ret.value&&ret.value.value&&ret.value.key) {
+            $api.val(obj,ret.value.value)
+            $api.attr(obj,"id",ret.value.key)
+        }
+    });
 }
 
 //正则判断  小时:分钟 格式
@@ -685,16 +730,22 @@ function getMeasureTimeSection(number) {
 }
 
 function changeMeasureTime(obj) {
-    let hour = parseInt($api.val(obj));
-    let start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
-    let end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
-    if (hour < 10) {
-        hour = "0" + hour;
-    }
+    var measureTimeSection = $api.val(obj)
     var el = $api.dom('#measureTime')
-    $api.val(el, hour + ":00");
     var el1 = $api.dom('#measureTimeSectionRemark')
-    $api.val(el1, "(" + start + ":00-" + end + ":59)");
+    if (isEmpty(measureTimeSection)){
+        $api.val(el, currentTime());
+        $api.val(el1, "");
+    } else{
+        let hour = parseInt(measureTimeSection);
+        let start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
+        let end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        $api.val(el, hour + ":00");
+        $api.val(el1, "(" + start + ":00-" + end + ":59)");
+    }
 }
 
 function isEmpty(str) {

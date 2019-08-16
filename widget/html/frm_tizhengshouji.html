@@ -86,7 +86,7 @@
                 </div>
                 <div class="aui-list-item-input">
                     <input id="temperature_value" type="text" class="aui-pull-left" style="width:47%"
-                            placeholder="请输入体温值">
+                           placeholder="请输入体温值">
                     <select id="temperature_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
                         <option value="5">腋温</option>
                         <option value="4">口温</option>
@@ -237,10 +237,10 @@
                 </div>
             </div>
         </li>
-        <!--<li id="fieldAdd" class="aui-list-header aui-text-info" style="font-size:0.8rem;">点击右侧+号进行其它信息维护-->
-        <!--<i class="aui-iconfont aui-icon-plus aui-btn aui-btn-info" style="font-weight: bold;" tapmode-->
-        <!--onclick="addField();"></i>-->
-        <!--</li>-->
+        <li id="fieldAdd" class="aui-list-header aui-text-info" style="font-size:0.8rem;">点击右侧+号进行其它信息维护
+            <i class="aui-iconfont aui-icon-plus aui-btn aui-btn-info" style="font-weight: bold;" tapmode
+               onclick="addField();"></i>
+        </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="saveTZ();">
                 <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
@@ -277,24 +277,24 @@
         </table>
     </div>
     <!--<ul id="hisRecordList" class="aui-list aui-media-list">-->
-        <!--{{~it.list:info:index}}-->
-        <!--<li class="aui-list-item aui-list-item-middle" tapmode onclick="showDetail({{=index}})">-->
-            <!--<div class="aui-media-list-item-inner">-->
-                <!--<div class="aui-list-item-inner aui-list-item-arrow">-->
-                    <!--<div class="aui-list-item-text">-->
-                        <!--<div class="aui-list-item-title aui-font-size-14">{{=info.createUserName}}</div>-->
-                        <!--<div class="aui-list-item-right">{{=info.handleTime || '-'}}</div>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash;<div class="aui-list-item-text">-->
-                        <!--{{=info._map['currentDate'] || '-'}}-->
-                    <!--</div>&ndash;&gt;-->
-                <!--</div>-->
-                <!--<div id="content-{{=index}}" class="aui-hide">-->
-                    <!--{{= JSON.stringify(info)}}-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</li>-->
-        <!--{{~}}-->
+    <!--{{~it.list:info:index}}-->
+    <!--<li class="aui-list-item aui-list-item-middle" tapmode onclick="showDetail({{=index}})">-->
+    <!--<div class="aui-media-list-item-inner">-->
+    <!--<div class="aui-list-item-inner aui-list-item-arrow">-->
+    <!--<div class="aui-list-item-text">-->
+    <!--<div class="aui-list-item-title aui-font-size-14">{{=info.createUserName}}</div>-->
+    <!--<div class="aui-list-item-right">{{=info.handleTime || '-'}}</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="aui-list-item-text">-->
+    <!--{{=info._map['currentDate'] || '-'}}-->
+    <!--</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div id="content-{{=index}}" class="aui-hide">-->
+    <!--{{= JSON.stringify(info)}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--{{~}}-->
     <!--</ul>-->
 </script>
 <script id="chart-tpl" type="text/template">
