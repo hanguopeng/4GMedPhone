@@ -65,7 +65,7 @@ apiready = function() {
                 });
                 $api.setStorage(storageKey.tourRecordsPersonId,value)
             }else if(scannerStatus === 'checkDetail'){
-                //alert("试管核对");
+                alert(JSON.stringify(ret.value));
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
                 for (var i = 0; i < persons.length; i++) {

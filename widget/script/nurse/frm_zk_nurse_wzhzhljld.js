@@ -22,16 +22,34 @@ apiready = function () {
 }
 
 function showAdd() {
+
+            person.pgrq = currentTime();
+            var storageUserName = $api.getStorage(storageKey.userName);
+            person.pgr = storageUserName;
+
+            person.currentTime = currentTime();
+            //alert(JSON.stringify(person));
+            $api.html($api.byId('content'), "");
+            var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
+            $api.html($api.byId('content'), contentTmpl(person));
+
+
+    api.parseTapmode();
+}
+
+/*function showAdd() {
     common.get({
         url: config.patientDetailUrl + patientId + '/' + person.homepageId,
         isLoading: true,
         success: function (ret) {
+
             ret.content.pgrq = currentTime();
             var storageUserName = $api.getStorage(storageKey.userName);
             ret.content.pgr = storageUserName;
 
             personInfo = ret.content;
             personInfo.currentTime = currentTime();
+            alert(JSON.stringify(personInfo));
             $api.html($api.byId('content'), "");
             var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
             $api.html($api.byId('content'), contentTmpl(personInfo));
@@ -39,7 +57,7 @@ function showAdd() {
         }
     });
     api.parseTapmode();
-}
+}*/
 
 //历史展示
 function showHis() {
@@ -302,7 +320,7 @@ function saveAddRecord() {
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
     params.measureDate= currentTime()+":00";
-    //alert(JSON.stringify(params));
+    alert(JSON.stringify(params));
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',
