@@ -4,6 +4,7 @@ var specialDates = []; //当前月的特殊日期
 var clendarId ;
 var scanner;
 var objId;
+
 apiready = function(){
     api.parseTapmode();
     scanner = api.require('cmcScan');
@@ -55,6 +56,34 @@ apiready = function(){
         var patientInfo = doT.template($api.text($api.byId('scanMed-tmpl')));
         $api.html($api.byId('scanContentContainer'),patientInfo($api.getStorage(storageKey.currentPerson)) );
         $api.addCls($api.byId('scanContentContainer'),'borderScanComplete');
+        //alert(ret.value.materialCode.value);
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url:config.scanMedical+ret.value.materialCode.value,
+            isLoading:true,
+            success:function(ret){
+                //alert(JSON.stringify(ret))
+                alert(JSON.stringify(ret.content.sonBoList))
+                if(ret&&ret.content){
+                    if(ret.content.medPatientId==person.id){
+                        var contentTmpl = doT.template($api.text($api.byId('scanMedical-tmpl')));
+                        $api.html($api.byId('medContentContainer'), contentTmpl(ret.content));
+                        if(ret.content.sonBoList.length>0){
+                            var contentTmpl = doT.template($api.text($api.byId('relation-tmpl')));
+                            $api.html($api.byId('relationContentContainer'), contentTmpl(ret.content.sonBoList));
+                        }
+                    }else{
+                        api.alert({
+                            title: '提示',
+                            msg: '两次扫描不是同一个患者',
+                        });
+
+                     }
+                }
+
+            }
+        });
+
     });
 
     showCalendar();
@@ -367,6 +396,8 @@ function medScan(obj){
     objId = $api.attr(obj, 'id');
     $api.setStorage(storageKey.scannerStatus,'medScan');
     scanner.start();
+
+
 }
 
 function currentMonth(){

@@ -65,7 +65,7 @@ apiready = function() {
                 });
                 $api.setStorage(storageKey.tourRecordsPersonId,value)
             }else if(scannerStatus === 'checkDetail'){
-                alert(JSON.stringify(ret.value));
+                //alert(JSON.stringify(ret.value));
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
                 for (var i = 0; i < persons.length; i++) {
@@ -84,11 +84,15 @@ apiready = function() {
                 });
                 api.sendEvent({
                     name: 'scanPersonComplete',
+
                 });
             }else if(scannerStatus === 'medScan'){
-                //alert('medScan')
+                //alert(JSON.stringify(ret.value));
                 api.sendEvent({
                     name: 'medScan',
+                    extra:{
+                        materialCode:ret.value,
+                    }
                 });
             }else{
                 var persons = $api.getStorage(storageKey.persons);

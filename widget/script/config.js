@@ -3,8 +3,8 @@ var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 // var localServer = "http://172.17.100.2:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
-var localServer = "http://192.168.1.137:8085/cmc-server";
-//var localServer = "http://192.168.1.138:8085/cmc-server";
+//var localServer = "http://172.17.100.2:8083/cmc-server";
+var localServer = "http://192.168.43.228:8085/cmc-server";
 
 
 // var ws = "ws://172.17.100.2:8889/";
@@ -52,6 +52,7 @@ var config={
     saveNurseTemperatureChart: localServer+"/nur/nurseTemperatureChart/saveAllPda",     //添加保存所有体征项
     getFileId: localServer+"/nur/nurseTemperatureChart/getFileId",     //获取病人护理文件ID
     getSelfDefining: localServer+"/nur/nurseTemperatureChart/queryItems",     //查询其他体征项
+    scanMedical:localServer+"/med/advice/getByMaterialCode/", //扫码核对-试管扫描医嘱
 
     // 未用+护理单
     animalHeatSituationUrl: localServer+"/nur/nurseLog/animalHeat/situation/{patientId}", //体温变化

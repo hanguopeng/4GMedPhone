@@ -17,6 +17,7 @@
         }
         .borderScanComplete{
             border: 2px solid #00bcd4;
+            border-bottom-color: #ffffff;
         }
         .order .line {
             display: inline-block;
@@ -34,12 +35,18 @@
   <div class="aui-tab" id="tab">
       <div class="aui-tab-item aui-active">重要事件提醒</div>
       <div class="aui-tab-item">试管核对</div>
-      <div class="aui-tab-item">药品核对</div>
+      <!--<div class="aui-tab-item">药品核对</div>-->
   </div>
   <div id="content">
 
   </div>
     <div class="content aui-font-size-15 aui-padded-t-15" id="scanContentContainer">
+
+    </div>
+    <div class="content aui-font-size-15 aui-padded-t-15" id="medContentContainer">
+
+    </div>
+    <div class="content aui-font-size-15 aui-padded-t-15" id="relationContentContainer">
 
     </div>
 </div>
@@ -152,46 +159,100 @@
         <span class="key">住院号：</span>
         <span class="value">{{=it.registerNumber||''}}</span>
     </div>
+
+</script>
+    <script id="scanMedical-tmpl" type="text/template">
+        <div class="keyValueItem aui-margin-l-15 order">
+            <span class="line" style="width: 35%;"></span>
+            <span class="txt" style="background: #00bcd4">医嘱信息</span>
+            <span class="line" style="width: 35%;"></span>
+        </div>
+        <div style="border:2px solid #0ad452">
+            <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
+                <div class="left" ></div>
+                <div class="right">
+                    <div >
+                        <span>医嘱内容：</span>
+                        <span>{{=it.name||''}}</span>
+                    </div>
+                    <div>
+                        <span>生效时间：</span>
+                        <span>{{=it.adviceStart||''}}</span>
+                    </div>
+                    <div>
+                        <span>用法：</span>
+                        <span>{{=it.usageName||''}}</span>
+                    </div>
+                    <div>
+                        <span>医生托嘱：</span>
+                        <span>{{=it.entrustment||''}}</span>
+                    </div>
+                    <div>
+                        <span>执行科室：</span>
+                        <span>{{=it.acceptOrgName||''}}</span>
+                    </div>
+                    <div>
+                        <span>开嘱医生：</span>
+                        <span>{{=it.doctorName||''}}</span>
+                    </div>
+                    <div>
+                        <span>开嘱时间：</span>
+                        <span>{{=it.foundTime||''}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+</script>
+<script id="relation-tmpl" type="text/template">
     <div class="keyValueItem aui-margin-l-15 order">
-        <span class="line" style="width: 35%;"></span>
-        <span class="txt" style="background: #00bcd4">医嘱信息</span>
-        <span class="line" style="width: 35%;"></span>
+        <span class="line" style="width: 15%;"></span>
+        <span class="txt" style="background: #00bcd4">该患者其他化验医嘱信息</span>
+        <span class="line" style="width: 15%;"></span>
     </div>
+    {{ for(var i=0;i<it.length;i++){
+    var item = it[i];
+    }}
     <div style="border:2px solid #0ad452">
         <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
             <div class="left" ></div>
             <div class="right">
                 <div >
                     <span>医嘱内容：</span>
-                    <span></span>
+                    <span>{{=item.name||''}}</span>
                 </div>
                 <div>
                     <span>生效时间：</span>
-                    <span></span>
+                    <span>{{=item.adviceStart||''}}</span>
                 </div>
                 <div>
                     <span>用法：</span>
-                    <span></span>
+                    <span>{{=item.usageName||''}}</span>
                 </div>
                 <div>
                     <span>医生托嘱：</span>
-                    <span></span>
+                    <span>{{=item.entrustment||''}}</span>
                 </div>
                 <div>
                     <span>执行科室：</span>
-                    <span></span>
+                    <span>{{=item.acceptOrgName||''}}</span>
                 </div>
                 <div>
                     <span>开嘱医生：</span>
-                    <span></span>
+                    <span>{{=item.doctorName||''}}</span>
                 </div>
                 <div>
                     <span>开嘱时间：</span>
-                    <span></span>
+                    <span>{{=item.foundTime||''}}</span>
                 </div>
             </div>
+        </div>
     </div>
-    </div>
+    {{
+    }
+    }}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
