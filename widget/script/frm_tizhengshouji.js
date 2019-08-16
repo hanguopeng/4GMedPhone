@@ -23,7 +23,7 @@ apiready = function () {
             homePageID: homePageID
         }),
         success: function (ret) {
-            if (isEmpty(ret.content)) {
+            if (!isEmpty(ret.content)) {
                 fileId = ret.content
             }
         }
