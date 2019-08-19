@@ -3,7 +3,7 @@ var personInfo = null;
 var patientId = person.id;
 apiready = function () {
     api.parseTapmode();
-    checkBox()
+
     var tab = new auiTab({
         element: document.getElementById("tab"),
         index: 1,
@@ -29,13 +29,11 @@ function showAdd() {
             ret.content.pgrq = currentTime();
             var storageUserName = $api.getStorage(storageKey.userName);
             ret.content.pgr = storageUserName;
-            //alert(JSON.stringify())
             personInfo = ret.content;
-
             $api.html($api.byId('content'), "");
             var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
             $api.html($api.byId('content'), contentTmpl(personInfo));
-
+            checkBox()
         }
     });
     api.parseTapmode();
@@ -325,10 +323,7 @@ function showHis(){
             templateList:[{"templateCode":"fallAndFallIntoBed","templateVersion":1}]
         }),
         success: function (ret) {
-            //alert(JSON.stringify(ret.content));
             if (ret.content && ret.content.list && ret.content.list.length > 0) {
-                //处理数据
-                //alert(JSON.stringify(ret.content.list));
                 var data = ret.content.list;
                 var contentTmpl = doT.template($api.text($api.byId('record-tpl')));
                 $api.html($api.byId('recordContent'), contentTmpl(data));
@@ -401,12 +396,9 @@ function checkBox() {
         dataType:JSON,
         success:function(ret){
             var item = ret.content;
-            //alert(JSON.stringify(item));
-            console.log(JSON.stringify(item));
-            //alert(item.length);
             $api.html($api.byId("hzgx"), "");
-            /*$api.html($api.byId("hzgx"), "<option value=''>请选择</option>");*/
             var contentTmpl = doT.template($api.text($api.byId("hzjsgx-tpl")));
+            // alert(JSON.stringify(item[0].text))
             $api.html($api.byId("hzgx"), contentTmpl(item));
         }
     });

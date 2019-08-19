@@ -17,21 +17,52 @@
             vertical-align: middle;
             padding: 0.2rem 0;
         }
-        input.inputItem{
+
+        input.inputItem {
             width: 2rem;
         }
-        .aui-row.item{
-            min-height: 44px;line-height: 44px;
+
+        .aui-row.item {
+            min-height: 44px;
+            line-height: 44px;
         }
-        .aui-row.border-bottom{
+
+        .aui-row.border-bottom {
             border-bottom: 1px double #f1f1f1;
             padding-bottom: 0.5rem;
         }
-        .ctitle{background-color:#67c23a;color: #fff;}
-        .itemDate{position: relative;line-height: 1.5rem;}
-        .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
-        .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
-        .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +82,7 @@
                 危重患重护理记录单
             </div>
             <div class="aui-row ">
-                <div class="aui-col-xs-4">
+                <div class="aui-col-xs-6">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>床号:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
@@ -59,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="aui-col-xs-5">
+                <div class="aui-col-xs-6">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>患者姓名:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
@@ -67,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="aui-col-xs-3">
+                <div class="aui-col-xs-6">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>性别:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
@@ -75,27 +106,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="aui-col-xs-4">
+                <div class="aui-col-xs-6">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>住院号:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="registerNumber" readonly value="{{=it.registerNumber||''}}">
+                            <input type="text" class="value" name="registerNumber" readonly
+                                   value="{{=it.registerNumber||''}}">
                         </div>
                     </div>
                 </div>
-                <div class="aui-col-xs-8">
+                <div>
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>入院时间:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="inHospitalTime" readonly value="{{=it.inHospitalTime||''}}">
+                            <input type="text" class="value" name="inHospitalTime" readonly
+                                   value="{{=it.inHospitalTime||''}}">
                         </div>
                     </div>
                 </div>
-                <div class="aui-col-xs-12">
+                <div>
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>诊断:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value"  value="">
+                            <input type="text" class="value" readonly value="{{=it.diagnose||''}}">
                         </div>
                     </div>
                 </div>
@@ -104,7 +137,8 @@
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                     <div>日期时间:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <input type="text" style="font-size:0.7rem" id="hsqmrq" onclick="pickerTime(this)" tapmode value="" class="input">
+                        <input type="text" style="font-size:0.7rem" id="hsqmrq" onclick="pickerTime(this)" tapmode
+                               value="" >
                     </div>
                 </div>
             </div>
@@ -113,7 +147,7 @@
                     录入记录
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div class="aui-col-xs-3">体温:</div>
+                    <div class="aui-col-xs-4">体温:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="temperature" id="TWval" placeholder="请输入内容">
                     </div>
@@ -121,7 +155,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">脉搏(次/min):</div>
+                    <div class="aui-col-xs-4">脉搏(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="pulse" id="MBval" placeholder="请输入内容">
                     </div>
@@ -129,7 +163,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">呼吸(次/min):</div>
+                    <div class="aui-col-xs-4">呼吸(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="breath" id="HXval" placeholder="请输入内容">
                     </div>
@@ -137,7 +171,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血压(mmHg):</div>
+                    <div class="aui-col-xs-4">血压(mmHg):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="bloodpressure" id="XYval" placeholder="请输入内容">
                     </div>
@@ -145,7 +179,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血氧饱和度(%):</div>
+                    <div class="aui-col-xs-4">血氧饱和度(%):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="ogen" id="XYBHval" placeholder="请输入内容">
                     </div>
@@ -153,7 +187,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">吸氧(L/min):</div>
+                    <div class="aui-col-xs-4">吸氧(L/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="inputogen" id="XYLval" placeholder="请输入内容">
                     </div>
@@ -164,7 +198,7 @@
                     入量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="RLMCval" name="RLMCval">
                             <option value="">请选择</option>
@@ -184,7 +218,7 @@
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div class="aui-col-xs-3">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="RLRLval" id="RLRLval" placeholder="请输入内容">
                     </div>
@@ -195,7 +229,7 @@
                     出量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="CHMCval" name="CHMCval">
                             <option value="">请选择</option>
@@ -214,13 +248,13 @@
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div class="aui-col-xs-4">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="CLRLval" id="CLRLval" placeholder="请输入内容">
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">颜色性状:</div>
+                    <div class="aui-col-xs-4">颜色性状:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="YSXZval" name="YSXZval">
                             <option value="">请选择</option>
@@ -336,7 +370,7 @@
                                     <option value="通畅"> 通畅</option>
                                     <option value="不通畅">不通畅</option>
                                     <option value="更换">更换</option>
-                                    <option value=""夹管>夹管</option>
+                                    <option value="" 夹管>夹管</option>
                                     <option value="置管"> 置管</option>
                                     <option value="拔管">拔管</option>
                                     <option value="更换">更换</option>
@@ -471,153 +505,145 @@
                             <input type="checkbox"
                                    name="dx-bqgc" value="呕血"> 呕血
                         </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="便血"> 便血
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="便血"> 便血
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="血尿"> 血尿
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="咳嗽"> 咳嗽
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="咳痰"> 咳痰
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="恶心"> 恶心
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="呕吐"> 呕吐
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="腹痛"> 腹痛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="腹泻"> 腹泻
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="入睡困难"> 入睡困难
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="入院指导"> 周身不适、乏力
+                        </div>
+                        </br>
+                        <div class="aui-margin-l-5" inline sytle="background-color:red;" style="width:6rem;">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="双侧瞳孔" onclick="QGQKselect(this)"> 双侧瞳孔
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select name="sctksel">
+                                    <option value="">请选择</option>
+                                    <option value="等大同圆"> a.等大同圆</option>
+                                    <option value="不等大">b.不等大</option>
+                                    <option value="散大固定">c.散大固定</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="血尿"> 血尿
+                        </div>
+
+
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="瞳孔对光发散" onclick="QGQKselect(this)"> 瞳孔对光发散
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide" id="tkdgfs-sel">
+                                <select id="dkdgfs" name="dkdgfs">
+                                    <option value="">请选择</option>
+                                    <option value="灵敏"> a.灵敏</option>
+                                    <option value="迟钝">b.迟钝</option>
+                                    <option value="存在">c.存在</option>
+                                    <option value="消失"> d.消失</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="咳嗽"> 咳嗽
+                        </div>
+
+
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="(L/R)侧肢体活动障碍"> (L/R)侧肢体活动障碍
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="语言" onclick="QGQKselect(this)"> 语言
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select id="czthdza" name="czthdza">
+                                    <option value="">请选择</option>
+                                    <option value="失语"> a.失语</option>
+                                    <option value="流利">b.流利</option>
+                                    <option value="不清晰">c.不清晰</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="咳痰"> 咳痰
+                        </div>
+
+
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="患肢" onclick="QGQKselect(this)"> 患肢
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select id="hz" name="hzhz">
+                                    <option value="">请选择</option>
+                                    <option value="末梢血运良"> a.末梢血运良</option>
+                                    <option value="末梢血运差">b.末梢血运差</option>
+                                    <option value="桡动脉搏动良">c.桡动脉搏动良</option>
+                                    <option value="桡动脉搏动差">d.桡动脉搏动差</option>
+                                    <option value="足背动脉搏动良"> e.足背动脉搏动良</option>
+                                    <option value="足背动脉搏动差">f.足背动脉搏动差</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="恶心"> 恶心
+                        </div>
+
+
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="患肢皮温" onclick="QGQKselect(this)"> 患肢皮温
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide" id="hz-sel">
+                                <select id="hzfw" name="hzfw">
+                                    <option value="">请选择</option>
+                                    <option value="正常"> a.正常</option>
+                                    <option value="高">b.高</option>
+                                    <option value="低">c.低</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="呕吐"> 呕吐
+                        </div>
+
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="肌力" onclick="QGQKselect(this)"> 肌力
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide" id="jl-sel">
+                                <select id="jl" name="jljl">
+                                    <option value="">请选择</option>
+                                    <option value="I级"> a.I级</option>
+                                    <option value="II级">b.II级</option>
+                                    <option value="III级">c.III级</option>
+                                    <option value="IV级">d.IV级</option>
+                                    <option value="V级"> e.V级</option>
+                                    <option value="0级">f.0级</option>
+                                    <option value="感觉平面">g.感觉平面</option>
+                                </select>
                             </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="腹痛"> 腹痛
-                            </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="腹泻"> 腹泻
-                            </div>
-                            <div class="aui-margin-l-5 inline">
-                                <input type="checkbox"
-                                       name="dx-bqgc" value="入睡困难"> 入睡困难
-                            </div>
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="入院指导"> 周身不适、乏力
-                                </div></br>
-                                <div class="aui-margin-l-5" inline sytle="background-color:red;" style="width:6rem;">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="双侧瞳孔" onclick="QGQKselect(this)" > 双侧瞳孔
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide">
-                                        <select name="sctksel">
-                                            <option value="">请选择</option>
-                                            <option value="等大同圆"> a.等大同圆</option>
-                                            <option value="不等大">b.不等大</option>
-                                            <option value="散大固定">c.散大固定</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        </div>
 
 
-
-
-
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="瞳孔对光发散" onclick="QGQKselect(this)"> 瞳孔对光发散
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide" id="tkdgfs-sel">
-                                        <select id="dkdgfs" name="dkdgfs">
-                                            <option value="">请选择</option>
-                                            <option value="灵敏"> a.灵敏</option>
-                                            <option value="迟钝">b.迟钝</option>
-                                            <option value="存在">c.存在</option>
-                                            <option value="消失"> d.消失</option>
-                                        </select>
-                                    </div>
-                                 </div>
-
-
-
-
-
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="(L/R)侧肢体活动障碍"> (L/R)侧肢体活动障碍
-                                </div>
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="语言" onclick="QGQKselect(this)"> 语言
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide">
-                                        <select id="czthdza" name="czthdza">
-                                            <option value="">请选择</option>
-                                            <option value="失语"> a.失语</option>
-                                            <option value="流利">b.流利</option>
-                                            <option value="不清晰">c.不清晰</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="患肢" onclick="QGQKselect(this)"> 患肢
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide">
-                                        <select id="hz" name="hzhz">
-                                            <option value="">请选择</option>
-                                            <option value="末梢血运良"> a.末梢血运良</option>
-                                            <option value="末梢血运差">b.末梢血运差</option>
-                                            <option value="桡动脉搏动良">c.桡动脉搏动良</option>
-                                            <option value="桡动脉搏动差">d.桡动脉搏动差</option>
-                                            <option value="足背动脉搏动良"> e.足背动脉搏动良</option>
-                                            <option value="足背动脉搏动差">f.足背动脉搏动差</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="患肢皮温" onclick="QGQKselect(this)"> 患肢皮温
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide" id="hz-sel">
-                                        <select id="hzfw" name="hzfw">
-                                            <option value="">请选择</option>
-                                            <option value="正常"> a.正常</option>
-                                            <option value="高">b.高</option>
-                                            <option value="低">c.低</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="aui-margin-l-5 inline">
-                                    <input type="checkbox"
-                                           name="dx-bqgc" value="肌力" onclick="QGQKselect(this)"> 肌力
-                                    <div class="flex-item aui-margin-l-10 aui-text-left hide" id="jl-sel">
-                                        <select id="jl" name="jljl">
-                                            <option value="">请选择</option>
-                                            <option value="I级"> a.I级</option>
-                                            <option value="II级">b.II级</option>
-                                            <option value="III级">c.III级</option>
-                                            <option value="IV级">d.IV级</option>
-                                            <option value="V级"> e.V级</option>
-                                            <option value="0级">f.0级</option>
-                                            <option value="感觉平面">g.感觉平面</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
+                    </div>
                 </div>
             </div>
-                </div>
             <div class="aui-row border-bottom">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>护理措施:</div>
@@ -726,18 +752,19 @@
                 </div>
             </div>
             </div>
-            <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
-                <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
-            </div>
             <div class="aui-row ">
-                <div class="aui-col-xs-4">
+                <div class="aui-col-xs-8">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>护士签名:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" name="userName" class="value" readonly value="{{it.pgr}}">
+                            <input type="text" name="userName" class="value" readonly value="{{=it.pgr}}">
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+                <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
             </div>
         </section>
     </section>
@@ -749,39 +776,28 @@
         <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
             危重患者护理记录单
         </div>
-        <div class="aui-searchbar" id="search">
-            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
-        </div>
         <div id="recordContent" class="recordContent">
         </div>
     </div>
 </script>
 <script id="record-tpl" type="text/template">
-
-    {{ for(var prop in it) { }}
-    <div class="item">
-        <div class="itemDate aui-margin-t-15">
-            <img src="../../image/u30820.png" alt="" class="f-right">
-            <div class="date aui-font-size-14">{{= prop}}</div>
-            <div style="clear: both;"></div>
+    {{?it}}
+    {{ for(var i=0;i< it.length;i++){
+    var item = it[i];
+    }}
+    <div class="aui-col-xs-6 aui-text-center aui-padded-t-15" tapmode onclick="openDetailWin(this);">
+        <img src="../../image/u30815.png" alt="" style="margin: auto;">
+        <div class="aui-margin-t-10">
+            <div class="aui-ellipsis-1">时间:{{= item.createTime}}</div>
         </div>
-        <div class="line"></div>
-        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
-            {{~ it[prop]:info:index}}
-            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin(this);">
-                <img src="../../image/u30815.png" alt="" style="margin: auto;">
-                <div class="aui-margin-t-10">
-                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
-                </div>
-                <div class="aui-margin-t-5">
-                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
-                </div>
-                <span class="aui-hide json-span">{{= JSON.stringify(info.itemList)}}</span>
-            </div>
-            {{~}}
+        <div class="aui-margin-t-5">
+            <div class="aui-ellipsis-1">创建人:{{= item.hushiqianming}}</div>
         </div>
+        <span class="aui-hide json-span">{{= JSON.stringify(item)}}</span>
     </div>
-    {{ } }}
+    {{  } }}
+    {{?}}
+
 </script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/config.js"></script>

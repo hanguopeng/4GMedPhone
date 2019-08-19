@@ -146,7 +146,7 @@ var searchPatientDetail = function (patientId) {
  */
 var searchLastExamineInfo = function (patientId) {
     common.get({
-        url: config.patientLastExamineUrl + patientId,
+        url: config.patientLastExamineUrl + patientId + "/" + person.homepageId,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('tzylContentContainer'), "");

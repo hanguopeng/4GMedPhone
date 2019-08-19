@@ -95,7 +95,7 @@
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>诊断:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value"  value="">
+                            <input type="text" class="value"  value="{{=it.diagnose||''}}">
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                     录入记录
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div class="aui-col-xs-3">体温:</div>
+                    <div class="aui-col-xs-4">体温:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="temperature" id="TWval" placeholder="请输入内容">
                     </div>
@@ -121,7 +121,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">脉搏(次/min):</div>
+                    <div  class="aui-col-xs-4">脉搏(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="pulse" id="MBval" placeholder="请输入内容">
                     </div>
@@ -129,7 +129,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">呼吸(次/min):</div>
+                    <div  class="aui-col-xs-4">呼吸(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="breath" id="HXval" placeholder="请输入内容">
                     </div>
@@ -137,7 +137,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血压(mmHg):</div>
+                    <div  class="aui-col-xs-4">血压(mmHg):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="bloodpressure" id="XYval" placeholder="请输入内容">
                     </div>
@@ -145,7 +145,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血氧饱和度(%):</div>
+                    <div  class="aui-col-xs-4">血氧饱和度(%):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="ogen" id="XYBHval" placeholder="请输入内容">
                     </div>
@@ -153,7 +153,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">吸氧(L/min):</div>
+                    <div  class="aui-col-xs-4">吸氧(L/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="inputogen" id="XYLval" placeholder="请输入内容">
                     </div>
@@ -164,7 +164,7 @@
                     入量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div  class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="RLMCval" name="RLMCval">
                             <option value="">请选择</option>
@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div  class="aui-col-xs-4">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="RLRLval" id="RLRLval" placeholder="请输入内容">
                     </div>
@@ -187,7 +187,7 @@
                     出量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div  class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="CHMCval" name="CHMCval">
                             <option value="">请选择</option>
@@ -199,13 +199,13 @@
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div  class="aui-col-xs-4">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <input type="text" class="value" name="CLRLval" id="CLRLval" placeholder="请输入内容">
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">颜色性状:</div>
+                    <div  class="aui-col-xs-4">颜色性状:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <select id="YSXZval" name="YSXZval">
                             <option value="">请选择</option>
@@ -651,9 +651,7 @@
                 </div>
             </div>
             </div>
-            <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
-                <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
-            </div>
+
             <div class="aui-row ">
                 <div class="aui-col-xs-8">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
@@ -663,6 +661,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+                <div class="aui-btn aui-btn-info" tapmode onclick="saveAddRecord();">保存</div>
             </div>
         </section>
     </section>
@@ -674,14 +676,12 @@
         <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
             危重患者护理记录单
         </div>
-        <div class="aui-searchbar" id="search">
-            <div class="aui-searchbar-cancel" tapmode onclick="search();">搜索</div>
-        </div>
         <div id="recordContent" class="recordContent">
         </div>
     </div>
 </script>
 <script id="record-tpl" type="text/template">
+    {{?it}}
     {{ for(var i=0;i< it.length;i++){
     var item = it[i];
     }}
@@ -696,6 +696,7 @@
         <span class="aui-hide json-span">{{= JSON.stringify(item)}}</span>
     </div>
     {{  } }}
+    {{?}}
 </script>
 
 <script type="text/javascript" src="../../script/api.js"></script>

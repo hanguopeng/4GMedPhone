@@ -1,5 +1,6 @@
 var ji = 0;
 var xi = 0;
+var userName = $api.getStorage(storageKey.userName)
 apiready = function() {
     api.parseTapmode();
     var tab = new auiTab({
@@ -23,7 +24,6 @@ function showAdd() {
         url: config.patientDetailUrl + person.id + '/' + person.homepageId,
         isLoading: true,
         success: function(ret) {
-            var userName = $api.getStorage(storageKey.userName)
             var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
             $api.html($api.byId('content'), contentTmpl({
                 person: ret.content,
@@ -265,7 +265,7 @@ function jiliang() {
     "<td><input type='text' name='jmoring"+ji+"' style='text-align:center;height:25px;'/></td>"+
     "<td><input type='text' name='jnoon"+ji+"' style='text-align:center;height:25px;'/></td>"+
     "<td><input type='text' name='jnight"+ji+"' style='text-align:center;height:25px;'/></td>"+
-    "<td><input type='text' name='jnurseName"+ji+"' value='' style='text-align:center;height:25px;'/></td>"+
+    "<td><input type='text' name='jnurseName"+ji+"' value=" + userName + " style='text-align:center;height:25px;'/></td>"+
     "</tr>");
     ji++;
     }
@@ -309,7 +309,7 @@ function jiliang() {
         "<td><input type='text' name='xzero"+xi+"' style='text-align:center;height:25px;'/></td>"+
         "<td><input type='text' name='xthree"+xi+"' style='text-align:center;height:25px;'/></td>"+
         "<td><input type='text' name='xmemo"+xi+"' style='text-align:center;height:25px;'/></td>"+
-        "<td><input type='text' name='xnurseName"+xi+"' value='' style='text-align:center;height:25px;'/></td>"+
+        "<td><input type='text' name='xnurseName"+xi+"' value=" + userName + "  style='text-align:center;height:25px;'/></td>"+
         "</tr>");
         xi++;
         }

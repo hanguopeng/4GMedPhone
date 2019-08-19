@@ -19,7 +19,7 @@ var config={
     organizationUrl: localServer+"/sys/organization/listByOperator", //疗区查询
     patientSearchUrl: localServer+"/med/patient", //病人查询
     patientDetailUrl: localServer+"/med/patient/", //病人详情
-    patientLastExamineUrl: localServer+"/nur/nurseLog/lastExamine/", //护理检查信息
+    patientLastExamineUrl: localServer+"/nur/nurseTemperatureChart/getSignValue/", //护理检查信息
     costSituationUrl: localServer+"/med/cost/situation/", //费用情况（金额汇总）
     medAssayUrl: localServer+"/med/assay?patientId=", //化验结果
     medAssayDetailUrl: localServer+"/med/assay/", //化验结果明细
@@ -52,24 +52,35 @@ var config={
     saveNurseTemperatureChart: localServer+"/nur/nurseTemperatureChart/saveAllPda",     //添加保存所有体征项
     getFileId: localServer+"/nur/nurseTemperatureChart/getFileId",     //获取病人护理文件ID
     getSelfDefining: localServer+"/nur/nurseTemperatureChart/queryItems",     //查询其他体征项
-    scanMedical:localServer+"/med/advice/getByMaterialCode/", //扫码核对-试管扫描医嘱
+    // 20290828整理护理单url
+    nurseLogXYZL: localServer + "/nur/criticallyIll",//血液肿瘤危重list
+    nurseLogWZHZ: localServer + "/nur/boneCriticallyIll", //骨科危重患者
+    nursePlanUrl:localServer+"/nur/nursePlan",
+    saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
+    saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
+    saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
+    selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
+    selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail", //胰岛素记录表详情
+    nurseBloodSugar: localServer+"/nur/nursePlan/json",//血糖监测录入（通用的）
+    nurseBloodSheet: localServer+"/nur/bloodSugar",//血糖监测表
+
+
 
     // 未用+护理单
     animalHeatSituationUrl: localServer+"/nur/nurseLog/animalHeat/situation/{patientId}", //体温变化
     transfuseSituationUrl: localServer+"/med/transfuse/situation/", //输液情况
     nursePlanSituationUrl: cmcServer+"/med/nursePlan/situation/{patientId}", //护理文书
-    nursePlanUrl:localServer+"/nur/nursePlan",
+
     patientrelationUrl: localServer + "/sys/dictionary/getComboBoxList",
     animalHeatSituation: localServer+"/nur/nurseLog/animalHeat/situation/", //体温变化
     bloodGlucose: localServer+"/nur/nurseLog?templateCode=xtjchl&templateVersion=1&patientId=", //血糖监测查询
     bloodGlucoseDetail: localServer+"/nur/nurseLog/", //血糖监测明细
     nurseLogCommon: localServer+"/nur/nurseLog/listDetails", //护理记录
     nurseSMTZhljld: localServer+"/nur/VitalSigns"  ,//生命体征护理记录单
-    nurseLogWZHZ: localServer + "/nur/boneCriticallyIll", //骨科危重患者
-    nurseLogXYZL: localServer + "/nur/criticallyIll",
+
+
     nurseLogNew: localServer+"/nur/nursePlan/listDetails/json",//一期护理文书
-    nurseBloodSugar: localServer+"/nur/nursePlan/json",//血糖监测录入
-    nurseBloodSheet: localServer+"/nur/bloodSugar",//血糖监测表
+
     nurseLogTXSJCreate: localServer+"/nur/nurseLog", //体征收集创建
     nurseLogCreate: localServer+"/nur/nurseLog", //护理创建
     nurseLogTZSJ: localServer+"/nur/nurseLog/listDetails", //体征收集历史
@@ -101,11 +112,7 @@ var config={
     nurLastExamineDownloadUrl: localServer+"/nur/nurseLog/lastExamine/download",  //护理信息
     medCostSituationDownloadUrl: localServer+"/med/cost/situation/downLoad",  //费用信息
     medPatientDetailsDownloadUrl: localServer+"/med/patient/details/download",  //病人详情
-    saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
-    saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
-    saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
-    selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
-    selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail" //胰岛素记录表详情
+
 }
 
 var accessoryType={

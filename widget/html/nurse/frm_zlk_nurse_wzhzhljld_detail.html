@@ -46,56 +46,6 @@
             <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
                 危重患重护理记录单
             </div>
-            <!--<div class="aui-row ">
-                <div class="aui-col-xs-4">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>床号:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="medBedName" readonly value="{{=it.medBedName}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="aui-col-xs-5">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>患者姓名:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="name" readonly value="{{=it.name}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="aui-col-xs-3">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>性别:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="sexName" readonly value="{{=it.sexName||''}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="aui-col-xs-4">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>住院号:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="registerNumber" readonly value="{{=it.registerNumber||''}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="aui-col-xs-8">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>入院时间:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value" name="inHospitalTime" readonly value="{{=it.inHospitalTime||''}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="aui-col-xs-12">
-                    <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
-                        <div>诊断:</div>
-                        <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" class="value"  value="">
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="aui-row ">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                     <div>创建时间:</div>
@@ -109,7 +59,7 @@
                     录入记录
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div class="aui-col-xs-3">体温:</div>
+                    <div class="aui-col-xs-4">体温:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.tiwen || '-'}}</span>
                     </div>
@@ -117,7 +67,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">脉搏(次/min):</div>
+                    <div  class="aui-col-xs-4">脉搏(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.maibo || '-'}}</span>
                     </div>
@@ -125,7 +75,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">呼吸(次/min):</div>
+                    <div  class="aui-col-xs-4">呼吸(次/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.huxi || '-'}}</span>
                     </div>
@@ -133,7 +83,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血压(mmHg):</div>
+                    <div  class="aui-col-xs-4">血压(mmHg):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.xueya || '-'}}</span>
                     </div>
@@ -141,7 +91,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">血氧饱和度(%):</div>
+                    <div  class="aui-col-xs-4">血氧饱和度(%):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.xueyangbaohedu || '-'}}</span>
                     </div>
@@ -149,7 +99,7 @@
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">吸氧(L/min):</div>
+                    <div  class="aui-col-xs-4">吸氧(L/min):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.xiyang || '-'}}</span>
                     </div>
@@ -160,13 +110,13 @@
                     入量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div  class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.ruliangmingcheng|| ''}}</span>
+                        <span>{{=it.ruliangmingcheng|| '-'}}</span>
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div  class="aui-col-xs-4">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.ruliangml || '-'}}</span>
                     </div>
@@ -177,19 +127,19 @@
                     出量
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">名称:</div>
+                    <div  class="aui-col-xs-4">名称:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         {{=it.chuliangmingcheng || '-'}}
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-3">量(ml):</div>
+                    <div  class="aui-col-xs-4">量(ml):</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.chuliangml || '-'}}</span>
                     </div>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-3">颜色性状:</div>
+                    <div  class="aui-col-xs-4">颜色性状:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <span>{{=it.yansexingzhuang || '-'}}</span>
                     </div>
@@ -230,8 +180,6 @@
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz"><div class="aui-margin-l-5 inline">
                         <span>{{=it.daoguanguanli || '-'}}</span>
                     </div>
-
-                    </div>
                 </div>
             </div>
             <div class="aui-row border-bottom">
@@ -263,13 +211,12 @@
                     </div>
                 </div>
             </div>
-            </div>
             <div class="aui-row ">
                 <div class="aui-col-xs-8">
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>护士签名:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <input type="text" name="userName" class="value" readonly value="{{=it.hushiqianming}}">
+                            <span>{{=it.hushiqianming||'-'}}></span>
                         </div>
                     </div>
                 </div>
@@ -283,14 +230,10 @@
 <script type="text/javascript" src="../../script/aui-tab.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
-<script type="text/javascript" src="../../script/nurse/frm_zk_nurse_wzhzhljld.js"></script>
 <script type="text/javascript">
     apiready = function(){
         api.parseTapmode();
         var params = api.pageParam.data;
-        //(JSON.stringify(params));
-        var person = $api.getStorage(storageKey.currentPerson);
-
         var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
         $api.html($api.byId('content'), contentTmpl(params));
     };

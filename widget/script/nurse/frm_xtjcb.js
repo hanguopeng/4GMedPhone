@@ -137,17 +137,19 @@ function saveTZ(){
 function showXTJCB(){
     var currentPerson = $api.getStorage(storageKey.currentPerson);
     var registerNumber = currentPerson.registerNumber;
-    //alert(registerNumber);
-   common.get({
+    $api.html($api.byId('content'), "");
+    common.get({
         url:config.nurseBloodSheet+"?registerNumber="+registerNumber,
         isLoading: true,
         success:function (ret) {
-            if(ret&&ret.content&&ret.content.length){
-                //alert(JSON.stringify(ret.content));
-                var item = ret.content;
-             var contentTmpl = doT.template($api.text($api.byId('hisxt-tpl')));
-              $api.html($api.byId('content'), contentTmpl(item));
-
+            if(ret&&ret.content&&ret.content.length>0){
+                var contentTmpl = doT.template($api.text($api.byId('hisxt-tpl')));
+                if (ret.content[0].id){
+                    var item = ret.content;
+                    $api.html($api.byId('content'), contentTmpl(item));
+                }else{
+                    $api.html($api.byId('content'), contentTmpl(""));
+                }
             }
         }
     })

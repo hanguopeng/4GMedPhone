@@ -28,7 +28,6 @@ function showAdd() {
             person.pgr = storageUserName;
 
             person.currentTime = currentTime();
-            //alert(JSON.stringify(person));
             $api.html($api.byId('content'), "");
             var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
             $api.html($api.byId('content'), contentTmpl(person));
@@ -61,9 +60,9 @@ function showAdd() {
 
 //历史展示
 function showHis() {
-
     var contentTmpl = doT.template($api.text($api.byId('his-tpl')));
     $api.html($api.byId('content'), contentTmpl({}));
+    search()
     api.parseTapmode();
     api.hideProgress();
 
@@ -320,7 +319,6 @@ function saveAddRecord() {
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
     params.measureDate= currentTime()+":00";
-    alert(JSON.stringify(params));
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',
@@ -506,20 +504,21 @@ function pickerSearch(){
 }
 
 function search() {
-
     var person = $api.getStorage(storageKey.currentPerson);
     $api.html($api.byId("recordContent"), "");
     common.get({
         url: config.nurseLogXYZL + "?registerNumber="+person.registerNumber,
         isLoading: true,
         success: function (ret) {
-            //alert(JSON.stringify(ret));
-            if (ret.content && ret.content) {
+            if (ret.content) {
                 //处理数据
                 var data = ret.content;
-                //根据开始时间和结束时间构造一个以时间为key的数组对象
                 var contentTmpl = doT.template($api.text($api.byId('record-tpl')));
-                $api.html($api.byId('recordContent'), contentTmpl(data));
+                if (data[0].id){
+                    $api.html($api.byId('recordContent'), contentTmpl(data));
+                } else{
+                    $api.html($api.byId('recordContent'), contentTmpl(""));
+                }
                 api.parseTapmode();
                 api.hideProgress();
             } else {

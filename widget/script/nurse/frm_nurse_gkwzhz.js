@@ -22,22 +22,32 @@ apiready = function () {
 }
 
 function showAdd() {
-    common.get({
-        url: config.patientDetailUrl + patientId + '/' + person.homepageId,
-        isLoading: true,
-        success: function (ret) {
-            ret.content.pgrq = currentTime();
-            var storageUserName = $api.getStorage(storageKey.userName);
-            ret.content.pgr = storageUserName;
+    // common.get({
+    //     url: config.patientDetailUrl + patientId + '/' + person.homepageId,
+    //     isLoading: true,
+    //     success: function (ret) {
+    //         alert(JSON.stringify(ret))
+    //         ret.content.pgrq = currentTime();
+    //         var storageUserName = $api.getStorage(storageKey.userName);
+    //         ret.content.pgr = storageUserName;
+    //
+    //         personInfo = ret.content;
+    //         personInfo.currentTime = currentTime();
+    //         $api.html($api.byId('content'), "");
+    //         var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
+    //         $api.html($api.byId('content'), contentTmpl(personInfo));
+    //
+    //     }
+    // });
+    person.pgrq = currentTime();
+    var storageUserName = $api.getStorage(storageKey.userName);
+    person.pgr = storageUserName;
 
-            personInfo = ret.content;
-            personInfo.currentTime = currentTime();
-            $api.html($api.byId('content'), "");
-            var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
-            $api.html($api.byId('content'), contentTmpl(personInfo));
+    person.currentTime = currentTime();
+    $api.html($api.byId('content'), "");
+    var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
+    $api.html($api.byId('content'), contentTmpl(person));
 
-        }
-    });
     api.parseTapmode();
 }
 
@@ -46,6 +56,7 @@ function showHis() {
 
     var contentTmpl = doT.template($api.text($api.byId('his-tpl')));
     $api.html($api.byId('content'), contentTmpl({}));
+    search()
     api.parseTapmode();
     api.hideProgress();
 
@@ -120,12 +131,12 @@ function saveAddRecord() {
     var xueya = $("input[name='bloodpressure']").val();
     var xueyangbaohedu = $("input[name='ogen']").val();//血氧饱和度
     var xiyang = $("input[name='inputogen']").val();//吸氧
-    var ruliangmingcheng = $("input[name='RLMCval']").val();
+    var ruliangmingcheng = $("select[name='RLMCval']").val();
     var ruliangml = $("input[name='RLRLval']").val();
-    var chuliangmingcheng = $("input[name='CHMCval']").val();
+    var chuliangmingcheng = $("select[name='CHMCval']").val();
     var chuliangml = $("input[name='CLRLval']").val();
 
-    var yansexingzhuang = $("input[name='YSXZval']").val();
+    var yansexingzhuang = $("select[name='YSXZval']").val();
 
     var yishi = "";
     var dxysArr = $("input[name='dx-ys']");
@@ -250,7 +261,7 @@ function saveAddRecord() {
 
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
-    parms.hushiqianming = hushiqianming;
+    params.hushiqianming = hushiqianming;
     params.hulicuoshi = hulicuoshi;
     params.bingqingguancha = bingqingguancha;
     params.jiankangzhidao = jiankangzhidao;
@@ -279,7 +290,6 @@ function saveAddRecord() {
     params.name = "骨科危重患者护理记录单";
     params.itemList = data;
     params.measureDate= currentTime()+":00";
-
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',
@@ -335,8 +345,8 @@ function addMapIfNotNull(arr, key, value, existsId) {
 function openDetailWin(el) {
     var data = JSON.parse($(el).find(".json-span").first().text());
     api.openWin({
-        name: 'win_brxjpgjjyjld_detail',
-        url: './win_brxjpgjjyjld_detail.html',
+        name: 'win_nurse_gk_wzhzhljld_detail',
+        url: './win_nurse_gk_wzhzhljld_detail.html',
         pageParam: {
             data: data
         }
@@ -468,22 +478,19 @@ function search() {
 
     var person = $api.getStorage(storageKey.currentPerson);
     $api.html($api.byId("recordContent"), "");
-    common.post({
-        url: config.nurseLogWZHZ,
+    common.get({
+        url: config.nurseLogWZHZ + "?registerNumber="+person.registerNumber,
         isLoading: true,
-        data:JSON.stringify({
-            patientId: person.id,
-            limit: -1,
-            templateList:[{"templateCode":"gkwzhzhljld","templateVersion":225}]
-        }),
         success: function (ret) {
-            //alert(JSON.stringify(ret));
-            if (ret.content && ret.content.list && ret.content.list.length > 0) {
+            if (ret.content) {
                 //处理数据
-                var data = ret.content.list;
-                //根据开始时间和结束时间构造一个以时间为key的数组对象
+                var data = ret.content;
                 var contentTmpl = doT.template($api.text($api.byId('record-tpl')));
-                $api.html($api.byId('recordContent'), contentTmpl(params));
+                if (data[0].id){
+                    $api.html($api.byId('recordContent'), contentTmpl(data));
+                } else{
+                    $api.html($api.byId('recordContent'), contentTmpl(""));
+                }
                 api.parseTapmode();
                 api.hideProgress();
             } else {

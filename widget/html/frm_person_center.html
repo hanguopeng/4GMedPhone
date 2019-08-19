@@ -38,6 +38,13 @@
                 </div>
                 <div class="content aui-font-size-15 aui-padded-t-15" id="fyhzContentContainer">
                 </div>
+
+                <div class="title aui-font-size-16" style="color: #08bad6;" onclick="changeNextShow(this)">
+                    体征一览
+                    <span style="float: right; width: 10%; font-size: 0.7rem">∨</span>
+                </div>
+                <div class="content aui-font-size-14 flex aui-padded-t-15" id="tzylContentContainer">
+
             </div>
             <div id="jcjg" class="tab-body-item">
 
@@ -53,29 +60,55 @@
 
     <script id="tzylTmpl" type="text/template">
         <div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 tiWen">{{=it.temperature||''}}</div>
+            <div class="tiZhengItem aui-padded-10 tiWen">
+                {{?it.temperature}}
+                {{=it.temperature.measureValue}}
+                {{??}}
+                {{='-'}}
+                {{?}}
+            </div>
             <div class="aui-font-size-12 aui-padded-t-5">体温<p style="line-height: 1.39em;">&nbsp;</p></div>
         </div>
         <div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 huXi">{{=it.breathe||''}}</div>
-            <div class="aui-font-size-12 aui-padded-t-5">呼吸（次/分）</div>
+            <div class="tiZhengItem aui-padded-10 huXi">
+                {{?it.breathRate}}
+                {{=it.breathRate.measureValue}}
+                {{??}}
+                {{='-'}}
+                {{?}}
+            </div>
+            <div class="aui-font-size-12 aui-padded-t-5">呼吸<br/>（次/分）</div>
         </div>
         <div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 maiBo">{{=it.pulse||''}}</div>
-            <div class="aui-font-size-12 aui-padded-t-5">脉搏（次/分）</div>
+            <div class="tiZhengItem aui-padded-10 maiBo">
+                {{?it.pulse}}
+                {{=it.pulse.measureValue}}
+                {{??}}
+                {{='-'}}
+                {{?}}
+            </div>
+            <div class="aui-font-size-12 aui-padded-t-5">脉搏<br/>（次/分）</div>
         </div>
         <div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 xueYa">{{=it.bloodPressureLow||''}}/{{=it.bloodPressureHigh||''}}</div>
-            <div class="aui-padded-t-5 aui-font-size-12">血压 (mmhg)</div>
+            <div class="tiZhengItem aui-padded-10 xueYa">
+                {{?it.bloodPressure}}
+                {{=it.bloodPressure.measureValue}}
+                {{??}}
+                {{='—'}}
+                {{?}}
+            </div>
+            <div class="aui-padded-t-5 aui-font-size-12">血压<br/>(mmhg)</div>
         </div>
         <div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 xinLv">{{=it.heartRate||''}}</div>
-            <div class="aui-font-size-12 aui-padded-t-5">心率（次/分）</div>
+            <div class="tiZhengItem aui-padded-10 xinLv">
+                {{?it.heartRate}}
+                {{=it.heartRate.measureValue}}
+                {{??}}
+                {{='-'}}
+                {{?}}
+            </div>
+            <div class="aui-font-size-12 aui-padded-t-5">心率<br/>（次/分）</div>
         </div>
-        <!--<div class="flex-item aui-text-center">
-            <div class="tiZhengItem aui-padded-10 xinLv">{{=it.heartRate||''}}</div>
-            <div class="aui-font-size-12 aui-padded-t-5">心率（次/分）</div>
-        </div>-->
     </script>
     <!--基础信息-->
     <script id="jcxxTmpl" type="text/template">
