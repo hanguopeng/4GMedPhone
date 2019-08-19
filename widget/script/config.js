@@ -1,14 +1,14 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 //var localServer = "http://140.143.143.150:8085/cmc-server";
-// var localServer = "http://172.17.100.2:8083/cmc-server";
+var localServer = "http://172.17.100.2:8083/cmc-server";
 //var localServer = "http://111.26.165.97:8083/cmc-server";
 //var localServer = "http://10.0.11.95:8085/cmc-server";
 //var localServer = "http://172.17.100.2:8083/cmc-server";
-var localServer = "http://192.168.43.228:8085/cmc-server";
+// var localServer = "http://192.168.43.228:8085/cmc-server";
 
 
-// var ws = "ws://172.17.100.2:8889/";
-var ws = "ws://192.168.1.137:8888/";
+var ws = "ws://172.17.100.2:8889/";
+// var ws = "ws://192.168.1.137:8888/";
 var config={
     // 已用
     duration:3000,
