@@ -698,7 +698,7 @@ function chooseTime(el) {
 
 
 function getMeasureTimeSection(number) {
-    let hour = parseInt(number);
+    var hour = parseInt(number);
     if (hour >= 0 && hour < 4) {
         hour = 2
     }
@@ -723,8 +723,8 @@ function getMeasureTimeSection(number) {
         hour = 22
     }
     $api.attr($api.byId('measureTimeSection' + hour), 'selected', 'true');
-    let start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
-    let end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
+    var start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
+    var end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
     var el1 = $api.dom('#measureTimeSectionRemark')
     $api.val(el1, "(" + start + ":00-" + end + ":59)");
 }
@@ -737,9 +737,9 @@ function changeMeasureTime(obj) {
         $api.val(el, currentTime());
         $api.val(el1, "");
     } else{
-        let hour = parseInt(measureTimeSection);
-        let start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
-        let end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
+        var hour = parseInt(measureTimeSection);
+        var start = hour - 2 < 10 ? "0" + (hour - 2) : hour - 2
+        var end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
         if (hour < 10) {
             hour = "0" + hour;
         }
