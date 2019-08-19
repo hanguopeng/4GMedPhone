@@ -10,7 +10,7 @@ apiready = function () {
         name:'swipeleft'
     }, function(ret, err){
         if (currentTab === 3){
-            currentTab = 0
+            currentTab = 3
         } else {
             currentTab = currentTab + 1
         }
@@ -22,7 +22,7 @@ apiready = function () {
         name:'swiperight'
     }, function(ret, err){
         if (currentTab === 0){
-            currentTab = 3
+            currentTab = 0
         } else {
             currentTab = currentTab - 1
         }
