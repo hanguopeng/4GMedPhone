@@ -1,7 +1,7 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var medPatientId = person.id
 var homePageID = person.homepageId
-var fileId = "1"
+var fileId
 var measureDate
 var measureTime
 var measureTimeSection
@@ -25,6 +25,12 @@ apiready = function () {
         success: function (ret) {
             if (!isEmpty(ret.content)) {
                 fileId = ret.content
+            }else{
+                api.toast({
+                    msg: '当前病人未生成护理单！',
+                    duration: config.duration,
+                    location: 'bottom'
+                });
             }
         }
     });
@@ -90,6 +96,14 @@ function showTZCJ() {
 
 //保存体征采集
 function saveTZ() {
+    if (isEmpty(fileId)){
+        api.toast({
+            msg: '当前病人未生成护理单,不允许保存！',
+            duration: config.duration,
+            location: 'bottom'
+        });
+        return;
+    }
     // 是否允许保存
     var measureDateValue = $("#measureDate").val()
     measureDate = measureDateValue
