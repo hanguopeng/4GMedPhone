@@ -451,7 +451,7 @@ var adviceRecordsForAdviceSends = function () {
         }),
         dataType: "json",
         success: function (ret) {
-            $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceRecords-selector'), 'active');
+            $api.removeCls( $api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
             $api.html($api.byId('adviceSendsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceSendsTmplList')));
             $api.html($api.byId('adviceSendsContentContainer'), contentTmpl(ret.content.list));
