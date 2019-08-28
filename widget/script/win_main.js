@@ -67,11 +67,22 @@ apiready = function() {
             }else if(scannerStatus === 'checkDetail'){
                 //alert(JSON.stringify(ret.value));
                 var persons = $api.getStorage(storageKey.persons);
-                //遍历查询
+                //遍历查询是否是此疗区患者
+                var forFlag = true;
                 for (var i = 0; i < persons.length; i++) {
                     if(persons[i].id==value){
                         $api.setStorage(storageKey.currentPerson, persons[i]);
+                        forFlag = false;
+                        break;
                     }
+                }
+                //如果不是弹出提醒
+                if(forFlag){
+                    api.alert({
+                        title: '提示',
+                        msg: '系统未管理此病人，请刷新后重试',
+                    });
+                    return;
                 }
                 api.openWin({
                     name: "win_person_center",
@@ -82,12 +93,13 @@ apiready = function() {
                     vScrollBarEnabled: true,
                     hScrollBarEnabled: false
                 });
+                //患者腕带扫描成功后发送事件
                 api.sendEvent({
                     name: 'scanPersonComplete',
 
                 });
             }else if(scannerStatus === 'medScan'){
-                //alert(JSON.stringify(ret.value));
+                //试管扫描成功后发送事件
                 api.sendEvent({
                     name: 'medScan',
                     extra:{
@@ -275,9 +287,9 @@ function sendAreaChangedEvent() {
 
 
 function backSystem(){
-  api.closeToWin({
-      name: 'win_system_grid'
-  });
+    api.closeToWin({
+        name: 'win_system_grid'
+    });
 }
 var tokenRet = function(personId){
     common.get({
