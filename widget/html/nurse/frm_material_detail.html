@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>一次性特殊卫材知情同意书</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+        }
+
+        table td,
+        table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+
+        table thead th {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+
+        table tr {
+            background: #fff;
+        }
+
+        #categoryy {
+            width: 340%;
+            display: inline;
+            white-space: nowrap;
+            overflow-x: scroll;
+            float: left;
+        }
+
+        #categoryy li {
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            padding-left: 10px;
+        }
+
+        #categoryy {
+            margin-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+        <div id="content" class="aui-content">
+        </div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <section class="aui-content">
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                    <div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>患者姓名:</span>
+                            <span>{{=it.person.name||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>性别:</span>
+                            <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>年龄:</span>
+                            <span>{{=it.person.age||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>住院号:</span>
+                            <span>{{=it.person.registerNumber||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>科室:</span>
+                            <span>{{=it.person.organizationName||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>床位号:</span>
+                            <span>{{=it.person.medBedName||' '}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>临床诊断:</span>
+                            <span>{{=it.person.clinicalDiagnosis||'-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">一次性特殊卫材知情同意书</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 aui-text-justify">
+                    <div class="center" style="overflow-x: scroll;overflow-y: auto;">
+                        <table class="table aui-font-size-14" id="categoryy">
+                            <caption>一次性特殊卫材知情同意书</caption>
+                            <thead>
+                            <tr>
+                                <th>一次性特殊卫材料名称</th>
+                                <th>价格</th>
+                                <th>患者(家属)签字</th>
+                            </tr>
+                            </thead>
+                            <tbody id="body">
+
+                            </tbody>
+                        </table>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>告知医师（签字、盖章）：<input type="text" class="input" id="doctorName" value="{{=it.params.doctorName}}" readonly style="width: 8rem"></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>医生签字时间：<input type="text" class="input"  tapmode id="doctorSignatureTime" readonly value="{{=it.params.doctorSignatureTime}}"  tapmode   style="width: 8rem"/></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>护士签字：<input type="text"  class="input" id="nurseName" value="{{=it.params.nurseName}}"  readonly style="width: 8rem"></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>签字时间：<input type="text" class="input" tapmode id="signatureTime" readonly  tapmode value="{{=it.params.signatureTime}}"  style="width: 8rem"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </section>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        var id = api.pageParam.data;
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url: config.selectSonMaterial,
+            isLoading: true,
+            data:{
+                id: id
+            },
+            success: function(ret) {
+                common.get({
+                    url: config.selectMaterialById + id,
+                    isLoading: false,
+                    success: function(data) {
+                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                        var map = {};
+                        var result = data.content
+                        map.doctorName = result.doctorName
+                        map.doctorSignatureTime = result.doctorSignatureTime
+                        map.signatureTime = result.signatureTime
+                        map.nurseName = result.nurseName
+
+                        $api.html($api.byId('content'), contentTmpl({
+                            person: person,
+                            params: map
+                        }));
+
+                         var contentTmpltb = doT.template($api.text($api.byId('info')));
+                         $api.html($api.byId('body'), contentTmpltb(ret.content));
+
+
+                        api.parseTapmode();
+                        var collapse = new auiCollapse({
+                            autoHide: false //是否自动隐藏已经展开的容器
+                        });
+                        api.hideProgress();
+
+                    }
+                });
+            }
+        });
+
+
+
+    };
+</script>
+
+<script id="info" type="text/template">
+    {{for(var i=0;i< it.length;i++){
+        var item = it[i];
+    }}
+    <tr>
+        <td>{{=item.materialName||''}}</td>
+        <td>{{=item.price||''}}</td>
+        <td>{{=item.signature||''}}</td>
+    </tr>
+    {{ } }}
+</script>
+
+</html>

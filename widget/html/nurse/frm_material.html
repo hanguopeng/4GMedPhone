@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>一次性特需卫生材料</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
+        }
+
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
+
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
+
+        .sel {
+            display: inline-block !important;
+            width: inherit !important;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+            margin-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        table input {
+            text-align:center;
+            width:100%;
+            height:25px;
+        }
+        table td,
+        table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+        }
+
+        table thead th {
+            background-color: #CCE8EB;
+
+        }
+
+        table tr {
+            background: #fff;
+        }
+
+        #categoryy {
+            width: 100%;
+            display: inline;
+            white-space: nowrap;
+            overflow-x: scroll;
+            float: left;
+            margin-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content">
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item aui-active">新建</div>
+            <div class="aui-tab-item">历史记录</div>
+        </div>
+        <div id="content">
+
+        </div>
+    </div>
+</body>
+<script id="add-tpl" type="text/template">
+    <section class="aui-content">
+        <ul class="aui-list aui-collapse aui-border">
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">基础信息</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-padded-15 aui-border-b">
+                    <div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>患者姓名:</span>
+                            <span>{{=it.person.name||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>性别:</span>
+                            <span>{{=(it.person.sex=="1"?"男":"女")||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>年龄:</span>
+                            <span>{{=it.person.age||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>住院号:</span>
+                            <span>{{=it.person.registerNumber||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>科室:</span>
+                            <span>{{=it.person.organizationName||"-"}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>床位号:</span>
+                            <span>{{=it.person.medBedName||' '}}</span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>临床诊断:</span>
+                            <span>{{=it.person.clinicalDiagnosis||'-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-collapse-item">
+                <li class="aui-list-item aui-collapse-header" tapmode>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-text-danger">一次性特殊卫材知情同意书</div>
+                        <div class="aui-list-item-right">
+                            <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                        </div>
+                    </div>
+                </li>
+                <div class="aui-collapse-content aui-font-size-14 aui-text-justify">
+                    <div class="center" style="overflow-x: scroll;overflow-y: auto;">
+                        <table class="table aui-font-size-14" id="categoryy">
+                          <caption>一次性特殊卫材知情同意书<br/>
+                              <input type="button" value="增加" onclick="addOne();" />
+                          </caption>
+                            <thead>
+                                <tr>
+                                    <th>一次性特殊卫材料名称</th>
+                                    <th>价格</th>
+                                    <th>患者(家属)签字</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body">
+
+                            </tbody>
+                        </table>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>告知医师（签字、盖章）：<input type="text" class="input" id="doctorName" value="" style="width: 8rem"></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>医生签字时间：<input type="text" class="input"  tapmode id="doctorSignatureTime" onclick="picker(this)" tapmode value="{{=it.currentTime}}"  style="width: 8rem"/></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>护士签字：<input type="text"  class="input" id="nurseName" value="{{=it.userName}}"  readonly style="width: 8rem"></span>
+                        </div>
+                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                            <span>签字时间：<input type="text" class="input" tapmode id="signatureTime" onclick="picker(this)" tapmode value="{{=it.currentTime}}"  style="width: 8rem"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </section>
+    <input type="hidden" id="materialId" value="0" />
+    <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+        <div class="aui-btn aui-btn-info" tapmode onclick="save()">保存同意书</div>
+    </div>
+</script>
+
+<script id="his-tpl" type="text/template">
+    <div id="qbxxkr-lsjl">
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            一次性特殊卫材知情同意书
+        </div>
+        <div id="recordContent" class="recordContent">
+        </div>
+    </div>
+</script>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin('{{=info.id}}');">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+            </div>
+            {{~}}
+        </div>
+    </div>
+    {{ } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_material.js"></script>
+
+</html>

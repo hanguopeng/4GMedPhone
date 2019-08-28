@@ -234,7 +234,10 @@ var common = {
                     "Content-Type": "application/json",
                     "token": $api.getStorage(storageKey.token)
                 },
-                dataType: 'json'
+                dataType: 'json',
+                data: {
+                    body: param.data
+                }
             }, function (ret, err) {
                 console.log(JSON.stringify(ret));
                 console.log(JSON.stringify(err));

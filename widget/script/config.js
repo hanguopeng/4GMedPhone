@@ -52,7 +52,7 @@ var config={
     saveNurseTemperatureChart: localServer+"/nur/nurseTemperatureChart/saveAllPda",     //添加保存所有体征项
     getFileId: localServer+"/nur/nurseTemperatureChart/getFileId",     //获取病人护理文件ID
     getSelfDefining: localServer+"/nur/nurseTemperatureChart/queryItems",     //查询其他体征项
-    // 20290828整理护理单url
+    // 20190828整理护理单url
     nurseLogXYZL: localServer + "/nur/criticallyIll",//血液肿瘤危重list
     nurseLogWZHZ: localServer + "/nur/boneCriticallyIll", //骨科危重患者
     nursePlanUrl:localServer+"/nur/nursePlan",
@@ -63,6 +63,13 @@ var config={
     selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail", //胰岛素记录表详情
     nurseBloodSugar: localServer+"/nur/nursePlan/json",//血糖监测录入（通用的）
     nurseBloodSheet: localServer+"/nur/bloodSugar",//血糖监测表
+    // 20190827 一次性卫生材料相关
+    saveParentMaterial: localServer+"/nur/nursePlan/saveMaterial",//保存一次卫材父数据
+    saveSonMaterial: localServer+"/nur/nursePlan/saveMaterialSon",//保存一次卫材子数据
+    updateParentMaterial: localServer+"/nur/nursePlan/updateParentMaterial/",//保存一次卫材子数据
+    selectParentMaterial: localServer+"/nur/nursePlan/selectMaterial",  //查询父数据列表
+    selectSonMaterial: localServer+"/nur/nursePlan/selectMaterialSon",  //通过父id查询子数据列表
+    selectMaterialById: localServer+"/nur/nursePlan/selectMaterialById/",  //通过id获取一次卫材数据
 
 
 
