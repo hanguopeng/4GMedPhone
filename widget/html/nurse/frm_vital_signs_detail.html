@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>生命体征监测记录单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/inpatientConsent.css" />
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+        }
+
+        table td,
+        table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+
+        table thead th {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+
+        table tr {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="aui-content">
+    </div>
+</body>
+<script id="detail-tpl" type="text/template">
+    <ul id="tzRecordList" class="aui-list aui-form-list">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量人
+                </div>
+                <div class="aui-list-item-input">{{=it.nurseName||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量日期
+                </div>
+                <div class="aui-list-item-input">{{=it.measureDate||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量时间
+                </div>
+                <div class="aui-list-item-input">{{=it.measureTime||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    体温(°C)
+                </div>
+                <div class="aui-list-item-input">{{=it.temperature||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    脉搏(次/分)
+                </div>
+                <div class="aui-list-item-input">{{=it.pulse||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    心率(次/分)
+                </div>
+                <div class="aui-list-item-input">{{=it.heartRate||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    呼吸(次/分)
+                </div>
+                <div class="aui-list-item-input">{{=it.breathRate||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    血压(mmHg)
+                </div>
+                <div class="aui-list-item-input">{{=it.bloodPressure||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    入量ml及名称
+                </div>
+                <div class="aui-list-item-input">{{=it.input||'-'}}</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    出量ml及名称
+                </div>
+                <div class="aui-list-item-input">{{=it.output||'-'}}</div>
+            </div>
+        </li>
+    </ul>
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        api.parseTapmode();
+        var id = api.pageParam.data;
+        common.get({
+            url: config.selectVitalSignsById + id,
+            isLoading: true,
+            success: function(ret) {
+                common.get({
+                    url: config.selectMaterialById + id,
+                    isLoading: false,
+                    success: function(data) {
+                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                        $api.html($api.byId('content'), contentTmpl(ret.content));
+                        api.parseTapmode();
+                        api.hideProgress();
+                    }
+                });
+            }
+        });
+    };
+</script>
+</html>

@@ -1,14 +1,9 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
-//var localServer = "http://140.143.143.150:8085/cmc-server";
-var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://111.26.165.97:8083/cmc-server";
-//var localServer = "http://10.0.11.95:8085/cmc-server";
-//var localServer = "http://172.17.100.2:8083/cmc-server";
-// var localServer = "http://192.168.43.228:8085/cmc-server";
+// var localServer = "http://172.17.100.2:8083/cmc-server";
+var localServer = "http://192.168.1.126:8085/cmc-server";
 
-
-var ws = "ws://172.17.100.2:8889/";
-// var ws = "ws://192.168.1.137:8888/";
+// var ws = "ws://172.17.100.2:8889/";
+var ws = "ws://192.168.1.126:8888/";
 var config={
     // 已用
     duration:3000,
@@ -70,6 +65,10 @@ var config={
     selectParentMaterial: localServer+"/nur/nursePlan/selectMaterial",  //查询父数据列表
     selectSonMaterial: localServer+"/nur/nursePlan/selectMaterialSon",  //通过父id查询子数据列表
     selectMaterialById: localServer+"/nur/nursePlan/selectMaterialById/",  //通过id获取一次卫材数据
+    // 20190830 生命体征监测相关
+    saveVitalSigns: localServer+"/nur/nursePlan/saveVitalSigns",  //生命体征检测保存
+    selectVitalSigns: localServer+"/nur/nursePlan/selectVitalSigns",  //生命体征检测查询
+    selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
 
 
 

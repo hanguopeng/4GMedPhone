@@ -128,16 +128,16 @@
                             </tbody>
                         </table>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
-                            <span>告知医师（签字、盖章）：<input type="text" class="input" id="doctorName" value="{{=it.params.doctorName}}" readonly style="width: 8rem"></span>
+                            <span>告知医师（签字、盖章）：<input type="text" class="input" id="doctorName" value="{{=it.params.doctorName||'-'}}" readonly style="width: 8rem"></span>
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
-                            <span>医生签字时间：<input type="text" class="input"  tapmode id="doctorSignatureTime" readonly value="{{=it.params.doctorSignatureTime}}"  tapmode   style="width: 8rem"/></span>
+                            <span>医生签字时间：<input type="text" class="input"  tapmode id="doctorSignatureTime" readonly value="{{=it.params.doctorSignatureTime||'-'}}"  tapmode   style="width: 8rem"/></span>
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
-                            <span>护士签字：<input type="text"  class="input" id="nurseName" value="{{=it.params.nurseName}}"  readonly style="width: 8rem"></span>
+                            <span>护士签字：<input type="text"  class="input" id="nurseName" value="{{=it.params.nurseName||'-'}}"  readonly style="width: 8rem"></span>
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
-                            <span>签字时间：<input type="text" class="input" tapmode id="signatureTime" readonly  tapmode value="{{=it.params.signatureTime}}"  style="width: 8rem"/></span>
+                            <span>签字时间：<input type="text" class="input" tapmode id="signatureTime" readonly  tapmode value="{{=it.params.signatureTime||'-'}}"  style="width: 8rem"/></span>
                         </div>
                     </div>
                 </div>

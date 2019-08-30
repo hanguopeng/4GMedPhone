@@ -2,147 +2,214 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta charset="UTF-8">
     <meta name="viewport" content=
             "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>血糖监测单</title>
+    <title>生命体征监测记录单</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/bloodGlucose.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/page.css" />
-    <style type="text/css">
-        table {
-            border-collapse: collapse;
-            margin: 1rem auto;
-            text-align: center;
-        }
-        table td, table th {
-            border: 1px solid #cad9ea;
-            color: #666;
-            height: 30px;
-        }
-        table thead th {
-            background-color: #CCE8EB;
-            width: 100px;
-        }
-        table tr {
-            background: #fff;
-        }
-        .trActive {
-            background: #F5FAFA;
+    <link rel="stylesheet" type="text/css" href="../../css/signsCollection.css"/>
+    <style>
+        .ctitle {
+            background-color: #67c23a;
+            color: #fff;
         }
 
+        .itemDate {
+            position: relative;
+            line-height: 1.5rem;
+        }
 
-        #category {width:100%;display: inline;white-space: nowrap;overflow-x:scroll;float:left;}
-        #category li{display:inline-block;width:80px;height:30px;padding-left:10px;}
-        #category {margin-left: 0.5rem;padding-right: 0.5rem;}
+        .itemDate img {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 1.5rem;
+        }
+
+        .itemDate .date {
+            position: relative;
+            height: 1.5rem;
+            margin-right: 2rem;
+            color: #fff;
+            float: right;
+        }
+
+        .line {
+            background-color: rgba(64, 158, 254, 1);
+            height: 2px;
+            margin-top: -2px;
+            margin-right: 0.1rem;
+        }
     </style>
 </head>
 <body>
-<div class="aui-font-size-16 topTitle aui-text-center aui-padded-t-5 aui-padded-b-5" style='width:100%;position:fixed; z-index:999; top:0;'>生命体征监测记录单</div>
-<div class="top aui-padded-15 aui-font-size-14" id="personInfo">
-</div>
-<div class="center" style="overflow-x: scroll;overflow-y: auto;">
-    <table width="90%" class="table aui-font-size-14"   id="category" style="width:100%; overflow-x:auto; background:buttonface;">
-        <thead>
-        <tr>
-            <th colspan="2">日期时间</th>
-            <th>体温℃</th>
-            <th>脉搏(次/分)</th>
-            <th>呼吸(次/分)</th>
-            <th colspan="2">血压(mmHg)</th>
-            <th colspan="2">入量ml及名称</th>
-            <th colspan="2">出量ml及名称</th>
-            <th>护士签名</th>
-        </tr>
-        </thead>
-        <tbody id="tbody">
-        <tr data-id="">
-
-
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div id="pageDivContainer"></div>
-<script id="personInfo-tmpl" type="text/template">
-    <div class="aui-margin-b-5 aui-margin-t-15">
-        <div class="inline aui-margin-t-5">
-            <span>科室:</span>
-            <span>{{=it.ks||''}}</span>
-        </div>
-        <div class="inline aui-margin-l-15">
-            <span>姓名:</span>
-            <span>{{=it.zyh||''}}</span>
-        </div>
-        <div class="inline aui-margin-l-5">
-            <span>年龄:</span>
-            <span></span>
-        </div>
+<div class="aui-content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">新建</div>
+        <div class="aui-tab-item">历史记录</div>
     </div>
-    <div class="aui-margin-b-5 aui-margin-t-15">
-        <div class="inline aui-margin-t-5">
-            <span>床号:</span>
-            <span></span>
+    <div id="content">
+    </div>
+</div>
+
+</body>
+<script id="tzRecord-tpl" type="text/template">
+    <ul id="tzRecordList" class="aui-list aui-form-list">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量人
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="nurseName" type="text" readOnly="true" value="{{=it.nurseName}}">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量日期
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="measureDate" type="text" onclick="chooseDate(this)" readOnly="true" value="{{=it.currentDate}}">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    测量时间
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="measureTime" type="text"  onclick="chooseTime(this)" value="{{=it.currentTime}}">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    体温(°C)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="temperature" type="text" class="aui-pull-left" style="width:47%"
+                           placeholder="请输入体温值">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    脉搏(次/分)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="pulse" type="text"  class="aui-pull-left" style="width:47%;"
+                           placeholder="请输入脉搏值">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    心率(次/分)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="heartRate" type="text" placeholder="请输入心率值">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    呼吸(次/分)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="breathRate" type="text"  class="aui-pull-left" placeholder="请输入呼吸值" style="width:47%;">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    血压(mmHg)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="bloodPressure" type="text" class="aui-pull-left" style="margin-left: 0.1rem;" placeholder="高压在前低压在后由/隔开">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    入量ml及名称
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="input" type="text"
+                           placeholder="请输入入量ml及名称">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 45%;">
+                    出量ml及名称
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="output" type="text"
+                           placeholder="请输入出量ml及名称">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="save();">
+                <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+            </div>
+        </li>
+
+    </ul>
+</script>
+<script id="his-tpl" type="text/template">
+    <div>
+        <div class="aui-font-size-16 aui-text-center title aui-padded-5 ctitle">
+            生命体征监测记录单
         </div>
-        <div class="inline aui-margin-l-15">
-            <span>病案号:</span>
-            <span></span>
+        <div id="recordContent" class="recordContent">
         </div>
     </div>
 </script>
-<script id="content-tmpl" type="text/template">
-    {{for(var i=0;i< it.length;i++){
-    var item = it[i];
-    }}
-    <tr data-id="{{=item.id||''}}">
-        <td colspan="2">{{=item.createTime ||""}}</td>
-        <td>{{=item.temperature||""}}</td>
-        <td>{{=item.pulse1 ||""}}</td>
-        <td>{{=item.breathRate ||""}}</td>
-        <td colspan="2">{{=item.bloodPressureLow ||""}}/{{=item.bloodPressureHigh||""}}</td>
-        <td colspan="2">{{=item.input||""}}:{{=it.inputMl ||""}}</td>
-        <td colspan="2">{{=item.output||""}}:{{=it.outputMl ||""}}</td>
-        <td colspan="2">{{=item.hsqm ||""}}</td>
-    </tr>
+<script id="record-tpl" type="text/template">
+
+    {{ for(var prop in it) { }}
+    <div class="item">
+        <div class="itemDate aui-margin-t-15">
+            <img src="../../image/u30820.png" alt="" class="f-right">
+            <div class="date aui-font-size-14">{{= prop}}</div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="aui-row aui-font-size-12 aui-padded-t-10 aui-padded-b-10">
+            {{~ it[prop]:info:index}}
+            <div class="aui-col-xs-4 aui-text-center aui-padded-t-10" tapmode onclick="openDetailWin('{{=info.id}}');">
+                <img src="../../image/u30815.png" alt="" style="margin: auto;">
+                <div class="aui-margin-t-10">
+                    <div class="aui-ellipsis-1">时间:{{= truncTime(info.createTime)}}</div>
+                </div>
+                <div class="aui-margin-t-5">
+                    <div class="aui-ellipsis-1">创建人:{{= info.createUserName}}</div>
+                </div>
+            </div>
+            {{~}}
+        </div>
+    </div>
     {{ } }}
 </script>
-<script id="pageInfo-tmpl" type="text/template">
-    <div style="padding: 0px 20px;">
-        <div class="aui-row">
-            <span>第</span>
-            <span>{{=(it.currPage-1) * it.pageSize + 1}}</span>
-            <span>到</span>
-            <span>{{=it.currPage * it.pageSize}}</span>
-            <span>条记录</span>
-            <span style="margin-left: 25px;">共</span>
-            <span>{{=it.totalCount}}</span>
-            <span>条记录</span>
-        </div>
-        <div  class="aui-pull-right aui-row aui-margin-t-5" id="pageNumContainer" class="pageNumContainer" data-currentPage="{{=it.currPage}}">
-            {{? parseInt(it.currPage)!=1}}<span onclick="firstPage();">首页</span>{{?}}
-            {{? parseInt(it.currPage)>1}}<span onclick="prePage();" class="prePage">上一页</span>{{?}}
-            <span class="pageNumItem active">{{=it.currPage}}</span>
-            {{? parseInt(it.totalPage)>parseInt(it.currPage)}}
-            <span class="pageNumItem" onclick="nextPage('{{=parseInt(it.currPage)+1}}');">
-                    {{=parseInt(it.currPage)+1}}
-            </span>
-            {{?}}
-            {{? parseInt(it.totalPage)>parseInt(it.currPage)}}
-            <span class="nextPage" onclick="nextPage('{{=parseInt(it.currPage)+1}}');">下一页</span>
-            {{?}}
-        </div>
-
-    </div>
-</script>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/config.js"></script>
 <script type="text/javascript" src="../../script/common.js"></script>
 <script type="text/javascript" src="../../script/aui-tab.js"></script>
-<script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
-<script type="text/javascript" src="../../script/bootstrap.js.js"></script>
-<script type="text/javascript" src="../../script/nurse/frm_nurse_smtzjcjld.js"></script>
-</body>
+<script type="text/javascript" src="../../script/zrender.min.js"></script>
+<script type="text/javascript" src="../../script/drawUtils.js"></script>
+<script type="text/javascript" src="../../script/nurse/frm_smtzjcjld.js"></script>
 </html>
