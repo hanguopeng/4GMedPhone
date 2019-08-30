@@ -116,6 +116,9 @@
             });
           }else if(index==2){
             common.clearStorage();
+              api.sendEvent({
+                  name: 'goRoot'
+              });
             api.closeToWin({
                 name: 'root'
             });

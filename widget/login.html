@@ -104,6 +104,11 @@
         scanner.open();
         $api.setStorage(storageKey.cmcScan, scanner);
         api.addEventListener({
+            name: 'goRoot'
+        }, function (ret, err) {
+            window.location.reload();//刷新页面
+        });
+        api.addEventListener({
             name: 'scanEvent'
         }, function(ret, err) {
             if (ret) {

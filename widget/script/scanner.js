@@ -91,6 +91,9 @@ function changePwd(){
 // 登录页
 function switchAccount(){
     common.clearStorage();
+    api.sendEvent({
+        name: 'goRoot'
+    });
     api.closeToWin({
         name: 'root'
     });
