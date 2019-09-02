@@ -96,6 +96,7 @@ function saveTZ(){
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
     params.medPatientId = person.id;
+    params.homepageId = person.homepageId;
     params.medTemplateId= 222;
     params.name = "血糖监测报表";
     params.huanzhezicexuetang = huanzhezicexuetang;

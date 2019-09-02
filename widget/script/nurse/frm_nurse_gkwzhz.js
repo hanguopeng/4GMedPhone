@@ -286,6 +286,7 @@ function saveAddRecord() {
     params.registerNumber = registerNumber;
     params.inHospitalTime = inHospitalTime;
     params.medPatientId = person.id;
+    params.homepageId = person.homepageId;
     params.medTemplateId = 225;
     params.name = "骨科危重患者护理记录单";
     params.itemList = data;

@@ -135,6 +135,7 @@ function saveAddRecord() {
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
     params.medPatientId = person.id;
+    params.homepageId = person.homepageId;
     params.medTemplateId = 219;
     params.itemList = data;
     params.name = "PICC穿刺"
@@ -215,6 +216,7 @@ function showHis(){
         isLoading:true,
         data:JSON.stringify({
             patientId: person.id,
+            homepageId: person.homepageId,
             limit: -1,
             templateList:[{"templateCode":"PICCpuncture","templateVersion":1}]
         }),

@@ -194,6 +194,7 @@ function saveAddRecord() {
     var params = {};
     var person = $api.getStorage(storageKey.currentPerson);
     params.medPatientId = person.id;
+    params.homepageId = person.homepageId;
     params.medTemplateId = 224;
     params.itemList = data;
     params.measureDate = currentTime() + ":00";
@@ -319,6 +320,7 @@ function showHis(){
         isLoading:true,
         data:JSON.stringify({
             patientId: person.id,
+            homepageId: person.homepageId,
             limit: -1,
             templateList:[{"templateCode":"fallAndFallIntoBed","templateVersion":1}]
         }),

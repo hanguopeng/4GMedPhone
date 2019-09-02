@@ -68,6 +68,7 @@ function saveAddRecord() {
             var params = {};
             var person = $api.getStorage(storageKey.currentPerson);
             params.medPatientId = person.id;
+            params.homepageId = person.homepageId;
             params.name = "中心静脉导管拒绝维护知情同意书";
             params.medTemplateId = 218;
             params.itemList = data;
@@ -98,8 +99,7 @@ function showHis() {
     $api.html($api.byId("recordContent"), "");
     var person = $api.getStorage(storageKey.currentPerson);
     common.get({
-        //url:config.nursePlanUrl+"?patientId="+person.id+"&templateIdList=202&limit=-1",
-        url: config.selectInsulin+"?patientId="+person.id,
+        url: config.selectInsulin+"?patientId="+person.id+"&homepageId" + person.homepageId,
         isLoading: true,
         success: function(ret) {
             if (ret.content && ret.content.list && ret.content.list.length > 0) {
@@ -273,8 +273,8 @@ function jiliang() {
     function xuetang() {
       var person = $api.getStorage(storageKey.currentPerson);
       var patientId = person.id;
-      var insulinId = 0;
-      insulinId = $("#insulinId").val();
+      var homepageId = person.homepageId;
+      var insulinId = $("#insulinId").val();
       if(insulinId!=0){
 
       }else{
@@ -289,7 +289,8 @@ function jiliang() {
               'handleTime':handleTime,
               'nurseName':nurseName,
               'userTime':userTime,
-              'medPatientId':patientId
+              'medPatientId':patientId,
+              'homepageId':homepageId
             },
             success: function(r) {
                 $("#insulinId").val(r.content.id);
@@ -317,6 +318,7 @@ function jiliang() {
         function saveHLD(){
           var person = $api.getStorage(storageKey.currentPerson);
           var patientId = person.id;
+          var homepageId = person.homepageId;
           var insulinId = $("#insulinId").val();
 
           if(insulinId!=0){
@@ -343,7 +345,6 @@ function jiliang() {
                   'handleTime':handleTime,
                   'nurseName':nurseName,
                   'basedAmount':basedAmount,
-                  'medPatientId':patientId,
                   'insulinId':insulinId,
                   'moring':moring,
                   'noon':noon,

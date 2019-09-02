@@ -315,6 +315,7 @@ function saveAddRecord() {
     //var storageUserName = $api.getStorage(storageKey.loginName);
     params.hushiqianming = hushiqianming;
     params.medPatientId = person.id;
+    params.homepageId = person.homepageId;
     params.medTemplateId = 223;
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
