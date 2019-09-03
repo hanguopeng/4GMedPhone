@@ -429,7 +429,8 @@ function jiliang() {
                   'handleTime':handleTime,
                   'nurseName':nurseName,
                   'userTime':userTime,
-                  'medPatientId':patientId
+                  'medPatientId':patientId,
+                  'homepageId':homepageId
                 },
                 success: function(r) {
                   api.hideProgress();
