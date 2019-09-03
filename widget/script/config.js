@@ -48,8 +48,7 @@ var config={
     getFileId: localServer+"/nur/nurseTemperatureChart/getFileId",     //获取病人护理文件ID
     getSelfDefining: localServer+"/nur/nurseTemperatureChart/queryItems",     //查询其他体征项
     // 20190828整理护理单url
-    nurseLogXYZL: localServer + "/nur/criticallyIll",//血液肿瘤危重list
-    nurseLogWZHZ: localServer + "/nur/boneCriticallyIll", //骨科危重患者
+    nurseLogNew: localServer+"/nur/nursePlan/listDetails/json",//plan通用护理单查询
     nursePlanUrl:localServer+"/nur/nursePlan",
     saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
     saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
@@ -85,7 +84,6 @@ var config={
     nurseSMTZhljld: localServer+"/nur/VitalSigns"  ,//生命体征护理记录单
 
 
-    nurseLogNew: localServer+"/nur/nursePlan/listDetails/json",//一期护理文书
 
     nurseLogTXSJCreate: localServer+"/nur/nurseLog", //体征收集创建
     nurseLogCreate: localServer+"/nur/nurseLog", //护理创建

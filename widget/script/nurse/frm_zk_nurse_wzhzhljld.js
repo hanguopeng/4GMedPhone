@@ -508,12 +508,21 @@ function search() {
     var person = $api.getStorage(storageKey.currentPerson);
     $api.html($api.byId("recordContent"), "");
     common.get({
-        url: config.nurseLogXYZL + "?registerNumber="+person.registerNumber,
+        url: config.nurseLogNew,
         isLoading: true,
+        data: JSON.stringify({
+            patientId: person.id,
+            homepageId: person.homepageId,
+            templateList: [{
+                templateCode: 'xyzlkwzhzhld',
+                templateVersion: '1'
+            }],
+            limit: -1,
+        }),
         success: function (ret) {
-            if (ret.content) {
+            if (ret.content.list) {
                 //处理数据
-                var data = ret.content;
+                var data = ret.content.list;
                 var contentTmpl = doT.template($api.text($api.byId('record-tpl')));
                 if (data[0].id){
                     $api.html($api.byId('recordContent'), contentTmpl(data));
