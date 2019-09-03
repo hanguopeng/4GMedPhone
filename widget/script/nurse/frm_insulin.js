@@ -235,6 +235,7 @@ function getDayAll(datas) {
 function jiliang() {
   var person = $api.getStorage(storageKey.currentPerson);
   var patientId = person.id;
+ var homepageId = person.homepageId;
   var insulinId = 0;
   insulinId = $("#insulinId").val();
   if(insulinId!=0){
@@ -251,7 +252,8 @@ function jiliang() {
           'handleTime':handleTime,
           'nurseName':nurseName,
           'userTime':userTime,
-          'medPatientId':patientId
+          'medPatientId':patientId,
+          'homepageId':homepageId
         },
         success: function(r) {
             $("#insulinId").val(r.content.id);
