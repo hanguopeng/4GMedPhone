@@ -507,7 +507,7 @@ function pickerSearch(){
 function search() {
     var person = $api.getStorage(storageKey.currentPerson);
     $api.html($api.byId("recordContent"), "");
-    common.get({
+    common.post({
         url: config.nurseLogNew,
         isLoading: true,
         data: JSON.stringify({
