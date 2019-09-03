@@ -99,7 +99,7 @@ function showHis() {
     $api.html($api.byId("recordContent"), "");
     var person = $api.getStorage(storageKey.currentPerson);
     common.get({
-        url: config.selectInsulin+"?patientId="+person.id+"&homepageId" + person.homepageId,
+        url: config.selectInsulin+"?patientId="+person.id+"&homepageId=" + person.homepageId,
         isLoading: true,
         success: function(ret) {
             if (ret.content && ret.content.list && ret.content.list.length > 0) {
