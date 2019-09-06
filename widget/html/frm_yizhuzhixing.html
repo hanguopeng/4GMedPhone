@@ -13,7 +13,7 @@
 <body>
 <div class="bodyContainer">
     <div class="aui-tab" id="tab">
-        <div class="aui-tab-item aui-active" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录
+        <div class="aui-tab-item" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录
             <div id="adviceRecordsDropdown" class="adviceRecordsDropdown hide">
                 <div id="allTold" class="changeBlue" onclick="changeBlue(this,'allTold')">全部医嘱单</div>
                 <div id="longTold" onclick="changeBlue(this,'longTold')">长嘱医嘱单</div>
@@ -22,12 +22,12 @@
         </div>
         <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
         <div class="aui-tab-item" id="tab-advice-sends" data-to="advice-sends" onclick="changeTab(this);">医嘱发送</div>
-        <div class="aui-tab-item" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
+        <div class="aui-tab-item  aui-active" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
         <div class="aui-tab-item" id="tab-skin-test" data-to="skin-test" onclick="changeTab(this);">皮试结果</div>
     </div>
     <div class="tabBody">
         <!--医嘱记录-->
-        <div id="advice-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
+        <div id="advice-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="advice-records-header">
                 <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()"> 在用医嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -175,14 +175,15 @@
             <!--</div>-->
         </div>
         <!--巡视记录-->
-        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
+        <div id="tour-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="itemContainer" id="tourRecordsContentContainer">
             </div>
             <div class="bottomContainer">
                 <div id="tourRecords-result" class="bottomBody aui-padded-15">
                 </div>
-                <div class="bottomBtn aui-font-size-16 flex">
-                    <div class="btn flex-item border-right" onclick="clickBottomTab('tour-records','tourRecords-result');">巡视</div>
+                <div>
+                    <a href="#" class="add-btn" tapmode onclick="clickBottomTab('tour-records','tourRecords-result');"></a>
+                    <!--<div class="btn flex-item border-right" onclick="clickBottomTab('tour-records','tourRecords-result');">巡视</div>-->
                 </div>
             </div>
         </div>
@@ -934,14 +935,18 @@
         {{for(var i=0;i<it.list.length;i++) {
          var item = it.list[i];
         }}
-        <tr onclick="changeNextShow(this)">
+        <tr onclick="changeNextTwoShow(this)">
             <td>{{=item.nurseName}}</td>
             <td>{{=item.inspectionTime}}</td>
             <td>{{=item.inspectionType}}</td>
             <td>{{=item.patientName}}</td>
             <td>{{=item.medBedName}}</td>
         </tr>
-        <tr class="hide" id="{{=item.id}}">
+        <tr class="hide">
+            <td>护理等级</td>
+            <td colspan="4">{{=item.nurseLevelName||''}}</td>
+        </tr>
+        <tr class="hide">
             <td>巡视备注</td>
             <td colspan="4">{{=item.inspectionMemo||''}}</td>
         </tr>
@@ -955,17 +960,26 @@
     <div class="flex aui-margin-t-5" >
         <div class="flex-item">
             <span class="key">患者姓名：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>{{=it.patientName}}</span>
         </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="flex-item">
             <span class="key">床号：</span>
             <span>{{=it.medBedName}}</span>
         </div>
     </div>
+    <div class="flex aui-margin-t-5" >
+        <div class="flex-item">
+            <span class="key">护理等级：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>{{=it.nurseLevelName}}</span>
+        </div>
+    </div>
     <div class="flex aui-margin-t-5">
         <div class="flex-item">
-            <span class="key">巡视项：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;项：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="value">
                  <select class="select" id="inspectionTypeId">
                      {{
@@ -981,29 +995,27 @@
     </div>
     <div class="flex aui-margin-t-5">
         <div class="flex-item">
-            <div class="flex-item">
-                <span class="key">巡视备注：</span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="value"><textarea class="textarea"  id="inspectionMemo" placeholder="请输入内容"></textarea></span>
-            </div>
+            <span >巡视备注：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="value"><textarea class="textarea"  id="inspectionMemo" placeholder="请输入内容"></textarea></span>
         </div>
     </div>
     <div class="flex aui-margin-t-5">
         <div class="flex-item">
             <span class="key" style="margin-top: 3rem">巡视时间：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="value"><input type="text" class="select" style="font-size:0.7rem" id="inspectionTime" placeholder="巡视时间" onclick="pickerWithSecond(this)" value="{{=it.time}}"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="value"><input type="text" style="font-size:0.7rem; width: 10rem; display: inline-block; padding: 0px 5px;" id="inspectionTime" placeholder="巡视时间"  value="{{=it.time}}" readonly></span>
         </div>
     </div>
     <div class="flex aui-margin-t-5">
         <div class="flex-item">
-            <span class="key">巡视人:</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;人：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>{{=it.nurseName}}</span>
         </div>
     </div>
     <div class=" aui-text-center aui-margin-t-15">
-        <div class="btn aui-btn aui-btn-success" onclick="tourRecordsExecute();">保存</div>
+        <div class="btn aui-btn aui-btn-success" onclick="tourRecordsExecute();"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
     </div>
 </script>
 

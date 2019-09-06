@@ -6,18 +6,22 @@ var patientId = person.id;
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
-
+var swipe = false
 var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
 var currentTab = 0
 apiready = function () {
     api.parseTapmode();
-    adviceRecords();
+    currentTab = 2
+    // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
+    tourRecords();
+    $api.setStorage(storageKey.scannerStatus, 'tour-records');
     paddingSelectAdviceRecords();
     // 监控左划事件
     api.addEventListener({
         name:'swipeleft'
     }, function(ret, err){
+        swipe = true
         if (currentTab === 3){
             currentTab = 3
         } else {
@@ -33,6 +37,7 @@ apiready = function () {
     api.addEventListener({
         name:'swiperight'
     }, function(ret, err){
+        swipe = true
         if (currentTab === 0){
             currentTab = 0
         } else {
@@ -56,7 +61,8 @@ apiready = function () {
             if(persons[i].id == tourRecordsPersonId){
                 status = false
                 tourRecordsPerson = persons[i]
-                clickBottomTab('tour-records','tourRecords-result',persons[i].name, persons[i].medBedName);
+
+                clickBottomTab('tour-records','tourRecords-result');
             }
         }
         if (status){
@@ -118,6 +124,8 @@ var changeTab = function (obj) {
             $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
         } else{
             currentTab = 0
+        }
+        if (swipe){
             // 切换tab时将所有选中条件都清空
             priorityCode = ''
             adviceRecordsReset()
@@ -132,6 +140,7 @@ var changeTab = function (obj) {
             $api.html($api.byId('advice-records-header'), "");
             $api.html($api.byId('advice-records-header'), el);
 
+            swipe = false
             adviceRecords();
         }
     } else if (dataTo == "advice-execute") {//医嘱执行
@@ -180,7 +189,7 @@ var changeTab = function (obj) {
  * @param parent
  * @param id
  */
-var clickBottomTab = function (parent, id, name ,medBedName) {
+var clickBottomTab = function (parent, id) {
     var activeTab = $api.dom($api.byId(parent), '#' + id);
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
@@ -197,11 +206,7 @@ var clickBottomTab = function (parent, id, name ,medBedName) {
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
 
         if (id === 'tourRecords-result'){
-            if (!isEmpty(name)){
-                paddingInputTourRecords(name, medBedName);
-            } else {
-                paddingInputTourRecords(person.name, person.medBedName);
-            }
+            paddingInputTourRecords()
         }else if(id === 'adviceRecords-selector'){
             $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         }
@@ -502,11 +507,17 @@ var closeDetail = function (obj) {
  * 巡视记录列表
  */
 var tourRecords = function () {
-    common.get({
-        url: config.inspectionQuery + patientId + '/' + $api.getStorage(storageKey.userId) ,
+    common.post({
+        url: config.inspectionQuery,
         isLoading: true,
+        data:JSON.stringify({
+            patientId: tourRecordsPerson.id,
+            homepageId: tourRecordsPerson.homepageId,
+            limit: -1
+        }),
+        dataType: "json",
         success: function (ret) {
-            if(ret&&ret.content&&ret.content.list.length>0){
+            if(ret&&ret.content&&ret.content.list&&ret.content.list.length>0){
                 $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
                 $api.html($api.byId('tourRecordsContentContainer'), "");
                 var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
@@ -532,8 +543,9 @@ var paddingInputTourRecords = function (name,medBedName) {
         dataType:JSON,
         success:function(ret){
             var data = {}
-            data.patientName = name;
-            data.medBedName = medBedName;
+            data.patientName = tourRecordsPerson.name;
+            data.medBedName = tourRecordsPerson.medBedName;
+            data.nurseLevelName = tourRecordsPerson.nurseLevelName;
             data.list = {}
             data.time = currentTime();
             data.nurseName = $api.getStorage(storageKey.userName);
@@ -553,13 +565,24 @@ var tourRecordsExecute = function () {
     var inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
     var inspectionMemo = $api.val($api.byId('inspectionMemo'));
     var inspectionTime = $api.val($api.byId('inspectionTime'));
+    var nurseLevelCode = tourRecordsPerson.nurseLevelCode;
+    var nurseLevel = ''
+    switch (nurseLevelCode) {
+        case 'A': nurseLevel = '120100002';break;
+        case 'B': nurseLevel = '120100003';break;
+        case 'C': nurseLevel = '120100004';break;
+        case 'D': nurseLevel = '120100005';break;
+        case 'E': nurseLevel = '1101005';break;
+    }
     common.post({
         url: config.inspectionSave,
         data: {
             patientId:  tourRecordsPerson.id,
+            homepageId:  tourRecordsPerson.homepageId,
             patientName:  tourRecordsPerson.name,
             medBedId: tourRecordsPerson.medBedId,
             medBedName: tourRecordsPerson.medBedName,
+            nurseLevel: nurseLevel,
             nurseId: $api.getStorage(storageKey.userId),
             nurseName: $api.getStorage(storageKey.userName),
             inspectionTime: inspectionTime,
@@ -910,6 +933,18 @@ var changeNextShow = function(obj){
     if (isHide){
         $api.removeCls($api.next(obj), 'hide');
     } else{
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
+
+var changeNextTwoShow = function(obj){
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    obj = $api.next(obj)
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.removeCls($api.next(obj), 'hide');
+    } else{
+        $api.addCls(obj, 'hide');
         $api.addCls($api.next(obj), 'hide');
     }
 }

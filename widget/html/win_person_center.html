@@ -48,13 +48,13 @@
           <span>{{=it.person.age || '--'}}&nbsp;&nbsp;</span>
           <span>
               {{? it.person.nurse_level_code=="A" || it.person.nurseLevelCode=="A"}}
-              <span>重症监护&nbsp;&nbsp;</span>
+              <span>特级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="B" || it.person.nurseLevelCode=="B"}}
-              <span>一级护理&nbsp;&nbsp;</span>
+              <span>Ⅰ级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="C" || it.person.nurseLevelCode=="C"}}
-              <span>二级护理&nbsp;&nbsp;</span>
+              <span>Ⅱ级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="D" || it.person.nurseLevelCode=="D"}}
-              <span>三级护理&nbsp;&nbsp;</span>
+              <span>Ⅲ级护理&nbsp;&nbsp;</span>
               {{?? it.person.nurse_level_code=="E" || it.person.nurseLevelCode=="E"}}
               <span>保护性隔离护理</span>
               {{?}}
