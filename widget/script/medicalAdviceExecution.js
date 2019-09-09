@@ -78,10 +78,7 @@ apiready = function () {
  * 切换tab
  * @param obj
  */
-var changeTab = function (obj,swipeStatus) {
-    if (!isEmpty(swipeStatus)){
-        swipe  = true
-    }
+var changeTab = function (obj) {
     // 给选中的tab添加aui-active样式
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
