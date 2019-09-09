@@ -148,6 +148,7 @@
 <script>
 apiready = function(){
     var list = {}
+    $api.setStorage(storageKey.scannerStatus, '');
     var areaName = $api.getStorage(storageKey.areaName);
     list.areaName = areaName
     $api.html($api.byId('currentDepartment'), "");

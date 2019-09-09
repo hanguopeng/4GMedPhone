@@ -87,7 +87,7 @@ apiready = function(){
                 });
             }
         });
-        $api.setStorage(storageKey.scannerStatus,'changePatient');
+        $api.setStorage(storageKey.scannerStatus,'');
 
     });
     showCalendar();

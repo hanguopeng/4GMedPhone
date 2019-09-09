@@ -362,6 +362,7 @@ function ExitApp() {
     api.addEventListener({
         name: 'keyback'
     }, function (ret, err) {
+        $api.setStorage(storageKey.scannerStatus, '');
         if (ci == 0) {
             time1 = new Date().getTime();
             ci = 1;
