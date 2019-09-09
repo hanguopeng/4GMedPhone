@@ -62,6 +62,8 @@ apiready = function () {
             if(persons[i].id == tourRecordsPersonId){
                 status = false
                 tourRecordsPerson = persons[i]
+
+                clickBottomTab('tour-records','tourRecords-result');
                 paddingInputTourRecords()
             }
         }
