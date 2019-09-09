@@ -61,8 +61,7 @@ apiready = function () {
             if(persons[i].id == tourRecordsPersonId){
                 status = false
                 tourRecordsPerson = persons[i]
-
-                clickBottomTab('tour-records','tourRecords-result');
+                paddingInputTourRecords()
             }
         }
         if (status){
@@ -206,6 +205,7 @@ var clickBottomTab = function (parent, id) {
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
 
         if (id === 'tourRecords-result'){
+            tourRecordsPerson = person
             paddingInputTourRecords()
         }else if(id === 'adviceRecords-selector'){
             $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
@@ -511,8 +511,8 @@ var tourRecords = function () {
         url: config.inspectionQuery,
         isLoading: true,
         data:JSON.stringify({
-            patientId: tourRecordsPerson.id,
-            homepageId: tourRecordsPerson.homepageId,
+            patientId: person.id,
+            homepageId: person.homepageId,
             limit: -1
         }),
         dataType: "json",
@@ -529,7 +529,7 @@ var tourRecords = function () {
     });
 };
 
-var paddingInputTourRecords = function (name,medBedName) {
+var paddingInputTourRecords = function () {
 
     var params = {};
     params.queryCode = "inspectionType";
