@@ -23,7 +23,7 @@ var config={
     // 20190709添加
     patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
     inspectionSave:localServer+"/med/inspection/inspectionSave", //巡视记录保存
-    inspectionQuery:localServer+"/med/inspection/inspectionQuery", //巡视记录查询
+    inspectionQuery:localServer+"/med/inspection/inspectionQueryPda", //巡视记录查询
     // 20190711 添加注册
     register: localServer+"/sys/user/register", //注册
     // 20190712 添加修改密码

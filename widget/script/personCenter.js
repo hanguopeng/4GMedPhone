@@ -55,8 +55,8 @@ var loadHYJG = function () {
 /**
  * 费用明细
  */
-var loadFYMX = function () {
-    fymxList(patientId);
+var loadFYMX = function (status) {
+    fymxList(patientId,status);
 };
 
 /**
@@ -97,7 +97,7 @@ var changeTab = function (obj) {
         loadHYJG();
     } else if (dataTo == "fymx") {//费用明细
         currentTab = 3
-        loadFYMX();
+        loadFYMX(false);
     }
 }
 
@@ -274,7 +274,14 @@ var assayDetail = function(obj,assayId){
  * 费用明细
  * @param patientId
  */
-var fymxList = function(patientId){
+var fymxList = function(patientId,status){
+    var costItemStatisticsList  = config.costItemStatisticsList + "?patientId=" + patientId + "&homepageId=" + person.homepageId;
+    if (status){
+        var costSum = $api.byId('costSum').checked;
+        if (costSum){
+            costItemStatisticsList = costItemStatisticsList + "&costSum=true";
+        }
+    }
     common.get({
         url: config.costSituationUrl + patientId + '/' + person.homepageId,
         isLoading: false,
@@ -282,12 +289,16 @@ var fymxList = function(patientId){
             var data = {}
             data.cost = ret.content
             common.get({
-                url: config.costItemStatisticsList + "?patientId=" + patientId + "&homepageId=" + person.homepageId,
+                url: costItemStatisticsList,
                 isLoading: true,
                 success: function (ret) {
                     $api.html($api.byId('fymx'), "");
                     data.list = ret.content
-                    var contentTmpl = doT.template($api.text($api.byId('fymxTmpl')));
+                    if (status && costSum){
+                       var contentTmpl = doT.template($api.text($api.byId('fymxTmplTwo')));
+                    } else{
+                       var contentTmpl = doT.template($api.text($api.byId('fymxTmpl')));
+                    }
                     $api.html($api.byId('fymx'), contentTmpl(data));
                 }
             });

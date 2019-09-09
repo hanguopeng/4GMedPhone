@@ -176,6 +176,11 @@
         </div>
         <!--巡视记录-->
         <div id="tour-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
+            <div class="aui-padded-l-15" id="tour-records-header">
+                <label><input class="aui-margin-t-5 " name="allPatient" id="allPatient" type="checkbox" tapmode  onchange="tourRecords()"> 全部患者</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="allNurse" id="allNurse" type="checkbox" tapmode   onchange="tourRecords()"> 全部护士</label>
+            </div>
             <div class="itemContainer" id="tourRecordsContentContainer">
             </div>
             <div class="bottomContainer">
@@ -931,8 +936,8 @@
         </thead>
         <tbody id="tbody">
         {{?it}}
-        {{for(var i=0;i<it.list.length;i++) {
-         var item = it.list[i];
+        {{for(var i=0;i<it.length;i++) {
+         var item = it[i];
         }}
         <tr onclick="changeNextTwoShow(this)">
             <td>{{=item.nurseName}}</td>

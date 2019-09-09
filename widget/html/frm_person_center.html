@@ -351,6 +351,9 @@
                 {{}}}
             </div>
         </div>
+        <div class="aui-padded-l-15">
+            <label><input class="aui-margin-t-5 " name="costSum" id="costSum" type="checkbox" tapmode  onchange="loadFYMX(true)"> 按项目合并</label>
+        </div>
         {{?}}
         {{?it.list && it.list.length>0}}
         {{
@@ -376,6 +379,89 @@
                 <tr>
                     <td style="width: 30%">{{=itemDetail.costListDate}}</td>
                     <td style="width: 50%;text-align: left">{{=itemDetail.costListName}}</td>
+                    <td style="width: 20%">{{=itemDetail.costListMoney}}</td>
+                </tr>
+                {{ } }}
+                {{?}}
+            </table>
+        </div>
+        {{ } }}
+        {{??}}
+        <div class="aui-margin-l-15  aui-font-size-14" style="padding-top: 0.5rem;color: #5e5e5e">（无费用明细）</div>
+        {{?}}
+    </script>
+    <script id="fymxTmplTwo" type="text/template">
+        {{? it.cost}}
+        <div>
+            <div class="aui-margin-l-15">
+                <span class="key">剩余款：</span>
+                {{if(it.cost.balance >= 0 || isEmpty(it.cost.balance)){ }}
+                <span class="value">{{=it.cost.balance||'-'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.balance}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">预交款：</span>
+                {{if(it.cost.prepayMoney >= 0 || isEmpty(it.cost.prepayMoney)){ }}
+                <span class="value">{{=it.cost.prepayMoney||'-'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.prepayMoney}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">未结费用：</span>
+                {{if(it.cost.unconsumeMoney >= 0 || isEmpty(it.cost.unconsumeMoney)){ }}
+                <span class="value">{{=it.cost.unconsumeMoney||'-'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.unconsumeMoney}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">预结费用：</span>
+                {{if(it.cost.consumeMoney >= 0 || isEmpty(it.cost.consumeMoney)){ }}
+                <span class="value">{{=it.cost.consumeMoney||'-'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.consumeMoney}}</span>
+                {{}}}
+            </div>
+            <div class="aui-margin-l-15">
+                <span class="key">自付费用：</span>
+                {{if(it.cost.selfMoney >= 0 || isEmpty(it.cost.selfMoney)){ }}
+                <span class="value">{{=it.cost.selfMoney||'-'}}</span>
+                {{ }else{}}
+                <span class="value redInfo">{{=it.cost.selfMoney}}</span>
+                {{}}}
+            </div>
+        </div>
+        <div class="aui-padded-l-15">
+            <label><input class="aui-margin-t-5 " name="costSum" id="costSum" type="checkbox" tapmode  onchange="loadFYMX(true)" checked> 按项目合并</label>
+        </div>
+        {{?}}
+        {{?it.list && it.list.length>0}}
+        {{
+        for(var i=0;i<it.list.length;i++) {
+        var item = it.list[i];
+        }}
+        <div onclick="changeNextShow(this)" class="title aui-margin-t-10 aui-padded-t-10 aui-padded-b-10 flex aui-padded-l-10 aui-padded-r-10 aui-font-size-14">
+            <div class="flex-item aui-text-left">{{=item.costBigType||''}}</div>
+            <div class="flex-item aui-text-right">{{=item.costMoney||'0'}} 元</div>
+        </div>
+        <div onclick="changeThisShow(this)" class="content aui-padded-b-15 aui-padded-t-15 fymxItemDetail hide">
+            <table>
+                <tr>
+                    <th style="width: 50%">收费项</th>
+                    <th style="width: 30%">合计次数</th>
+                    <th style="width: 20%">合计费用(元)</th>
+                </tr>
+                {{?item.list}}
+                {{
+                for(var j=0;j< item.list.length;j++) {
+                var itemDetail = item.list[j];
+                }}
+                <tr>
+                    <td style="width: 50%;text-align: left">{{=itemDetail.costListName}}</td>
+                    <td style="width: 30%">{{=itemDetail.costListCount}}</td>
                     <td style="width: 20%">{{=itemDetail.costListMoney}}</td>
                 </tr>
                 {{ } }}

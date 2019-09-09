@@ -1,5 +1,6 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var userId = $api.getStorage(storageKey.userId);
+var areaId = $api.getStorage(storageKey.areaId);
 var tourRecordsPerson = person   // 巡视扫码得到的病人
 var patientId = person.id;
 
@@ -510,17 +511,22 @@ var closeDetail = function (obj) {
  * 巡视记录列表
  */
 var tourRecords = function () {
+    var params = {}
+    params.organizationId = areaId;
+    if (!$api.byId('allPatient').checked){
+        params.patientId = person.id
+        params.homepageId = person.homepageId
+    }
+    if (!$api.byId('allNurse').checked){
+        params.nurseId = userId
+    }
     common.post({
         url: config.inspectionQuery,
         isLoading: true,
-        data:JSON.stringify({
-            patientId: person.id,
-            homepageId: person.homepageId,
-            limit: -1
-        }),
+        data:JSON.stringify(params),
         dataType: "json",
         success: function (ret) {
-            if(ret&&ret.content&&ret.content.list&&ret.content.list.length>0){
+            if(ret&&ret.content&&ret.content.length>0){
                 $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
                 $api.html($api.byId('tourRecordsContentContainer'), "");
                 var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
@@ -585,8 +591,9 @@ var tourRecordsExecute = function () {
             patientName:  tourRecordsPerson.name,
             medBedId: tourRecordsPerson.medBedId,
             medBedName: tourRecordsPerson.medBedName,
+            organizationId: areaId,
             nurseLevel: nurseLevel,
-            nurseId: $api.getStorage(storageKey.userId),
+            nurseId: userId,
             nurseName: $api.getStorage(storageKey.userName),
             inspectionTime: inspectionTime,
             inspectionTypeId: inspectionTypeId,
