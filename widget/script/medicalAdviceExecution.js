@@ -16,6 +16,7 @@ apiready = function () {
     currentTab = 2
     // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
     tourRecords();
+    $api.setStorage(storageKey.scannerStatus, 'tour-records');
     paddingSelectAdviceRecords();
     // 监控左划事件
     api.addEventListener({

@@ -247,7 +247,11 @@
         <div class="right">
             <div >
                 <span>医嘱内容：</span>
+                {{?item.dosage}}
+                <span>{{=item.name||''}}，每次{{=item.dosage||''}}</span>
+                {{??}}
                 <span>{{=item.name||''}}</span>
+                {{?}}
             </div>
             <div>
                 <span>生效时间：</span>
@@ -274,12 +278,16 @@
                 <span>{{=item.foundTime||''}}</span>
             </div>
 
-            {{?item.sonAdvice!==null}}
-            {{for(var j=0;j<item.sonAdvice.length;j++) {
+            {{?item.sonBoList}}
+            {{for(var j=0;j<item.sonBoList.length;j++) {
             }}
             <div>
                 <span>医嘱内容{{=(j+1)}}：</span>
-                <span>{{=item.sonAdvice[j]||''}}</span>
+                {{?item.sonBoList[j].dosage}}
+                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
+                {{??}}
+                <span>{{=item.sonBoList[j].name||''}}</span>
+                {{?}}
             </div>
             {{}}}
             {{?}}
@@ -753,7 +761,11 @@
         <div class="right" >
             <div>
                 <span>医嘱内容：</span>
+                {{?item.dosage}}
+                <span>{{=item.name||''}}，每次{{=item.dosage||''}}</span>
+                {{??}}
                 <span>{{=item.name||''}}</span>
+                {{?}}
             </div>
             <div>
                 <span>生效时间：</span>
@@ -780,12 +792,16 @@
                 <span>{{=item.foundTime||''}}</span>
             </div>
 
-            {{?item.sonAdvice!==null}}
-            {{for(var j=0;j<item.sonAdvice.length;j++) {
+            {{?item.sonBoList}}
+            {{for(var j=0;j<item.sonBoList.length;j++) {
             }}
             <div>
                 <span>医嘱内容{{=(j+1)}}：</span>
-                <span>{{=item.sonAdvice[j]||''}}</span>
+                {{?item.sonBoList[j].dosage}}
+                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
+                {{??}}
+                <span>{{=item.sonBoList[j].name||''}}</span>
+                {{?}}
             </div>
             {{}}}
             {{?}}
