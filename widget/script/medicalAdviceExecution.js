@@ -139,8 +139,6 @@ var changeTab = function (obj,swipeStatus) {
             $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
             var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
                 "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag\" id=\"reportFlag\" type=\"checkbox\" tapmode   onchange=\"adviceRecords()\"> 需要报告</label>\n" +
-                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
                 "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
             $api.html($api.byId('advice-records-header'), "");
             $api.html($api.byId('advice-records-header'), el);
@@ -159,8 +157,6 @@ var changeTab = function (obj,swipeStatus) {
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
         var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <label><input class=\"aui-margin-t-5 \" name=\"reportFlag1\" id=\"reportFlag1\" type=\"checkbox\" tapmode   onchange=\"adviceRecordsForAdviceSends()\"> 需要报告</label>\n" +
             "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
             "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
@@ -231,12 +227,8 @@ var clickBottomTab = function (parent, id) {
  */
 var adviceRecords = function (type) {
     var inUse
-    var reportFlag
     if ($api.byId('inUse').checked){
         inUse = 1
-    }
-    if ($api.byId('reportFlag').checked){
-        reportFlag = 1
     }
     if (!isEmpty(type)){
         priorityCode = $api.val($api.byId('priorityCode'))
@@ -275,7 +267,6 @@ var adviceRecords = function (type) {
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
-            reportFlag: reportFlag,   //需要报告,  选中是1
             priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode')),    //病案费目
             status:  $api.val($api.byId('status')),   //医嘱状态
@@ -418,12 +409,8 @@ var closeAdviceExecuteDetail = function (obj) {
  */
 var adviceRecordsForAdviceSends = function () {
     var inUse
-    var reportFlag
     if ($api.byId('inUse1').checked){
         inUse = 1
-    }
-    if ($api.byId('reportFlag1').checked){
-        reportFlag = 1
     }
     var priorityCode1 = $api.val($api.byId('priorityCode1'))
     var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin1')) //上次执行时间开始
@@ -449,7 +436,6 @@ var adviceRecordsForAdviceSends = function () {
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
-            reportFlag: reportFlag,   //需要报告,  选中是1
             priorityCode:  priorityCode1,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode1')),    //病案费目
             status:  $api.val($api.byId('status1')),   //医嘱状态
