@@ -1,6 +1,6 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 var localServer = "http://172.17.100.2:8083/cmc-server";
-// var localServer = "http://192.168.1.126:8085/cmc-server";
+//var localServer = "http://192.168.43.200:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
 // var ws = "ws://192.168.1.126:8888/";
@@ -68,6 +68,7 @@ var config={
     saveVitalSigns: localServer+"/nur/nursePlan/saveVitalSigns",  //生命体征检测保存
     selectVitalSigns: localServer+"/nur/nursePlan/selectVitalSigns",  //生命体征检测查询
     selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
+    scanMedical: localServer+"/med/advice/getByMaterialCode/", //扫码核对查询医嘱信息
 
 
 

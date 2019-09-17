@@ -9,21 +9,25 @@
     <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
     <link rel="stylesheet" type="text/css" href="../css/common.css"/>
     <style type="text/css">
-        .smComplete{
+        .smComplete {
             background: #55dc03
         }
-        .smUncomplete{
+
+        .smUncomplete {
             background: #fa7d3e;
         }
-        .borderScanComplete{
+
+        .borderScanComplete {
             border: 2px solid #00bcd4;
             border-bottom-color: #ffffff;
         }
+
         .order .line {
             display: inline-block;
             width: 32%;
-            border-top: 1px solid #ccc ;
+            border-top: 1px solid #ccc;
         }
+
         .order .txt {
             color: #686868;
             vertical-align: -4px;
@@ -32,14 +36,14 @@
 </head>
 <body>
 <div class="aui-content">
-  <div class="aui-tab" id="tab">
-      <div class="aui-tab-item aui-active">重要事件提醒</div>
-      <div class="aui-tab-item">试管核对</div>
-      <!--<div class="aui-tab-item">药品核对</div>-->
-  </div>
-  <div id="content">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">重要事件提醒</div>
+        <div class="aui-tab-item">试管核对</div>
+        <!--<div class="aui-tab-item">药品核对</div>-->
+    </div>
+    <div id="content">
 
-  </div>
+    </div>
     <div class="content aui-font-size-15 aui-padded-t-15" id="scanContentContainer">
 
     </div>
@@ -52,53 +56,64 @@
 </div>
 
 </body>
-<script  id="calendar-tpl" type="text/template">
-  <div id="switch" class="aui-bar aui-bar-nav aui-bar-light">
-      <a class="aui-pull-left" tapmode onclick="lastMonth();">
-        <span class="aui-iconfont aui-icon-left"></span>
-      </a>
-     <div id="curDate" class="aui-title">　</div>
-     <a class="aui-pull-right" tapmode onclick="nextMonth();">
-       <span class="aui-iconfont aui-icon-right"></span>
-     </a>
-  </div>
-  <div class="aui-content-padded" style="margin-top:14em;margin-bottom:5em">
-    <div id="record-content" class="aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
-
+<script id="calendar-tpl" type="text/template">
+    <div id="switch" class="aui-bar aui-bar-nav aui-bar-light">
+        <a class="aui-pull-left" tapmode onclick="lastMonth();">
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <div id="curDate" class="aui-title">　</div>
+        <a class="aui-pull-right" tapmode onclick="nextMonth();">
+            <span class="aui-iconfont aui-icon-right"></span>
+        </a>
     </div>
-  </div>
-  <a href="#" class="add-btn" tapmode onclick="addNotice();"></a>
+    <div class="aui-content-padded" style="margin-top:14em;margin-bottom:5em">
+        <div id="record-content" class="aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
+
+        </div>
+    </div>
+    <a href="#" class="add-btn" tapmode onclick="addNotice();"></a>
 </script>
 <script id="check-tpl" type="text/template">
-  <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
-      <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanPatient" tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者</div>
-  </div>
-  <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
-      <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed" tapmode onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签</div>
-  </div>
+    <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanPatient"
+             tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者
+        </div>
+    </div>
+    <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed" tapmode
+             onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签
+        </div>
+    </div>
 </script>
 
 <script id="medical-tpl" type="text/template">
     <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
-        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanPatient-first" tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者</div>
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem"
+             id="scanPatient-first" tapmode onclick="scan(this);">第一步:点击此按钮，扫一扫切换患者
+        </div>
     </div>
     <div class="aui-text-center aui-content-padded aui-margin-t-5" style="margin: 0rem;">
-        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed-second" tapmode onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签</div>
+        <div class="aui-btn aui-btn-block smUncomplete" style="height: 1.5rem;line-height: 1.55rem" id="scanMed-second"
+             tapmode onclick="medScan(this);">第二步:点击此按钮，扫一扫试管标签
+        </div>
     </div>
 </script>
 <script id="record-tpl" type="text/template">
-  {{~ it.content:info:index}}
-  <div id="record{{=info.id}}" class="aui-row aui-padded-t-10 aui-padded-b-10 aui-border-b cus-record-cus">
-      <div class="aui-col-xs-8 aui-ellipsis-1" tapmode onclick="openModifyWin('{{=info.id}}','{{=info.motionName}}','{{= spliceHourMinute(info.alertTime) }}',' {{=info.bedCode}}','{{=info.patientName}}')">
-        <span  class="aui-text-info aui-font-size-16" style="line-height: 1.5rem;">{{=info.motionName}} {{= spliceHourMinute(info.alertTime) }} {{=info.bedCode}}床 {{=info.patientName}}</span>
-      </div>
-      <div class="aui-col-xs-4">
-        <div  style="float:right;">
-          <div tapmode onclick="deleteRecord('{{=info.id}}');" class="aui-btn aui-btn-sm aui-btn-danger"><span class="aui-iconfont aui-icon-minus"></span>删除</div>
+    {{~ it.content:info:index}}
+    <div id="record{{=info.id}}" class="aui-row aui-padded-t-10 aui-padded-b-10 aui-border-b cus-record-cus">
+        <div class="aui-col-xs-8 aui-ellipsis-1" tapmode
+             onclick="openModifyWin('{{=info.id}}','{{=info.motionName}}','{{= spliceHourMinute(info.alertTime) }}',' {{=info.bedCode}}','{{=info.patientName}}')">
+            <span class="aui-text-info aui-font-size-16" style="line-height: 1.5rem;">{{=info.motionName}} {{= spliceHourMinute(info.alertTime) }} {{=info.bedCode}}床 {{=info.patientName}}</span>
         </div>
-      </div>
-  </div>
-  {{~}}
+        <div class="aui-col-xs-4">
+            <div style="float:right;">
+                <div tapmode onclick="deleteRecord('{{=info.id}}');" class="aui-btn aui-btn-sm aui-btn-danger"><span
+                        class="aui-iconfont aui-icon-minus"></span>删除
+                </div>
+            </div>
+        </div>
+    </div>
+    {{~}}
 </script>
 <script id="scanMed-tmpl" type="text/template">
     <div class="keyValueItem aui-margin-l-15">
@@ -161,50 +176,47 @@
     </div>
 
 </script>
-    <script id="scanMedical-tmpl" type="text/template">
-        <div class="keyValueItem aui-margin-l-15 order">
-            <span class="line" style="width: 35%;"></span>
-            <span class="txt" style="background: #00bcd4">医嘱信息</span>
-            <span class="line" style="width: 35%;"></span>
-        </div>
-        <div style="border:2px solid #0ad452">
-            <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
-                <div class="left" ></div>
-                <div class="right">
-                    <div >
-                        <span>医嘱内容：</span>
-                        <span>{{=it.name||''}}</span>
-                    </div>
-                    <div>
-                        <span>生效时间：</span>
-                        <span>{{=it.adviceStart||''}}</span>
-                    </div>
-                    <div>
-                        <span>用法：</span>
-                        <span>{{=it.usageName||''}}</span>
-                    </div>
-                    <div>
-                        <span>医生托嘱：</span>
-                        <span>{{=it.entrustment||''}}</span>
-                    </div>
-                    <div>
-                        <span>执行科室：</span>
-                        <span>{{=it.acceptOrgName||''}}</span>
-                    </div>
-                    <div>
-                        <span>开嘱医生：</span>
-                        <span>{{=it.doctorName||''}}</span>
-                    </div>
-                    <div>
-                        <span>开嘱时间：</span>
-                        <span>{{=it.foundTime||''}}</span>
-                    </div>
+<script id="scanMedical-tmpl" type="text/template">
+    <div class="keyValueItem aui-margin-l-15 order">
+        <span class="line" style="width: 35%;"></span>
+        <span class="txt" style="background: #00bcd4">医嘱信息</span>
+        <span class="line" style="width: 35%;"></span>
+    </div>
+    <div style="border:2px solid #0ad452">
+        <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
+            <div class="left"></div>
+            <div class="right">
+                <div>
+                    <span>医嘱内容：</span>
+                    <span>{{=it.name||''}}</span>
+                </div>
+                <div>
+                    <span>生效时间：</span>
+                    <span>{{=it.adviceStart||''}}</span>
+                </div>
+                <div>
+                    <span>用法：</span>
+                    <span>{{=it.usageName||''}}</span>
+                </div>
+                <div>
+                    <span>医生托嘱：</span>
+                    <span>{{=it.entrustment||''}}</span>
+                </div>
+                <div>
+                    <span>执行科室：</span>
+                    <span>{{=it.acceptOrgName||''}}</span>
+                </div>
+                <div>
+                    <span>开嘱医生：</span>
+                    <span>{{=it.doctorName||''}}</span>
+                </div>
+                <div>
+                    <span>开嘱时间：</span>
+                    <span>{{=it.foundTime||''}}</span>
                 </div>
             </div>
         </div>
-
-
-
+    </div>
 </script>
 <script id="relation-tmpl" type="text/template">
     <div class="keyValueItem aui-margin-l-15 order">
@@ -212,14 +224,15 @@
         <span class="txt" style="background: #00bcd4">该患者其他化验医嘱信息</span>
         <span class="line" style="width: 15%;"></span>
     </div>
-    {{ for(var i=0;i<it.length;i++){
+    {{ for(var i=0;i
+    <it.length;i++){
     var item = it[i];
     }}
     <div style="border:2px solid #0ad452">
         <div class="adviceRecordsTmplList aui-font-size-16 aui-margin-l-15" style="">
-            <div class="left" ></div>
+            <div class="left"></div>
             <div class="right">
-                <div >
+                <div>
                     <span>医嘱内容：</span>
                     <span>{{=item.name||''}}</span>
                 </div>
