@@ -7,8 +7,6 @@ var patientId = person.id;
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
-var swipe = false
-var priorityCode = ''   // 存放医嘱记录选中的医嘱期效
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
 var currentTab = 0
 apiready = function () {
@@ -22,7 +20,6 @@ apiready = function () {
     api.addEventListener({
         name:'swipeleft'
     }, function(ret, err){
-        swipe = true
         if (currentTab === 3){
             currentTab = 3
         } else {
@@ -30,15 +27,11 @@ apiready = function () {
         }
         var id = tabList[currentTab]
         changeTab($api.dom('#'+id))
-        if (currentTab === 0){
-            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        }
     });
     // 监控右划事件
     api.addEventListener({
         name:'swiperight'
     }, function(ret, err){
-        swipe = true
         if (currentTab === 0){
             currentTab = 0
         } else {
@@ -46,9 +39,6 @@ apiready = function () {
         }
         var id = tabList[currentTab]
         changeTab($api.dom('#'+id))
-        if (currentTab === 0 ){
-            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        }
     });
     // 监控巡视扫码事件
     api.addEventListener({
@@ -80,10 +70,7 @@ apiready = function () {
  * 切换tab
  * @param obj
  */
-var changeTab = function (obj,swipeStatus) {
-    if (!isEmpty(swipeStatus)){
-        swipe  = true
-    }
+var changeTab = function (obj) {
     // 给选中的tab添加aui-active样式
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
@@ -124,55 +111,46 @@ var changeTab = function (obj,swipeStatus) {
 
     if (dataTo == "advice-records") {// 医嘱记录
         $api.setStorage(storageKey.scannerStatus, '');
-        if (currentTab === 0 ){
-            $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
-            $api.addCls($api.byId("adviceRecordsDropdown"), 'show');
-        } else{
-            currentTab = 0
-        }
-        if (swipe){
-            // 切换tab时将所有选中条件都清空
-            priorityCode = ''
-            adviceRecordsReset()
-            $api.addCls($api.byId('allTold'), 'changeBlue');
-            $api.removeCls($api.byId('longTold'), 'changeBlue');
-            $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
-            var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
-                "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
-            $api.html($api.byId('advice-records-header'), "");
-            $api.html($api.byId('advice-records-header'), el);
-
-            swipe = false
-            adviceRecords();
-        }
+        currentTab = 0
+        // 切换tab时将所有选中条件都清空
+        adviceRecordsReset()
+        var el =" <label>" +
+            "<input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+        $api.html($api.byId('advice-records-header'), "");
+        $api.html($api.byId('advice-records-header'), el);
+        adviceRecords()
     } else if (dataTo == "advice-execute") {//医嘱执行
-        // $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
-        // currentTab = 'advice-execute'
-        // adviceExecute();
+
     } else if (dataTo == "advice-sends") {//医嘱发送
         $api.setStorage(storageKey.scannerStatus, '');
-        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 1
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
-        var el =" <label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
+        var el =" <label>" +
+            "<input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
             "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
             "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
         $api.html($api.byId('advice-sends-header'), el);
 
         adviceRecordsForAdviceSends()
-        // adviceSends();
     } else if (dataTo == "tour-records") {//巡视记录
         $api.setStorage(storageKey.scannerStatus, 'tour-records');
-        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         currentTab = 2
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
         $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 3
-        $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
 
         // 切换tab时将所有选中条件都清空
         skinTestRecordReset()
@@ -209,8 +187,6 @@ var clickBottomTab = function (parent, id) {
         if (id === 'tourRecords-result'){
             tourRecordsPerson = person
             paddingInputTourRecords()
-        }else if(id === 'adviceRecords-selector'){
-            $api.removeCls($api.byId("adviceRecordsDropdown"), 'show');
         }
 
         $api.addCls(activeTab, 'active');
@@ -225,24 +201,18 @@ var clickBottomTab = function (parent, id) {
 /**
  * 医嘱记录
  */
-var adviceRecords = function (type) {
+var adviceRecords = function () {
     var inUse
     if ($api.byId('inUse').checked){
         inUse = 1
     }
-    if (!isEmpty(type)){
-        priorityCode = $api.val($api.byId('priorityCode'))
-        //并将上面的期效下拉选更改为这里选中的条件
-        $api.removeCls($api.byId('allTold'), 'changeBlue');
-        $api.removeCls($api.byId('longTold'), 'changeBlue');
-        $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
-        if (priorityCode === ''){
-            $api.addCls($api.byId('allTold'), 'changeBlue');
-        } else if(priorityCode === '0'){
-            $api.addCls($api.byId('longTold'), 'changeBlue');
-        } else if(priorityCode === '1'){
-            $api.addCls($api.byId('temporaryTold'), 'changeBlue');
-        }
+    var longTermAdviceStatus = $api.byId('longTermAdvice').checked
+    var temporaryAdviceStatus = $api.byId('temporaryAdvice').checked
+    var priorityCode = ''
+    if (longTermAdviceStatus && !temporaryAdviceStatus){
+        priorityCode = 0
+    } else if (!longTermAdviceStatus && temporaryAdviceStatus){
+        priorityCode = 1
     }
     var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin')) //上次执行时间开始
     var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd'))  //上次执行时间结束
@@ -280,7 +250,6 @@ var adviceRecords = function (type) {
         dataType: "json",
         success: function (ret) {
             // 刷新数据之前将所有筛选的弹框和医嘱记录的弹框收回
-            $api.removeCls( $api.dom($api.byId('tab'), '#adviceRecordsDropdown'), 'show');
             $api.removeCls( $api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
             $api.html($api.byId('adviceRecordsContentContainer'), "");
             var contentTmpl = doT.template($api.text($api.byId('adviceRecordsTmplList')));
@@ -306,7 +275,6 @@ var paddingSelectAdviceRecords = function () {
         success:function(ret){
             var data = {}
             data.adviceStatus = ret.content
-            data.priorityCode = priorityCode
             params.queryCode = "advice_type"
             common.post({
                 url:config.dictUrl,
@@ -339,26 +307,6 @@ var changeAdviceShow = function (obj) {
         $api.removeCls($api.next(obj), 'show');
         $api.addCls($api.next(obj), 'hide');
     }
-}
-
-/**
- * 点击医嘱记录弹出下拉选，鼠标浮在哪条记录上哪条记录变成浅蓝色
- * @param obj
- */
-var changeBlue = function (obj,id) {
-    if ('allTold' === id){
-        priorityCode = ''
-    } else if ('longTold' === id){
-        priorityCode = 0
-    } else if ('temporaryTold' === id){
-        priorityCode = 1
-    }
-
-    $api.removeCls($api.byId('allTold'), 'changeBlue');
-    $api.removeCls($api.byId('longTold'), 'changeBlue');
-    $api.removeCls($api.byId('temporaryTold'), 'changeBlue');
-    $api.addCls(obj, 'changeBlue');
-    adviceRecords();
 }
 
 /**
@@ -405,14 +353,21 @@ var closeAdviceExecuteDetail = function (obj) {
 
 
 /**
- * 医嘱记录
+ * 医嘱记录for发送记录
  */
 var adviceRecordsForAdviceSends = function () {
     var inUse
     if ($api.byId('inUse1').checked){
         inUse = 1
     }
-    var priorityCode1 = $api.val($api.byId('priorityCode1'))
+    var longTermAdviceStatus = $api.byId('longTermAdvice1').checked
+    var temporaryAdviceStatus = $api.byId('temporaryAdvice1').checked
+    var priorityCode = ''
+    if (longTermAdviceStatus && !temporaryAdviceStatus){
+        priorityCode = 0
+    } else if (!longTermAdviceStatus && temporaryAdviceStatus){
+        priorityCode = 1
+    }
     var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin1')) //上次执行时间开始
     var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd1'))  //上次执行时间结束
     var foundTimeBegin = $api.val($api.byId('foundTimeBegin1'))  //开嘱时间开始
@@ -436,7 +391,7 @@ var adviceRecordsForAdviceSends = function () {
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
-            priorityCode:  priorityCode1,    //医嘱优先级（期效）
+            priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode1')),    //病案费目
             status:  $api.val($api.byId('status1')),   //医嘱状态
             lastExcecutiveTimeBegin:  lastExcecutiveTimeBegin,   //上次执行时间开始
@@ -887,7 +842,6 @@ function adviceSendsReset(){
     $api.val($api.byId('lastExcecutiveTimeEnd1'),'')
     $api.val($api.byId('foundTimeBegin1'),'')
     $api.val($api.byId('foundTimeEnd1'),'')
-    $api.attr($api.byId('priorityCodeOne1'), 'selected','true');
     $api.attr($api.byId('typeCodeOne1'), 'selected','true');
     $api.attr($api.byId('statusOne1'), 'selected','true');
 

@@ -13,13 +13,7 @@
 <body>
 <div class="bodyContainer">
     <div class="aui-tab" id="tab">
-        <div class="aui-tab-item" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this,'swipeStatus');">医嘱记录
-            <div id="adviceRecordsDropdown" class="adviceRecordsDropdown hide">
-                <div id="allTold" class="changeBlue" onclick="changeBlue(this,'allTold')">全部医嘱单</div>
-                <div id="longTold" onclick="changeBlue(this,'longTold')">长嘱医嘱单</div>
-                <div id="temporaryTold" onclick="changeBlue(this,'temporaryTold')">临嘱医嘱单</div>
-            </div>
-        </div>
+        <div class="aui-tab-item" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录</div>
         <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
         <div class="aui-tab-item" id="tab-advice-sends" data-to="advice-sends" onclick="changeTab(this);">医嘱发送</div>
         <div class="aui-tab-item  aui-active" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
@@ -30,6 +24,10 @@
         <div id="advice-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="advice-records-header">
                 <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()"> 在用医嘱</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="longTermAdvice" id="longTermAdvice" type="checkbox" tapmode  onchange="adviceRecords()"> 长嘱</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="temporaryAdvice" id="temporaryAdvice" type="checkbox" tapmode  onchange="adviceRecords()"> 临嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
             </div>
@@ -122,6 +120,10 @@
         <div id="advice-sends" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="advice-sends-header">
                 <label><input class="aui-margin-t-5 " name="inUse1" id="inUse1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 在用医嘱</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="longTermAdvice1" id="longTermAdvice1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 长嘱</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="temporaryAdvice1" id="temporaryAdvice1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 临嘱</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
             </div>
@@ -356,29 +358,6 @@
 <!--医嘱列表筛选-->
 <script id="selectAdviceRecords" type="text/template">
     <div class="flex aui-margin-t-5" >
-        <div class="flex-item">
-            <span class="key">医嘱期效：</span>
-            <span class="value">
-                <select class="select" style="width: 4rem" id="priorityCode">
-                    {{?it.priorityCode === ''}}
-                     <option value="" selected>全部医嘱</option>
-                    {{??}}
-                     <option value="">全部医嘱</option>
-                    {{?}}
-
-                    {{?it.priorityCode ===0}}
-                     <option value="0" selected> 长嘱医嘱</option>
-                    {{??}}
-                     <option value="0"> 长嘱医嘱</option>
-                    {{?}}
-                    {{?it.priorityCode === 1}}
-                     <option value="1" selected>临时医嘱</option>
-                    {{??}}
-                     <option value="1">临时医嘱</option>
-                    {{?}}
-                </select>
-            </span>
-        </div>
         <div class="flex-item">
             <span class="key">病案费目：</span>
             <span class="value">
@@ -859,29 +838,6 @@
 <!--新医嘱发送记录列表筛选-->
 <script id="selectAdviceSends" type="text/template">
     <div class="flex aui-margin-t-5" >
-        <div class="flex-item">
-            <span class="key">医嘱期效：</span>
-            <span class="value">
-                <select class="select" style="width: 4rem" id="priorityCode1">
-                    {{?it.priorityCode === ''}}
-                     <option value="" id="priorityCodeOne1" selected>全部医嘱</option>
-                    {{??}}
-                     <option value="">全部医嘱</option>
-                    {{?}}
-
-                    {{?it.priorityCode ===0}}
-                     <option value="0" selected> 长嘱医嘱</option>
-                    {{??}}
-                     <option value="0"> 长嘱医嘱</option>
-                    {{?}}
-                    {{?it.priorityCode === 1}}
-                     <option value="1" selected>临时医嘱</option>
-                    {{??}}
-                     <option value="1">临时医嘱</option>
-                    {{?}}
-                </select>
-            </span>
-        </div>
         <div class="flex-item">
             <span class="key">病案费目：</span>
             <span class="value">

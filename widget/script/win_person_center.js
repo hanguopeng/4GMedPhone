@@ -47,6 +47,7 @@ apiready = function(){
         api.addEventListener({
             name: 'keyback'
         },function(ret, err) {
+            $api.setStorage(storageKey.scannerStatus, '');
             api.closeWin();
         });
             return;
@@ -74,6 +75,7 @@ apiready = function(){
     api.addEventListener({
         name: 'keyback'
       },function(ret, err) {
+        $api.setStorage(storageKey.scannerStatus, '');
         api.closeWin();
     });
 }
