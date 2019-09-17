@@ -531,6 +531,7 @@ var tourRecordsExecute = function () {
         data: {
             patientId:  tourRecordsPerson.id,
             homepageId:  tourRecordsPerson.homepageId,
+            registerNumber:  tourRecordsPerson.registerNumber,
             patientName:  tourRecordsPerson.name,
             medBedId: tourRecordsPerson.medBedId,
             medBedName: tourRecordsPerson.medBedName,
