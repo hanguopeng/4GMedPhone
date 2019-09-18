@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/widget/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/widget/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -41,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="316">
-              <caret line="54" column="64" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
+              <caret line="54" column="64" lean-forward="true" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -49,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/script/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1330">
-              <caret line="70" column="75" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+            <state relative-caret-position="184">
+              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -58,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="251" column="39" lean-forward="true" selection-start-line="251" selection-start-column="39" selection-end-line="251" selection-end-column="39" />
+            <state relative-caret-position="241">
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
               <folding>
                 <element signature="e#156#162#0" expanded="true" />
                 <element signature="e#162#168#0" expanded="true" />
@@ -95,6 +92,15 @@
                 <element signature="e#170#176#0" expanded="true" />
                 <element signature="e#176#182#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="1061" column="60" selection-start-line="1061" selection-start-column="60" selection-end-line="1061" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -174,7 +180,6 @@
         <option value="$PROJECT_DIR$/widget/login.html" />
         <option value="$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html" />
         <option value="$USER_HOME$/AppData/Local/Temp/HZ$D.075.680/HZ$D.075.682/BOOT-INF/classes/application.yml" />
-        <option value="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" />
         <option value="$PROJECT_DIR$/widget/html/nurse/frm_PICC_detail.html" />
         <option value="$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html" />
         <option value="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" />
@@ -182,6 +187,7 @@
         <option value="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" />
         <option value="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" />
         <option value="$PROJECT_DIR$/widget/script/config.js" />
+        <option value="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" />
       </list>
     </option>
   </component>
@@ -272,17 +278,27 @@
       <workItem from="1567991339503" duration="1954000" />
       <workItem from="1568596747018" duration="827000" />
       <workItem from="1568619266272" duration="1048000" />
-      <workItem from="1568723854523" duration="240000" />
+      <workItem from="1568723854523" duration="1517000" />
+      <workItem from="1568771078272" duration="1805000" />
     </task>
+    <task id="LOCAL-00001" summary="没啥">
+      <created>1568724123080</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1568724123080</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67589000" />
+    <option name="totallyTimeSpent" value="70671000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25159913" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25426438" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Project Explorer" order="3" />
@@ -350,6 +366,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="没啥" />
+    <option name="LAST_COMMIT_MESSAGE" value="没啥" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/widget/html/frm_main_content.html">
@@ -588,13 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="937" column="15" selection-start-line="937" selection-start-column="15" selection-end-line="937" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/win_main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2774">
@@ -609,24 +622,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="54" column="64" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
+        <state relative-caret-position="381">
+          <caret line="1061" column="60" selection-start-line="1061" selection-start-column="60" selection-end-line="1061" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1330">
-          <caret line="70" column="75" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+        <state relative-caret-position="184">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="54" column="64" lean-forward="true" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="251" column="39" lean-forward="true" selection-start-line="251" selection-start-column="39" selection-end-line="251" selection-end-column="39" />
+        <state relative-caret-position="241">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
           <folding>
             <element signature="e#156#162#0" expanded="true" />
             <element signature="e#162#168#0" expanded="true" />

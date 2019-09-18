@@ -52,7 +52,6 @@ apiready = function () {
             if(persons[i].id == tourRecordsPersonId){
                 status = false
                 tourRecordsPerson = persons[i]
-
                 clickBottomTab('tour-records','tourRecords-result');
                 paddingInputTourRecords()
             }
@@ -184,10 +183,10 @@ var clickBottomTab = function (parent, id) {
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
 
-        if (id === 'tourRecords-result'){
+        /*if (id === 'tourRecords-result'){
             tourRecordsPerson = person
             paddingInputTourRecords()
-        }
+        }*/
 
         $api.addCls(activeTab, 'active');
 
