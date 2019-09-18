@@ -183,10 +183,9 @@ var clickBottomTab = function (parent, id) {
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
 
-        /*if (id === 'tourRecords-result'){
-            tourRecordsPerson = person
+        if (id === 'tourRecords-result'){
             paddingInputTourRecords()
-        }*/
+        }
 
         $api.addCls(activeTab, 'active');
 
