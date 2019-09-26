@@ -905,9 +905,9 @@
         </tr>
         </thead>
         <tbody id="tbody">
-        {{?it}}
-        {{for(var i=0;i<it.length;i++) {
-         var item = it[i];
+        {{?it.list}}
+        {{for(var i=0;i<it.list.length;i++) {
+         var item = it.list[i];
         }}
         <tr onclick="changeNextTwoShow(this)">
             <td>{{=item.nurseName}}</td>
@@ -918,7 +918,14 @@
         </tr>
         <tr class="hide">
             <td>护理等级</td>
+            {{?it.userId === item.nurseId}}
+            <td colspan="3">{{=item.nurseLevelName||''}}</td>
+            <td>
+                <div style="color: red" onclick="deleteThis('{{=item.id}}')">删除</div>
+            </td>
+            {{??}}
             <td colspan="4">{{=item.nurseLevelName||''}}</td>
+            {{?}}
         </tr>
         <tr class="hide">
             <td>巡视备注</td>

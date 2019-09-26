@@ -468,10 +468,14 @@ var tourRecords = function () {
         dataType: "json",
         success: function (ret) {
             if(ret&&ret.content&&ret.content.length>0){
+                var userId = $api.getStorage(storageKey.userId);
+                var params = [];
+                params.list = ret.content;
+                params.userId  = userId;
                 $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
                 $api.html($api.byId('tourRecordsContentContainer'), "");
                 var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
-                $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(ret.content));
+                $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(params));
             }else{
                 $api.html($api.byId('tourRecordsContentContainer'), "");
             }
@@ -552,6 +556,35 @@ var tourRecordsExecute = function () {
         },
     });
 };
+var deleteThis = function (id) {
+    alert(id)
+    common.get({
+        url: config.inspectionDelete + id + "/" + userId,
+        isLoading: true,
+        success: function (ret) {
+            if(ret.code===200){
+                if (ret.content === -1){
+                    api.alert({
+                        title: '提示',
+                        msg: '只能删除自己创建的巡视记录！',
+                    });
+                } else if (ret.content > 0 ){
+                    api.alert({
+                        title: '提示',
+                        msg: '删除成功',
+                    });
+                } else{
+                    api.alert({
+                        title: '提示',
+                        msg: '删除失败',
+                    });
+                }
+            }
+            tourRecords();
+        },
+    });
+
+}
 
 /**
  * 皮试结果记录列表查询
