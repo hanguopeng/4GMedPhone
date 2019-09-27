@@ -24,6 +24,8 @@ var config={
     patientSaveUrl:localServer+"/med/patient/patientSaveUrl/", //入科确认
     inspectionSave:localServer+"/med/inspection/inspectionSave", //巡视记录保存
     inspectionQuery:localServer+"/med/inspection/inspectionQueryPda", //巡视记录查询
+    // 20190926 Mela.S
+    inspectionDelete:localServer+"/med/inspection/deleteInspectionByOrId/", //巡视记录查询
     // 20190711 添加注册
     register: localServer+"/sys/user/register", //注册
     // 20190712 添加修改密码
