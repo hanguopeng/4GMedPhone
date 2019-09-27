@@ -557,7 +557,6 @@ var tourRecordsExecute = function () {
     });
 };
 var deleteThis = function (id) {
-    alert(id)
     common.get({
         url: config.inspectionDelete + id + "/" + userId,
         isLoading: true,
