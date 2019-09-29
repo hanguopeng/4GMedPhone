@@ -116,7 +116,6 @@ function closeWin() {
 }
 
 function openFrameContent(page){
-
     if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
         var person = $api.getStorage(storageKey.currentPerson);
         common.get({
@@ -177,7 +176,41 @@ function openFrameContent(page){
                 }
             }
         });
+    }else{
+        api.closeFrame({
+            name: 'frm_person_search'
+        });
+        var header = document.querySelector('#header');
+        var pos = $api.offset(header);
+        var footPos = $api.offset(document.querySelector('#footer'))
+        api.openFrame({ // 打开Frame
+            name: page,
+            url: '../html/'+ page +'.html',
+            rect: {
+                x: 0,
+                y: pos.h, // 头部留位置
+                w: 'auto',
+                h: api.winHeight-pos.h-footPos.h
+            },
+            bounces: false,
+            reload: true,
+            vScrollBarEnabled: false
+        });
 
+        for (var i = 0; i < frames.length; i++){
+            if(frames[i]===page){
+                api.setFrameAttr({
+                    name: frames[i],
+                    hidden: false
+                });
+                currentFrame = i;
+            }else{
+                api.setFrameAttr({
+                    name: frames[i],
+                    hidden: true
+                });
+            }
+        }
     }
 
 }
