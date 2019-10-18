@@ -153,16 +153,16 @@ function addTelephone(){
         if(btnIndex===1){
             if(text===""||text===null){
                 api.toast({
-                    msg: '电话不可为空',
+                    msg: '联系电话不可为空',
                     duration: 2000,
                     location: 'middle'
                 });
-                return
             }else{
                 common.get({
                     url:config.updateTelephone + patientId + "/" + person.homepageId + "/" + text ,
-                    isLoading:false,
+                    isLoading:true,
                     success:function(ret,err){
+                        api.hideProgress();
                         if(ret.code===200){
                             api.toast({
                                 msg: '添加成功',
@@ -197,16 +197,16 @@ function updateTelephone(){
         if(btnIndex===1){
             if(text===""||text===null){
                 api.toast({
-                    msg: '电话不可为空',
+                    msg: '联系电话不能为空',
                     duration: 2000,
                     location: 'middle'
                 });
-                return
             }else{
                 common.get({
                     url:config.updateTelephone + patientId + "/" + person.homepageId + "/" + text ,
-                    isLoading:false,
+                    isLoading:true,
                     success:function(ret,err){
+                        api.hideProgress();
                         if(ret.code===200){
                             api.toast({
                                 msg: '联系电话修改成功',

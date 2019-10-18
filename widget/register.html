@@ -85,9 +85,12 @@
             </div>
         </li>
     </ul>
-    <div class="aui-row aui-margin-t-15">
-        <div id="registerBtn" class="aui-btn aui-btn-block aui-btn-info" style="background:linear-gradient(to left, #23f8e5,#57f2fc)"
-             tapmode onclick="register()">注册</div><br/>
+    <div class="aui-row aui-margin-t-15" style="text-align: center">
+        <div id="registerBtn" class="aui-btn aui-btn-block aui-btn-info"
+             style="background:linear-gradient(to left, #23f8e5,#57f2fc);display: inline-block;width: 48%;font-size: 0.8rem;"
+             tapmode onclick="register()">注册</div>
+        <div  class="aui-btn aui-btn-block aui-btn-sm" style="display: inline-block;width: 48%;font-size: 0.8rem;"
+              tapmode onclick="api.closeWin()">返回</div>
     </div>
 </div>
 <script type="text/javascript" src="./script/api.js"></script>
