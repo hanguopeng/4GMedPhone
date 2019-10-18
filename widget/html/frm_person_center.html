@@ -157,7 +157,16 @@
         </div>
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">
             <span class="key">联系电话：</span>
+            {{if(it.inOrganizationTime){ }}
+                <span id="telephoneInput">{{=it.contactsMobile||''}}</span>
+                {{if(it.contactsMobile){ }}
+                <span class="aui-btn aui-btn-info" tapmode onclick="updateTelephone();" >修改联系电话</span>
+                {{}else{}}
+                <span class="aui-btn aui-btn-info" tapmode onclick="addTelephone();" >添加联系电话</span>
+            {{}}}
+            {{}else{}}
             <span class="value">{{=it.contactsMobile||''}}</span>
+            {{}}}
         </div>
 
         <div class="keyValueItem aui-margin-t-5 aui-margin-l-15">

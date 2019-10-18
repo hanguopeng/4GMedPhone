@@ -139,7 +139,95 @@ var searchPatientDetail = function (patientId) {
         }
     });
 };
+//添加联系电话方式
+function addTelephone(){
+    var telephone = $api.text($api.byId('telephoneInput'));
+    api.prompt({
+        title:'联系电话添加',
+        text:telephone,
+        type:'number',
+        buttons: ['确定', '取消']
+    }, function (ret, err) {
+        var btnIndex = ret.buttonIndex;
+        var text = ret.text;
+        if(btnIndex===1){
+            if(text===""||text===null){
+                api.toast({
+                    msg: '电话不可为空',
+                    duration: 2000,
+                    location: 'middle'
+                });
+                return
+            }else{
+                common.get({
+                    url:config.updateTelephone + patientId + "/" + person.homepageId + "/" + text ,
+                    isLoading:false,
+                    success:function(ret,err){
+                        if(ret.code===200){
+                            api.toast({
+                                msg: '添加成功',
+                                duration: 2000,
+                                location: 'middle'
+                            });
+                            $api.text($api.byId('telephoneInput'), text);
+                        }else{
+                            api.toast({
+                                msg: '添加失败',
+                                duration: 2000,
+                                location: 'middle'
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    });
+}
+//修改电话方法
+function updateTelephone(){
+    var telephone = $api.text($api.byId('telephoneInput'));
+    api.prompt({
+        title:'联系电话修改',
+        text:telephone,
+        type:'number',
+        buttons: ['确定', '取消']
+    }, function (ret, err) {
+        var btnIndex = ret.buttonIndex;
+        var text = ret.text;
+        if(btnIndex===1){
+            if(text===""||text===null){
+                api.toast({
+                    msg: '电话不可为空',
+                    duration: 2000,
+                    location: 'middle'
+                });
+                return
+            }else{
+                common.get({
+                    url:config.updateTelephone + patientId + "/" + person.homepageId + "/" + text ,
+                    isLoading:false,
+                    success:function(ret,err){
+                        if(ret.code===200){
+                            api.toast({
+                                msg: '联系电话修改成功',
+                                duration: 2000,
+                                location: 'middle'
+                            });
+                            $api.text($api.byId('telephoneInput'), text);
+                        }else{
+                            api.toast({
+                                msg: '联系电话修改失败',
+                                duration: 2000,
+                                location: 'middle'
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    });
 
+}
 /**
  * 体征信息
  * @param patientId
