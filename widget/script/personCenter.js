@@ -3,6 +3,7 @@ var patientId = person.id;
 var page = 1;
 var tabList = ['tab-jcst','tab-jcjg','tab-hyjg','tab-fymx']
 var currentTab = 0
+var tagFlag;
 apiready = function () {
     api.parseTapmode();
     // 监控左划事件
@@ -30,8 +31,35 @@ apiready = function () {
         changeTab($api.dom('#'+id))
     });
     loadJCST();
+    /**
+     *  下拉刷新
+     * */
+    api.setRefreshHeaderInfo({
+        visible: true,
+        bgColor: 'rgba(0,0,0,0)',
+        textColor: '#666',
+        textDown: '下拉刷新',
+        textUp: '释放刷新',
+        showTime: false
+    }, function (ret, err) {
+        downPullRefresh();
+    });
 };
 
+function downPullRefresh(){
+    api.refreshHeaderLoadDone();
+    if(tagFlag === "jcst"){
+        loadJCST();
+    }else if(tagFlag === "jcjg"){
+        loadJCJG()
+    }else if(tagFlag === "hyjg"){
+        loadHYJG()
+    }else {
+        loadFYMX()
+    }
+
+
+}
 /**
  * 基础信息
  */
@@ -65,6 +93,7 @@ var loadFYMX = function (status) {
  */
 var changeTab = function (obj) {
     var auiActive = $api.hasCls(obj, 'aui-active');
+    tagFlag = ""
     if (!auiActive) {
         $api.removeCls($api.byId('tab-jcst'), 'aui-active');
         $api.removeCls($api.byId('tab-jcjg'), 'aui-active');
@@ -88,14 +117,18 @@ var changeTab = function (obj) {
     }
     if (dataTo == "jcst") {//基础视图
         currentTab = 0
+        tagFlag = "jcst"
         loadJCST();
     } else if (dataTo == "jcjg") {//检查结果
+        tagFlag = "jcjg"
         currentTab = 1
         loadJCJG();
     } else if (dataTo == "hyjg") {//化验结果
+        tagFlag = "hyjg"
         currentTab = 2
         loadHYJG();
     } else if (dataTo == "fymx") {//费用明细
+        tagFlag = "fymx"
         currentTab = 3
         loadFYMX(false);
     }

@@ -9,9 +9,11 @@ var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
 var currentTab = 0
+var tabFlag;
 apiready = function () {
     api.parseTapmode();
     currentTab = 2
+    tabFlag = "tour-records"
     // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
     tourRecords();
     $api.setStorage(storageKey.scannerStatus, 'tour-records');
@@ -65,13 +67,81 @@ apiready = function () {
             });
         }
     });
+
+    api.setRefreshHeaderInfo({
+        visible: true,
+        bgColor: 'rgba(0,0,0,0)',
+        textColor: '#666',
+        textDown: '下拉刷新',
+        textUp: '释放刷新',
+        showTime: false
+    }, function (ret, err) {
+        downPullRefresh();
+    });
 }
 
+function downPullRefresh(){
+    api.refreshHeaderLoadDone(); //复位下拉刷新
+    if(tabFlag === "advice-records"){
+        $api.setStorage(storageKey.scannerStatus, '');
+        currentTab = 0
+        // 切换tab时将所有选中条件都清空
+        adviceRecordsReset()
+        var el =" <label>" +
+            "<input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+        $api.html($api.byId('advice-records-header'), "");
+        $api.html($api.byId('advice-records-header'), el);
+        adviceRecords()
+    }/*else if(tabFlag === "advice-execute") {
+
+    }*/else if(tabFlag === "skin-test") {
+        $api.setStorage(storageKey.scannerStatus, '');
+        // 切换tab时将所有选中条件都清空
+        skinTestRecordReset()
+        var el = "<label><input class=\"aui-margin-t-5 \" id=\"noInput\" type=\"checkbox\" onclick=\"skinTestRecord()\" checked> 未录入</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" id=\"alreadyInput\" type=\"checkbox\" onclick=\"skinTestRecord()\"> 已录入</label>"
+        $api.html($api.byId('skinTest-header'), "");
+        $api.html($api.byId('skinTest-header'), el);
+
+        skinTestRecord();
+    }else if(tabFlag === "tour-records") {
+        var tourEle = "<label><input class=\"aui-margin-t-5 \" name=\"allPatient\" id=\"allPatient\" type=\"checkbox\" tapmode  onchange=\"tourRecords()\"> 全部患者</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" name=\"allNurse\" id=\"allNurse\" type=\"checkbox\" tapmode   onchange=\"tourRecords()\"> 全部护士</label>"
+        $api.html($api.byId('tour-records-header'), "");
+        $api.html($api.byId('tour-records-header'),tourEle);
+        tourRecords();
+    }else if(tabFlag === "advice-sends"){
+        $api.setStorage(storageKey.scannerStatus, '');
+        // 切换tab时将所有选中条件都清空
+        adviceSendsReset()
+        var el =" <label>" +
+            "<input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+        $api.html($api.byId('advice-sends-header'), "");
+        $api.html($api.byId('advice-sends-header'), el);
+
+        adviceRecordsForAdviceSends()
+    }
+}
 /**
  * 切换tab
  * @param obj
  */
 var changeTab = function (obj) {
+    tabFlag = ""
     // 给选中的tab添加aui-active样式
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
@@ -111,6 +181,7 @@ var changeTab = function (obj) {
     }
 
     if (dataTo == "advice-records") {// 医嘱记录
+        tabFlag = "advice-records"
         $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 0
         // 切换tab时将所有选中条件都清空
@@ -127,8 +198,9 @@ var changeTab = function (obj) {
         $api.html($api.byId('advice-records-header'), el);
         adviceRecords()
     } else if (dataTo == "advice-execute") {//医嘱执行
-
+            tabFlag = "advice-execute"
     } else if (dataTo == "advice-sends") {//医嘱发送
+        tabFlag = "advice-sends"
         $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 1
         // 切换tab时将所有选中条件都清空
@@ -146,10 +218,12 @@ var changeTab = function (obj) {
 
         adviceRecordsForAdviceSends()
     } else if (dataTo == "tour-records") {//巡视记录
+        tabFlag = "tour-records"
         $api.setStorage(storageKey.scannerStatus, 'tour-records');
         currentTab = 2
         tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
+        tabFlag = "skin-test"
         $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 3
 
