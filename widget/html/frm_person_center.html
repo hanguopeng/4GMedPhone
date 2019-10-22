@@ -110,6 +110,16 @@
             </div>
             <div class="aui-font-size-12 aui-padded-t-5">心率<br/>（次/分）</div>
         </div>
+        <div class="flex-item aui-text-center">
+            <div class="tiZhengItem aui-padded-10 tongGan">
+                {{?it.painIntensity}}
+                {{=it.painIntensity.measureValue}}
+                {{??}}
+                {{='-'}}
+                {{?}}
+            </div>
+            <div class="aui-font-size-12 aui-padded-t-5">疼痛强度<p style="line-height: 1.39em;">&nbsp;</p></div>
+        </div>
     </script>
     <!--基础信息-->
     <script id="jcxxTmpl" type="text/template">

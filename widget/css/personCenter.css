@@ -39,6 +39,10 @@
 .tab-body-item#jcst .content .tiZhengItem.xinLv{
     background-color: rgba(25, 158, 216, 1);
 }
+.tab-body-item#jcst .content .tiZhengItem.tongGan{
+    background-color: rgb(29, 216, 186);
+}
+
 clearfix:after{
     content: ' ';
     display: block;
