@@ -631,9 +631,10 @@ var tourRecordsExecute = function (type) {
         success: function (ret) {
             $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
             tourRecords();
-            api.alert({
-                title: '提示',
+            api.toast({
                 msg: '操作成功',
+                duration: 2000,
+                location: 'middle'
             });
         },
     });
