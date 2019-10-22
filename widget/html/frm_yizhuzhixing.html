@@ -912,7 +912,12 @@
         <tr onclick="changeNextTwoShow(this)">
             <td>{{=item.nurseName}}</td>
             <td>{{=item.inspectionTime}}</td>
-            <td>{{=item.inspectionType}}</td>
+            <td>
+                {{?item.inspectionType==='巡视项'}}
+                {{??}}
+                {{=item.inspectionType}}
+                {{?}}
+            </td>
             <td>{{=item.patientName}}</td>
             <td>{{=item.medBedName}}</td>
         </tr>

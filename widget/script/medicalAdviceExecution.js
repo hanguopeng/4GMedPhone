@@ -52,8 +52,10 @@ apiready = function () {
             if(persons[i].id == tourRecordsPersonId){
                 status = false
                 tourRecordsPerson = persons[i]
-                clickBottomTab('tour-records','tourRecords-result');
-                paddingInputTourRecords()
+                // 如果病人对上了，直接触发保存动作
+                tourRecordsExecute('scan');
+                // clickBottomTab('tour-records','tourRecords-result');
+                // paddingInputTourRecords()
             }
         }
         if (status){
@@ -514,11 +516,17 @@ var paddingInputTourRecords = function () {
 }
 /**
  * 巡视记录保存
+ * 20191022 修改，当扫码触发巡视时直接保存
  */
-var tourRecordsExecute = function () {
-    var inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
-    var inspectionMemo = $api.val($api.byId('inspectionMemo'));
-    var inspectionTime = $api.val($api.byId('inspectionTime'));
+var tourRecordsExecute = function (type) {
+    var inspectionTypeId = null;
+    var inspectionMemo = null;
+    var inspectionTime = currentTime();
+    if (isEmpty(type)){
+        inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
+        inspectionMemo = $api.val($api.byId('inspectionMemo'));
+        inspectionTime = $api.val($api.byId('inspectionTime'));
+    }
     var nurseLevelCode = tourRecordsPerson.nurseLevelCode;
     var nurseLevel = ''
     switch (nurseLevelCode) {
