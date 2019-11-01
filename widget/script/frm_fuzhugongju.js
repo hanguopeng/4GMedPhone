@@ -426,17 +426,10 @@ function scan(obj){
 }
 
 function medScan(obj){
-    if(firstFlag){
         objId = $api.attr(obj, 'id');
         $api.setStorage(storageKey.scannerStatus,'medScan');
         scanner.start();
-    }else{
-        api.toast({
-            msg: '请先进行第一步',
-            duration: 2000,
-            location: 'middle'
-        });
-    }
+
 
 }
 
