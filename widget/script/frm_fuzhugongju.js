@@ -4,7 +4,7 @@ var specialDates = []; //当前月的特殊日期
 var clendarId ;
 var scanner;
 var objId;
-
+var firstFlag = false;
 apiready = function(){
     api.parseTapmode();
     scanner = api.require('cmcScan');
@@ -45,18 +45,25 @@ apiready = function(){
         //扫描切换患者成功后使第一步按钮变色
         $api.removeCls($api.byId(objId),'smUncomplete');
         $api.addCls($api.byId(objId),'smComplete');
+        $api.removeCls($api.byId('scanMed'),'smComplete');
+        $api.addCls($api.byId('scanMed'),'smUncomplete');
+        $api.html($api.byId('scanContentContainer'), "");
+        $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
+        firstFlag = true;
     });
     api.addEventListener({
         name:'medScan'
     },function(ret,err){
         var person = $api.getStorage(storageKey.currentPerson);
+        var userId = $api.getStorage(storageKey.userId);
         //发送请求查询医嘱信息
         common.get({
-            url:config.scanMedical+ret.value.materialCode.value,
+            url:config.scanMedical+ret.value.materialCode.value + "/" + person.id + "/" + userId,
             isLoading:true,
             success:function(ret){
-                if(ret&&ret.content){
-                    if(ret.content.medPatientId==person.id){
+                console.log(JSON.stringify(ret))
+                if(ret){
+                    if(ret.code===200&&ret.patientId.toString() === person.id.toString()){
                         //只有确定扫描患者与试管是同一患者才使第二部按钮变色
                         $api.removeCls($api.byId(objId),'smUncomplete');
                         $api.addCls($api.byId(objId),'smComplete');
@@ -64,31 +71,57 @@ apiready = function(){
                         var patientInfo = doT.template($api.text($api.byId('scanMed-tmpl')));
                         $api.html($api.byId('scanContentContainer'),patientInfo($api.getStorage(storageKey.currentPerson)) );
                         $api.addCls($api.byId('scanContentContainer'),'borderScanComplete');
+
+                        api.startPlay({
+                            path: 'widget://res/checkSuccess.mp3'
+                        }, function(ret, err) {
+
+                        });
+                        api.toast({
+                            msg: '核对成功！',
+                            duration: config.duration,
+                            location: 'middle'
+                        });
+                        firstFlag = false;
                         //显示医嘱信息
-                        var contentTmpl = doT.template($api.text($api.byId('scanMedical-tmpl')));
+                        /*var contentTmpl = doT.template($api.text($api.byId('scanMedical-tmpl')));
                         $api.html($api.byId('medContentContainer'), contentTmpl(ret.content));
                         if(ret.content.sonBoList.length>0){
                             var contentTmpl = doT.template($api.text($api.byId('relation-tmpl')));
                             $api.html($api.byId('relationContentContainer'), contentTmpl(ret.content.sonBoList));
-                        }
+                        }*/
                     }else{
-                        api.alert({
+                        api.toast({
+                            msg: '核对失败！',
+                            duration: config.duration,
+                            location: 'middle'
+                        });
+                        api.startPlay({
+                            path: 'widget://res/checkFailed.mp3'
+                        }, function(ret, err) {
+
+                        });
+                        /*api.alert({
                             title: '提示',
                             msg: '两次扫描不是同一个患者',
-                        });
+                        });*/
 
                     }
                 }
 
             },fail:function(ret,err){
+                api.startPlay({
+                    path: 'widget://res/checkFailed.mp3'
+                }, function(ret, err) {
+
+                });
                 api.alert({
                     title: '提示',
-                    msg: '请扫描正确的试管',
+                    msg: '请扫描正确的试管码',
                 });
             }
         });
         $api.setStorage(storageKey.scannerStatus,'');
-
     });
     showCalendar();
     //添加事件成功之后页面将该日期设置为提醒日期，同时需要重新刷新该日期下的所有事件
@@ -393,9 +426,18 @@ function scan(obj){
 }
 
 function medScan(obj){
-    objId = $api.attr(obj, 'id');
-    $api.setStorage(storageKey.scannerStatus,'medScan');
-    scanner.start();
+    if(firstFlag){
+        objId = $api.attr(obj, 'id');
+        $api.setStorage(storageKey.scannerStatus,'medScan');
+        scanner.start();
+    }else{
+        api.toast({
+            msg: '请先进行第一步',
+            duration: 2000,
+            location: 'middle'
+        });
+    }
+
 }
 
 function currentMonth(){

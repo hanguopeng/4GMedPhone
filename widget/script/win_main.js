@@ -96,7 +96,6 @@ apiready = function() {
                 //患者腕带扫描成功后发送事件
                 api.sendEvent({
                     name: 'scanPersonComplete',
-
                 });
             }else if(scannerStatus === 'medScan'){
                 //试管扫描成功后发送事件
