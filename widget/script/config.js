@@ -70,7 +70,7 @@ var config={
     saveVitalSigns: localServer+"/nur/nursePlan/saveVitalSigns",  //生命体征检测保存
     selectVitalSigns: localServer+"/nur/nursePlan/selectVitalSigns",  //生命体征检测查询
     selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
-    scanMedical: localServer+"/med/advice/getByMaterialCode/", //扫码核对查询医嘱信息
+    scanMedical: localServer+"/med/advice/barcode/getByMaterialCode/", //扫码核对查询医嘱信息
     updateTelephone:localServer+"/med/patient/updateTelephone/", //修改联系电话
 
 
