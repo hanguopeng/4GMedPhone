@@ -61,9 +61,8 @@ apiready = function(){
             url:config.scanMedical+ret.value.materialCode.value + "/" + person.id + "/" + userId,
             isLoading:true,
             success:function(ret){
-                console.log(JSON.stringify(ret))
                 if(ret){
-                    if(ret.code===200&&ret.patientId.toString() === person.id.toString()){
+                    if(ret.code===200&&ret.msg==="success"){
                         //只有确定扫描患者与试管是同一患者才使第二部按钮变色
                         $api.removeCls($api.byId(objId),'smUncomplete');
                         $api.addCls($api.byId(objId),'smComplete');
@@ -426,18 +425,9 @@ function scan(obj){
 }
 
 function medScan(obj){
-    if(firstFlag){
         objId = $api.attr(obj, 'id');
         $api.setStorage(storageKey.scannerStatus,'medScan');
         scanner.start();
-    }else{
-        api.toast({
-            msg: '请先进行第一步',
-            duration: 2000,
-            location: 'middle'
-        });
-    }
-
 }
 
 function currentMonth(){
