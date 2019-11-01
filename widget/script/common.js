@@ -144,21 +144,21 @@ var common = {
                         if (param.isLoading || false) {
                             api.hideProgress();
                         }
-                        if (!common.loginInvalid) {
-                            common.loginInvalid = true;
-                            api.alert({
-                                title: '提示',
-                                msg: '长时间未操作或该账号在其它应用登录,请重新登录！',
-                            }, function (ret, err) {
-                                common.clearStorage();
-                                api.sendEvent({
-                                    name: 'goRoot'
-                                });
-                                api.closeToWin({
-                                    name: 'root'
-                                });
-                            });
-                        }
+                        // if (!common.loginInvalid) {
+                        //     common.loginInvalid = true;
+                        //     api.alert({
+                        //         title: '提示',
+                        //         msg: '长时间未操作或该账号在其它应用登录,请重新登录！',
+                        //     }, function (ret, err) {
+                        //         common.clearStorage();
+                        //         api.sendEvent({
+                        //             name: 'goRoot'
+                        //         });
+                        //         api.closeToWin({
+                        //             name: 'root'
+                        //         });
+                        //     });
+                        // }
                     } else {
                         if (param.isLoading || false) {
                             api.hideProgress();
@@ -263,21 +263,21 @@ var common = {
                         if (param.isLoading || false) {
                             api.hideProgress();
                         }
-                        if (!common.loginInvalid) {
-                            common.loginInvalid = true;
-                            api.alert({
-                                title: '提示',
-                                msg: '长时间未操作或该账号在其它应用登录,请重新登录！',
-                            }, function (ret, err) {
-                                common.clearStorage();
-                                api.sendEvent({
-                                    name: 'goRoot'
-                                });
-                                api.closeToWin({
-                                    name: 'root'
-                                });
-                            });
-                        }
+                        // if (!common.loginInvalid) {
+                        //     common.loginInvalid = true;
+                        //     api.alert({
+                        //         title: '提示',
+                        //         msg: '长时间未操作或该账号在其它应用登录,请重新登录！',
+                        //     }, function (ret, err) {
+                        //         common.clearStorage();
+                        //         api.sendEvent({
+                        //             name: 'goRoot'
+                        //         });
+                        //         api.closeToWin({
+                        //             name: 'root'
+                        //         });
+                        //     });
+                        // }
                     } else {
                         if (param.isLoading || false) {
                             api.hideProgress();
