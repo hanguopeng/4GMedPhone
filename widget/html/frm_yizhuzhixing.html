@@ -23,13 +23,11 @@
         <!--医嘱记录-->
         <div id="advice-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="advice-records-header">
-                <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()"> 在用医嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="inUse" id="inUse" type="checkbox" tapmode  onchange="adviceRecords()" checked> 在用医嘱</label>
+                <label><input class="aui-margin-t-5 " name="nonArrival" id="nonArrival" type="checkbox" tapmode  onchange="adviceRecords()" checked> 未到终止时间</label>
                 <label><input class="aui-margin-t-5 " name="longTermAdvice" id="longTermAdvice" type="checkbox" tapmode  onchange="adviceRecords()"> 长嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " name="temporaryAdvice" id="temporaryAdvice" type="checkbox" tapmode  onchange="adviceRecords()"> 临嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
+                <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px" onclick="clickBottomTab('advice-records','adviceRecords-selector');">筛选</div>
             </div>
             <div class="itemContainer" id="adviceRecordsContentContainer">
             </div>
@@ -119,13 +117,11 @@
         <!--医嘱发送-->
         <div id="advice-sends" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="advice-sends-header">
-                <label><input class="aui-margin-t-5 " name="inUse1" id="inUse1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 在用医嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="inUse1" id="inUse1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()" checked> 在用医嘱</label>
+                <label><input class="aui-margin-t-5 " name="nonArrival1" id="nonArrival1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()" checked> 未到终止时间</label>
                 <label><input class="aui-margin-t-5 " name="longTermAdvice1" id="longTermAdvice1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 长嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input class="aui-margin-t-5 " name="temporaryAdvice1" id="temporaryAdvice1" type="checkbox" tapmode  onchange="adviceRecordsForAdviceSends()"> 临嘱</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
+                <div class="aui-btn" style="background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px" onclick="clickBottomTab('advice-sends','adviceSends-selector');">筛选</div>
             </div>
             <div class="itemContainer" id="adviceSendsContentContainer">
             </div>

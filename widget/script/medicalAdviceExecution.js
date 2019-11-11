@@ -88,13 +88,11 @@ function downPullRefresh(){
         // 切换tab时将所有选中条件都清空
         adviceRecordsReset()
         var el =" <label>" +
-            "<input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+            "<label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 在用医嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
+            "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
         $api.html($api.byId('advice-records-header'), "");
         $api.html($api.byId('advice-records-header'), el);
         adviceRecords()
@@ -123,13 +121,11 @@ function downPullRefresh(){
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
         var el =" <label>" +
-            "<input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+            "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival11\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
+            "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
         $api.html($api.byId('advice-sends-header'), el);
 
@@ -186,14 +182,12 @@ var changeTab = function (obj) {
         currentTab = 0
         // 切换tab时将所有选中条件都清空
         adviceRecordsReset()
-        var el =" <label>" +
-            "<input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 在用医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
+        var el =
+            "<label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 在用医嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
+            "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
         $api.html($api.byId('advice-records-header'), "");
         $api.html($api.byId('advice-records-header'), el);
         adviceRecords()
@@ -206,13 +200,11 @@ var changeTab = function (obj) {
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
         var el =" <label>" +
-            "<input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 在用医嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "<input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 1rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
+            "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
+            "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
         $api.html($api.byId('advice-sends-header'), el);
 
@@ -280,6 +272,10 @@ var adviceRecords = function () {
     if ($api.byId('inUse').checked){
         inUse = 1
     }
+    var nonArrival
+    if ($api.byId('nonArrival').checked){
+        nonArrival = 1
+    }
     var longTermAdviceStatus = $api.byId('longTermAdvice').checked
     var temporaryAdviceStatus = $api.byId('temporaryAdvice').checked
     var priorityCode = ''
@@ -306,11 +302,13 @@ var adviceRecords = function () {
 
     common.post({
         url: config.queryAdviceList,
+        timeout: 30,
         isLoading: true,
         data: JSON.stringify({
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
+            nonArrival: nonArrival,   //未到终止时间，选中是1
             priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode')),    //病案费目
             status:  $api.val($api.byId('status')),   //医嘱状态
@@ -434,6 +432,10 @@ var adviceRecordsForAdviceSends = function () {
     if ($api.byId('inUse1').checked){
         inUse = 1
     }
+    var nonArrival
+    if ($api.byId('nonArrival1').checked){
+        nonArrival = 1
+    }
     var longTermAdviceStatus = $api.byId('longTermAdvice1').checked
     var temporaryAdviceStatus = $api.byId('temporaryAdvice1').checked
     var priorityCode = ''
@@ -461,10 +463,12 @@ var adviceRecordsForAdviceSends = function () {
     common.post({
         url: config.queryAdviceList,
         isLoading: true,
+        timeout: 30,
         data: JSON.stringify({
             nurseId:  userId,   //护士ID
             patientId:  patientId,   //病人ID
             inUse: inUse,   //在用医嘱，选中是1
+            nonArrival: nonArrival,   //未到终止时间，选中是1
             priorityCode:  priorityCode,    //医嘱优先级（期效）
             typeCode:  $api.val($api.byId('typeCode1')),    //病案费目
             status:  $api.val($api.byId('status1')),   //医嘱状态
@@ -495,6 +499,7 @@ var adviceSendsDetail = function (obj,adviceId) {
     if (noDetail){
         common.post({
             url: config.querySendList,
+            timeout: 30,
             isLoading: true,
             data: JSON.stringify({
                 patientId:  patientId,   //病人ID
