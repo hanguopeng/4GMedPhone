@@ -112,6 +112,9 @@
             margin-left: 0.5rem;
             padding-right: 0.5rem;
         }
+        input{
+            text-align:center;
+        }
     </style>
 </head>
 
@@ -155,20 +158,20 @@
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
                             <span>床号:</span>
-                            <span>{{=it.person.medBedName||'-'}}</span>
+                            <span>{{=it.person.medBedId||'-'}}</span>
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
                             <span>出生日期:</span>
                             <span>{{=it.person.birthday||'-'}}</span>
                         </div>
-                        <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
+                        <!--<div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
                             <span>身份证号:</span>
                             <span>{{=it.person.idNumber||'-'}}</span>
                         </div>
                         <div class="inline aui-margin-l-5 aui-margin-b-10" style="font-size: 0.7rem;color: #757575;">
                             <span>民族:</span>
                             <span>{{=it.person.nationName||'-'}}</span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -195,13 +198,13 @@
                             <tbody>
                                 <tr>
                                   <td>
-                                  {{=it.params.userTime||''}}
+                                      <input type="text" id="userTimeId" value="{{=it.params.userTime||''}}">
                                   </td>
                                   <td>
-                                    {{=it.params.handleTime||''}}
+                                      <input type="text" onclick="picker(this)" id="handleTimeId" value="{{=it.params.handleTime||''}}">
                                   </td>
                                   <td>
-                                    {{=it.params.nurseName||''}}
+                                      <input type="text" id="nurseNameId" value="{{=it.params.nurseName||''}}" readonly>
                                   </td>
                                 </tr>
                             </tbody>
@@ -229,18 +232,18 @@
                           <caption>胰岛素泵血糖动态监测(单位：mmol/L)表</caption>
                             <thead>
                                 <tr>
-                                    <th>日期时间</th>
-                                    <th>空腹</th>
-                                    <th>早餐前2小时</th>
-                                    <th>午餐前</th>
-                                    <th>午餐后2小时</th>
-                                    <th>晚餐前</th>
-                                    <th>晚餐后2小时</th>
-                                    <th>睡前</th>
-                                    <th>0点</th>
-                                    <th>3点</th>
-                                    <th>备注</th>
-                                    <th>护士签名</th>
+                                    <th colspan="2">日期时间</th>
+                                    <th colspan="1">空腹</th>
+                                    <th colspan="1">早餐前2小时</th>
+                                    <th colspan="1">午餐前</th>
+                                    <th colspan="1">午餐后2小时</th>
+                                    <th colspan="1">晚餐前</th>
+                                    <th colspan="1">晚餐后2小时</th>
+                                    <th colspan="1">睡前</th>
+                                    <th colspan="1">0点</th>
+                                    <th colspan="1">3点</th>
+                                    <th colspan="1">备注</th>
+                                    <th colspan="1">护士签名</th>
                                 </tr>
                             </thead>
                             <tbody id="xtbody" >
@@ -252,6 +255,9 @@
                 </div>
             </div>
         </ul>
+        <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+            <div class="aui-btn aui-btn-info" tapmode onclick="save();">保存通知书</div>
+        </div>
     </section>
 </script>
 
@@ -351,19 +357,142 @@
 
 
     };
+
+    function picker(el, id) {
+        api.openPicker({
+            type: 'date',
+            title: '日期'
+        }, function(ret, err) {
+            var startYear = ret.year;
+            var startMonth = ret.month;
+            var startDay = ret.day;
+            var date = startYear + "-" + (startMonth < 10 ? "0" + startMonth : startMonth) + "-" + (startDay < 10 ? "0" + startDay : startDay);
+            api.openPicker({
+                type: 'time',
+                title: '时间'
+            }, function(ret1, err1) {
+                var hour = ret1.hour;
+                if (hour < 10) {
+                    hour = "0" + hour;
+                }
+                var minute = ret1.minute;
+                if (minute < 10) {
+                    minute = "0" + minute;
+                }
+                var time = hour + ":" + minute+":"+"00";
+                $api.val(el, date + " " + time);
+
+                $(id).css("color", "#ccc2c2");
+                $(id).one("click", function() {
+                    $(el).val("");
+                    $(id).css("color", "#ffffff");
+                });
+            });
+        });
+    }
+
+    function save(){
+       var userTimeId = $api.byId('userTimeId') ;
+       var handleTimeId = $api.byId('handleTimeId');
+       var nurseNameId = $api.byId('nurseNameId');
+
+       var zljlArr = $("tr[name='ydsb-zljl']");  //胰岛素泵强化治疗剂量记录
+       var dtjcArr = $("tr[name='ydsb-dtjc']");  //胰岛素泵血糖动态检测表
+        //遍历获取到的 胰岛素泵强化治疗剂量记录 放入数组中
+       for(var i=0;i<zljlArr.length;i++){
+           var dataId =$api.attr(zljlArr[i], 'data-id');
+           var params = {};
+           params.handleTime = $("input[name='handleTime"+i+"']").val();
+           params.basedAmount = $("input[name='basedAmount"+i+"']").val();
+           params.moring = $("input[name='moring"+i+"']").val();
+           params.noon = $("input[name='noon"+i+"']").val();
+           params.night = $("input[name='night"+i+"']").val();
+           params.nurseName = $("input[name='nurseName" + i+"']").val();
+           common.post({
+               url:config.updateBased,
+               isLoading:false,
+               dataType:JSON,
+               data: {
+                   'id':dataId,
+                   'basedAmount':params.basedAmount,
+                   'handleTime':params.handleTime,
+                   'moring':params.moring,
+                   'noon':params.noon,
+                   'night':params.night
+               }, success:function(ret){
+                   if(ret.code===200){
+                       api.toast({
+                           msg: ret.content,
+                           duration: 2000,
+                           location: 'middle'
+                       });
+                   }else{
+                       api.toast({
+                           msg: ret.content,
+                           duration: 2000,
+                           location: 'middle'
+                       });
+                   }
+                   }
+           })
+       }
+        //遍历获取到的 胰岛素泵血糖动态监测 放入数组中
+    for(var i=0;i<dtjcArr.length;i++){
+        var params = {};
+        var dataId =$api.attr(dtjcArr[i], 'data-id');
+        params.handleTimeDtjc = $("input[name='handleTimeDtjc"+i+"']").val();
+        params.stomach = $("input[name='stomach"+i+"']").val();
+        params.moringDtjc = $("input[name='moringDtjc"+i+"']").val();
+        params.noonBefore = $("input[name='noonBefore"+i+"']").val();
+        params.noonAfter = $("input[name='noonAfter"+i+"']").val();
+        params.nightBefore = $("input[name='nightBefore"+i+"']").val();
+        params.nigntAfter = $("input[name='nigntAfter"+i+"']").val();
+        params.sleepBefore = $("input[name='sleepBefore"+i+"']").val();
+        params.zero = $("input[name='zero"+i+"']").val();
+        params.three = $("input[name='three"+i+"']").val();
+        params.memo = $("input[name='memo"+i+"']").val();
+        params.nurseName = $("input[name='nurseName"+i+"']").val();
+        common.post({
+            url:config.updateMonitoring,
+            isLoading:false,
+            dataType:JSON,
+            data: {
+                id: dataId,
+                handleTime: params.handleTimeDtjc,
+                stomach: params.stomach,
+                moring: params.moringDtjc,
+                noonBefore: params.noonBefore,
+                noonAfter: params.noonAfter,
+                nightBefore: params.nightBefore,
+                nigntAfter: params.nigntAfter,
+                sleepBefore: params.sleepBefore,
+                zero: params.zero,
+                three: params.three,
+                memo: params.memo
+            },success:function(ret){
+                console.log(JSON.stringify(ret))
+            }
+        })
+    }
+    }
 </script>
 
 <script id="content-tmplb" type="text/template">
     {{for(var i=0;i< it.length;i++){
         var item = it[i];
     }}
-    <tr data-id="{{=item.id||''}}">
-        <td>{{=item.handleTime||''}}</td>
+    <tr data-id="{{=item.id||''}}" name="ydsb-zljl">
+        <td><input type="text" name="handleTime{{=i}}" value="{{=item.handleTime||''}}" onclick="picker(this)"></td>
+        <td><input type="text" name="basedAmount{{=i}}" value="{{=item.basedAmount||''}}"></td>
+        <td><input type="text" name="moring{{=i}}" value="{{=item.moring||''}}"></td>
+        <td><input type="text" name="noon{{=i}}" value="{{=item.noon||''}}"></td>
+        <td><input type="text" name="night{{=i}}" value="{{=item.night||''}}"></td>
+        <!--<td>{{=item.handleTime||''}}</td>
         <td>{{=item.basedAmount||''}}</td>
         <td>{{=item.moring||''}}</td>
         <td>{{=item.noon||''}}</td>
-        <td>{{=item.night||''}}</td>
-        <td>{{=item.nurseName||''}}</td>
+        <td>{{=item.night||''}}</td>-->
+        <td><input type="text" name="nurseName{{=i}}" value="{{=item.nurseName||''}}" readonly></td>
     </tr>
     {{ } }}
 </script>
@@ -372,8 +501,19 @@
     {{for(var i=0;i< it.length;i++){
         var item = it[i];
     }}
-    <tr data-id="{{=item.id||''}}">
-        <td>{{=item.handleTime||''}}</td>
+    <tr data-id="{{=item.id||''}}" name="ydsb-dtjc">
+        <td colspan="2"><input type="text" value="{{=item.handleTime||''}}" name="handleTimeDtjc{{=i}}" onclick="picker(this)"></td>
+        <td><input type="text" value="{{=item.stomach||''}}" name="stomach{{=i}}"></td>
+        <td><input type="text" value="{{=item.moring||''}}" name="moringDtjc{{=i}}"></td>
+        <td><input type="text" value="{{=item.noonBefore||''}}" name="noonBefore{{=i}}"></td>
+        <td><input type="text" value="{{=item.noonAfter||''}}" name="noonAfter{{=i}}"></td>
+        <td><input type="text" value="{{=item.nightBefore||''}}" name="nightBefore{{=i}}"></td>
+        <td><input type="text" value="{{=item.nigntAfter||''}}" name="nigntAfter{{=i}}"></td>
+        <td><input type="text" value="{{=item.sleepBefore||''}}" name="sleepBefore{{=i}}"></td>
+        <td><input type="text" value="{{=item.zero||''}}" name="zero{{=i}}"></td>
+        <td><input type="text" value="{{=item.three||''}}" name="three{{=i}}"></td>
+        <td><input type="text" value="{{=item.memo||''}}" name="memo{{=i}}"></td>
+        <!--<td>{{=item.handleTime||''}}</td>
         <td>{{=item.stomach||''}}</td>
         <td>{{=item.moring||''}}</td>
         <td>{{=item.noonBefore||''}}</td>
@@ -383,8 +523,8 @@
         <td>{{=item.sleepBefore||''}}</td>
         <td>{{=item.zero||''}}</td>
         <td>{{=item.three||''}}</td>
-        <td>{{=item.memo||''}}</td>
-        <td>{{=item.nurseName||''}}</td>
+        <td>{{=item.memo||''}}</td>-->
+        <td><input type="text" value="{{=item.nurseName||''}}" name="nurseName{{=i}}" readonly></td>
     </tr>
     {{ } }}
 </script>

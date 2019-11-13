@@ -53,6 +53,8 @@ var config={
     nurseLogNew: localServer+"/nur/nursePlan/listDetails/json",//plan通用护理单查询
     nursePlanUrl:localServer+"/nur/nursePlan",
     saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
+    updateBased:localServer + "/nur/nursePlan/updateBased", //修改胰岛素强化治疗剂量
+    updateMonitoring:localServer + "/nur/nursePlan/updateMonitoring",  //修改血糖动态监测表
     saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
     saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
     selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
