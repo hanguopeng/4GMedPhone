@@ -325,24 +325,45 @@ var searchMedExamine = function (patientId) {
  * 检查结果详情
  * @param examineId
  */
-var inspectionDetail = function (obj, id,examineId) {
+var inspectionDetail = function (obj, id,examineId,execStatus) {
     if($api.hasCls($api.next(obj),'hide')){
-        common.get({
-            url: config.medExamineDetailUrl + id + "/" + examineId,
-            isLoading: true,
-            success: function (ret) {
-                $api.html($api.next(obj), "");
-                if(ret && ret.content) {
-                    if (ret.content.reportTime){
+        if (execStatus==='0'){
+            api.toast({
+                msg: '该条医嘱未执行！',
+                duration: 2000,
+                location: 'bottom'
+            });
+            return
+        } else if(execStatus==='1'){
+            common.get({
+                url: config.medExamineDetailUrl + id + "/" + examineId,
+                isLoading: true,
+                success: function (ret) {
+                    $api.html($api.next(obj), "");
+                    if(ret && ret.content) {
                         var contentTmpl = doT.template($api.text($api.byId('jcjgDetailTmpl')));
                         $api.html($api.next(obj), contentTmpl(ret.content));
-                    }else{
-                        alert("未开具报告，请耐心等待!")
+                        var contentTmpl = doT.template($api.text($api.byId('jcjgDetailTmpl')));
+                        $api.html($api.next(obj), contentTmpl(ret.content));
                     }
+                    $api.removeCls($api.next(obj), 'hide');
                 }
-                $api.removeCls($api.next(obj), 'hide');
-            }
-        });
+            });
+        } else if(execStatus==='2'){
+            api.toast({
+                msg: '该条医嘱拒绝执行！',
+                duration: 2000,
+                location: 'bottom'
+            });
+            return
+        } else if(execStatus==='3'){
+            api.toast({
+                msg: '该条医嘱正在执行中！',
+                duration: 2000,
+                location: 'bottom'
+            });
+            return
+        }
     }else{
         $api.addCls($api.next(obj),'hide');
     }
