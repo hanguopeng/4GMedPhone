@@ -139,14 +139,26 @@ function showXTJCB(){
     var currentPerson = $api.getStorage(storageKey.currentPerson);
     var registerNumber = currentPerson.registerNumber;
     $api.html($api.byId('content'), "");
-    common.get({
-        url:config.nurseBloodSheet+"?registerNumber="+registerNumber,
+    common.post({
+        url:config.nurseBloodSheet,
         isLoading: true,
+        dataType:JSON,
+        data:{
+            patientId: currentPerson.id,
+            homepageId: currentPerson.homepageId,
+            templateList: [{
+                templateCode: 'bloodSugar',
+                templateVersion: '1'
+            }],
+            limit: 99,
+            page: 1
+        },
         success:function (ret) {
-            if(ret&&ret.content&&ret.content.length>0){
+            console.log(JSON.stringify(ret))
+            if(ret&&ret.content&&ret.content.list&&ret.content.list.length>0){
                 var contentTmpl = doT.template($api.text($api.byId('hisxt-tpl')));
-                if (ret.content[0].id){
-                    var item = ret.content;
+                if (ret.content.list[0].id){
+                    var item = ret.content.list;
                     $api.html($api.byId('content'), contentTmpl(item));
                 }else{
                     $api.html($api.byId('content'), contentTmpl(""));
@@ -165,6 +177,56 @@ function openFrame(page){
 
 }
 
+function update(){
+    var trArr = $("tr[name='xtjc-name']");
+    var person = $api.getStorage(storageKey.currentPerson);
+    for(var i=0;i<trArr.length;i++){
+        var handleTime = $("input[name='handleTime"+i+"']").val();
+        var params = {
+            id: $api.attr(trArr[i], 'data-id'),
+            paramList: []
+        };
+        params.paramList.push({
+            key: 'xuetang',
+            value: $("input[name='xuetang"+i+"']").val()
+        });
+        params.paramList.push({
+            key: 'huanzhezicexuetang',
+            value: $("input[name='huanzhezicexuetang"+i+"']").val()
+        });
+        params.paramList.push({
+            key: 'xytime',
+            value: handleTime.substr(11,19)
+        });
+        params.paramList.push({
+            key: 'xydate',
+            value: handleTime.substr(0,10)
+        });
+        console.log(JSON.stringify(params))
+    common.post({
+        url:config.nurseBloodSugarUpdate,
+        isLoading:false,
+        data:JSON.stringify(params),
+        dataType:JSON,
+        success:function(ret){
+            if(ret.code===200){
+                api.toast({
+                    msg: ret.content,
+                    duration: 2000,
+                    location: 'middle'
+                });
+            }else{
+                api.toast({
+                    msg: ret.content,
+                    duration: 2000,
+                    location: 'middle'
+                });
+            }
+        }
+
+    })
+    }
+}
 /*//显示采集历史
 function showHis(){
     $api.html($api.byId('content'), "");
@@ -308,3 +370,35 @@ function truncD(datestr){
     return datestr.substr(8);
 }
 
+function picker(el, id) {
+    api.openPicker({
+        type: 'date',
+        title: '日期'
+    }, function(ret, err) {
+        var startYear = ret.year;
+        var startMonth = ret.month;
+        var startDay = ret.day;
+        var date = startYear + "-" + (startMonth < 10 ? "0" + startMonth : startMonth) + "-" + (startDay < 10 ? "0" + startDay : startDay);
+        api.openPicker({
+            type: 'time',
+            title: '时间'
+        }, function(ret1, err1) {
+            var hour = ret1.hour;
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            var minute = ret1.minute;
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            var time = hour + ":" + minute+":"+"00";
+            $api.val(el, date + " " + time);
+
+            $(id).css("color", "#ccc2c2");
+            $(id).one("click", function() {
+                $(el).val("");
+                $(id).css("color", "#ffffff");
+            });
+        });
+    });
+}
