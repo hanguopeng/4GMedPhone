@@ -158,7 +158,6 @@
             url: config.selectVitalSignsById + id,
             isLoading: true,
             success: function(ret) {
-                alert(JSON.stringify(ret.content))
                 var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
                 $api.html($api.byId('content'), contentTmpl(ret.content));
                 $api.attr($api.byId(ret.content.inputType),"selected","selected");
