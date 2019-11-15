@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="扫码核对">
+    <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="扫码核对111111">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_smtzjcjld.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_smtzjcjld.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/html/nurse/frm_vital_signs_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/nurse/frm_vital_signs_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/widget/script/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/nurse/frm_smtzjcjld.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/nurse/frm_smtzjcjld.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,37 +23,66 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
+        <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-11/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4275">
-              <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14174">
-              <caret line="746" column="35" lean-forward="true" selection-start-line="746" selection-start-column="35" selection-end-line="746" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/html/frm_fuzhugongju.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="931">
-              <caret line="49" column="81" selection-start-line="49" selection-start-column="62" selection-end-line="49" selection-end-column="81" />
+            <state relative-caret-position="-1254">
+              <caret line="15" column="57" lean-forward="true" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+        <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="1749">
+              <caret line="786" column="37" lean-forward="true" selection-start-line="786" selection-start-column="37" selection-end-line="786" selection-end-column="37" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+                <element signature="e#140#146#0" expanded="true" />
+                <element signature="e#146#152#0" expanded="true" />
+                <element signature="e#152#158#0" expanded="true" />
+                <element signature="e#158#164#0" expanded="true" />
+                <element signature="e#164#170#0" expanded="true" />
+                <element signature="e#170#176#0" expanded="true" />
+                <element signature="e#176#182#0" expanded="true" />
+                <element signature="e#163#169#0" expanded="true" />
+                <element signature="e#169#175#0" expanded="true" />
+                <element signature="e#175#181#0" expanded="true" />
+                <element signature="e#181#187#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+                <element signature="e#140#146#0" expanded="true" />
+                <element signature="e#146#152#0" expanded="true" />
+                <element signature="e#152#158#0" expanded="true" />
+                <element signature="e#158#164#0" expanded="true" />
+                <element signature="e#164#170#0" expanded="true" />
+                <element signature="e#170#176#0" expanded="true" />
+                <element signature="e#176#182#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_vital_signs_detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="241">
+              <caret line="225" column="27" lean-forward="true" selection-start-line="225" selection-start-column="27" selection-end-line="225" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_smtzjcjld.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="373">
+              <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -56,17 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/script/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2793">
-              <caret line="15" column="57" lean-forward="true" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/script/win_main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1881">
-              <caret line="99" column="50" lean-forward="true" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
+            <state relative-caret-position="38">
+              <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -83,9 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scanMedical-tmpl</find>
-      <find>scanMedical</find>
-      <find>扫码</find>
       <find>scanSuccess</find>
       <find>saveTZ</find>
       <find>fileId</find>
@@ -101,7 +123,6 @@
       <find>全部患者</find>
       <find>重置</find>
       <find>/med/advice/skin</find>
-      <find>皮试</find>
       <find>medScan</find>
       <find>scanPersonComplete</find>
       <find>scannerStatus</find>
@@ -113,6 +134,10 @@
       <find>scanMed</find>
       <find>medContentContainer</find>
       <find>alert</find>
+      <find>success</find>
+      <find>fail</find>
+      <find>皮试</find>
+      <find>detail-tpl</find>
     </findStrings>
     <replaceStrings>
       <replace>tabFlag</replace>
@@ -120,6 +145,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="NursingDocumentation" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -157,17 +187,19 @@
         <option value="$PROJECT_DIR$/widget/html/frm_person_center.html" />
         <option value="$PROJECT_DIR$/widget/script/personCenter.js" />
         <option value="$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html" />
-        <option value="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" />
         <option value="$PROJECT_DIR$/widget/login.html" />
         <option value="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" />
         <option value="$PROJECT_DIR$/widget/script/win_main.js" />
-        <option value="$PROJECT_DIR$/widget/script/config.js" />
         <option value="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" />
+        <option value="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" />
+        <option value="$PROJECT_DIR$/widget/html/frm_smtzjcjld.js" />
+        <option value="$PROJECT_DIR$/widget/script/config.js" />
+        <option value="$PROJECT_DIR$/widget/html/nurse/frm_vital_signs_detail.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="632" />
+    <option name="x" value="534" />
     <option name="y" value="17" />
     <option name="width" value="975" />
     <option name="height" value="1040" />
@@ -199,6 +231,13 @@
               <item name="4GMedPhone" type="b2602c69:ProjectViewProjectNode" />
               <item name="4GMedPhone" type="462c0819:PsiDirectoryNode" />
               <item name="widget" type="462c0819:PsiDirectoryNode" />
+              <item name="html" type="462c0819:PsiDirectoryNode" />
+              <item name="nurse" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="4GMedPhone" type="b2602c69:ProjectViewProjectNode" />
+              <item name="4GMedPhone" type="462c0819:PsiDirectoryNode" />
+              <item name="widget" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -225,7 +264,13 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hangp1910\work\4Gyun\4Gpda\4GMedPhone\widget\html\nurse" />
+      <recent name="C:\Users\hangp1910\work\4Gyun\4Gpda\4GMedPhone\widget\script\nurse" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hangp1910\work\4Gyun\4Gpda\4GMedPhone\widget\script" />
+      <recent name="C:\Users\hangp1910\work\4Gyun\4Gpda\4GMedPhone\widget\html" />
       <recent name="C:\Users\hangp1910\work\4Gyun\4Gpda\4GMedPhone\widget\res" />
     </key>
   </component>
@@ -364,7 +409,12 @@
       <workItem from="1572419547806" duration="22000" />
       <workItem from="1572419705355" duration="1084000" />
       <workItem from="1572503354288" duration="12945000" />
-      <workItem from="1572594073518" duration="4018000" />
+      <workItem from="1572594073518" duration="5465000" />
+      <workItem from="1572829576661" duration="801000" />
+      <workItem from="1572835308242" duration="723000" />
+      <workItem from="1573723667808" duration="735000" />
+      <workItem from="1573781652550" duration="1175000" />
+      <workItem from="1573800174637" duration="2911000" />
     </task>
     <task id="LOCAL-00001" summary="没啥">
       <created>1568724123080</created>
@@ -408,11 +458,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572594769007</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="扫码核对1111">
+      <created>1572601396011</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1572601396011</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112004000" />
+    <option name="totallyTimeSpent" value="119796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -421,7 +478,7 @@
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info id="DB Browser" order="2" weight="0.32995737" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.26066098" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.2739872" />
       <window_info id="Structure" order="4" weight="0.25" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
@@ -442,6 +499,7 @@
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="13" visible="true" weight="0.32962137" />
+      <window_info anchor="bottom" id="Messages" order="14" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -503,10 +561,10 @@
     <MESSAGE value="tishi" />
     <MESSAGE value="扫码核对" />
     <MESSAGE value="扫码核对-config.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="扫码核对-config.js" />
+    <MESSAGE value="扫码核对1111" />
+    <option name="LAST_COMMIT_MESSAGE" value="扫码核对1111" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Desktop/code.js" />
     <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -546,13 +604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13414">
           <caret line="706" column="69" selection-start-line="706" selection-start-column="69" selection-end-line="706" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3477">
-          <caret line="183" column="25" selection-start-line="183" selection-start-column="22" selection-end-line="183" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -612,20 +663,6 @@
         <state relative-caret-position="-627" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/css/aui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="852" column="11" selection-start-line="852" selection-start-column="11" selection-end-line="852" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="79" column="100" selection-start-line="79" selection-start-column="100" selection-end-line="79" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_xtjcb_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="677">
@@ -670,20 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_person_center.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="45" column="99" selection-start-line="45" selection-start-column="79" selection-end-line="45" selection-end-column="99" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/personCenter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="48" column="27" lean-forward="true" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/frm_main_content.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2508">
@@ -715,45 +738,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4275">
-          <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14174">
-          <caret line="746" column="35" lean-forward="true" selection-start-line="746" selection-start-column="35" selection-end-line="746" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/frm_fuzhugongju.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
-          <caret line="49" column="81" selection-start-line="49" selection-start-column="62" selection-end-line="49" selection-end-column="81" />
+        <state relative-caret-position="391">
+          <caret line="64" column="65" lean-forward="true" selection-start-line="64" selection-start-column="65" selection-end-line="64" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/scanner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1671" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_person_center.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9481">
+          <caret line="499" column="54" selection-start-line="499" selection-start-column="54" selection-end-line="499" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/personCenter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="48" column="27" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/win_person_center.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="72" column="56" selection-start-line="72" selection-start-column="56" selection-end-line="72" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/win_person_center.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2603">
+          <caret line="137" column="74" selection-start-line="137" selection-start-column="74" selection-end-line="137" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/win_main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1881">
-          <caret line="99" column="50" lean-forward="true" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
+          <caret line="99" column="50" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="128" column="49" selection-start-line="128" selection-start-column="49" selection-end-line="128" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="1069" column="60" lean-forward="true" selection-start-line="1069" selection-start-column="60" selection-end-line="1069" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_smtzjcjld.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-893">
+          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/css/aui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="408" column="1" selection-start-line="408" selection-start-column="1" selection-end-line="408" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-11/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1254">
+          <caret line="15" column="57" lean-forward="true" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2793">
-          <caret line="15" column="57" lean-forward="true" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
+        <state relative-caret-position="38">
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="373">
+          <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_smtzjcjld.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_vital_signs_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="225" column="27" lean-forward="true" selection-start-line="225" selection-start-column="27" selection-end-line="225" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1749">
+          <caret line="786" column="37" lean-forward="true" selection-start-line="786" selection-start-column="37" selection-end-line="786" selection-end-column="37" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+            <element signature="e#140#146#0" expanded="true" />
+            <element signature="e#146#152#0" expanded="true" />
+            <element signature="e#152#158#0" expanded="true" />
+            <element signature="e#158#164#0" expanded="true" />
+            <element signature="e#164#170#0" expanded="true" />
+            <element signature="e#170#176#0" expanded="true" />
+            <element signature="e#176#182#0" expanded="true" />
+            <element signature="e#163#169#0" expanded="true" />
+            <element signature="e#169#175#0" expanded="true" />
+            <element signature="e#175#181#0" expanded="true" />
+            <element signature="e#181#187#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#label#0;n#!!top" expanded="true" />
+            <element signature="e#140#146#0" expanded="true" />
+            <element signature="e#146#152#0" expanded="true" />
+            <element signature="e#152#158#0" expanded="true" />
+            <element signature="e#158#164#0" expanded="true" />
+            <element signature="e#164#170#0" expanded="true" />
+            <element signature="e#170#176#0" expanded="true" />
+            <element signature="e#176#182#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

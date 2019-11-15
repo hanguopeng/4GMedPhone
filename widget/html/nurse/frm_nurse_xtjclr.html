@@ -10,6 +10,18 @@
     <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/signsCollection.css"/>
 </head>
+<style>
+    td{
+        min-width: 3rem;
+        word-wrap:break-word;
+    }
+    th{
+        min-width: 3rem;
+    }
+    input{
+        text-align: center;
+    }
+</style>
 <body>
 <div class="aui-content">
     <div class="aui-tab" id="tab">
@@ -107,7 +119,7 @@
 </script>
 <script id="hisxt-tpl" type="text/template">
     <div class="center" style="overflow-x: scroll;overflow-y: auto;">
-        <table width="90%" class="table aui-font-size-14">
+        <table class="aui-font-size-14">
             <thead>
             <tr>
                 <th>日期时间</th>
@@ -121,16 +133,24 @@
             {{ for(var i=0;i<it.length;i++){
             var item = it[i];
             }}
-            <tr>
-                <td>{{=item.handleTime||''}}</td>
-                <td>{{=item.xuetang||''}}</td>
-                <td>{{=item.huanzhezicexuetang||''}}</td>
-                <td>{{=item.qianzi||''}}</td>
+            <tr data-id="{{=item.id}}" name="xtjc-name">
+                <td><input type="text" value="{{=item.handleTime||''}}" name="handleTime{{=i}}" onclick="picker(this)"></td>
+                <td><input type="text" value="{{=item.xuetang||''}}" name="xuetang{{=i}}"></td>
+                <td><input type="text" value="{{=item.huanzhezicexuetang||''}}" name="huanzhezicexuetang{{=i}}"></td>
+                <td><input type="text" value="{{=item.qianzi||''}}" readonly name="qianzi{{=i}}"></td>
             </tr>
             {{ } }}
             {{?}}
             </tbody>
         </table>
+        <ul id="" class="aui-list aui-form-list">
+            <li  class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn" tapmode onclick="update();">
+                    <div class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+                </div>
+            </li>
+        </ul>
+
     </div>
 </script>
 <script type="text/javascript" src="../../script/api.js"></script>

@@ -53,7 +53,7 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     测量日期
                 </div>
-                <div class="aui-list-item-input">{{=it.measureDate||'-'}}</div>
+                <input id="measureDate" onclick="chooseDate(this)" type="text" value="{{=it.measureDate||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -61,15 +61,15 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     测量时间
                 </div>
-                <div class="aui-list-item-input">{{=it.measureTime||'-'}}</div>
+                <input id="measureTime" readonly="readonly" onclick="chooseTime(this)" type="text" value="{{=it.measureTime||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label" style="width: 45%;">
-                    体温(°C)
+                    体温(°C)r
                 </div>
-                <div class="aui-list-item-input">{{=it.temperature||'-'}}</div>
+                <input id="temperature" readonly="readonly" type="text" value="{{=it.temperature||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -77,7 +77,7 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     脉搏(次/分)
                 </div>
-                <div class="aui-list-item-input">{{=it.pulse||'-'}}</div>
+                <input id="pulse" readonly="readonly" type="text" value="{{=it.pulse||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -85,7 +85,7 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     心率(次/分)
                 </div>
-                <div class="aui-list-item-input">{{=it.heartRate||'-'}}</div>
+                <input id="heartRate" readonly="readonly" type="text" value="{{=it.heartRate||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -93,7 +93,7 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     呼吸(次/分)
                 </div>
-                <div class="aui-list-item-input">{{=it.breathRate||'-'}}</div>
+                <input id="breathRate" readonly="readonly" type="text" value="{{=it.breathRate||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -101,7 +101,7 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     血压(mmHg)
                 </div>
-                <div class="aui-list-item-input">{{=it.bloodPressure||'-'}}</div>
+                <input id="bloodPressure" readonly="readonly" type="text" value="{{=it.bloodPressure||'-'}}"/>
             </div>
         </li>
         <li class="aui-list-item">
@@ -109,7 +109,12 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     入量ml及名称
                 </div>
-                <div class="aui-list-item-input">{{=it.input||'-'}}</div>
+                <input id="input" readonly="readonly" style="width:47%;" type="text" value="{{=it.input||'-'}}"/>
+                <select id="input_type" class="aui-pull-right" disabled style="width:47%;margin-left: 0.1rem;">
+                    <option id="饮食水" value="饮食水">饮食水</option>
+                    <option id="输液" value="输液">输液</option>
+                    <option id="鼻饲" value="鼻饲">鼻饲</option>
+                </select>
             </div>
         </li>
         <li class="aui-list-item">
@@ -117,7 +122,19 @@
                 <div class="aui-list-item-label" style="width: 45%;">
                     出量ml及名称
                 </div>
-                <div class="aui-list-item-input">{{=it.output||'-'}}</div>
+                <input id="output" readonly="readonly" style="width:47%;" type="text" value="{{=it.output||'-'}}"/>
+                <select id="output_type" class="aui-pull-right" disabled style="width:47%;margin-left: 0.1rem;">
+                    <option id="引流液" value="引流液">引流液</option>
+                    <option id="尿" value="尿">尿</option>
+                    <option id="便" value="便">便</option>
+                </select>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn"  >
+                <div class="aui-btn aui-btn-info" id="update" onclick="update()" >修改</div>
+                <div class="aui-btn aui-btn-info" id="saveUpdate" onclick="savaUpdate()" style="display: none; margin-right: 0.5rem">保存修改</div>
+                <div class="aui-btn aui-btn-info" id="cancel" onclick="cancel()" style="display: none">取消</div>
             </div>
         </li>
     </ul>
@@ -130,25 +147,121 @@
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/aui-collapse.js"></script>
 <script type="text/javascript">
+    var id;
     apiready = function() {
         api.parseTapmode();
-        var id = api.pageParam.data;
+        id = api.pageParam.data;
+        initPage()
+    };
+    function initPage() {
         common.get({
             url: config.selectVitalSignsById + id,
             isLoading: true,
             success: function(ret) {
-                common.get({
-                    url: config.selectMaterialById + id,
-                    isLoading: false,
-                    success: function(data) {
-                        var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
-                        $api.html($api.byId('content'), contentTmpl(ret.content));
-                        api.parseTapmode();
-                        api.hideProgress();
-                    }
-                });
+                alert(JSON.stringify(ret.content))
+                var contentTmpl = doT.template($api.text($api.byId('detail-tpl')));
+                $api.html($api.byId('content'), contentTmpl(ret.content));
+                $api.attr($api.byId(ret.content.inputType),"selected","selected");
+                $api.attr($api.byId(ret.content.outputType),"selected","selected");
+                api.parseTapmode();
             }
         });
-    };
+    }
+    //编辑按钮
+    function update () {
+        document.getElementById("update").style.display="none";
+        document.getElementById("saveUpdate").style.display="block";
+        document.getElementById("cancel").style.display="block";
+
+        $("input").removeAttr("readonly");
+        $("input").removeAttr("disabled");
+
+        $("#input_type").removeAttr("disabled");
+        $("#output_type").removeAttr("disabled");
+
+    }
+    //修改按钮
+    function savaUpdate(){
+        console.log()
+
+        common.post({
+            url: config.updateVitalSigns,
+            isLoading: true,
+            dataType:JSON,
+            data: {
+                id: id,
+                measureDate: $api.val($api.byId('measureDate')),
+                measureTime: $api.val($api.byId('measureTime')),
+                temperature: $api.val($api.byId('temperature')),
+                pulse: $api.val($api.byId('pulse')),
+                breathRate: $api.val($api.byId('breathRate')),
+                heartRate: $api.val($api.byId('heartRate')),
+                bloodPressure:$api.val($api.byId('bloodPressure')),
+                input: $api.val($api.byId('input')) ,
+                inputType:$api.val($api.byId('input_type')),
+                output: $api.val($api.byId('output')) ,
+                outputType:$api.val($api.byId('output_type')),
+                nurseName: $api.val($api.byId('nurseName')),
+            },
+            success: function(r) {
+                api.hideProgress();
+                if (r && r.code === 200) {
+                    api.alert({
+                        title: '提示',
+                        msg: '修改成功！',
+                    }, function(ret, err) {
+                        initPage()
+                    });
+                } else {
+                    api.toast({
+                        msg: r.msg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            }
+        });
+    }
+    //取消按钮
+    function savaUpdate() {
+        document.getElementById("bt1").style.display="block";
+        document.getElementById("bt2").style.display="none";
+        document.getElementById("bt3").style.display="none";
+
+        $("input").attr("readonly","readonly");
+
+        $("#input_type").attr("disabled","disabled");
+        $("#output_type").attr("disabled","disabled");
+    }
+    function chooseTime(el) {
+        api.openPicker({
+            type: 'time',
+            title: '时间'
+        }, function (ret, err) {
+            var hour = ret.hour;
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            var minute = ret.minute;
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            var time = hour + ":" + minute + ":00" ;
+            $api.val(el, time);
+        });
+    }
+    function chooseDate(el){
+        api.openPicker({
+            type: 'date',
+            title: '日期'
+        }, function (ret, err) {
+            var startYear = ret.year;
+            var startMonth = ret.month;
+            var startDay = ret.day;
+            var startDate = startYear + "-" + (startMonth < 10 ? "0" + startMonth : startMonth) + "-" + (startDay < 10 ? "0" + startDay : startDay);
+            $api.val(el, startDate);
+        });
+    }
+
 </script>
 </html>

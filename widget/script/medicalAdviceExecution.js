@@ -796,7 +796,8 @@ var skinTestExecute = function () {
             implementNurseId: userId,
             implementNurseName: $api.getStorage(storageKey.userName),
             medAdviceId: skinTestAdviceId,
-            skinResult:skinTestResult
+            skinResult:skinTestResult,
+            skinMemo:''
         }),
         dataType: "json",
         isLoading: true,
@@ -822,6 +823,7 @@ var skinTestExecute = function () {
 };
 
 var currentTime = function () {
+    $api.val(element, 'value');
     var date = new Date();
     var year = date.getFullYear();
     var month = date.getMonth() + 1;

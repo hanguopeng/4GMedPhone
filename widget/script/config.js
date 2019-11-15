@@ -1,6 +1,6 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://192.168.1.125:8085/cmc-server";
+//var localServer = "http://192.168.1.107:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
 // var ws = "ws://192.168.1.126:8888/";
@@ -53,6 +53,8 @@ var config={
     nurseLogNew: localServer+"/nur/nursePlan/listDetails/json",//plan通用护理单查询
     nursePlanUrl:localServer+"/nur/nursePlan",
     saveBased:localServer+"/nur/nursePlan/saveBased",//保存胰岛素强化治疗剂量
+    updateBased:localServer + "/nur/nursePlan/updateBased", //修改胰岛素强化治疗剂量
+    updateMonitoring:localServer + "/nur/nursePlan/updateMonitoring",  //修改血糖动态监测表
     saveInsulinPda: localServer+"/nur/nursePlan/saveInsulin/pda",  //保存胰岛素列表
     saveMonitoring:localServer+"/nur/nursePlan/saveMonitoring",//保存血糖动态监测表
     selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
@@ -70,6 +72,7 @@ var config={
     saveVitalSigns: localServer+"/nur/nursePlan/saveVitalSigns",  //生命体征检测保存
     selectVitalSigns: localServer+"/nur/nursePlan/selectVitalSigns",  //生命体征检测查询
     selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
+    updateVitalSigns: localServer+"/nur/nursePlan/updateVitalSigns/",  //通过id修改生命体征检测
     scanMedical: localServer+"/med/advice/barcode/getByMaterialCode/", //扫码核对查询医嘱信息
     updateTelephone:localServer+"/med/patient/updateTelephone/", //修改联系电话
 

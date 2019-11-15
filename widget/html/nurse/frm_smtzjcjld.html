@@ -140,24 +140,28 @@
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 45%;">
+                <div class="aui-list-item-label">
                     入量ml及名称
                 </div>
-                <div class="aui-list-item-input">
-                    <input id="input" type="text"
-                           placeholder="请输入入量ml及名称">
-                </div>
+                <input id="input" style="width:55%;" type="text"  placeholder="请输入入量ml及名称"/>
+                <select id="input_type" class="aui-pull-right"  style="width:27%;margin-left: 0.1rem;">
+                    <option value="饮食水">饮食水</option>
+                    <option value="输液">输液</option>
+                    <option value="鼻饲">鼻饲</option>
+                </select>
             </div>
         </li>
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 45%;">
+                <div class="aui-list-item-label">
                     出量ml及名称
                 </div>
-                <div class="aui-list-item-input">
-                    <input id="output" type="text"
-                           placeholder="请输入出量ml及名称">
-                </div>
+                <input id="output" style="width:57%;" type="text"  placeholder="请输入出量ml及名称"/>
+                <select id="output_type" class="aui-pull-right"  style="width:27%;margin-left: 0.1rem;">
+                    <option value="引流液">引流液</option>
+                    <option value="尿">尿</option>
+                    <option value="便">便</option>
+                </select>
             </div>
         </li>
         <li class="aui-list-item">
@@ -210,6 +214,6 @@
 <script type="text/javascript" src="../../script/aui-tab.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/zrender.min.js"></script>
-<script type="text/javascript" src="../../script/drawUtils.js"></script>
+<script type="text/javascript" src="../../script/"></script>
 <script type="text/javascript" src="../../script/nurse/frm_smtzjcjld.js"></script>
 </html>
