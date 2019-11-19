@@ -253,6 +253,16 @@ function saveAddRecord() {
         }
 
     }
+    var pfqk ;
+    var pfqkArr = $("input[name='dx-piqk']").val(); //皮肤情况
+    for(var i=0;i<pfqkArr.length;i++){
+        if(pfqkArr[i].checked){
+
+            pfqk += pfqkArr[i].value+",";
+        }
+    }
+    pfqk = pfqk + "-" + $api.val($api.byId('dx-piqk'));
+
     var hushiqianming = $("input[name='userName']").val();
 
 
@@ -304,6 +314,7 @@ function saveAddRecord() {
     params.ruliangml = ruliangml;
     params.chuliangmingcheng = chuliangmingcheng;
     params.tiwei = dxtw;
+    params.pifuqingkuang = pfqk;
     params.chuliangml = chuliangml;
     params.yansexingzhuang = yansexingzhuang;
     params.yishi = yishi;
@@ -320,6 +331,7 @@ function saveAddRecord() {
     params.name = "血液肿瘤科危重患者护理记录单";
     //params.itemList = data;
     params.measureDate= currentTime()+":00";
+    console.log(JSON.stringify(params))
     api.confirm({
         title: '提示',
         msg: '确定保存吗？',

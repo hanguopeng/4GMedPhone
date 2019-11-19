@@ -32,6 +32,9 @@
         .itemDate img{position: absolute;right: 0px;top: 0px;height: 1.5rem;}
         .itemDate .date{position: relative;height: 1.5rem;margin-right: 2rem;color: #fff;float: right;}
         .line{background-color: rgba(64, 158, 254, 1);height: 2px;margin-top: -2px;margin-right:0.1rem;}
+        .flex>input{
+            margin-left: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -59,93 +62,115 @@
                     录入记录
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div class="aui-col-xs-4">体温:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.tiwen || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        体温(°C)r：
                     </div>
+                    <input  id="tiwen" readonly="readonly" type="text" value="{{=it.tiwen||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">脉搏(次/min):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.maibo || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        脉搏(次/min):
                     </div>
+                    <input id="maibo" readonly="readonly" type="text" value="{{=it.maibo||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">呼吸(次/min):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.huxi || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        呼吸(次/min):
                     </div>
+                    <input id="huxi" readonly="readonly" type="text" value="{{=it.huxi||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">血压(mmHg):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.xueya || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        血压(mmHg):
                     </div>
+                    <input id="xueya" readonly="readonly" type="text" value="{{=it.xueya||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">血氧饱和度(%):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.xueyangbaohedu || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 48%;">
+                        血氧饱和度(%):
                     </div>
+                    <input id="xueyangbaohedu" readonly="readonly" type="text" value="{{=it.xueyangbaohedu||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">吸氧(L/min):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.xiyang || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        吸氧(L/min):
                     </div>
+                    <input id="xiyang" readonly="readonly" type="text" value="{{=it.xiyang||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="aui-list-item-label aui-margin-l-10" style="width:100%;background-color: #F1F1F1;">
                     入量
                 </div>
-                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-4">名称:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.ruliangmingcheng|| '-'}}</span>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 ">
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        入量名称:
                     </div>
+                    <select id="RLMCval" name="RLMCval" class="aui-pull-right" disabled style="width:47%;margin-left: 0.1rem;">
+                        <option value="">请选择</option>
+                        <option id="饮食水" value="饮食水">饮食水</option>
+                        <option id="输液" value="输液">输液</option>
+                        <option id="鼻饲液" value="鼻饲液">鼻饲液</option>
+                        <option id="输血" value="输血">输血</option>
+                    </select>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">量(ml):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.ruliangml || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%;text-align: right">
+                        量:
                     </div>
+                    <input id="ruliang" readonly="readonly" type="text" value="{{=it.ruliangml||'-'}}"/>
                 </div>
             </div>
             <div class="aui-row ">
                 <div class="aui-list-item-label aui-margin-l-10" style="width:100%;background-color: #F1F1F1;">
                     出量
                 </div>
-                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-4">名称:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        {{=it.chuliangmingcheng || '-'}}
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        出量名称:
                     </div>
+                    <select id="CHMCval" name="CHMCval" class="aui-pull-right" disabled style="width:47%;margin-left: 0.1rem;">
+                        <option value="">请选择</option>
+                        <option id="尿液" value="尿液">尿液</option>
+                        <option id="便" value="便">便</option>
+                        <option id="呕吐物" value="呕吐物">呕吐物</option>
+                        <option id="引流液" value="引流液">引流液</option>
+                    </select>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
-                    <div  class="aui-col-xs-4">量(ml):</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.chuliangml || '-'}}</span>
+                    <div class="aui-list-item-label" style="width: 45%; text-align: right">
+                        量:
                     </div>
+                    <input id="chuliang" readonly="readonly" type="text" value="{{=it.chuliangml||'-'}}"/>
                 </div>
-                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10 aui-text-right">
-                    <div  class="aui-col-xs-4">颜色性状:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.yansexingzhuang || '-'}}</span>
+                <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
+                    <div class="aui-list-item-label" style="width: 45%;">
+                        颜色性状:
                     </div>
+                     <select id="YSXZval" name="YSXZval"  class="aui-pull-right" disabled style="width:47%;margin-left: 0.1rem;">
+                        <option value="">请选择</option>
+                        <option id="黄色" value="黄色">黄色</option>
+                        <option id="淡黄色" value="淡黄色">淡黄色</option>
+                        <option id="红色" value="红色">红色</option>
+                        <option id="暗红色" value="暗红色"></option>
+                        <option id="鲜红色"  value="鲜红色"></option>
+                        <option id="黄绿色" value="黄绿色"></option>
+                        <option id="咖啡色" value="咖啡色"></option>
+                        <option id="无" value="">无</option>
+                    </select>
                 </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="yishi_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>意识:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
@@ -156,7 +181,54 @@
                     </div>
                 </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="yishi_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>意识:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="清醒"> 清醒
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="意识模糊"> 意识模糊
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="嗜睡"> 嗜睡
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="昏睡"> 昏睡
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="谵妄"> 谵妄
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="烦躁"> 烦躁
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="浅昏迷"> 浅昏迷
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="中度昏迷"> 中度昏迷
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="深昏迷"> 深昏迷
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-ys" value="睡眠"> 睡眠
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="yinshi_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>饮食:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
@@ -166,7 +238,42 @@
                     </div>
                 </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="yinshi_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>饮食:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="禁食"> 禁食
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="流食"> 流食
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="半流食"> 半流食
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="鼻饲"> 鼻饲
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="低盐饮食"> 低盐饮食
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="低脂饮食"> 低脂饮食
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-sw" value="糖尿病饮食"> 糖尿病饮食
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="tiwei_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>体位:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
@@ -174,7 +281,42 @@
                     </div>
                 </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="tiwei_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>体位:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="半卧位"> 半卧位
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="侧卧位"> 侧卧位
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="平卧位"> 平卧位
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="端坐位"> 端坐位
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="患肢抬高"> 患肢抬高
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="头高足低位"> 头高足低位
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-tw" value="强迫体位"> 强迫体位
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="dghl_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>导管护理:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz"><div class="aui-margin-l-5 inline">
@@ -182,7 +324,93 @@
                     </div>
                 </div>
             </div>
+                </div>
             <div class="aui-row border-bottom">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>皮肤情况:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="完整"> 完整
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="压疮"> 压疮
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="出血点"> 出血点
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="破损"> 破损
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="水肿"> 水肿
+                        </div>
+                        <div class="flex aui-text-right">
+                            <div class="aui-col-xs-2">部位:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" id="dx-piqk" placeholder="请输入内容">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="dghl_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>导管护理:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz"><div class="aui-margin-l-5 inline">
+                        <input type="checkbox"
+                               name="dx-dghl" value="深静脉置管"> 深静脉置管
+                    </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="胃管"> 胃管
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="留置导尿管"> 留置导尿管
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="静脉留置针"> 静脉留置针
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="放腹水"> 放腹水
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="静脉置管"> 静脉置管
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="放胸水"> 放胸水
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-dghl" value="气管切开" onclick="QGQKselect(this)"> 导管情况
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select name="qgqkmjz">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="通畅" value="通畅"> 通畅</option>
+                                    <option data-val="不通畅" value="不通畅">不通畅</option>
+                                    <option data-val="更换" value="更换">更换</option>
+                                    <option data-val="置管" value="置管"> 置管</option>
+                                    <option data-val="夹管" value=""夹管>夹管</option>
+                                    <option data-val="拔管" value="拔管">拔管</option>
+                                    <option data-val="封管" value="封管">封管</option>
+                                    <option data-val="更换引流器" value="更换引流器"> 更换引流器(袋)</option>
+                                    <option data-val="更换敷贴" value="更换敷贴">更换敷贴</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="jkjy_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>健康教育:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
@@ -192,7 +420,38 @@
                     </div>
                 </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="jkjy_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>健康教育:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="入院指导"> 入院指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="饮食指导"> 饮食指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="检查指导"> 检查指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="安全指导"> 安全指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="康复指导"> 康复指导
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-jkzd" value="心理指导"> 心理指导
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="bqgc_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>病情观察:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
@@ -200,13 +459,234 @@
                             <span>{{=it.bingqingguancha || '-'}}</span>
                         </div>
                     </div>
+                </div>
             </div>
-            <div class="aui-row border-bottom">
+            <div class="aui-row border-bottom" id="bqgc_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>病情观察:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="头晕"> 头晕
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="头痛"> 头痛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="呼吸困难"> 呼吸困难
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="口唇发绛"> 口唇发绛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="气短"> 气短
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="心悸"> 心悸
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="胸闷"> 胸闷
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="贫血貌"> 贫血貌
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="呕血"> 呕血
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="便血"> 便血
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="双下肢浮肿"> 双下肢浮肿
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="血尿"> 血尿
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="咳嗽"> 咳嗽
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="咳痰"> 咳痰
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="恶心"> 恶心
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="呕吐"> 呕吐
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="腹痛"> 腹痛
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="腹泻"> 腹泻
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="入睡困难"> 入睡困难
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="周身不适、乏力"> 周身不适、乏力
+                        </div></br>
+                        <div class="aui-margin-l-5" inline sytle="background-color:red;" style="width:6rem;">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="双侧瞳孔" onclick="QGQKselect(this)" > 双侧瞳孔
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select name="sctksel">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="等大同圆" value="等大同圆"> a.等大同圆</option>
+                                    <option data-val="不等大" value="不等大">b.不等大</option>
+                                    <option data-val="散大固定" value="散大固定">c.散大固定</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="瞳孔对光发散" onclick="QGQKselect(this)"> 瞳孔对光发散
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide" id="tkdgfs-sel">
+                                <select id="dkdgfs" name="dkdgfs">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="灵敏" value="灵敏"> a.灵敏</option>
+                                    <option data-val="迟钝" value="迟钝">b.迟钝</option>
+                                    <option data-val="存在" value="存在">c.存在</option>
+                                    <option data-val="消失" value="消失"> d.消失</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox" id="侧肢体活动障碍"
+                                   name="dx-bqgc" value="侧肢体活动障碍" onclick="QGQKselect(this)"> (L/R)侧肢体活动障碍
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select id="czthd-lr" name="czthdlr">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="左" value="左"> a.左</option>
+                                    <option data-val="右" value="右">b.右</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-bqgc" value="语言" onclick="QGQKselect(this)"> 语言
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select id="czthdza" name="czthdza">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="失语" value="失语"> a.失语</option>
+                                    <option data-val="流利" value="流利">b.流利</option>
+                                    <option data-val="不清晰" value="不清晰">c.不清晰</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="aui-row border-bottom" id="hlcs_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>护理措施:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
                             <span>{{=it.hulicuoshi || '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="hlcs_checkbox" style="display: none" >
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>护理措施:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz" id="test001">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="按医嘱用药"> 按医嘱用药
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="整理床单元"> 整理床单元
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="洗漱"> 洗漱
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="口腔护理"> 口腔护理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="皮肤护理"> 皮肤护理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="床上擦浴"> 床上擦浴
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="翻身"> 翻身
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="针孔消毒"> 针孔消毒
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="使用气垫床"> 使用气垫床
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="排泄护理"> 排泄护理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="尿道口护理"> 尿道口护理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="雾化吸入"> 雾化吸入
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="会阴护理"> 会阴护理
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="床上洗头"> 床上洗头
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="膀胱冲洗"> 膀胱冲洗
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="物理降温" onclick="QGQKselect(this)"> 物理降温
+                            <div class="flex-item aui-margin-l-10 aui-text-left hide">
+                                <select name="wljw">
+                                    <option data-val="" value="">请选择</option>
+                                    <option data-val="酒精擦浴" value="酒精擦浴"> a.酒精擦浴</option>
+                                    <option data-val="温水擦浴" value="温水擦浴">b.温水擦浴</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-hlcs" value="叩背"> 叩背
                         </div>
                     </div>
                 </div>
@@ -221,6 +701,11 @@
                     </div>
                 </div>
             </div>
+            <div class="aui-text-center aui-margin-t-15 aui-padded-t-15">
+                <div class="aui-btn aui-btn-info" tapmode id="update" onclick="update();">修改</div>
+                <div class="aui-btn aui-btn-info" tapmode id="saveUpdate" onclick="savaUpdate()" style="display: none; margin-right: 0.5rem">保存修改</div>
+                <div class="aui-btn aui-btn-info" tapmode id="cancel" onclick="cancel()" style="display: none">取消</div>
+            </div>
         </section>
     </section>
 </script>
@@ -230,13 +715,7 @@
 <script type="text/javascript" src="../../script/aui-tab.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
-<script type="text/javascript">
-    apiready = function(){
-        api.parseTapmode();
-        var params = api.pageParam.data;
-        var contentTmpl = doT.template($api.text($api.byId('add-tpl')));
-        $api.html($api.byId('content'), contentTmpl(params));
-    };
-</script>
+<script type="text/javascript" src="../../script/nurse/frm_zlk_nurse_wzhzhljld_detail.js"></script>
+
 </body>
 </html>
