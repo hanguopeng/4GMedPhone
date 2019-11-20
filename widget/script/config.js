@@ -1,9 +1,9 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
 var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://192.168.1.107:8085/cmc-server";
+//var localServer = "http://192.168.1.125:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
-// var ws = "ws://192.168.1.126:8888/";
+// var ws = "ws://192.168.1.126:8888/";666666
 var config={
     // 已用
     duration:3000,
@@ -75,7 +75,10 @@ var config={
     updateVitalSigns: localServer+"/nur/nursePlan/updateVitalSigns/",  //通过id修改生命体征检测
     scanMedical: localServer+"/med/advice/barcode/getByMaterialCode/", //扫码核对查询医嘱信息
     updateTelephone:localServer+"/med/patient/updateTelephone/", //修改联系电话
+    // 20190830 生命体征监测相关
 
+    // 20191118 危重患重记录单相关
+    wzhznursePlan:localServer+"/nur/nursePlan/updatePlan",//血液肿瘤-危重患重护理记录单
 
     // 未用+护理单
     animalHeatSituationUrl: localServer+"/nur/nurseLog/animalHeat/situation/{patientId}", //体温变化

@@ -53,7 +53,7 @@
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                     <div>创建时间:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
-                        <span>{{=it.createTime || '-'}}</span>
+                        <span>{{=it.createTime || ''}}</span>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <div class="aui-list-item-label" style="width: 45%;">
                         体温(°C)r：
                     </div>
-                    <input  id="tiwen" readonly="readonly" type="text" value="{{=it.tiwen||'-'}}"/>
+                    <input  id="tiwen" readonly="readonly" type="text" value="{{=it.tiwen||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -73,7 +73,7 @@
                     <div class="aui-list-item-label" style="width: 45%;">
                         脉搏(次/min):
                     </div>
-                    <input id="maibo" readonly="readonly" type="text" value="{{=it.maibo||'-'}}"/>
+                    <input id="maibo" readonly="readonly" type="text" value="{{=it.maibo||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -81,7 +81,7 @@
                     <div class="aui-list-item-label" style="width: 45%;">
                         呼吸(次/min):
                     </div>
-                    <input id="huxi" readonly="readonly" type="text" value="{{=it.huxi||'-'}}"/>
+                    <input id="huxi" readonly="readonly" type="text" value="{{=it.huxi||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -89,7 +89,7 @@
                     <div class="aui-list-item-label" style="width: 45%;">
                         血压(mmHg):
                     </div>
-                    <input id="xueya" readonly="readonly" type="text" value="{{=it.xueya||'-'}}"/>
+                    <input id="xueya" readonly="readonly" type="text" value="{{=it.xueya||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -97,7 +97,7 @@
                     <div class="aui-list-item-label" style="width: 48%;">
                         血氧饱和度(%):
                     </div>
-                    <input id="xueyangbaohedu" readonly="readonly" type="text" value="{{=it.xueyangbaohedu||'-'}}"/>
+                    <input id="xueyangbaohedu" readonly="readonly" type="text" value="{{=it.xueyangbaohedu||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -105,7 +105,7 @@
                     <div class="aui-list-item-label" style="width: 45%;">
                         吸氧(L/min):
                     </div>
-                    <input id="xiyang" readonly="readonly" type="text" value="{{=it.xiyang||'-'}}"/>
+                    <input id="xiyang" readonly="readonly" type="text" value="{{=it.xiyang||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -128,7 +128,7 @@
                     <div class="aui-list-item-label" style="width: 45%;text-align: right">
                         量:
                     </div>
-                    <input id="ruliang" readonly="readonly" type="text" value="{{=it.ruliangml||'-'}}"/>
+                    <input id="ruliang" readonly="readonly" type="text" value="{{=it.ruliangml||''}}"/>
                 </div>
             </div>
             <div class="aui-row ">
@@ -151,7 +151,7 @@
                     <div class="aui-list-item-label" style="width: 45%; text-align: right">
                         量:
                     </div>
-                    <input id="chuliang" readonly="readonly" type="text" value="{{=it.chuliangml||'-'}}"/>
+                    <input id="chuliang" readonly="readonly" type="text" value="{{=it.chuliangml||''}}"/>
                 </div>
                 <div class="flex aui-text-right aui-padded-l-10 aui-padded-r-10">
                     <div class="aui-list-item-label" style="width: 45%;">
@@ -162,10 +162,10 @@
                         <option id="黄色" value="黄色">黄色</option>
                         <option id="淡黄色" value="淡黄色">淡黄色</option>
                         <option id="红色" value="红色">红色</option>
-                        <option id="暗红色" value="暗红色"></option>
-                        <option id="鲜红色"  value="鲜红色"></option>
-                        <option id="黄绿色" value="黄绿色"></option>
-                        <option id="咖啡色" value="咖啡色"></option>
+                        <option id="暗红色" value="暗红色">暗红色</option>
+                        <option id="鲜红色"  value="鲜红色">鲜红色</option>
+                        <option id="黄绿色" value="黄绿色">黄绿色</option>
+                        <option id="咖啡色" value="咖啡色">咖啡色</option>
                         <option id="无" value="">无</option>
                     </select>
                 </div>
@@ -175,7 +175,7 @@
                     <div>意识:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.yishi || '-'}}</span>
+                            <span>{{=it.yishi || ''}}</span>
                         </div>
 
                     </div>
@@ -233,7 +233,7 @@
                     <div>饮食:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.yinshi || '-'}}</span>
+                            <span>{{=it.yinshi || ''}}</span>
                         </div>
                     </div>
                 </div>
@@ -277,7 +277,7 @@
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>体位:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
-                        <span>{{=it.tiwei || '-'}}</span>
+                        <span>{{=it.tiwei || ''}}</span>
                     </div>
                 </div>
             </div>
@@ -319,41 +319,8 @@
             <div class="aui-row border-bottom" id="dghl_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>导管护理:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz"><div class="aui-margin-l-5 inline">
-                        <span>{{=it.daoguanguanli || '-'}}</span>
-                    </div>
-                </div>
-            </div>
-                </div>
-            <div class="aui-row border-bottom">
-                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
-                    <div>皮肤情况:</div>
-                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
-                        <div class="aui-margin-l-5 inline">
-                            <input type="checkbox"
-                                   name="dx-piqk" value="完整"> 完整
-                        </div>
-                        <div class="aui-margin-l-5 inline">
-                            <input type="checkbox"
-                                   name="dx-piqk" value="压疮"> 压疮
-                        </div>
-                        <div class="aui-margin-l-5 inline">
-                            <input type="checkbox"
-                                   name="dx-piqk" value="出血点"> 出血点
-                        </div>
-                        <div class="aui-margin-l-5 inline">
-                            <input type="checkbox"
-                                   name="dx-piqk" value="破损"> 破损
-                        </div>
-                        <div class="aui-margin-l-5 inline">
-                            <input type="checkbox"
-                                   name="dx-piqk" value="水肿"> 水肿
-                        </div>
-                        <div class="flex aui-text-right">
-                            <div class="aui-col-xs-2">部位:</div>
-                            <div class="flex-item aui-margin-l-10 aui-text-left">
-                                <input type="text" class="value" id="dx-piqk" placeholder="请输入内容">
-                            </div>
+                        <div class="flex-item aui-margin-l-10 aui-text-left rczgz"><div class="aui-margin-l-5 inline">
+                            <span>{{=it.daoguanguanli || ''}}</span>
                         </div>
                     </div>
                 </div>
@@ -410,12 +377,55 @@
                     </div>
                 </div>
             </div>
+            <div class="aui-row border-bottom" id="pfqk_input">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>皮肤情况:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <span>{{=it.pifuqingkuang || ''}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-row border-bottom" id="pfqk_checkbox" style="display: none">
+                <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
+                    <div>皮肤情况:</div>
+                    <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="完整"> 完整
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="压疮"> 压疮
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="出血点"> 出血点
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="破损"> 破损
+                        </div>
+                        <div class="aui-margin-l-5 inline">
+                            <input type="checkbox"
+                                   name="dx-piqk" value="水肿"> 水肿
+                        </div>
+                        <div class="flex aui-text-right">
+                            <div class="aui-col-xs-2">部位:</div>
+                            <div class="flex-item aui-margin-l-10 aui-text-left">
+                                <input type="text" class="value" id="dx-piqk" placeholder="请输入内容">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="aui-row border-bottom" id="jkjy_input">
                 <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10 aui-padded-t-15 aui-padded-b-15">
                     <div>健康教育:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.jiankangjiaoyu || '-'}}</span>
+                            <span>{{=it.jiankangjiaoyu || ''}}</span>
                         </div>
                     </div>
                 </div>
@@ -456,7 +466,7 @@
                     <div>病情观察:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.bingqingguancha || '-'}}</span>
+                            <span>{{=it.bingqingguancha || ''}}</span>
                         </div>
                     </div>
                 </div>
@@ -603,7 +613,7 @@
                     <div>护理措施:</div>
                     <div class="flex-item aui-margin-l-10 aui-text-left rczgz">
                         <div class="aui-margin-l-5 inline">
-                            <span>{{=it.hulicuoshi || '-'}}</span>
+                            <span>{{=it.hulicuoshi || ''}}</span>
                         </div>
                     </div>
                 </div>
@@ -696,7 +706,7 @@
                     <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
                         <div>护士签名:</div>
                         <div class="flex-item aui-margin-l-10 aui-text-left">
-                            <span>{{=it.hushiqianming||'-'}}</span>
+                            <span>{{=it.hushiqianming||''}}</span>
                         </div>
                     </div>
                 </div>

@@ -143,7 +143,7 @@ function saveAddRecord() {
     for(var i=0;i<dxysArr.length;i++){
         if(dxysArr[i].checked){
 
-            yishi += dxysArr[i].value+",";
+            yishi += dxysArr[i].value+" ";
         }
     }
 
@@ -155,10 +155,10 @@ function saveAddRecord() {
         if(dxdghlArr[i].checked){
 
             if("气管切开"==dxdghlArr[i].value){
-             daoguanhuli += dxdghlArr[i].value+"("+qgqkmjz+")"+",";
+             daoguanhuli += dxdghlArr[i].value+"("+qgqkmjz+")"+" ";
             }else {
 
-                daoguanhuli += dxdghlArr[i].value+",";
+                daoguanhuli += dxdghlArr[i].value+" ";
             }
         }
 
@@ -170,7 +170,7 @@ function saveAddRecord() {
     for(var i=0;i<dxswArr.length;i++){
         if(dxswArr[i].checked){
 
-            yinshi += dxswArr[i].value+",";
+            yinshi += dxswArr[i].value+" ";
         }
     }
     var jiankangzhidao = "";
@@ -178,7 +178,7 @@ function saveAddRecord() {
     for(var i=0;i<dxjkzdArr.length;i++){
         if(dxjkzdArr[i].checked){
 
-            jiankangzhidao += dxjkzdArr[i].value+",";
+            jiankangzhidao += dxjkzdArr[i].value+" ";
         }
     }
     var bingqingguancha ="";
@@ -193,20 +193,20 @@ function saveAddRecord() {
     for(var i=0;i<dxbqgcArr.length;i++){
         if(dxbqgcArr[i].checked){
             if("双侧瞳孔"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+sctksel+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+sctksel+")"+" ";
             }else if("瞳孔对光发散"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+dkdgfs+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+dkdgfs+")"+" ";
             }else if("语言"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+czthdza+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+czthdza+")"+" ";
             }else if("患肢"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+hzhz+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+hzhz+")"+" ";
             }else if("患肢皮温"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+hzfw+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+hzfw+")"+" ";
             }else if("肌力"==dxbqgcArr[i].value){
-                bingqingguancha += dxbqgcArr[i].value+"("+jljl+")"+",";
+                bingqingguancha += dxbqgcArr[i].value+"("+jljl+")"+" ";
             }else{
 
-                bingqingguancha += dxbqgcArr[i].value+",";
+                bingqingguancha += dxbqgcArr[i].value+" ";
 
             }
         }
@@ -218,16 +218,25 @@ function saveAddRecord() {
     for(var i=0;i<dxhlcsArr.length;i++){
         if(dxhlcsArr[i].checked){
             if("物理降温"==dxhlcsArr[i].value){
-                hulicuoshi += dxhlcsArr[i].value +"(" + wljw + ")" + ",";
+                hulicuoshi += dxhlcsArr[i].value +"(" + wljw + ")" + " ";
             }else{
 
-                hulicuoshi += dxhlcsArr[i].value + ",";
+                hulicuoshi += dxhlcsArr[i].value + " ";
             }
         }
 
     }
     var hushiqianming = $("input[name='userName']").val();
 
+    var pfqk = "";
+    var pfqkArr = $("input[name='dx-piqk']"); //皮肤情况
+    for(var i=0;i<pfqkArr.length;i++){
+        if(pfqkArr[i].checked){
+
+            pfqk += pfqkArr[i].value+" ";
+        }
+    }
+    pfqk = pfqk + "- " + $api.val($api.byId('dx-piqk'));
 
     /*addMapIfNotNull(data, "medBedName", medBedName, true);
 
@@ -282,6 +291,7 @@ function saveAddRecord() {
     params.maibo = maibo;
     params.medBedName = medBedName;
     params.name = name;
+    params.pifuqingkuang = pfqk;
     params.sexName = sexName;
     params.registerNumber = registerNumber;
     params.inHospitalTime = inHospitalTime;
