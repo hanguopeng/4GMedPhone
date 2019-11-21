@@ -146,12 +146,9 @@ function save(){
             temperature: $api.val($api.byId('temperature')),
             pulse: $api.val($api.byId('pulse')),
             breathRate: $api.val($api.byId('breathRate')),
-            heartRate: $api.val($api.byId('heartRate')),
             bloodPressure:$api.val($api.byId('bloodPressure')),
             input: $api.val($api.byId('input')),
-            inputType:$api.val($api.byId('input_type')),
             output: $api.val($api.byId('output')),
-            outputType:$api.val($api.byId('output_type')),
             nurseName: $api.val($api.byId('nurseName')),
         },
         success: function(r) {
