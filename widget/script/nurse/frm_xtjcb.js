@@ -137,16 +137,25 @@ function saveTZ(){
 
 function showXTJCB(){
     var currentPerson = $api.getStorage(storageKey.currentPerson);
-    var registerNumber = currentPerson.registerNumber;
+    var homepageId = currentPerson.homepageId;
     $api.html($api.byId('content'), "");
-    common.get({
-        url:config.nurseBloodSheet+"?registerNumber="+registerNumber,
+    alert(JSON.stringify(currentPerson))
+    common.post({
+        url:config.nurseBloodSheet,
         isLoading: true,
+        data:{
+            patientId: currentPerson.id,
+            homepageId: homepageId,
+            templateList: [{
+                templateCode: 'bloodSugar',
+                templateVersion: '1'
+            }],
+        },
         success:function (ret) {
-            if(ret&&ret.content&&ret.content.length>0){
+            if(ret&&ret.content&&ret.content.list&&ret.content.list.length>0){
                 var contentTmpl = doT.template($api.text($api.byId('hisxt-tpl')));
-                if (ret.content[0].id){
-                    var item = ret.content;
+                if (ret.content.list[0].id){
+                    var item = ret.content.list;
                     $api.html($api.byId('content'), contentTmpl(item));
                 }else{
                     $api.html($api.byId('content'), contentTmpl(""));

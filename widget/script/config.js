@@ -1,6 +1,6 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
-var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://192.168.1.125:8085/cmc-server";
+//var localServer = "http://172.17.100.2:8083/cmc-server";
+var localServer = "http://192.168.1.125:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
 // var ws = "ws://192.168.1.126:8888/";
@@ -58,7 +58,7 @@ var config={
     selectInsulin:localServer+"/nur/nursePlan/selectInsulinPda",//查询胰岛素泵记录列表
     selectInsulindetail:localServer+"/nur/nursePlan/selectInsulin/detail", //胰岛素记录表详情
     nurseBloodSugar: localServer+"/nur/nursePlan/json",//血糖监测录入（通用的）
-    nurseBloodSheet: localServer+"/nur/bloodSugar",//血糖监测表
+    nurseBloodSheet: localServer+"/nur/nursePlan/listDetails/json",//血糖监测表
     // 20190827 一次性卫生材料相关
     saveParentMaterial: localServer+"/nur/nursePlan/saveMaterial",//保存一次卫材父数据
     saveSonMaterial: localServer+"/nur/nursePlan/saveMaterialSon",//保存一次卫材子数据
