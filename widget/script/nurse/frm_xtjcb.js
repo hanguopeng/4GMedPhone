@@ -139,9 +139,8 @@ function showXTJCB(){
     var currentPerson = $api.getStorage(storageKey.currentPerson);
     var homepageId = currentPerson.homepageId;
     $api.html($api.byId('content'), "");
-    alert(JSON.stringify(currentPerson))
     common.post({
-        url:config.nurseBloodSheet,
+        url:config.nurseBloodSheetShow,
         isLoading: true,
         data:{
             patientId: currentPerson.id,
