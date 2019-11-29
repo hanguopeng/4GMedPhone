@@ -1,6 +1,6 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
-//var localServer = "http://172.17.100.2:8083/cmc-server";
-var localServer = "http://192.168.1.125:8085/cmc-server";
+var localServer = "http://172.17.100.2:8083/cmc-server";
+// var localServer = "http://192.168.1.125:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
 // var ws = "ws://192.168.1.126:8888/";
