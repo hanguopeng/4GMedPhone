@@ -89,7 +89,7 @@ function downPullRefresh(){
         adviceRecordsReset()
         var el =" <label>" +
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 在用医嘱</label>\n" +
-            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
+            "<label id=\"nonArrivalLabel\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
@@ -122,7 +122,7 @@ function downPullRefresh(){
         adviceSendsReset()
         var el =" <label>" +
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
-            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival11\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
+            "<label id=\"nonArrivalLabel1\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival11\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
@@ -184,7 +184,7 @@ var changeTab = function (obj) {
         adviceRecordsReset()
         var el =
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse\" id=\"inUse\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 在用医嘱</label>\n" +
-            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
+            "<label id=\"nonArrivalLabel\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival\" id=\"nonArrival\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice\" id=\"longTermAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 长嘱</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice\" id=\"temporaryAdvice\" type=\"checkbox\" tapmode  onchange=\"adviceRecords()\"> 临嘱</label>\n" +
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-records','adviceRecords-selector');\">筛选</div>"
@@ -201,7 +201,7 @@ var changeTab = function (obj) {
         adviceSendsReset()
         var el =" <label>" +
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
-            "<label><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
+            "<label id=\"nonArrivalLabel1\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
@@ -283,6 +283,13 @@ var adviceRecords = function () {
         priorityCode = 0
     } else if (!longTermAdviceStatus && temporaryAdviceStatus){
         priorityCode = 1
+    }
+    // 如果只选中临嘱或者在用没有被勾选，则未到终止时间失效
+    if (priorityCode == 1 || isEmpty(inUse)){
+        nonArrival = null
+        $api.addCls($api.byId('nonArrivalLabel'), 'hide');
+    } else{
+        $api.removeCls($api.byId('nonArrivalLabel'), 'hide');
     }
     var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin')) //上次执行时间开始
     var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd'))  //上次执行时间结束
@@ -443,6 +450,13 @@ var adviceRecordsForAdviceSends = function () {
         priorityCode = 0
     } else if (!longTermAdviceStatus && temporaryAdviceStatus){
         priorityCode = 1
+    }
+    // 如果只选中临嘱或者在用没有被勾选，则未到终止时间失效
+    if (priorityCode == 1 || isEmpty(inUse)){
+        nonArrival = null
+        $api.addCls($api.byId('nonArrivalLabel1'), 'hide');
+    } else{
+        $api.removeCls($api.byId('nonArrivalLabel1'), 'hide');
     }
     var lastExcecutiveTimeBegin = $api.val($api.byId('lastExcecutiveTimeBegin1')) //上次执行时间开始
     var lastExcecutiveTimeEnd =   $api.val($api.byId('lastExcecutiveTimeEnd1'))  //上次执行时间结束
