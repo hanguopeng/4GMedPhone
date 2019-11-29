@@ -122,7 +122,7 @@ function downPullRefresh(){
         adviceSendsReset()
         var el =" <label>" +
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
-            "<label id=\"nonArrivalLabel1\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival11\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
+            "<label id=\"nonArrivalLabel1\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice1\" id=\"temporaryAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 临嘱</label>\n" +
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
