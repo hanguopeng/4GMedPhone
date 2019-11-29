@@ -116,68 +116,67 @@ function closeWin() {
 }
 
 function openFrameContent(page){
-    // 不检查是否入科
-    // if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
-    //     var person = $api.getStorage(storageKey.currentPerson);
-    //     common.get({
-    //         url: config.patientDetailUrl + person.id + '/' + person.homepageId,
-    //         isLoading: true,
-    //         success: function (ret) {
-    //             if(ret && ret.content){
-    //                 if (isEmpty(ret.content.inOrganizationTime)){
-    //                     api.toast({
-    //                         msg:  '请优先完成患者的入科确认！',
-    //                         duration: config.duration,
-    //                         location: 'bottom'
-    //                     });
-    //                     return;
-    //                 }else{
-    //                     api.closeFrame({
-    //                         name: 'frm_person_search'
-    //                     });
-    //                     var header = document.querySelector('#header');
-    //                     var pos = $api.offset(header);
-    //                     var footPos = $api.offset(document.querySelector('#footer'))
-    //                     api.openFrame({ // 打开Frame
-    //                         name: page,
-    //                         url: '../html/'+ page +'.html',
-    //                         rect: {
-    //                             x: 0,
-    //                             y: pos.h, // 头部留位置
-    //                             w: 'auto',
-    //                             h: api.winHeight-pos.h-footPos.h
-    //                         },
-    //                         bounces: false,
-    //                         reload: true,
-    //                         vScrollBarEnabled: false
-    //                     });
-    //
-    //                     for (var i = 0; i < frames.length; i++){
-    //                         if(frames[i]===page){
-    //                             api.setFrameAttr({
-    //                                 name: frames[i],
-    //                                 hidden: false
-    //                             });
-    //                             currentFrame = i;
-    //                         }else{
-    //                             api.setFrameAttr({
-    //                                 name: frames[i],
-    //                                 hidden: true
-    //                             });
-    //                         }
-    //                     }
-    //                 }
-    //             }else{
-    //                 api.toast({
-    //                     msg:  '未查到指定病人信息',
-    //                     duration: config.duration,
-    //                     location: 'bottom'
-    //                 });
-    //                 return;
-    //             }
-    //         }
-    //     });
-    // }else{
+    if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
+        var person = $api.getStorage(storageKey.currentPerson);
+        common.get({
+            url: config.patientDetailUrl + person.id + '/' + person.homepageId,
+            isLoading: true,
+            success: function (ret) {
+                if(ret && ret.content){
+                    if (isEmpty(ret.content.inOrganizationTime)){
+                        api.toast({
+                            msg:  '请优先完成患者的入科确认！',
+                            duration: config.duration,
+                            location: 'bottom'
+                        });
+                        return;
+                    }else{
+                        api.closeFrame({
+                            name: 'frm_person_search'
+                        });
+                        var header = document.querySelector('#header');
+                        var pos = $api.offset(header);
+                        var footPos = $api.offset(document.querySelector('#footer'))
+                        api.openFrame({ // 打开Frame
+                            name: page,
+                            url: '../html/'+ page +'.html',
+                            rect: {
+                                x: 0,
+                                y: pos.h, // 头部留位置
+                                w: 'auto',
+                                h: api.winHeight-pos.h-footPos.h
+                            },
+                            bounces: false,
+                            reload: true,
+                            vScrollBarEnabled: false
+                        });
+
+                        for (var i = 0; i < frames.length; i++){
+                            if(frames[i]===page){
+                                api.setFrameAttr({
+                                    name: frames[i],
+                                    hidden: false
+                                });
+                                currentFrame = i;
+                            }else{
+                                api.setFrameAttr({
+                                    name: frames[i],
+                                    hidden: true
+                                });
+                            }
+                        }
+                    }
+                }else{
+                    api.toast({
+                        msg:  '未查到指定病人信息',
+                        duration: config.duration,
+                        location: 'bottom'
+                    });
+                    return;
+                }
+            }
+        });
+    }else{
         api.closeFrame({
             name: 'frm_person_search'
         });
@@ -212,7 +211,7 @@ function openFrameContent(page){
                 });
             }
         }
-    // }
+    }
 
 }
 
