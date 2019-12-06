@@ -211,6 +211,9 @@
                     </div>
                 </div>
                 <div id="skinTest-result" class="bottomBody aui-padded-15">
+                    <div class="aui-text-left aui-margin-t-15">
+                        <span style="margin-left: 1.7rem">录入时间：</span><input style="width: 6rem" class="adviceInputLong" type="text" id="input_time"  onclick="choose(this)">
+                    </div>
                     <div class="flex aui-margin-t-5">
                         <div class="flex-item">
                             <span class="key">皮试结果：</span>
@@ -1010,9 +1013,9 @@
         var item = it[i];
     }}
     {{?!isEmpty(item.skinResult)}}
-    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},false)">
+    <div class="item skinTestGreen border-green aui-font-size-14" id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect('{{=item.implementTime}}','{{=item.medAdviceId}}',false)">
         {{??}}
-            <div class="item border-green aui-font-size-14"  id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect({{=item.medAdviceId}},true)">
+            <div class="item border-green aui-font-size-14"  id="skinTest{{=item.medAdviceId}}" name="{{=item.id}}" onclick="SkinTestSelect( '{{=item.implementTime}}','{{=item.medAdviceId}}',true)">
         {{?}}
         <div class="rowItem">
             <span>{{=currentPerson.medBedName||''}}床 </span>

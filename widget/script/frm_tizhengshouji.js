@@ -10,8 +10,9 @@ var limit = 10;
 var currIdx = 1;
 var re = /^[1-9]+[0-9]*]*$/;
 var double = /^[0-9]+\.?[0-9]*$/;
-
+var UIInput;
 apiready = function () {
+    UIInput = api.require('UIInput');
     api.parseTapmode();
     // 获取病人field_id
     common.post({
@@ -236,7 +237,6 @@ function showHis() {
             templateList: [{"templateCode": "temperature", "templateVersion": 1}]
         }),
         success: function (ret) {
-            // alert(JSON.stringify(ret.content.list));
             if (!ret.content.list || ret.content.list.length <= 0) {
                 api.hideProgress();
                 api.toast({
@@ -538,15 +538,7 @@ function draw() {
                     var d2 = wdDatas[i].handleTime.replace(/\-/g, "/");
                     var date2 = new Date(d2);
                     var minutes = parseInt(date2 - date1) / 1000 / 60; //两个时间相差的分钟数
-                    // alert("wdDatas[i].value"+wdDatas[i].value)
-                    // alert(d1) //2019/05/27
-                    // alert(date1) //
-                    // alert(d2) //2019/05/28 11:33:51
-                    // alert(date2) //
-                    // alert(minutes) //2132.85
-                    //console.log("minutes="+minutes);
                     wdDatas[i].x = DrawUtil.startX + minutes * DrawUtil.xWidth / (4 * 60);
-                    // alert( wdDatas[i].x)
                 }
                 //画图形
                 for (var i = 0; i < wdDatas.length; i++) {
@@ -767,3 +759,17 @@ function isEmpty(str) {
         return true
     }
 }
+
+function foucsNextInput(InputId){
+
+    $api.byId(InputId).focus();
+
+}
+
+
+
+
+
+
+
+

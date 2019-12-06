@@ -85,14 +85,14 @@
                     体温(°C)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="temperature_value" type="text" class="aui-pull-left" style="width:47%"
-                           placeholder="请输入体温值">
+                    <input id="temperature_value" type="number" class="aui-pull-left" style="width:47%"
+                           placeholder="请输入体温值" onkeydown="foucsNextInput('temperature_part')">
                     <select id="temperature_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
-                        <option value="腋温">腋温</option>
-                        <option value="口温">口温</option>
-                        <option value="肛温">肛温</option>
-                        <option value="耳温">耳温</option>
-                        <option value="额温">额温</option>
+                        <option value="5">腋温</option>
+                        <option value="4">口温</option>
+                        <option value="3">肛温</option>
+                        <option value="2">耳温</option>
+                        <option value="1">额温</option>
                     </select>
                 </div>
             </div>
@@ -103,12 +103,23 @@
                     脉搏(次/min)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="pulse_value" type="text"  class="aui-pull-left" style="width:47%;"
-                           placeholder="请输入脉搏值">
+                    <input id="pulse_value" type="number"  class="aui-pull-left" style="width:47%;"
+                           placeholder="请输入脉搏值" onkeydown="foucsNextInput('pulse_part')">
                     <select id="pulse_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
                         <option value="">自测脉搏</option>
-                        <option value="起搏器">起搏器脉搏</option>
+                        <option value="6">起搏器脉搏</option>
                     </select>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label" style="width: 40%;">
+                    心率(次/min)
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="heartRate_value" type="number"
+                           placeholder="请输入心率值">
                 </div>
             </div>
         </li>
@@ -118,10 +129,10 @@
                     呼吸(次/min)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="breathRate_value" type="text"  class="aui-pull-left" placeholder="请输入呼吸值" style="width:47%;">
+                    <input id="breathRate_value" type="number"  class="aui-pull-left" placeholder="请输入呼吸值" style="width:47%;" onkeydown="foucsNextInput('breathRate_part')">
                     <select id="breathRate_part" class="aui-pull-right"  style="width:47%;margin-left: 0.1rem;">
                         <option value="">自主呼吸</option>
-                        <option value="呼吸机">呼吸机</option>
+                        <option value="7">呼吸机</option>
                     </select>
                 </div>
             </div>
@@ -132,20 +143,9 @@
                     血压(mmHg)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="bloodPressure_value" type="text" class="aui-pull-left"
+                    <input id="bloodPressure_value" type="number" class="aui-pull-left"
                            style="margin-left: 0.1rem;"
                            placeholder="高压在前低压在后由/隔开">
-                </div>
-            </div>
-        </li>
-        <li class="aui-list-item">
-            <div class="aui-list-item-inner">
-                <div class="aui-list-item-label" style="width: 40%;">
-                    心率(次/min)
-                </div>
-                <div class="aui-list-item-input">
-                    <input id="heartRate_value" type="text"
-                           placeholder="请输入心率值">
                 </div>
             </div>
         </li>
@@ -155,7 +155,7 @@
                     疼痛强度(分)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="painIntensity_value" type="text"
+                    <input id="painIntensity_value" type="number"
                            placeholder="请输入疼痛强度">
                 </div>
             </div>
@@ -166,7 +166,7 @@
                     大便次数
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="shitTime_value" type="text"
+                    <input id="shitTime_value" type="number"
                            placeholder="请输入大便次数">
                 </div>
             </div>
@@ -177,7 +177,7 @@
                     小便次数
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="urineTime_value" type="text"
+                    <input id="urineTime_value" type="number"
                            placeholder="请输入小便次数">
                 </div>
             </div>
@@ -188,7 +188,7 @@
                     尿量(ml)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="upd_value" type="text"
+                    <input id="upd_value" type="number"
                            placeholder="请输入尿量">
                 </div>
             </div>
@@ -199,7 +199,7 @@
                     总入量(ml)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="totalInput_value" type="text"
+                    <input id="totalInput_value" type="number"
                            placeholder="请输入总入量">
                 </div>
             </div>
@@ -210,7 +210,7 @@
                     总出量(ml)
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="totalOutput_value" type="text"
+                    <input id="totalOutput_value" type="number"
                            placeholder="请输入总出量">
                 </div>
             </div>

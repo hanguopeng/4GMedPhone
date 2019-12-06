@@ -10,6 +10,8 @@ var skinTestStatus = true
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
 var currentTab = 0
 var tabFlag;
+
+var adviceStartTime;
 apiready = function () {
     api.parseTapmode();
     currentTab = 2
@@ -262,6 +264,7 @@ var clickBottomTab = function (parent, id) {
     if(active){
         $api.removeCls(activeTab,'active');
     }
+
 };
 
 /**
@@ -739,7 +742,9 @@ var skinTestRecord = function () {
 /**
  * 选中某条皮试记录，边框变成红色，代表已选中，再次点击去掉红色
  */
-var SkinTestSelect = function (medAdviceId,status) {
+var SkinTestSelect = function (implementTime,medAdviceId,status) {
+    adviceStartTime = implementTime;//生效时间
+
     var obj = $api.dom('#skinTest'+medAdviceId)
     if (!obj){
         return
@@ -773,12 +778,29 @@ var SkinTestSelect = function (medAdviceId,status) {
         }
 
     }
-
+    //录入时间处理
+    var t = new Date(implementTime).getTime();
+    t += 20*60*1000;//一个小时的毫秒数
+    d = new Date(t);
+    var date = new Date(d);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    $api.val($api.byId('input_time'), y + '-' + m + '-' + d+' '+h+':'+minute+':'+second);
 };
 /**
  * 皮试结果保存或修改
  */
 var skinTestExecute = function () {
+    var  inputTime = $api.val($api.byId('input_time'));
     var skinTestResult = $("input[name='skinTestResult']:checked").val();
     if (isEmpty(skinTestId)){
         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
@@ -803,6 +825,23 @@ var skinTestExecute = function () {
             return;
         }
     }
+
+    if (isEmpty(inputTime)){
+        api.toast({
+            msg: '请选择时间',
+            duration: 2000,
+            location: 'middle'
+        });
+        return;
+
+    } else if (new Date(inputTime).getTime() < new Date(adviceStartTime).getTime()) {
+        api.toast({
+            msg: '录入时间不能小于生效时间',
+            duration: 2000,
+            location: 'middle'
+        });
+        return;
+    }
     common.post({
         url: config.updateSkin,
         data:JSON.stringify({
@@ -810,7 +849,8 @@ var skinTestExecute = function () {
             implementNurseId: userId,
             implementNurseName: $api.getStorage(storageKey.userName),
             medAdviceId: skinTestAdviceId,
-            skinResult:skinTestResult
+            skinResult:skinTestResult,
+            inputTime:inputTime
         }),
         dataType: "json",
         isLoading: true,
@@ -1032,4 +1072,30 @@ var changeNextTwoShow = function(obj){
         $api.addCls(obj, 'hide');
         $api.addCls($api.next(obj), 'hide');
     }
+}
+function choose(el){
+    api.openPicker({
+        type: 'date',
+        title: '日期'
+    }, function(ret, err){
+        var startYear = ret.year;
+        var startMonth = ret.month;
+        var startDay = ret.day;
+        var date = startYear + "-" + (startMonth<10? "0"+startMonth:startMonth) + "-" + (startDay<10?"0"+startDay:startDay);
+        api.openPicker({
+            type: 'time',
+            title: '时间'
+        }, function(ret1, err1){
+            var hour = ret1.hour;
+            if(hour < 10){
+                hour = "0"+hour;
+            }
+            var minute = ret1.minute;
+            if(minute < 10){
+                minute = "0"+minute;
+            }
+            var time = hour + ":" + minute;
+            $api.val(el,date+" "+time);
+        });
+    });
 }
