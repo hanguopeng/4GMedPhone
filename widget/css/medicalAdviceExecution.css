@@ -150,21 +150,21 @@
     margin-top: 0.5rem;
 }
 .tab-body-item .itemContainer .item .border-red{
-    border: 1px double #e51c23;
+    border: 5px groove #F56C6C;
 }
 .tab-body-item .itemContainer .item .border-green{
     border: 1px double #67c23b;
 }
 
 .tab-body-item .itemContainer .border-red{
-    border: 1px double #e51c23;
+    border: 5px groove #F56C6C;
 }
 .tab-body-item .itemContainer .border-green{
     border: 1px double #67c23b;
 }
 /* 皮试结果执行完成，边框是绿色，背景是深绿色*/
 .tab-body-item .itemContainer .item.skinTestGreen{
-    background-color: #24771c;
+    background-color: #04CAEA;
 }
 .tab-body-item .itemContainer .item .leftTop{
     position: absolute;

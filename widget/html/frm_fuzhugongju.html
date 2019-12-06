@@ -14,7 +14,7 @@
         }
 
         .smUncomplete {
-            background: #fa7d3e;
+            background: #9ea7b4;
         }
 
         .borderScanComplete {
@@ -37,8 +37,8 @@
 <body>
 <div class="aui-content">
     <div class="aui-tab" id="tab">
-        <div class="aui-tab-item aui-active">重要事件提醒</div>
-        <div class="aui-tab-item">试管核对</div>
+        <div class="aui-tab-item aui-active">试管核对</div>
+        <div class="aui-tab-item">重要事件提醒</div>
         <!--<div class="aui-tab-item">药品核对</div>-->
     </div>
     <div id="content">
@@ -56,6 +56,28 @@
 </div>
 
 </body>
+<script id="tbody-tpl" type="text/template">
+    <tr>
+        <td colspan="4" width="30%">{{=it.materialCode}}</td>
+        <td colspan="4" width="30%" bgcolor="{{=it.checkColor}}">{{=it.msgInfo}}</td>
+
+    </tr>
+</script>
+
+<script id="table-tpl" type="text/template">
+    <table class="aui-font-size-14 aui-padded-10 hide" id="table-id">
+        <thead>
+        <tr>
+            <th colspan="4" width="30%">试管条码</th>
+            <th colspan="4" width="30%">核对结果</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</script>
+
 <script id="calendar-tpl" type="text/template">
     <div id="switch" class="aui-bar aui-bar-nav aui-bar-light">
         <a class="aui-pull-left" tapmode onclick="lastMonth();">
@@ -68,7 +90,6 @@
     </div>
     <div class="aui-content-padded" style="margin-top:14em;margin-bottom:5em">
         <div id="record-content" class="aui-padded-l-10 aui-padded-r-10" style="padding: 0 0;">
-
         </div>
     </div>
     <a href="#" class="add-btn" tapmode onclick="addNotice();"></a>

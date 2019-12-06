@@ -17,9 +17,6 @@ apiready = function(){
     },function(ret){
         $api.html($api.byId('content'), "");
         if(ret.index==1){
-            //重要事件提醒
-            showCalendar();
-        }else if(ret.index==2){
             $api.html($api.byId('content'), '');
             $api.html($api.byId('scanContentContainer'), '');
             $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
@@ -28,6 +25,11 @@ apiready = function(){
             //关闭日历--根据日历open方法中的id关闭
             calendar.close({id:clendarId});
             showScan();
+
+        }else if(ret.index==2){
+            //重要事件提醒
+            firstFlag = false;
+            showCalendar();
         }else if(ret.index==3){
             $api.setStorage(storageKey.scannerStatus,'checkDetail');
             $api.html($api.byId('content'), '');
@@ -47,8 +49,14 @@ apiready = function(){
         $api.addCls($api.byId(objId),'smComplete');
         $api.removeCls($api.byId('scanMed'),'smComplete');
         $api.addCls($api.byId('scanMed'),'smUncomplete');
-        $api.html($api.byId('scanContentContainer'), "");
+        $api.html($api.byId('tbody'), "");
+        $api.addCls($api.byId('table-id'),'hide','hide')
         $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
+        //扫描患者成功后刷新上边栏信息
+        api.sendEvent({
+            name: 'patientChange'
+        });
+        //限制操作者必须先进行第一步扫描患者才可以扫试管码
         firstFlag = true;
     });
     api.addEventListener({
@@ -56,32 +64,36 @@ apiready = function(){
     },function(ret,err){
         var person = $api.getStorage(storageKey.currentPerson);
         var userId = $api.getStorage(storageKey.userId);
+        var materialCode = ret.value.materialCode.value
         //发送请求查询医嘱信息
         common.get({
-            url:config.scanMedical+ret.value.materialCode.value + "/" + person.id + "/" + userId,
+            url:config.scanMedical + materialCode + "/" + person.id + "/" + userId,
             isLoading:true,
-            success:function(ret){
-                if(ret){
-                    if(ret.code===200&&ret.msg==="success"){
-                        //只有确定扫描患者与试管是同一患者才使第二部按钮变色
-                        $api.removeCls($api.byId(objId),'smUncomplete');
-                        $api.addCls($api.byId(objId),'smComplete');
-                        //显示患者信息
-                        var patientInfo = doT.template($api.text($api.byId('scanMed-tmpl')));
-                        $api.html($api.byId('scanContentContainer'),patientInfo($api.getStorage(storageKey.currentPerson)) );
-                        $api.addCls($api.byId('scanContentContainer'),'borderScanComplete');
+            success:function(retGet){
+                if(retGet){
+                        $api.removeCls($api.byId('table-id'),'hide')
+                        var msgInfo;
+                        var checkColor;
+                        if(retGet.msg==='true'){
+                            msgInfo = '核对一致'
+                            checkColor = '#00cc66'
+                        }
+                        if(retGet.msg==='false'){
+                            msgInfo = '核对不一致'
+                            checkColor = '#ff6600'
+                        }
+                        if(retGet.msg==='failed'){
+                            msgInfo = '无此条码，请到his系统确认'
+                            checkColor = '#ffffff'
+                        }
+                        var params = {};
+                        params.msgInfo = msgInfo;
+                        params.checkColor = checkColor;
+                        params.materialCode = materialCode;
 
-                        api.startPlay({
-                            path: 'widget://res/checkSuccess.mp3'
-                        }, function(ret, err) {
+                        var tbodyTmpl = doT.template($api.text($api.byId('tbody-tpl')));
+                        $api.append($api.byId('tbody'), tbodyTmpl(params));
 
-                        });
-                        api.toast({
-                            msg: '核对成功！',
-                            duration: config.duration,
-                            location: 'middle'
-                        });
-                        firstFlag = false;
                         //显示医嘱信息
                         /*var contentTmpl = doT.template($api.text($api.byId('scanMedical-tmpl')));
                         $api.html($api.byId('medContentContainer'), contentTmpl(ret.content));
@@ -89,31 +101,10 @@ apiready = function(){
                             var contentTmpl = doT.template($api.text($api.byId('relation-tmpl')));
                             $api.html($api.byId('relationContentContainer'), contentTmpl(ret.content.sonBoList));
                         }*/
-                    }else{
-                        api.toast({
-                            msg: '核对失败！',
-                            duration: config.duration,
-                            location: 'middle'
-                        });
-                        api.startPlay({
-                            path: 'widget://res/checkFailed.mp3'
-                        }, function(ret, err) {
 
-                        });
-                        /*api.alert({
-                            title: '提示',
-                            msg: '两次扫描不是同一个患者',
-                        });*/
-
-                    }
                 }
 
-            },fail:function(ret,err){
-                api.startPlay({
-                    path: 'widget://res/checkFailed.mp3'
-                }, function(ret, err) {
-
-                });
+            },fail:function(retGet,err){
                 api.alert({
                     title: '提示',
                     msg: '请扫描正确的试管码',
@@ -122,7 +113,7 @@ apiready = function(){
         });
         $api.setStorage(storageKey.scannerStatus,'');
     });
-    showCalendar();
+    showScan();
     //添加事件成功之后页面将该日期设置为提醒日期，同时需要重新刷新该日期下的所有事件
     api.addEventListener({
         name: eventName.addAlertOk
@@ -213,6 +204,7 @@ function deleteRecord(id){
 function showCalendar(){
     chooseDate=null;
     specialDates.length = 0;
+    $api.html($api.byId('scanContentContainer'),"");
     common.get({
         url:config.alertMonthUrl+"?month="+currentMonth(),
         isLoading:true,
@@ -377,6 +369,9 @@ function openModifyWin(id,motionName,alertTime,bedCode,patientName){
 function showScan(){
     var contentTmpl = doT.template($api.text($api.byId('check-tpl')));
     $api.html($api.byId('content'), contentTmpl({}));
+
+    var tableTmpl = doT.template($api.text($api.byId('table-tpl')));
+    $api.html($api.byId('scanContentContainer'), tableTmpl({}));
     api.parseTapmode();
 }
 function showScanMedical(){
@@ -425,9 +420,18 @@ function scan(obj){
 }
 
 function medScan(obj){
+    if(firstFlag){
         objId = $api.attr(obj, 'id');
         $api.setStorage(storageKey.scannerStatus,'medScan');
         scanner.start();
+    }else{
+        api.toast({
+            msg: '请先扫描患者腕带或床头卡',
+            duration: 2000,
+            location: 'middle'
+        });
+    }
+
 }
 
 function currentMonth(){
@@ -441,3 +445,15 @@ function currentMonth(){
 function spliceHourMinute(date){
     return date.substr(11,5);
 }
+var changeNextTwoShow = function(obj){
+    var isHide = $api.hasCls($api.next(obj), 'hide');
+    obj = $api.next(obj)
+    if (isHide){
+        $api.removeCls(obj, 'hide');
+        $api.removeCls($api.next(obj), 'hide');
+    } else{
+        $api.addCls(obj, 'hide');
+        $api.addCls($api.next(obj), 'hide');
+    }
+}
+

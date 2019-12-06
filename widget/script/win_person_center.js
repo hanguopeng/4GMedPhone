@@ -23,6 +23,11 @@ apiready = function(){
             $api.html($api.byId("icon"), jiaobiao);
         }
     });
+    api.addEventListener({
+        name:'patientChange'
+    },function(ret){
+        freshHeaderInfo()
+    })
     if(scannerStatus === 'checkDetail'){
         //alert("return方法");
         $api.setStorage(storageKey.scannerStatus, '');

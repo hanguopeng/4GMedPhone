@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="">
+    <list default="true" id="17244c24-0815-480a-9857-619108f7916e" name="Default Changelist" comment="血糖检测单回显问题修复">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/css/medicalAdviceExecution.css" beforeDir="false" afterPath="$PROJECT_DIR$/widget/css/medicalAdviceExecution.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/widget/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/widget/script/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/win_main.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/win_main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/script/win_person_center.js" beforeDir="false" afterPath="$PROJECT_DIR$/widget/script/win_person_center.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,19 +23,43 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html">
+        <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
-              <caret line="142" column="57" selection-start-line="142" selection-start-column="57" selection-end-line="142" selection-end-column="57" />
+            <state relative-caret-position="190">
+              <caret line="10" column="67" lean-forward="true" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js">
+        <entry file="file://$PROJECT_DIR$/widget/css/medicalAdviceExecution.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="141" selection-start-line="141" selection-end-line="141" />
+            <state relative-caret-position="354">
+              <caret line="159" column="30" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="244" column="103" lean-forward="true" selection-start-line="244" selection-start-column="103" selection-end-line="244" selection-end-column="103" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="204" column="42" selection-start-line="204" selection-start-column="42" selection-end-line="204" selection-end-column="42" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -38,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/widget/script/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="61" column="23" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="23" />
+            <state relative-caret-position="290">
+              <caret line="48" column="81" selection-start-line="48" selection-start-column="71" selection-end-line="48" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -56,36 +85,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scanMedical-tmpl</find>
-      <find>scanMedical</find>
-      <find>扫码</find>
-      <find>scanSuccess</find>
-      <find>saveTZ</find>
-      <find>fileId</find>
-      <find>selfKey</find>
-      <find>sendAreaChangedEvent</find>
-      <find>刷新</find>
-      <find>下拉</find>
-      <find>tzylContentContainer</find>
-      <find>searchMedExamine</find>
-      <find>immersive</find>
-      <find>tabFlag</find>
-      <find>tagFlag</find>
       <find>全部患者</find>
       <find>重置</find>
       <find>/med/advice/skin</find>
-      <find>皮试</find>
-      <find>medScan</find>
-      <find>scanPersonComplete</find>
       <find>scannerStatus</find>
       <find>relationContentContainer</find>
       <find>scanMed-tmpl</find>
       <find>check-tpl</find>
-      <find>scanContentContainer</find>
-      <find>borderScanComplete</find>
       <find>scanMed</find>
       <find>medContentContainer</find>
       <find>alert</find>
+      <find>skin</find>
+      <find>back</find>
+      <find>background-color</find>
+      <find>border-red</find>
+      <find>userName</find>
+      <find>medScan</find>
+      <find>请</find>
+      <find>巡视</find>
+      <find>header-tpl</find>
+      <find>scanContentContainer</find>
+      <find>firstFlag</find>
+      <find>checkDetail</find>
+      <find>scanPersonComplete</find>
+      <find>borderScanComplete</find>
+      <find>table-tpl</find>
+      <find>tbody</find>
+      <find>hide</find>
+      <find>皮试</find>
+      <find>skinTestList</find>
+      <find>提醒</find>
     </findStrings>
     <replaceStrings>
       <replace>tabFlag</replace>
@@ -106,7 +135,6 @@
         <option value="$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/CmcScan.java" />
         <option value="$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/login.html" />
         <option value="$PROJECT_DIR$/widget/script/frm_main_content.js" />
-        <option value="$PROJECT_DIR$/widget/script/win_person_center.js" />
         <option value="$PROJECT_DIR$/widget/config.xml" />
         <option value="$USER_HOME$/Documents/WeChat Files/hangp1992/FileStorage/File/2019-05/login(1).html" />
         <option value="$PROJECT_DIR$/widget/html/nurse/win_zkl_wzhzhljld_detail.html" />
@@ -130,18 +158,20 @@
         <option value="$PROJECT_DIR$/widget/script/personCenter.js" />
         <option value="$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html" />
         <option value="$PROJECT_DIR$/widget/script/medicalAdviceExecution.js" />
-        <option value="$PROJECT_DIR$/widget/login.html" />
-        <option value="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" />
-        <option value="$PROJECT_DIR$/widget/script/win_main.js" />
-        <option value="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" />
         <option value="$PROJECT_DIR$/widget/script/config.js" />
         <option value="$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js" />
+        <option value="$PROJECT_DIR$/widget/login.html" />
+        <option value="$PROJECT_DIR$/widget/script/win_main.js" />
+        <option value="$PROJECT_DIR$/widget/script/win_person_center.js" />
+        <option value="$PROJECT_DIR$/widget/html/frm_fuzhugongju.html" />
+        <option value="$PROJECT_DIR$/widget/script/frm_fuzhugongju.js" />
+        <option value="$PROJECT_DIR$/widget/css/medicalAdviceExecution.css" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="534" />
-    <option name="y" value="17" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="975" />
     <option name="height" value="1040" />
   </component>
@@ -173,13 +203,6 @@
               <item name="4GMedPhone" type="b2602c69:ProjectViewProjectNode" />
               <item name="4GMedPhone" type="462c0819:PsiDirectoryNode" />
               <item name="widget" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
-              <item name="nurse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="4GMedPhone" type="b2602c69:ProjectViewProjectNode" />
-              <item name="4GMedPhone" type="462c0819:PsiDirectoryNode" />
-              <item name="widget" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -200,7 +223,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../4Gweb/cmc-web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../wd/wangdiaoApp/wangdiaoApp" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -346,6 +369,9 @@
       <workItem from="1572503354288" duration="12945000" />
       <workItem from="1572594073518" duration="4018000" />
       <workItem from="1574663990554" duration="3038000" />
+      <workItem from="1575442400862" duration="8105000" />
+      <workItem from="1575506682373" duration="16890000" />
+      <workItem from="1575592733960" duration="3925000" />
     </task>
     <task id="LOCAL-00001" summary="没啥">
       <created>1568724123080</created>
@@ -400,7 +426,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115042000" />
+    <option name="totallyTimeSpent" value="143962000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -409,7 +435,7 @@
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info id="DB Browser" order="2" weight="0.32995737" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.26332623" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.22761194" />
       <window_info id="Structure" order="4" weight="0.25" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
@@ -429,7 +455,7 @@
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="13" visible="true" weight="0.32962137" />
+      <window_info anchor="bottom" id="Version Control" order="13" weight="0.32962137" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -443,6 +469,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -495,7 +531,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="血糖检测单回显问题修复" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Desktop/code.js" />
     <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_nurse_gkwzhz.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -624,27 +659,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/CMC/cmc/print/static/test.html" />
-    <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3382">
-          <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4579">
-          <caret line="241" column="27" selection-start-line="241" selection-start-column="27" selection-end-line="241" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/win_main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="41" column="50" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/frm_person_center.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -666,13 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3534">
-          <caret line="186" column="30" selection-start-line="186" selection-start-column="30" selection-end-line="186" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/frm_main_content.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="514">
@@ -690,59 +697,142 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4275">
-          <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14174">
-          <caret line="746" column="35" selection-start-line="746" selection-start-column="35" selection-end-line="746" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/html/frm_fuzhugongju.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
-          <caret line="49" column="81" selection-start-line="49" selection-start-column="62" selection-end-line="49" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/win_main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1881">
-          <caret line="99" column="50" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widget/html/nurse/frm_nurse_xtjclr.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
+        <state relative-caret-position="2698">
           <caret line="142" column="57" selection-start-line="142" selection-start-column="57" selection-end-line="142" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widget/script/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="61" column="23" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widget/script/nurse/frm_xtjcb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="141" selection-start-line="141" selection-end-line="141" />
+        <state relative-caret-position="190">
+          <caret line="145" column="40" lean-forward="true" selection-start-line="145" selection-start-column="40" selection-end-line="145" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/core-scripting.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="255" column="18" selection-start-line="255" selection-start-column="18" selection-end-line="255" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="5364" column="4" selection-start-line="5364" selection-start-column="4" selection-end-line="5364" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms2.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="185" column="18" lean-forward="true" selection-start-line="185" selection-start-column="18" selection-end-line="185" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/scanner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/win_main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="35" column="10" lean-forward="true" selection-start-line="35" selection-start-column="10" selection-end-line="35" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/win_person_center.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="72" column="57" selection-start-line="72" selection-start-column="57" selection-end-line="72" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/win_main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1843">
+          <caret line="97" column="45" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/win_person_center.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/frm_fuzhugongju.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="50" column="57" selection-start-line="50" selection-start-column="57" selection-end-line="50" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_fuzhugongju.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="40" column="40" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/medicalAdviceExecution.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="721" column="11" lean-forward="true" selection-start-line="721" selection-start-column="11" selection-end-line="721" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_yizhuzhixing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="67" lean-forward="true" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/html/frm_tizhengshouji.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="244" column="103" lean-forward="true" selection-start-line="244" selection-start-column="103" selection-end-line="244" selection-end-column="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/frm_tizhengshouji.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="204" column="42" selection-start-line="204" selection-start-column="42" selection-end-line="204" selection-end-column="42" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#li#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/script/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="48" column="81" selection-start-line="48" selection-start-column="71" selection-end-line="48" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widget/css/medicalAdviceExecution.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="159" column="30" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
         </state>
       </provider>
     </entry>

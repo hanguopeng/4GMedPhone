@@ -84,7 +84,7 @@ apiready = function() {
                     });
                     return;
                 }
-                api.openWin({
+                /*api.openWin({
                     name: "win_person_center",
                     bounces: false,
                     slidBackEnabled: false,
@@ -92,7 +92,7 @@ apiready = function() {
                     url: '../html/win_person_center.html',
                     vScrollBarEnabled: true,
                     hScrollBarEnabled: false
-                });
+                });*/
                 //患者腕带扫描成功后发送事件
                 api.sendEvent({
                     name: 'scanPersonComplete',
