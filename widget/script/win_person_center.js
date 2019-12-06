@@ -4,6 +4,17 @@ var scannerStatus = $api.getStorage(storageKey.scannerStatus);
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
+    api.addEventListener({
+        name: 'inOraSuccessEvent'
+    },function(ret, err) {
+        api.toast({
+            msg: '入科成功!',
+            duration: 3000,
+            location: 'middle'
+        });
+        refreshCurrenFrame()
+        return;
+    });
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     if (parseInt(newAdviceCount)>0){
         var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +

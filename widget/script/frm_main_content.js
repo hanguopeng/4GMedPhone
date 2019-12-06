@@ -89,6 +89,38 @@ function addScanSuccessListener() {
         name: "scanSuccess"
     }, function (ret, err) {
         var personIdx = ret.value.index;
+        var allPersons = $api.getStorage(storageKey.persons);
+        var person = allPersons[personIdx];
+        common.get({
+            url: config.patientDetailUrl + person.id + '/' + person.homepageId,
+            isLoading: true,
+            success: function (ret) {
+                if(ret && ret.content){
+                    if (isEmpty(ret.content.inOrganizationTime)){
+                        common.get({
+                            url: config.patientSaveUrl + person.id + '/' + person.homepageId,
+                            isLoading: true,
+                            text: "正在保存...",
+                            success: function (ret) {
+                                api.hideProgress();
+                                api.sendEvent({
+                                    name: 'inOraSuccessEvent',
+                                });
+                            }
+                        });
+                        return;
+                    }
+                }else{
+                    api.toast({
+                        msg:  '未查到指定病人信息',
+                        duration: config.duration,
+                        location: 'bottom'
+                    });
+                    return;
+                }
+            }
+        });
+
         openPersonCenter(personIdx);
     });
 }
