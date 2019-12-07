@@ -766,6 +766,10 @@ function foucsNextInput(InputId){
 
 }
 
+function  closeKeyBoard(InputId) {
+    $api.byId(InputId).blur();
+}
+
 
 
 
