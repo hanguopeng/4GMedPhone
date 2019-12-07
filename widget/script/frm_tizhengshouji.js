@@ -761,14 +761,21 @@ function isEmpty(str) {
 }
 
 function foucsNextInput(InputId){
-
-    $api.byId(InputId).focus();
-
+    var theEvent = event ||window.event;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+    if(code==13||code==9) {
+        $api.byId(InputId).focus();
+    }
 }
 
 function  closeKeyBoard(InputId) {
-    $api.byId(InputId).blur();
+    var theEvent = event ||window.event;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode
+    if(code==13||code==9) {
+        $api.byId(InputId).blur();
+    }
 }
+
 
 
 
