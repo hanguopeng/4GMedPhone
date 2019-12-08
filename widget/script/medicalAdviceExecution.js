@@ -828,7 +828,7 @@ var skinTestExecute = function () {
 
     if (isEmpty(inputTime)){
         api.toast({
-            msg: '请选择时间',
+            msg: '请选择录入时间',
             duration: 2000,
             location: 'middle'
         });
