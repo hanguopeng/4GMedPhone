@@ -760,7 +760,7 @@ function isEmpty(str) {
     }
 }
 
-function foucsNextInput(InputId){
+function focusNextInput(InputId){
     var theEvent = event ||window.event;
     var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
     if(code==13||code==9) {
