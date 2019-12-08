@@ -4,17 +4,6 @@ var scannerStatus = $api.getStorage(storageKey.scannerStatus);
 apiready = function(){
     api.parseTapmode();
     freshHeaderInfo();
-    api.addEventListener({
-        name: 'inOraSuccessEvent'
-    },function(ret, err) {
-        api.toast({
-            msg: '入科成功!',
-            duration: 3000,
-            location: 'middle'
-        });
-        refreshCurrenFrame()
-        return;
-    });
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     if (parseInt(newAdviceCount)>0){
         var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
@@ -49,7 +38,7 @@ apiready = function(){
             var allPersons = $api.getStorage(storageKey.persons);
             $api.setStorage(storageKey.currentPerson, allPersons[ret.value.index]);
             freshHeaderInfo();
-            refreshCurrenFrame();
+            refreshCurrentFrame();
         });
 
         //添加其它页面打开某个frm的监听，需要在 frames 变量中添加对应的值
@@ -77,7 +66,7 @@ apiready = function(){
         var allPersons = $api.getStorage(storageKey.persons);
         $api.setStorage(storageKey.currentPerson, allPersons[ret.value.index]);
         freshHeaderInfo();
-        refreshCurrenFrame();
+        refreshCurrentFrame();
     });
 
     //添加其它页面打开某个frm的监听，需要在 frames 变量中添加对应的值
@@ -232,7 +221,7 @@ function openFrameContent(page){
 }
 
 //根据左右选择病人刷新当前frame页面
-function refreshCurrenFrame(){
+function refreshCurrentFrame(){
   openFrameContent(frames[currentFrame]);
 }
 

@@ -168,6 +168,15 @@ var searchPatientDetail = function (patientId) {
             if(ret && ret.content){
                 var contentTmpl = doT.template($api.text($api.byId('jcxxTmpl')));
                 $api.html($api.byId('jcxxContentContainer'), contentTmpl(ret.content));
+                var inOrganization = $api.getStorage(storageKey.inOrganization);
+                if (!isEmpty(inOrganization)){
+                    api.toast({
+                        msg: '入科成功!',
+                        duration: 3000,
+                        location: 'middle'
+                    });
+                    $api.setStorage(storageKey.inOrganization,null);
+                }
             }
         }
     });

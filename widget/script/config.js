@@ -187,5 +187,7 @@ var storageKey={
     newAdviceCount:"newAdviceCount", // 新开医嘱数量
     cmcScan:"cmcScan",  // 扫描模块
     createFlag:"createFlag", //websocket是否已经连接
-    tourRecordsPersonId: "tourRecordsPersonId"
+    tourRecordsPersonId: "tourRecordsPersonId",
+    inOrganization: "inOrganization"    //入科提示
+
 }

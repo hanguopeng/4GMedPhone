@@ -103,12 +103,12 @@ function addScanSuccessListener() {
                             text: "正在保存...",
                             success: function (ret) {
                                 api.hideProgress();
-                                api.sendEvent({
-                                    name: 'inOraSuccessEvent',
-                                });
+                                $api.setStorage(storageKey.inOrganization,'inOrganization');
+                                openPersonCenter(personIdx);
                             }
                         });
-                        return;
+                    }else{
+                        openPersonCenter(personIdx);
                     }
                 }else{
                     api.toast({
@@ -120,8 +120,6 @@ function addScanSuccessListener() {
                 }
             }
         });
-
-        openPersonCenter(personIdx);
     });
 }
 

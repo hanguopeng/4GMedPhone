@@ -31,25 +31,20 @@ apiready = function() {
                         text: "正在保存...",
                         success: function (ret) {
                             api.hideProgress();
-                            api.alert({
-                                title: '提示',
-                                msg: '入科成功！',
-                            }, function (ret, err) {
-                                var persons = $api.getStorage(storageKey.persons);
-                                //遍历查询
-                                for (var i = 0; i < persons.length; i++) {
-                                    if(persons[i].id==value){
-                                        api.sendEvent({
-                                            name: "scanSuccess",
-                                            extra: {
-                                                index: i
-                                            }
-                                        });
-                                        return;
-                                    }
+                            $api.setStorage(storageKey.inOrganization,'inOrganization');
+                            var persons = $api.getStorage(storageKey.persons);
+                            //遍历查询
+                            for (var i = 0; i < persons.length; i++) {
+                                if(persons[i].id==value){
+                                    api.sendEvent({
+                                        name: "scanSuccess",
+                                        extra: {
+                                            index: i
+                                        }
+                                    });
+                                    return;
                                 }
-
-                            });
+                            }
                         }
                     });
                 }else{
