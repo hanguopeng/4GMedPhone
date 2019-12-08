@@ -176,6 +176,8 @@ var searchPatientDetail = function (patientId) {
                         location: 'middle'
                     });
                     $api.setStorage(storageKey.inOrganization,null);
+                }else{
+                    $api.setStorage(storageKey.inOrganization,null);
                 }
             }
         }
