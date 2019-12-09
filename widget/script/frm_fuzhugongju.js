@@ -65,12 +65,13 @@ apiready = function(){
         var person = $api.getStorage(storageKey.currentPerson);
         var userId = $api.getStorage(storageKey.userId);
         var materialCode = ret.value.materialCode.value
-        //发送请求查询医嘱信息
-        common.get({
-            url:config.scanMedical + materialCode + "/" + person.id + "/" + userId,
-            isLoading:true,
-            success:function(retGet){
-                if(retGet){
+        var eleFlag = $api.byId(materialCode)
+        if(eleFlag===undefined||eleFlag===""||eleFlag===null){
+            common.get({
+                url:config.scanMedical + materialCode + "/" + person.id + "/" + userId,
+                isLoading:true,
+                success:function(retGet){
+                    if(retGet){
                         $api.removeCls($api.byId('table-id'),'hide')
                         var msgInfo;
                         var checkColor;
@@ -102,15 +103,17 @@ apiready = function(){
                             $api.html($api.byId('relationContentContainer'), contentTmpl(ret.content.sonBoList));
                         }*/
 
-                }
+                    }
 
-            },fail:function(retGet,err){
-                api.alert({
-                    title: '提示',
-                    msg: '请扫描正确的试管码',
-                });
-            }
-        });
+                },fail:function(retGet,err){
+                    api.alert({
+                        title: '提示',
+                        msg: '请扫描正确的试管码',
+                    });
+                }
+            });
+        }
+        //发送请求查询医嘱信息
         $api.setStorage(storageKey.scannerStatus,'');
     });
     showScan();
