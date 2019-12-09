@@ -106,7 +106,7 @@
         api.addEventListener({
             name: 'goRoot'
         }, function (ret, err) {
-            window.location.reload();//刷新页面
+            $api.val($api.byId('userPass'), '');
         });
         api.addEventListener({
             name: 'scanEvent'

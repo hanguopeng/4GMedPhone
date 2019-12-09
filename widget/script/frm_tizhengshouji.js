@@ -680,7 +680,18 @@ function nextweek() {
     setDate(addDate(currentFirstDate, 7));
     draw();
 };
-
+function chooseDate(el){
+    api.openPicker({
+        type: 'date',
+        title: '日期'
+    }, function (ret, err) {
+        var startYear = ret.year;
+        var startMonth = ret.month;
+        var startDay = ret.day;
+        var startDate = startYear + "-" + (startMonth < 10 ? "0" + startMonth : startMonth) + "-" + (startDay < 10 ? "0" + startDay : startDay);
+        $api.val(el, startDate);
+    });
+}
 
 // 20190814
 function chooseTime(el) {
