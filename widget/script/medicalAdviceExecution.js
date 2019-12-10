@@ -112,7 +112,7 @@ function downPullRefresh(){
 
         skinTestRecord();
     }else if(tabFlag === "tour-records") {
-        var tourEle = "<label><input class=\"aui-margin-t-5 \" name=\"allPatient\" id=\"allPatient\" type=\"checkbox\" tapmode  onchange=\"tourRecords()\"> 全部患者</label>\n" +
+        var tourEle = "<label><input class=\"aui-margin-t-5 \" name=\"allPatient\" id=\"allPatient\" type=\"checkbox\" tapmode  onchange=\"tourRecords()\" checked> 全部患者</label>\n" +
             "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
             "                <label><input class=\"aui-margin-t-5 \" name=\"allNurse\" id=\"allNurse\" type=\"checkbox\" tapmode   onchange=\"tourRecords()\"> 全部护士</label>"
         $api.html($api.byId('tour-records-header'), "");
