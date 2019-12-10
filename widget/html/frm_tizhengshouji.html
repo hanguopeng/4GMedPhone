@@ -40,7 +40,7 @@
                     测量日期
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="measureDate" type="text" onclick="chooseDate(this)" value="{{=it.currentDate}}">
+                    <input id="measureDate" type="text" onclick="chooseDate(this)" value="{{=it.currentDate}}" onkeydown="focusNextInput('measureTime')">
                 </div>
             </div>
         </li>
@@ -50,7 +50,7 @@
                     测量时间
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="measureTime" type="text"  onclick="chooseTime(this)" value="{{=it.currentTime}}">
+                    <input id="measureTime" type="text"  onclick="chooseTime(this)" value="{{=it.currentTime}}" onkeydown="focusNextInput('temperature_value')">
                 </div>
             </div>
         </li>
@@ -61,7 +61,6 @@
                 </div>
                 <div class="aui-list-item-input">
                     <select id="measureTimeSection" class="aui-pull-left" onchange="changeMeasureTime(this)" style="width:47%">
-                        <option value="" selected></option>
                         <option id="measureTimeSection2" value="2">2
                         </option>
                         <option id="measureTimeSection6" value="6">6

@@ -14,7 +14,7 @@ var UIInput;
 apiready = function () {
     UIInput = api.require('UIInput');
     api.parseTapmode();
-    // 获取病人field_id
+    获取病人field_id
     common.post({
         url: config.getFileId,
         isLoading: false,
@@ -35,7 +35,6 @@ apiready = function () {
             }
         }
     });
-
 
     //定义点击tab
     var tab = new auiTab({
@@ -108,6 +107,22 @@ function saveTZ() {
     // 是否允许保存
     var measureDateValue = $("#measureDate").val()
     measureDate = measureDateValue
+    if (!measureDate ) {
+        api.toast({
+            msg: '请输入测量日期',
+            duration: config.duration,
+            location: 'bottom'
+        });
+        return;
+    }
+    if (!testDate(measureDate)) {
+        api.toast({
+            msg: '测量日期格式不正确',
+            duration: config.duration,
+            location: 'bottom'
+        });
+        return;
+    }
     var measureTimeValue = $("#measureTime").val();
     measureTime = measureTimeValue
     var measureTimeSectionValue = $("#measureTimeSection").val();
@@ -362,6 +377,15 @@ function openSelfDefiningListPage(obj) {
     });
 }
 
+function testDate(date) {
+    var regu = /^(\d{4})-(\d{2})-(\d{2})$/;
+    var re = new RegExp(regu);
+    if (re.test(date)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 //正则判断  小时:分钟 格式
 function testTime(time) {
     var regu = /^([0-1]{1}\d|2[0-3]):([0-5]\d)$/;
