@@ -201,7 +201,7 @@ var changeTab = function (obj) {
         currentTab = 1
         // 切换tab时将所有选中条件都清空
         adviceSendsReset()
-        var el =" <label>" +
+        var el =
             "<label><input class=\"aui-margin-t-5 \" name=\"inUse1\" id=\"inUse1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 在用医嘱</label>\n" +
             "<label id=\"nonArrivalLabel1\" class=\"hide\"><input class=\"aui-margin-t-5 \" name=\"nonArrival1\" id=\"nonArrival1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\" checked> 未到终止时间</label>\n" +
             "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice1\" id=\"longTermAdvice1\" type=\"checkbox\" tapmode  onchange=\"adviceRecordsForAdviceSends()\"> 长嘱</label>\n" +
@@ -582,7 +582,6 @@ var tourRecords = function () {
 };
 
 var paddingInputTourRecords = function () {
-
     var params = {};
     params.queryCode = "inspectionType";
     params.addAllFlag = false;

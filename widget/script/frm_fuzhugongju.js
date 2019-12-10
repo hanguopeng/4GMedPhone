@@ -9,7 +9,6 @@ apiready = function(){
     api.parseTapmode();
     scanner = api.require('cmcScan');
     calendar = api.require('UICalendar');
-
     var tab = new auiTab({
         element:document.getElementById("tab"),
         index: 1,
@@ -30,15 +29,6 @@ apiready = function(){
             //重要事件提醒
             firstFlag = false;
             showCalendar();
-        }else if(ret.index==3){
-            $api.setStorage(storageKey.scannerStatus,'checkDetail');
-            $api.html($api.byId('content'), '');
-            $api.html($api.byId('scanContentContainer'), '');
-            $api.removeCls($api.byId('scanContentContainer'),'borderScanComplete');
-            //试管核对
-            //关闭日历--根据日历open方法中的id关闭
-            calendar.close({id:clendarId});
-            showScan();
         }
     });
     api.addEventListener({
@@ -111,6 +101,12 @@ apiready = function(){
                         msg: '请扫描正确的试管码',
                     });
                 }
+            });
+        }else{
+            api.toast({
+                msg: '该条码已经扫描过啦',
+                duration: 2000,
+                location: 'middle'
             });
         }
         //发送请求查询医嘱信息

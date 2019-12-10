@@ -41,13 +41,6 @@ apiready = function(){
             refreshCurrentFrame();
         });
 
-        //添加其它页面打开某个frm的监听，需要在 frames 变量中添加对应的值
-        api.addEventListener({
-            name: eventName.openFrame
-        }, function(ret, err){
-            openFrameContent(ret.value.name);
-        });
-
         //点击返回键关闭当前window窗口
         api.addEventListener({
             name: 'keyback'
@@ -121,6 +114,9 @@ function closeWin() {
 }
 
 function openFrameContent(page){
+    api.closeFrame({
+        name: 'frm_fuzhugongju'
+    });
     if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
         var person = $api.getStorage(storageKey.currentPerson);
         common.get({
