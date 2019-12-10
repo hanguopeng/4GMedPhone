@@ -100,6 +100,8 @@ apiready = function() {
                         materialCode:ret.value,
                     }
                 });
+                console.log(JSON.stringify(ret))
+                console.log('win_main')
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
@@ -127,9 +129,9 @@ apiready = function() {
             });
         }
     });
-    if("true"!=socketFlag){
+    /*if("true"!=socketFlag){
         nurerId();
-    }
+    }*/
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     if (parseInt(newAdviceCount)>0){
         var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
@@ -285,7 +287,7 @@ function backSystem(){
         name: 'win_system_grid'
     });
 }
-var tokenRet = function(personId){
+/*var tokenRet = function(personId){
     common.get({
         url: localServer + "/med/patient/getUserToken/"+personId,
         isLoading: false,
@@ -294,8 +296,8 @@ var tokenRet = function(personId){
             createWs(wsdata);
         }
     });
-}
-
+}*/
+/*
 var nurerId = function(){
 
     common.get({
@@ -308,8 +310,8 @@ var nurerId = function(){
         }
     });
 
-}
-function createWs(wsdata) {
+}*/
+/*function createWs(wsdata) {
     var WsUrl = ws + encodeURIComponent(wsdata);
 
     wsClient = new WebSocket(WsUrl);
@@ -330,8 +332,8 @@ function createWs(wsdata) {
 
     $api.setStorage("createFlag","true");
 
-}
-function  onmessage(event) {
+}*/
+/*function  onmessage(event) {
     var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
     newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
     $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
@@ -344,7 +346,7 @@ function onOpen(){
 }
 function send(){
 
-}
+}*/
 
 
 /**
