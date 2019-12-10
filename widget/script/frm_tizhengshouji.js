@@ -14,7 +14,7 @@ var UIInput;
 apiready = function () {
     UIInput = api.require('UIInput');
     api.parseTapmode();
-    获取病人field_id
+    //获取病人field_id
     common.post({
         url: config.getFileId,
         isLoading: false,
