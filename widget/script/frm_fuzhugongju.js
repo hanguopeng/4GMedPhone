@@ -377,10 +377,6 @@ function showScan(){
     $api.html($api.byId('scanContentContainer'), tableTmpl({}));
     api.parseTapmode();
 }
-function showScanMedical(){
-    var contentTmpl = doT.template($api.text($api.byId('medical-tpl')));
-    $api.html($api.byid('content'),contentTmpl({}));
-}
 
 function scan(obj){
     $api.setStorage(storageKey.scannerStatus,'checkDetail');

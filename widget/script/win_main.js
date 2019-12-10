@@ -100,8 +100,6 @@ apiready = function() {
                         materialCode:ret.value,
                     }
                 });
-                console.log(JSON.stringify(ret))
-                console.log('win_main')
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
