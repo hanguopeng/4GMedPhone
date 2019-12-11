@@ -280,7 +280,7 @@
             {{?item.sonBoList}}
             {{for(var j=0;j<item.sonBoList.length;j++) {
             }}
-            <div>
+            <div  style="color: red;">
                 <span>医嘱内容{{=(j+1)}}：</span>
                 {{?item.sonBoList[j].dosage}}
                 <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
@@ -771,7 +771,7 @@
             {{?item.sonBoList}}
             {{for(var j=0;j<item.sonBoList.length;j++) {
             }}
-            <div>
+            <div  style="color: red;">
                 <span>医嘱内容{{=(j+1)}}：</span>
                 {{?item.sonBoList[j].dosage}}
                 <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>

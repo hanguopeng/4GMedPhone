@@ -164,6 +164,9 @@ function saveTZ() {
     var painIntensity_value = $("#painIntensity_value").val();
     // 大便次数
     var shitTime_value = $("#shitTime_value").val();
+    if(shitTime_value ==='#'){
+        shitTime_value = '☆'
+    }
     // 小便次数
     var urineTime_value = $("#urineTime_value").val();
     // 尿量
