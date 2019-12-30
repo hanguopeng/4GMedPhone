@@ -14,6 +14,7 @@ var UIInput;
 apiready = function () {
     UIInput = api.require('UIInput');
     api.parseTapmode();
+    $api.setStorage(storageKey.scannerStatus,'collectionOfSign')
     //获取病人field_id
     common.post({
         url: config.getFileId,

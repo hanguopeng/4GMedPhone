@@ -100,6 +100,29 @@ apiready = function() {
                         materialCode:ret.value,
                     }
                 });
+            }else if(scannerStatus=== 'collectionOfSign'){
+                var personsArr = $api.getStorage(storageKey.persons);
+                //遍历查询是否是此疗区患者
+                var flag = true;
+                for (var l = 0; l < personsArr.length; l++) {
+                    if(personsArr[l].id==value){
+                        $api.setStorage(storageKey.currentPerson, personsArr[l]);
+                        flag = false;
+                        break;
+                    }
+                }
+                //如果不是弹出提醒
+                if(flag){
+                    api.alert({
+                        title: '提示',
+                        msg: '系统未管理此病人，请刷新后重试',
+                    });
+                    return;
+                }else{
+                    api.sendEvent({
+                        name: 'patientChange'
+                    });
+                }
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询
