@@ -54,6 +54,13 @@ apiready = function () {
         //遍历查询
         for (var i = 0; i < persons.length; i++) {
             if(persons[i].id == tourRecordsPersonId){
+                if(persons[i].inOrganizationTime==""||persons[i].inOrganizationTime==null||persons[i].inOrganizationTime==undefined){
+                    api.alert({
+                        title:'提示',
+                        msg:'病人未入科，请入科后尝试'
+                    })
+                    return
+                }
                 status = false
                 tourRecordsPerson = persons[i]
                 // 如果病人对上了，直接触发保存动作
@@ -850,7 +857,8 @@ var skinTestExecute = function () {
             implementNurseName: $api.getStorage(storageKey.userName),
             medAdviceId: skinTestAdviceId,
             skinResult:skinTestResult,
-            inputTime:inputTime
+            inputTime:inputTime,
+            skinMemo:''
         }),
         dataType: "json",
         isLoading: true,
