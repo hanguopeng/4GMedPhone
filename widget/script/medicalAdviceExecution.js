@@ -51,20 +51,31 @@ apiready = function () {
         var tourRecordsPersonId = $api.getStorage(storageKey.tourRecordsPersonId);
         var persons = $api.getStorage(storageKey.persons);
         var status = true
+        var inOraFlag = true;
         //遍历查询
         for (var i = 0; i < persons.length; i++) {
             if(persons[i].id == tourRecordsPersonId){
-                if(persons[i].inOrganizationTime==""||persons[i].inOrganizationTime==null||persons[i].inOrganizationTime==undefined){
-                    api.alert({
-                        title:'提示',
-                        msg:'病人未入科，请入科后尝试'
-                    })
-                    return
-                }
+                var homeId = persons[i].homepageId
+                var personInfo = persons[i]
+                common.get({
+                    url: config.patientDetailUrl + tourRecordsPersonId + '/' + homeId,
+                    isLoading: true,
+                    success: function (ret) {
+                        if (ret && ret.content) {
+                            if (ret.content.inOrganizationTime == null || ret.content.inOrganizationTime == "") {
+                                api.toast({
+                                    title: '提示',
+                                    msg: '病人未入科，请入科后尝试'
+                                })
+                                return;
+                            }
+                                tourRecordsPerson = personInfo;
+                                tourRecordsExecute('scan');
+                        }
+                    }
+                })
                 status = false
-                tourRecordsPerson = persons[i]
                 // 如果病人对上了，直接触发保存动作
-                tourRecordsExecute('scan');
                 // clickBottomTab('tour-records','tourRecords-result');
                 // paddingInputTourRecords()
             }
