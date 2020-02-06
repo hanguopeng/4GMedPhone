@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content=
+    "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>新医嘱提醒</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<body style="background-color:#F0F0F0">
+<style>
+</style>
+  <header id="searchHeader" class="aui-bar aui-bar-nav" style="position:fixed;background-color:#006dba !important;">
+    <div class="aui-title" style="left: 3rem">新医嘱提醒列表</div>
+    <div id="header-left" class="aui-pull-right" tapmode="active" onclick="closeCurrentFrame()">
+      <i class="aui-iconfont aui-icon-close" ></i>
+    </div>
+  </header>
+<div class="tabBody" style="margin-top: 2.3rem">
+    <div class="itemContainer" id="newsWarnContentContainer">
+    </div>
+</div>
+</body>
+<script id="newsWarnList" type="text/template">
+    <table class=" aui-font-size-14">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>住院号</th>
+            <th>床号</th>
+            <th style="width: 40%">状态</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{?it}}
+        {{for(var i=0;i<it.length;i++) {
+           var item = it[i];
+        }}
+        <tr onclick="redirectToAdviceList(this,'{{=item.medPatientId}}','{{=item.patientName}}')">
+            <td>{{=item.patientName||''}}</td>
+            <td>{{=item.inNO||''}}</td>
+            <td>{{=item.bedNo||''}}</td>
+            <td>{{=item.msgContent||''}}</td>
+        </tr>
+        {{ } }}
+        {{?}}
+        </tbody>
+    </table>
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/aui-tab.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/news_warn_for_patient.js"></script>
+</html>

@@ -1,27 +1,41 @@
 frames=["frm_person_center","frm_tizhengshouji","frm_yizhuzhixing","frm_huliwendang","frm_fuzhugongju","nurse/frm_nurse_hljld","nurse/frm_nurse_zyybtys","nurse/frm_nurse_dnzqtzs","nurse/frm_nurse_gczqtzs","nurse/frm_nurse_wcjyzqtzs","nurse/bloodGlucose"];
 currentFrame = 0;
 var scannerStatus = $api.getStorage(storageKey.scannerStatus);
-apiready = function(){
+var redirectToAdviceList = false
+apiready = function () {
+    redirectToAdviceList = api.pageParam.redirectToAdviceList
     api.parseTapmode();
-    freshHeaderInfo();
-    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
-    if (parseInt(newAdviceCount)>0){
-        var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
-            "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-        $api.html($api.byId("icon"), jiaobiao);
+    if (redirectToAdviceList === true){
+        openFrameContent('frm_yizhuzhixing')
     }
+    freshHeaderInfo();
+    // var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    // if (parseInt(newAdviceCount)>0){
+    //     var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
+    //         "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+    //     $api.html($api.byId("icon"), jiaobiao);
+    // }
     api.addEventListener({
-        name: 'changeNewAdviceNumber'
+        name: 'changeNewsColorRed'
     }, function(ret,err){
-        var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
-        if (parseInt(newAdviceCount1)>0){
-            var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
-                "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-            $api.html($api.byId("icon"), jiaobiao);
-        }else{
-            var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
-            $api.html($api.byId("icon"), jiaobiao);
-        }
+        $api.removeCls($api.byId('newsRemind'),'textWhite');
+        $api.addCls($api.byId("newsRemind"), 'textRed');
+        // var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
+        // if (parseInt(newAdviceCount1)>0){
+        //     var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
+        //         "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+        //     $api.html($api.byId("icon"), jiaobiao);
+        // }else{
+        //     var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
+        //     $api.html($api.byId("icon"), jiaobiao);
+        // }
+    });
+    // 打开病人新医嘱提醒列表，红色的图标变为白色
+    api.addEventListener({
+        name: 'changeNewsColorWhite'
+    }, function(ret,err){
+        $api.removeCls($api.byId("newsRemind"), 'textRed');
+        $api.addCls($api.byId('newsRemind'),'textWhite');
     });
     api.addEventListener({
         name:'patientChange'
@@ -88,6 +102,12 @@ function freshHeaderInfo(){
 
   var headerInfo = doT.template($api.text($api.byId('header-tpl')));
   $api.html($api.byId('header'), headerInfo(personData));
+  // newsWarnColor是红色，那么本层也要变为红色
+  var newsWarnColor = $api.getStorage(storageKey.newsWarnColor);
+  if (newsWarnColor==='red') {
+      $api.removeCls($api.byId('newsRemind'),'textWhite');
+      $api.addCls($api.byId("newsRemind"), 'textRed');
+  }
 }
 
 function openMainFrame() {
@@ -155,7 +175,10 @@ function openFrameContent(page){
                             },
                             bounces: false,
                             reload: true,
-                            vScrollBarEnabled: false
+                            vScrollBarEnabled: false,
+                            pageParam: {
+                                redirectToAdviceList: redirectToAdviceList
+                            }
                         });
 
                         for (var i = 0; i < frames.length; i++){

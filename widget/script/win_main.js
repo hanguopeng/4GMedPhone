@@ -150,28 +150,29 @@ apiready = function() {
             });
         }
     });
-    /*if("true"!=socketFlag){
+    if("true"!=socketFlag){
         nurerId();
-    }*/
-    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
-    if (parseInt(newAdviceCount)>0){
-        var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
-            "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-        $api.html($api.byId("caidanlan"), jiaobiao);
     }
-
+    // 原新医嘱提醒数量
+    // var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    // if (parseInt(newAdviceCount)>0){
+    //     var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount+"</div>\n" +
+    //         "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
+    //     $api.html($api.byId("caidanlan"), jiaobiao);
+    // }
+    // 有新医嘱下达，响铃并将白色的图标变为红色
     api.addEventListener({
-        name: 'changeNewAdviceNumber'
+        name: 'changeNewsColorRed'
     }, function(ret,err){
-        var newAdviceCount1= $api.getStorage(storageKey.newAdviceCount);
-        if (parseInt(newAdviceCount1)>0){
-            var jiaobiao = "<div class='jiaobiao' id='sjb'>"+newAdviceCount1+"</div>\n" +
-                "        <span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;' id='hongdian'></span>";
-            $api.html($api.byId("caidanlan"), jiaobiao);
-        }else{
-            var jiaobiao = "<span class='aui-iconfont aui-icon-menu' style='color:white;font-size:1rem;'></span>";
-            $api.html($api.byId("caidanlan"), jiaobiao);
-        }
+        $api.removeCls($api.byId('newsRemind'),'textWhite');
+        $api.addCls($api.byId("newsRemind"), 'textRed');
+    });
+    // 打开病人新医嘱提醒列表，红色的图标变为白色
+    api.addEventListener({
+        name: 'changeNewsColorWhite'
+    }, function(ret,err){
+        $api.removeCls($api.byId("newsRemind"), 'textRed');
+        $api.addCls($api.byId('newsRemind'),'textWhite');
     });
 
     ExitApp();
@@ -243,11 +244,11 @@ function getOrganizationInfo() {
                 for (var i = 0; i < ret.content.length; i++) {
                     if (i == 0) {
                         area_name = ret.content[i].name
-                        $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '" selected="selected">' + ret.content[i].name + '</option>');
+                        areaCode = ret.content[i].code
+                        $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '" id="' + ret.content[i].code + '" selected="selected">' + ret.content[i].name + '</option>');
                     } else {
-                        $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '">' + ret.content[i].name + '</option>');
+                        $api.append($api.byId('areaSel'), '<option value="' + ret.content[i].id + '" id="' + ret.content[i].code + '" >' + ret.content[i].name + '</option>');
                     }
-
                 }
                 openMainFrame();
             } else {
@@ -262,6 +263,7 @@ function getOrganizationInfo() {
 function openMainFrame() {
     var areaId = $api.byId('areaSel').value;
     $api.setStorage(storageKey.areaId, areaId);
+    $api.setStorage(storageKey.areaCode, areaCode);
     $api.setStorage(storageKey.areaName, area_name);
 
     var header = document.querySelector('#header');
@@ -276,7 +278,7 @@ function openMainFrame() {
             h: api.winHeight-pos.h //-footPos.h
         },
         pageParam: {
-            areaId: $api.byId('areaSel').value
+            areaId: areaId
         },
         bounces: true,
         reload: true,
@@ -291,8 +293,9 @@ function sendAreaChangedEvent() {
     var areaId = $api.byId('areaSel').value;
     var index = $api.byId('areaSel').selectedIndex; // 选中索引
     var areaName = $api.byId('areaSel').options[index].text;
-
+    var areaCode = $api.byId('areaSel').options[index].id;
     $api.setStorage(storageKey.areaId, areaId);
+    $api.setStorage(storageKey.areaCode, areaCode);
     $api.setStorage(storageKey.areaName, areaName);
     api.sendEvent({
         name: eventName.InpatientAreaChanged,
@@ -308,7 +311,7 @@ function backSystem(){
         name: 'win_system_grid'
     });
 }
-/*var tokenRet = function(personId){
+var tokenRet = function(personId){
     common.get({
         url: localServer + "/med/patient/getUserToken/"+personId,
         isLoading: false,
@@ -317,8 +320,7 @@ function backSystem(){
             createWs(wsdata);
         }
     });
-}*/
-/*
+}
 var nurerId = function(){
 
     common.get({
@@ -331,8 +333,8 @@ var nurerId = function(){
         }
     });
 
-}*/
-/*function createWs(wsdata) {
+}
+function createWs(wsdata) {
     var WsUrl = ws + encodeURIComponent(wsdata);
 
     wsClient = new WebSocket(WsUrl);
@@ -353,21 +355,26 @@ var nurerId = function(){
 
     $api.setStorage("createFlag","true");
 
-}*/
-/*function  onmessage(event) {
-    var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
-    newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
-    $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
+}
+function  onmessage(event) {
     api.sendEvent({
-        name: 'changeNewAdviceNumber'
-    });
+            name: 'changeNewsColorRed'
+        });
+    $api.setStorage(storageKey.newsWarnColor, "red");
+    // 原新医嘱提醒数量方法
+    // var newAdviceCount= $api.getStorage(storageKey.newAdviceCount);
+    // newAdviceCount = parseInt(newAdviceCount) + parseInt(JSON.parse(event.data).notice)
+    // $api.setStorage(storageKey.newAdviceCount, newAdviceCount);
+    // api.sendEvent({
+    //     name: 'changeNewAdviceNumber'
+    // });
 
 }
 function onOpen(){
 }
-function send(){
-
-}*/
+// function send(){
+//
+// }
 
 
 /**
