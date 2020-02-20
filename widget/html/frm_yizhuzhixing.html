@@ -14,9 +14,8 @@
 <div class="bodyContainer">
     <div class="aui-tab" id="tab">
         <div class="aui-tab-item" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录</div>
-        <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
         <div class="aui-tab-item" id="tab-advice-sends" data-to="advice-sends" onclick="changeTab(this);">医嘱发送</div>
-        <div class="aui-tab-item" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
+        <div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>
         <div class="aui-tab-item" id="tab-skin-test" data-to="skin-test" onclick="changeTab(this);">皮试结果</div>
     </div>
     <div class="tabBody">
@@ -33,84 +32,6 @@
             </div>
             <div class="bottomContainer aui-font-size-14">
                 <div id="adviceRecords-selector" class="bottomBody aui-padded-15" style="bottom: 0rem;padding: 0.75rem 0">
-                </div>
-            </div>
-        </div>
-        <!--医嘱执行 -->
-        <div id="advice-execute" class="tab-body-item aui-padded-t-10 aui-font-size-14  ">
-            <div class="aui-padded-l-15">
-                <label><input class="aui-margin-t-5 " id="yesterday" type="checkbox" onclick="adviceExecute()"> 昨天</label>
-                &nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="today" type="checkbox" onclick="adviceExecute()"> 今天</label>
-                &nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="tomorrow" type="checkbox" onclick="adviceExecute()"> 明天</label>
-                &nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " id="allDay" type="checkbox" onclick="adviceExecute()"> 全部</label>
-                &nbsp;&nbsp;
-                <div class="adviceExecuteDropdown">
-                     <select id="adviceExecuteItems">
-                        <option value="0">输液</option>
-                        <option value="1">外出</option>
-                        <option value="2">请假</option>
-                        <option value="3">稳定</option>
-                        <option value="4">休息中</option>
-                        <option value="5">进食</option>
-                        <option value="6">手术</option>
-                        <option value="7">检查中</option>
-                        <option value="8">其它</option>
-                     </select>
-                </div>
-            </div>
-            <div class="itemContainer" id="adviceExecuteContentContainer">
-            </div>
-            <div class="bottomContainer">
-                <div id="adviceExecute-selector" class="bottomBody aui-padded-15">
-                    <div class="flex aui-margin-t-5" >
-                        <div class="">
-                            <span class="key">医嘱期效：</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="11"></span>
-                        </div>
-                        <div class="">
-                            <span class="key">医嘱用法：</span>
-                            <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="22"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="">
-                            <span class="key">医嘱执行科室：</span>
-                            <span class="value"><input class="adviceInput" type="text" onclick="picker(this)" placeholder="请输入内容" id="33"></span>
-                        </div>
-                        <div class="">
-                            <span class="key">执行状态：</span>
-                            <span class="value"><input class="adviceInput" type="text"  placeholder="请输入内容" id="44"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="">
-                            <span class="key">要求执行时间：</span>
-                            <span class="value"><input class="adviceInputLong " type="text"  onclick="pickerWithTime(this)" placeholder="请输入内容" id="55"></span>
-                            <span>&nbsp;至&nbsp;</span>
-                            <span class="value"><input class="adviceInputLong " type="text"  onclick="pickerWithTime(this)" placeholder="请输入内容" id="66"></span>
-                        </div>
-                    </div>
-                    <div class="flex aui-margin-t-5">
-                        <div class="">
-                            <span class="key">医嘱发送时间: </span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="77"></span>
-                            <span>至</span>
-                            <span class="value"><input class="adviceInputLong" type="text" onclick="pickerWithTime(this)" placeholder="请输入内容" id="88"></span>
-                        </div>
-                    </div>
-                    <div class="aui-text-center aui-margin-t-15">
-                        <div class="btn aui-btn aui-btn-success" onclick="adviceRecords();">确定</div>
-                    </div>
-                </div>
-                <div id="adviceExecute-execute" class="bottomBody aui-padded-15 active">
-
-                </div>
-                <div class="bottomBtn aui-font-size-16 flex">
-                    <div class="btn flex-item border-right" onclick="clickBottomTab('advice-execute','adviceExecute-selector');">筛选</div>
-                    <div class="btn flex-item" onclick="clickBottomTab('advice-execute','adviceExecute-execute');">执行</div>
                 </div>
             </div>
         </div>
@@ -170,20 +91,18 @@
                 <!--</div>-->
             <!--</div>-->
         </div>
-        <!--巡视记录-->
-        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
-            <div class="aui-padded-l-15" id="tour-records-header">
-                <label><input class="aui-margin-t-5 " name="allPatient" id="allPatient" type="checkbox" tapmode  onchange="tourRecords()" checked> 全部患者</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <label><input class="aui-margin-t-5 " name="allNurse" id="allNurse" type="checkbox" tapmode   onchange="tourRecords()"> 全部护士</label>
+        <!--医嘱执行 -->
+        <div id="advice-execute" class="tab-body-item aui-padded-t-10 aui-font-size-14  ">
+            <div class="aui-padded-l-15"  id="advice-execute-header">
+                <label><input class="aui-margin-t-5 " name="longTermAdvice2" id="longTermAdvice2" type="checkbox" tapmode  onchange="adviceExecute()"> 长嘱</label>
+                <label><input class="aui-margin-t-5 " name="temporaryAdvice2" id="temporaryAdvice2" type="checkbox" tapmode  onchange="adviceExecute()"> 临嘱</label>
+                <div id="noDo" class="aui-btn show" style="background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px" onclick="adviceExecute('change')">执行列表</div>
+                <div id="done" class="aui-btn hide" style="background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px" onclick="adviceExecute('change')">待执行</div>
             </div>
-            <div class="itemContainer" id="tourRecordsContentContainer">
+            <div class="itemContainer" id="adviceExecuteContentContainer">
             </div>
-            <div class="bottomContainer">
-                <div id="tourRecords-result" class="bottomBody aui-padded-15">
-                </div>
-                <div>
-                    <a href="#" class="add-btn" tapmode onclick="clickBottomTab('tour-records','tourRecords-result');"></a>
+            <div class="bottomContainer aui-font-size-14">
+                <div id="adviceExecute-dialog" class="bottomBody aui-padded-15" style="bottom: 0rem;padding: 0.75rem 0">
                 </div>
             </div>
         </div>
@@ -410,320 +329,6 @@
         <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceRecordsReset();">重置</div>
     </div>
 </script>
-<!--医嘱执行-->
-<script id="adviceExecuteTmplList" type="text/template">
-    {{
-    for(var i=0;i<6;i++) {
-    }}
-
-            <div class="item border-green aui-font-size-14" onclick="changeAdviceExecuteShow(this)">
-                <div class="leftTop">
-                    <div>输液</div>
-                </div>
-                <div class="rowItem">
-                    <span>要求执行时间：</span>
-                    <span>2019-05-23 13:13:43</span>
-                </div>
-                <div class="rowItem">
-                    <span>医嘱内容：</span>
-                    <span>XXXXXXX</span>
-                </div>
-                <div class="rowItem">
-                    <span>发送医嘱：</span>
-                    <span>李红XXXXXXX</span>
-                </div>
-                <div class="rowItem">
-                    <span>托嘱内容：</span>
-                    <span>2019-05-23 13:13:43</span>
-                </div>
-                <div class="rowItem">
-                    <span>开医嘱医生：</span>
-                    <span>张三</span>
-                </div>
-            </div>
-            <div id="adviceExecuteDetail" class="detail hide" onclick="closeAdviceExecuteDetail(this)">
-                <div>---------医嘱发送记录---------</div>
-                <div>
-                    <span>发送时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>单据号：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>收费项目：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>发送次数：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>计费状态：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行科室：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行人：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>首次时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>末次时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>发送人：</span>
-                    <span></span>
-                </div>
-                <div>---------医嘱内容---------</div>
-                <div>
-                    <span>医嘱内容：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>生效时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>用法：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>医生托嘱：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行科室：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>开嘱医生：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>开嘱时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>总量：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>单量：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>天数：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>频率：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>执行性质：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>上次执行：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>状态：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>校对护士：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>校对时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>停嘱医生：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>停嘱时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>确认停嘱时间：</span>
-                    <span></span>
-                </div>
-                <div>
-                    <span>基本药物：</span>
-                    <span></span>
-                </div>
-            </div>
-            {{ } }}
-</script>
-<!--医嘱发送,暂时不用了-->
-<script id="adviceSendsTmplListOld" type="text/template">
-    {{?it}}
-    {{
-    for(var i=0;i<it.length;i++) {
-    var item = it[i];
-    }}
-    <div class="adviceSendsTmplList aui-font-size-14" onclick="changeAdviceShow(this)">
-        {{?item.fieldENName}}
-        <div class="left" style="background-color:{{=item.fieldENName}};border: 1px double {{=item.fieldENName}}" >{{=item.priorityName}}</div>
-        {{??}}
-        <div class="left background-white" >{{=item.priorityName}}</div>
-        {{?}}
-        <div class="right" >
-            <div>
-                <span>医嘱内容：</span>
-                <span>{{=item.name||''}}</span>
-            </div>
-            <div>
-                <span>开嘱医生：</span>
-                <span>{{=item.doctorName||''}}</span>
-            </div>
-            <div>
-                <span>发送时间：</span>
-                <span>{{=item.sendTime||''}}</span>
-            </div>
-            <div>
-                <span>首次时间：</span>
-                <span>{{=item.firstTime||''}}</span>
-            </div>
-            <div>
-                <span>末次时间：</span>
-                <span>{{=item.lastTime||''}}</span>
-            </div>
-        </div>
-    </div>
-    <div class="detail hide"  onclick="changeThisShow(this)">
-
-        {{?item.costList!==null}}
-        {{for(var j=0;j<item.costList.length;j++) { }}
-        <div> -------------收费项{{=(j+1)}}：--------------</div>
-        <div>
-            <span >单据号：{{=item.costList[j].costListId||''}}</span>
-            <span style="padding-left: 5rem">计费状态：{{=item.costList[j].sendBillStatus||''}}</span>
-        </div>
-        <div>
-            <span>收费项目：</span>
-            <span>{{=item.costList[j].costListType||''}}</span>
-        </div>
-        <div>
-            <span>发送次数：</span>
-            <span>{{=item.costList[j].sendNum||''}}</span>
-        </div>
-        <div>
-            <span>发送医嘱：</span>
-            <span>{{=item.costList[j].sendName||''}}</span>
-        </div>
-        <div>
-            <span>执行科室：{{=item.costList[j].executeDepartment||''}}</span>
-            <span style="padding-left: 5rem">执行状态：{{=item.costList[j].executeStatus||''}}</span>
-        </div>
-        <div>
-            <span>执行人：{{=item.costList[j].executor||''}}</span>
-            <span style="padding-left: 4rem">执行时间：{{=item.costList[j].executeTime||''}}</span>
-        </div>
-        {{}}}
-        {{?}}
-        <div>--------------医嘱内容--------------</div>
-        <div>
-            <span>生效时间：</span>
-            <span>{{=item.adviceStart||''}}</span>
-        </div>
-        <div>
-            <span>用法：</span>
-            <span>{{=item.usageName||''}}</span>
-        </div>
-        <div>
-            <span>医生托嘱：</span>
-            <span>{{=item.entrustment||''}}</span>
-        </div>
-        <div>
-            <span>执行科室：</span>
-            <span>{{=item.acceptOrgName||''}}</span>
-        </div>
-        <div>
-            <span>开嘱时间：</span>
-            <span>{{=item.foundTime||''}}</span>
-        </div>
-        <div>
-            <span>总量：</span>
-            <span>{{=item.foundTime||''}}</span>
-        </div>
-        <div>
-            <span>单量：</span>
-            <span>{{=item.dosage||''}}</span>
-        </div>
-        <div>
-            <span>天数：</span>
-            <span>{{=item.dateNum||''}}</span>
-        </div>
-        <div>
-            <span>频率：</span>
-            <span>{{=item.frequencyName||''}}</span>
-        </div>
-        <div>
-            <span>执行时间：</span>
-            <span>{{=item.executionTime||''}}</span>
-        </div>
-        <div>
-            <span>执行性质：</span>
-            <span>{{=item.executiveNature||''}}</span>
-        </div>
-        <div>
-            <span>上次执行：</span>
-            <span>{{=item.lastExcecutiveTime||''}}</span>
-        </div>
-        <div>
-            <span>状态：</span>
-            <span>{{=item.statusName||''}}</span>
-        </div>
-        <div>
-            <span>校对护士：</span>
-            <span>{{=item.nurseName||''}}</span>
-        </div>
-        <div>
-            <span>校对时间：</span>
-            <span>{{=item.checkTime||''}}</span>
-        </div>
-        <div>
-            <span>停嘱医生：</span>
-            <span>{{=item.stopDocName||''}}</span>
-        </div>
-        <div>
-            <span>停嘱时间：</span>
-            <span>{{=item.stopTime||''}}</span>
-        </div>
-        <div>
-            <span>确认停嘱时间：</span>
-            <span>{{=item.stopConfirm||''}}</span>
-        </div>
-        <div>
-            <span>基本药物：</span>
-            <span>{{=item.drugs||''}}</span>
-        </div>
-    </div>
-    {{ } }}
-    {{?}}
-</script>
-
 <!--医嘱发送记录新-->
 <script id="adviceSendsTmplList" type="text/template">
     {{?it}}
@@ -889,119 +494,155 @@
         <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceSendsReset();">重置</div>
     </div>
 </script>
-<!--巡视记录 -->
-<script id="tourRecordsList" type="text/template">
-    <table class=" aui-font-size-14">
-        <thead>
-        <tr>
-            <th>巡视人</th>
-            <th>巡视时间</th>
-            <th>患者情况</th>
-            <th>患者姓名</th>
-            <th>床号</th>
-        </tr>
-        </thead>
-        <tbody id="tbody">
-        {{?it.list}}
-        {{for(var i=0;i<it.list.length;i++) {
-         var item = it.list[i];
-        }}
-        <tr onclick="changeNextTwoShow(this)">
-            <td>{{=item.nurseName}}</td>
-            <td>{{=item.inspectionTime}}</td>
-            <td>
-                {{?item.inspectionType==='巡视项'}}
-                {{??}}
-                {{=item.inspectionType}}
-                {{?}}
-            </td>
-            <td>{{=item.patientName}}</td>
-            <td>{{=item.medBedName}}</td>
-        </tr>
-        <tr class="hide">
-            <td>护理等级</td>
-            {{?it.userId === item.nurseId}}
-            <td colspan="3">{{=item.nurseLevelName||''}}</td>
-            <td>
-                <div style="color: red" onclick="deleteThis('{{=item.id}}')">删除</div>
-            </td>
-            {{??}}
-            <td colspan="4">{{=item.nurseLevelName||''}}</td>
+<!--医嘱执行-待执行列表-->
+<script id="adviceExecuteNoDoList" type="text/template">
+    {{?it}}
+    {{
+    for(var i=0;i<it.length;i++) {
+    var item = it[i];
+    }}
+    <div class="adviceExecuteNoDoList aui-font-size-14" onclick="deleteInfusionStick('{{=item.id}}')">
+        <div>
+            <div class="executeStatus">{{=item.executeStatus||''}}</div>
+            <div class="adviceType">{{=item.adviceType||''}}</div>
+        </div>
+        <div class="right">
+            {{?item.doctorEntrust}}
+            <div>
+                <span>医生托嘱：{{=item.doctorEntrust||''}}</span>
+            </div>
             {{?}}
-        </tr>
-        <tr class="hide">
-            <td>巡视备注</td>
-            <td colspan="4">{{=item.inspectionMemo||''}}</td>
-        </tr>
-        {{ } }}
-        {{?}}
-        </tbody>
-    </table>
+            {{?item.adviceNameList}}
+            {{for(var j=0;j<item.adviceNameList.length;j++) {
+            }}
+            <div>
+                <span>{{=item.adviceNameList[j]||''}}</span>
+            </div>
+            {{}}}
+            {{?}}
+            {{?item.usage}}
+            <div>
+                <span>用法：{{=item.usage||''}}</span>
+            </div>
+            {{?}}
+            <div>
+                <span>要求时间：{{=item.requiredTime||''}}</span>
+            </div>
+            <div>
+                <span>停止时间：{{=item.stopTime||''}}</span>
+            </div>
+        </div>
+    </div>
+    {{ } }}
+    {{?}}
 </script>
-<!--巡视结果保存-->
-<script id="inputTourRecords" type="text/template">
-    <div class="flex aui-margin-t-5" >
-        <div class="flex-item">
-            <span class="key">患者姓名：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>{{=it.patientName}}</span>
-        </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="flex-item">
-            <span class="key">床号：</span>
-            <span>{{=it.medBedName}}</span>
-        </div>
-    </div>
-    <div class="flex aui-margin-t-5" >
-        <div class="flex-item">
-            <span class="key">护理等级：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>{{=it.nurseLevelName}}</span>
-        </div>
-    </div>
-    <div class="flex aui-margin-t-5">
-        <div class="flex-item">
-            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;项：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="value">
-                 <select class="select" id="inspectionTypeId">
-                     {{
-                        if(it.list){
-                            for(var i=0;i<it.list.length;i++) {
-                            var item = it.list[i];
-                            }}
-                        <option value="{{=item.code}}">{{=item.text}}</option>
-                     {{}}}}
-                 </select>
-            </span>
-        </div>
-    </div>
-    <div class="flex aui-margin-t-5">
-        <div class="flex-item">
-            <span >巡视备注：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="value"><textarea class="textarea"  id="inspectionMemo" placeholder="请输入内容"></textarea></span>
-        </div>
-    </div>
-    <div class="flex aui-margin-t-5">
-        <div class="flex-item">
-            <span class="key" style="margin-top: 3rem">巡视时间：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="value"><input type="text" style="font-size:0.7rem; width: 10rem; display: inline-block; padding: 0px 5px;" id="inspectionTime" placeholder="巡视时间"  value="{{=it.time}}" readonly></span>
-        </div>
-    </div>
-    <div class="flex aui-margin-t-5">
-        <div class="flex-item">
-            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;人：</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>{{=it.nurseName}}</span>
-        </div>
-    </div>
-    <div class=" aui-text-center aui-margin-t-15">
-        <div class="btn aui-btn aui-btn-success" onclick="tourRecordsExecute();"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
-    </div>
-</script>
+<!--医嘱执行-执行记录列表-->
+<script id="adviceExecuteDoneList" type="text/template">
 
+    {{?it}}
+    {{
+    for(var i=0;i<it.length;i++) {
+    var item = it[i];
+    }}
+    <div class="adviceExecuteDoneList aui-font-size-14" onclick="deleteInfusionStick('{{=item.id}}')">
+        <div class="left">
+            <div class="adviceType">{{=item.adviceType||''}}</div>
+        </div>
+        <div class="right">
+            {{?item.adviceNameList}}
+            {{for(var j=0;j<item.adviceNameList.length;j++) {
+            }}
+            <div>
+                <span>{{=item.adviceNameList[j]||''}}</span>
+            </div>
+            {{}}}
+            {{?}}
+            <div>
+                <span>要求时间：{{=item.requiredTime||''}}</span>
+            </div>
+            {{?item.usage}}
+            <div>
+                <span>用法：{{=item.usage||''}}</span>
+            </div>
+            {{?}}
+            <div>
+                <span>执行时间：{{=item.createTime||''}}</span>
+                <span>执行人：{{=item.createUserName||''}}</span>
+            </div>
+            <div>
+                <span>执行结果：{{=item.transfusionStatus||''}}</span>
+            </div>
+        </div>
+    </div>
+    {{ } }}
+    {{?}}
+</script>
+<!--医嘱执行-->
+<script id="adviceExecuteDialog" type="text/template">
+    <div class="flex aui-margin-t-5" >
+        <div class="flex-item"  style="text-align:left">
+            <span>{{=scanAdviceExecute.medBedId||''}}床</span>
+            <span style="padding-left: 5%">{{=scanAdviceExecute.patientName||''}}</span>
+            <span style="padding-left: 5%">{{=scanAdviceExecute.sexName||''}}</span>
+            <span style="padding-left: 5%">{{=scanAdviceExecute.patientAge||''}}</span>
+        </div>
+    </div>
+    {{?scanAdviceExecute.adviceNameList}}
+    {{for(var j=0;j<scanAdviceExecute.adviceNameList.length;j++) {
+    }}
+    <div class="flex aui-margin-t-5" >
+        <span>{{=scanAdviceExecute.adviceNameList[j]||''}}</span>
+    </div>
+    {{}}}
+    {{?}}
+    <div class="flex aui-margin-t-5" >
+        <span>医生托嘱：{{=scanAdviceExecute.doctorEntrust||''}}</span>
+    </div>
+    <div class="flex aui-margin-t-5" >
+        <span>用法：{{=scanAdviceExecute.usage||''}}</span>
+    </div>
+    <div class="flex aui-margin-t-5" >
+        <span>要求时间：{{=scanAdviceExecute.requiredTime||''}}</span>
+    </div>
+    <div class="flex aui-margin-t-5" >
+        <span>停止时间：{{=scanAdviceExecute.stopTime||''}}</span>
+    </div>
+    </div>
+    {{?scanAdviceExecute.executeStatus===4}}
+    <div class="flex aui-margin-t-5" >
+        <span>执行状态：输液完成</span>
+    </div>
+    <div class="aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceExecuteClose('adviceExecute-dialog')">关闭</div>
+    </div>
+    {{??scanAdviceExecute.executeStatus===3}}
+    <div class="flex aui-margin-t-5" >
+        <span>滴速：<input id="drippingSpeed"></span>
+    </div>
+    <div class=" aui-margin-t-5" >
+        <span>输液执行情况：
+            <input name="transfusionStatus" type="radio" value="0" checked/>正常
+            <input name="transfusionStatus" type="radio" value="1" style="margin-left: 6%"/>拒绝
+            <input name="transfusionStatus" type="radio" value="2" style="margin-left: 6%"/>外出
+        </span>
+
+    </div>
+    <div class="aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" onclick="adviceExecuteProcess('{{=scanAdviceExecute.executeStatus}}')">{{=scanAdviceExecute.message}}</div>
+        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceExecuteClose('adviceExecute-dialog')">关闭</div>
+    </div>
+    {{??scanAdviceExecute.executeStatus==='no'}}
+    <div class="aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" onclick="adviceExecuteScanPatient()">{{=scanAdviceExecute.message}}</div>
+        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceExecuteClose('adviceExecute-dialog')">关闭</div>
+    </div>
+    {{??}}
+    <div class="aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" onclick="adviceExecuteProcess('{{=scanAdviceExecute.executeStatus}}')">{{=scanAdviceExecute.message}}</div>
+        <div class="btn aui-btn aui-btn-success" style="margin-left: 1rem" tapmode onclick="adviceExecuteClose('adviceExecute-dialog')">关闭</div>
+    </div>
+    {{?}}
+</script>
 <!--皮试结果-->
 <script id="skinTestList" type="text/template">
     {{

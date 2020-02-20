@@ -1,0 +1,43 @@
+.bottomContainer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.bottomContainer .bottomBody{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0rem;
+    background-color: #e1e1e1;
+    display: none;
+}
+.bottomContainer .bottomBody.active{
+    display: block;
+}
+.bottomContainer .bottomBody .select{
+    width: 10rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    height: 1.2rem;
+    padding: 0px 5px;
+    background-color: #fff;
+}
+.bottomContainer .bottomBody#tourRecords-result .textarea{
+    width: 10rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    height: 3rem;
+    padding: 0px 5px;
+    vertical-align:middle;
+    background-color: #fff;
+}
+ .bottomContainer .bottomBody#tourRecords-result .flex-item{
+    text-align: left;
+}
+
+
+
+textarea{
+    border: 1px double #ccc;
+}

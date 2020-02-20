@@ -1,19 +1,24 @@
 var person = $api.getStorage(storageKey.currentPerson);
 var userId = $api.getStorage(storageKey.userId);
 var areaId = $api.getStorage(storageKey.areaId);
-var tourRecordsPerson = person   // 巡视扫码得到的病人
+var executeStatus = 1
+var scanAdviceExecute;   // 医嘱执行得到的记录
+var scanAdviceExecutePerson;   // 医嘱执行记录对应的人
+
 var patientId = person.id;
 
 var skinTestId = ''   //最后一次选中的皮试id
 var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
-var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
+var tabList = ['tab-advice-records','tab-advice-sends','tab-advice-execute','tab-skin-test']
 var currentTab = 2
-var tabFlag = 'tour-records';
+var tabFlag = 'advice-execute';
 
 var adviceStartTime;
 var redirectToAdviceList = false
+var scanner;
 apiready = function () {
+    scanner = api.require('cmcScan');
     redirectToAdviceList = api.pageParam.redirectToAdviceList
     api.parseTapmode();
     if (redirectToAdviceList === true) {
@@ -23,12 +28,12 @@ apiready = function () {
         $api.addCls($api.byId('advice-records'), 'active');
         adviceRecords()
     }else{
-        // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
-        $api.addCls($api.byId('tab-tour-records'), 'aui-active');
-        $api.addCls($api.byId('tour-records'), 'active');
-        tourRecords();
+        // 进入医嘱执行，默认显示医嘱执行页，并添加扫码监听事件
+        $api.addCls($api.byId('tab-advice-execute'), 'aui-active');
+        $api.addCls($api.byId('advice-execute'), 'active');
+        adviceExecute()
     }
-    $api.setStorage(storageKey.scannerStatus, 'tour-records');
+    $api.setStorage(storageKey.scannerStatus, 'adviceExecute');
     paddingSelectAdviceRecords();
     // 监控左划事件
     api.addEventListener({
@@ -54,47 +59,68 @@ apiready = function () {
         var id = tabList[currentTab]
         changeTab($api.dom('#'+id))
     });
-    // 监控巡视扫码事件
+    //监控医嘱执行扫码事件
     api.addEventListener({
-        name: 'tourRecordsResultShow'
+        name: 'adviceExecuteShow'
     }, function(ret,err){
-        var tourRecordsPersonId = $api.getStorage(storageKey.tourRecordsPersonId);
-        var persons = $api.getStorage(storageKey.persons);
-        var status = true
-        var inOraFlag = true;
-        //遍历查询
-        for (var i = 0; i < persons.length; i++) {
-            if(persons[i].id == tourRecordsPersonId){
-                var homeId = persons[i].homepageId
-                var personInfo = persons[i]
-                common.get({
-                    url: config.patientDetailUrl + tourRecordsPersonId + '/' + homeId,
-                    isLoading: true,
-                    success: function (ret) {
-                        if (ret && ret.content) {
-                            if (ret.content.inOrganizationTime == null || ret.content.inOrganizationTime == "") {
-                                api.toast({
-                                    title: '提示',
-                                    msg: '病人未入科，请入科后尝试'
-                                })
-                                return;
-                            }
-                                tourRecordsPerson = personInfo;
-                                tourRecordsExecute('scan');
+        var infusionStickValue = $api.getStorage(storageKey.infusionStickValue)
+        // 通过这个码获取输液贴信息。
+        common.post({
+            url: config.getInfusionStickById + infusionStickValue,
+            isLoading: true,
+            success: function (ret) {
+                if (ret && ret.content) {
+                    scanAdviceExecute = ret.content
+                    // 对比是否是这个科室的病人。
+                    var persons = $api.getStorage(storageKey.persons);
+                    var status = true
+                    //遍历查询
+                    for (var i = 0; i < persons.length; i++) {
+                        var personInfo = persons[i]
+                        var homeId = personInfo.homepageId
+                        var medPatientId = personInfo.id
+                        if(medPatientId == scanAdviceExecute.medPatientId && homeId == scanAdviceExecute.homepageId){
+                            scanAdviceExecutePerson = personInfo
+                            common.get({
+                                url: config.patientDetailUrl + medPatientId + '/' + homeId,
+                                isLoading: true,
+                                success: function (ret) {
+                                    if (ret && ret.content) {
+                                        if (isEmpty(ret.content.inOrganizationTime)) {
+                                            scanAdviceExecute = null
+                                            api.toast({
+                                                title: '提示',
+                                                msg: '病人未入科，请入科后尝试'
+                                            })
+                                            return;
+                                        }else{
+                                            popupExecuteDiv()
+                                        }
+                                    }
+                                }
+                            })
+                            status = false
                         }
                     }
-                })
-                status = false
-                // 如果病人对上了，直接触发保存动作
-                // clickBottomTab('tour-records','tourRecords-result');
-                // paddingInputTourRecords()
+                }else{
+                    api.toast({
+                        msg: '获取输液贴信息失败，请扫描正确的输液贴条码！',
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                    return;
+                }
             }
-        }
+        })
+
         if (status){
-            api.alert({
-                title: '提示',
-                msg: '系统未管理此病人，请刷新后重试',
+            scanAdviceExecute = null
+            api.toast({
+                msg: '本科室未管理此条码对应的病人，请确认！',
+                duration: 2000,
+                location: 'middle'
             });
+            return;
         }
     });
 
@@ -108,8 +134,127 @@ apiready = function () {
     }, function (ret, err) {
         downPullRefresh();
     });
+    api.addEventListener({
+        name: 'adviceExecuteScanPatientId'
+    }, function(ret,err){
+        var patientId = $api.getStorage(storageKey.adviceExecuteScanPatientId);
+        $api.setStorage(storageKey.scannerStatus, 'adviceExecute');
+        if (scanAdviceExecute.medPatientId === patientId){
+            api.toast({
+                msg: '核对病人信息成功，请核对输液贴信息！',
+                duration: 2000,
+                location: 'middle'
+            });
+            scanAdviceExecute.executeStatus = 2
+            scanAdviceExecute.message = "核对完成"
+            $api.addCls($api.dom($api.byId("advice-execute"), '#adviceExecute-dialog'), 'active');
+            var contentTmpl = doT.template($api.text($api.byId('adviceExecuteDialog')));
+            $api.html($api.byId('adviceExecute-dialog'), "");
+            $api.html($api.byId('adviceExecute-dialog'), contentTmpl(scanAdviceExecute));
+        }else{
+            $api.removeCls($api.dom($api.byId("advice-execute"), '#adviceExecute-dialog'), 'active');
+            api.toast({
+                msg: '扫描信息与输液贴病人信息不匹配！',
+                duration: 2000,
+                location: 'middle'
+            });
+        }
+    })
 }
-
+function popupExecuteDiv(){
+    var executeStatus = scanAdviceExecute.executeStatus
+    scanAdviceExecute.patientName = scanAdviceExecutePerson.name
+    scanAdviceExecute.patientAge = scanAdviceExecutePerson.age
+    scanAdviceExecute.sexName = scanAdviceExecutePerson.sexName
+    scanAdviceExecute.medBedId = scanAdviceExecutePerson.medBedId
+    if (executeStatus === 0){
+        scanAdviceExecute.message = "接收成功"
+    }else if (executeStatus === 1){
+        scanAdviceExecute.message = "配液完成"
+    }else if (executeStatus === 2){
+        scanAdviceExecute.executeStatus = 'no'
+        scanAdviceExecute.message = "扫描病人"
+    }else if (executeStatus === 3){
+        scanAdviceExecute.message = "输液提交"
+    }else if (executeStatus === 4){
+    }else{
+        return
+    }
+    $api.addCls($api.dom($api.byId("advice-execute"), '#adviceExecute-dialog'), 'active');
+    var contentTmpl = doT.template($api.text($api.byId('adviceExecuteDialog')));
+    $api.html($api.byId('adviceExecute-dialog'), "");
+    $api.html($api.byId('adviceExecute-dialog'), contentTmpl(scanAdviceExecute));
+}
+function adviceExecuteProcess(executeStatus) {
+    if (executeStatus==='3'){
+        scanAdviceExecute.drippingSpeed = $api.val($api.byId('drippingSpeed'))
+        scanAdviceExecute.transfusionStatus = $("input[name='transfusionStatus']:checked").val();
+    }
+    scanAdviceExecute.executeStatus = parseInt(executeStatus)+1
+    common.post({
+        url: config.executeInfusionStick,
+        isLoading: true,
+        data: JSON.stringify(scanAdviceExecute),
+        success: function (ret) {
+            if (ret && ret.code==200){
+                api.toast({
+                    msg: '操作成功！',
+                    duration: 2000,
+                    location: 'middle'
+                });
+                adviceExecuteClose('adviceExecute-dialog')
+            } else{
+                api.toast({
+                    msg: '操作失败！',
+                    duration: 2000,
+                    location: 'middle'
+                });
+                return;
+            }
+        }
+    })
+}
+function adviceExecuteClose(adviceExecuteDialog) {
+    scanAdviceExecute = null
+    scanAdviceExecutePerson = null
+    $api.removeCls($api.dom($api.byId("advice-execute"), '#'+adviceExecuteDialog), 'active');
+    adviceExecute()
+}
+function deleteInfusionStick(id) {
+    api.confirm({
+        title: '提示',
+        msg: '确定删除该输液贴记录吗？',
+        buttons: ['确定', '取消']
+    }, function(ret, err){
+        if(ret.buttonIndex==1){
+            common.post({
+                url: config.deleteInfusionStick + id,
+                isLoading: true,
+                success: function (ret) {
+                    if (ret && ret.code==200){
+                        api.toast({
+                            msg: '删除成功！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                        adviceExecuteClose('adviceExecute-dialog')
+                    } else{
+                        api.toast({
+                            msg: '删除失败！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                        return;
+                    }
+                }
+            })
+        }
+    });
+}
+function adviceExecuteScanPatient() {
+    $api.setStorage(storageKey.scannerStatus,'adviceExecuteScanPatient');
+    scanner.start();
+}
 function downPullRefresh(){
     api.refreshHeaderLoadDone(); //复位下拉刷新
     if(tabFlag === "advice-records"){
@@ -126,26 +271,6 @@ function downPullRefresh(){
         $api.html($api.byId('advice-records-header'), "");
         $api.html($api.byId('advice-records-header'), el);
         adviceRecords()
-    }/*else if(tabFlag === "advice-execute") {
-
-    }*/else if(tabFlag === "skin-test") {
-        $api.setStorage(storageKey.scannerStatus, '');
-        // 切换tab时将所有选中条件都清空
-        skinTestRecordReset()
-        var el = "<label><input class=\"aui-margin-t-5 \" id=\"noInput\" type=\"checkbox\" onclick=\"skinTestRecord()\" checked> 未录入</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <label><input class=\"aui-margin-t-5 \" id=\"alreadyInput\" type=\"checkbox\" onclick=\"skinTestRecord()\"> 已录入</label>"
-        $api.html($api.byId('skinTest-header'), "");
-        $api.html($api.byId('skinTest-header'), el);
-
-        skinTestRecord();
-    }else if(tabFlag === "tour-records") {
-        var tourEle = "<label><input class=\"aui-margin-t-5 \" name=\"allPatient\" id=\"allPatient\" type=\"checkbox\" tapmode  onchange=\"tourRecords()\" checked> 全部患者</label>\n" +
-            "                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-            "                <label><input class=\"aui-margin-t-5 \" name=\"allNurse\" id=\"allNurse\" type=\"checkbox\" tapmode   onchange=\"tourRecords()\"> 全部护士</label>"
-        $api.html($api.byId('tour-records-header'), "");
-        $api.html($api.byId('tour-records-header'),tourEle);
-        tourRecords();
     }else if(tabFlag === "advice-sends"){
         $api.setStorage(storageKey.scannerStatus, '');
         // 切换tab时将所有选中条件都清空
@@ -158,8 +283,29 @@ function downPullRefresh(){
             "<div class=\"aui-btn\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"clickBottomTab('advice-sends','adviceSends-selector');\">筛选</div>"
         $api.html($api.byId('advice-sends-header'), "");
         $api.html($api.byId('advice-sends-header'), el);
-
         adviceRecordsForAdviceSends()
+    }else if(tabFlag === "advice-execute") {
+        $api.setStorage(storageKey.scannerStatus, 'adviceExecute');
+        executeStatus = 1
+        var el =
+            "<label><input class=\"aui-margin-t-5 \" name=\"longTermAdvice2\" id=\"longTermAdvice2\" type=\"checkbox\" tapmode  onchange=\"adviceExecute()\"> 长嘱</label>\n" +
+            "<label><input class=\"aui-margin-t-5 \" name=\"temporaryAdvice2\" id=\"temporaryAdvice2\" type=\"checkbox\" tapmode  onchange=\"adviceExecute()\"> 临嘱</label>\n" +
+            "<div id=\"noDo\" class=\"aui-btn show\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"adviceExecute('change')\">执行列表</div>\n" +
+            "<div id=\"done\" class=\"aui-btn hide\" style=\"background: #38afe6;float: right;margin-right: 0.5rem;margin-top: -5px\" onclick=\"adviceExecute('change')\">待执行</div>"
+        $api.html($api.byId('advice-execute-header'), "");
+        $api.html($api.byId('advice-execute-header'), el);
+        adviceExecute()
+    }else if(tabFlag === "skin-test") {
+        $api.setStorage(storageKey.scannerStatus, '');
+        // 切换tab时将所有选中条件都清空
+        skinTestRecordReset()
+        var el = "<label><input class=\"aui-margin-t-5 \" id=\"noInput\" type=\"checkbox\" onclick=\"skinTestRecord()\" checked> 未录入</label>\n" +
+            "                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+            "                <label><input class=\"aui-margin-t-5 \" id=\"alreadyInput\" type=\"checkbox\" onclick=\"skinTestRecord()\"> 已录入</label>"
+        $api.html($api.byId('skinTest-header'), "");
+        $api.html($api.byId('skinTest-header'), el);
+
+        skinTestRecord();
     }
 }
 /**
@@ -172,9 +318,8 @@ var changeTab = function (obj) {
     var auiActive = $api.hasCls(obj, 'aui-active');
     if (!auiActive) {
         $api.removeCls($api.byId('tab-advice-records'), 'aui-active');
-        // $api.removeCls($api.byId('tab-advice-execute'), 'aui-active');
         $api.removeCls($api.byId('tab-advice-sends'), 'aui-active');
-        $api.removeCls($api.byId('tab-tour-records'), 'aui-active');
+        $api.removeCls($api.byId('tab-advice-execute'), 'aui-active');
         $api.removeCls($api.byId('tab-skin-test'), 'aui-active');
         $api.addCls(obj, 'aui-active');
     }
@@ -184,22 +329,20 @@ var changeTab = function (obj) {
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
         $api.removeCls($api.byId('advice-records'), 'active');
-        // $api.removeCls($api.byId('advice-execute'), 'active');
         $api.removeCls($api.byId('advice-sends'), 'active');
-        $api.removeCls($api.byId('tour-records'), 'active');
+        $api.removeCls($api.byId('advice-execute'), 'active');
         $api.removeCls($api.byId('skin-test'), 'active');
 
         $api.addCls(activeTab, 'active');
 
         $api.removeCls($api.dom($api.byId('advice-records'), '#adviceRecords-selector'), 'active');
 
-        // 移除医嘱执行、医嘱发送、巡视记录、皮试结果的筛选等操作
-        // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-        // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
+        // 移除医嘱执行、医嘱发送、医嘱执行、皮试结果的筛选等操作
+        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
+        $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
 
         $api.removeCls($api.dom($api.byId('advice-sends'), '#adviceSends-selector'), 'active');
 
-        $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
 
         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId('skin-test'), '#skinTest-result'), 'active');
@@ -221,9 +364,7 @@ var changeTab = function (obj) {
         $api.html($api.byId('advice-records-header'), "");
         $api.html($api.byId('advice-records-header'), el);
         adviceRecords()
-    } else if (dataTo == "advice-execute") {//医嘱执行
-            tabFlag = "advice-execute"
-    } else if (dataTo == "advice-sends") {//医嘱发送
+    }else if (dataTo == "advice-sends") {//医嘱发送
         tabFlag = "advice-sends"
         $api.setStorage(storageKey.scannerStatus, '');
         currentTab = 1
@@ -239,11 +380,10 @@ var changeTab = function (obj) {
         $api.html($api.byId('advice-sends-header'), el);
 
         adviceRecordsForAdviceSends()
-    } else if (dataTo == "tour-records") {//巡视记录
-        tabFlag = "tour-records"
-        $api.setStorage(storageKey.scannerStatus, 'tour-records');
+    } else if (dataTo == "advice-execute") {//医嘱执行
+        tabFlag = "advice-execute"
+        $api.setStorage(storageKey.scannerStatus, 'adviceExecute');
         currentTab = 2
-        tourRecords();
     } else if (dataTo == "skin-test") {//皮试结果
         tabFlag = "skin-test"
         $api.setStorage(storageKey.scannerStatus, '');
@@ -269,14 +409,13 @@ var clickBottomTab = function (parent, id) {
     var activeTab = $api.dom($api.byId(parent), '#' + id);
     var active = $api.hasCls(activeTab, 'active');
     if (!active) {
-        // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-selector'), 'active');
-        // $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-execute'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#adviceRecords-selector'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#adviceSends-selector'), 'active');
+        $api.removeCls($api.dom($api.byId(parent), '#adviceExecute-dialog'), 'active');
 
-        $api.removeCls($api.dom($api.byId(parent), '#tourRecords-result'), 'active');
+        // $api.removeCls($api.dom($api.byId(parent), '#tourRecords-result'), 'active');
 
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-selector'), 'active');
         $api.removeCls($api.dom($api.byId(parent), '#skinTest-result'), 'active');
@@ -422,44 +561,101 @@ var changeAdviceShow = function (obj) {
 /**
  * 医嘱执行记录查询
  */
-var adviceExecute = function () {
+var adviceExecute = function (change) {
+    $api.removeCls($api.dom($api.byId("advice-execute"), '#adviceExecute-dialog'), 'active');
+    if (change){
+        if (executeStatus === 1){
+            executeStatus = 4
+            $api.removeCls($api.byId('noDo'), 'show');
+            $api.removeCls($api.byId('done'), 'hide');
+            $api.addCls($api.byId('noDo'), 'hide');
+            $api.addCls($api.byId('done'), 'show');
+        } else{
+            executeStatus = 1
+            $api.removeCls($api.byId('noDo'), 'hide');
+            $api.removeCls($api.byId('done'), 'show');
+            $api.addCls($api.byId('noDo'), 'show');
+            $api.addCls($api.byId('done'), 'hide');
+        }
+    }
+    var longTermAdviceStatus = $api.byId('longTermAdvice2').checked
+    var temporaryAdviceStatus = $api.byId('temporaryAdvice2').checked
+    var adviceType = ''
+    if (longTermAdviceStatus && !temporaryAdviceStatus){
+        adviceType = 0
+    } else if (!longTermAdviceStatus && temporaryAdviceStatus){
+        adviceType = 1
+    }
     common.post({
-        url: config.adviceDetail + patientId,
+        url: config.infusionStickList,
         isLoading: true,
+        data: JSON.stringify({
+            medPatientId:  patientId,   //病人ID
+            homepageId: person.homepageId,
+            adviceType:  adviceType,    //医嘱期效
+            executeStatus:  executeStatus    //执行状态
+        }),
+        dataType: "json",
         success: function (ret) {
-            // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-selector'), 'active');
-            // $api.removeCls($api.dom($api.byId('advice-execute'), '#adviceExecute-execute'), 'active');
-            //
-            // $api.html($api.byId('adviceExecuteContentContainer'), "");
-            // var contentTmpl = doT.template($api.text($api.byId('adviceExecuteTmplList')));
-            // $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(ret.context));
+            if (ret.code==200){
+                var result = ret.content
+                $api.html($api.byId('adviceExecuteContentContainer'), "");
+                var contentTmpl = doT.template($api.text($api.byId('adviceExecuteNoDoList')));
+                if (executeStatus === 4){
+                    for (var i=0;i<result.length;i++){
+                        result[i].adviceType = transAdviceType(result[i].adviceType)
+                        result[i].transfusionStatus = transTransfusionStatus(result[i].transfusionStatus)
+                    }
+                    contentTmpl = doT.template($api.text($api.byId('adviceExecuteDoneList')));
+                }else{
+                    for (var i=0;i<result.length;i++){
+                        result[i].executeStatus = transExecuteStatus(result[i].executeStatus)
+                        result[i].adviceType = transAdviceType(result[i].adviceType)
+                    }
+                }
+                console.log(JSON.stringify(result))
+                $api.html($api.byId('adviceExecuteContentContainer'), contentTmpl(result));
+            }else{
+                api.toast({
+                    msg: '获取执行记录异常！',
+                    duration: 2000,
+                    location: 'middle'
+                });
+                return;
+            }
         }
     });
 };
 
-/**
- * 点击医嘱执行记录显示详细信息
- * @param obj
- */
-var changeAdviceExecuteShow = function (obj) {
-    var isHide = $api.hasCls($api.next(obj), 'hide');
-    if (isHide){
-        $api.removeCls($api.next(obj), 'hide');
-        $api.addCls($api.next(obj), 'show');
-    } else{
-        $api.removeCls($api.next(obj), 'show');
-        $api.addCls($api.next(obj), 'hide');
+var transAdviceType = function (adviceType) {
+    switch (adviceType) {
+        case '0': return '长嘱';
+        case '1': return '临嘱';
+        default: return '';
     }
 }
 
-/**
- * 点击医嘱执行详细信息关闭详情
- * @param obj
- */
-var closeAdviceExecuteDetail = function (obj) {
-    $api.removeCls(obj, 'show');
-    $api.addCls(obj, 'hide');
+var transTransfusionStatus = function (transfusionStatus) {
+    switch (transfusionStatus) {
+        case 0: return '完成';
+        case 1: return '拒绝';
+        case 2: return '外出';
+        default: return '';
+    }
 }
+
+var transExecuteStatus = function (executeStatus) {
+    switch (executeStatus) {
+        case 1: return '接收成功';
+        case 2: return '配液完成';
+        case 3: return '核对完成';
+        default: return '';
+    }
+}
+var test = function () {
+    alert(3233)
+}
+
 
 
 /**
@@ -574,148 +770,6 @@ var adviceSendsDetail = function (obj,adviceId) {
  */
 var closeDetail = function (obj) {
     $api.html(obj, "");
-}
-/**
- * 巡视记录列表
- */
-var tourRecords = function () {
-    var params = {}
-    params.organizationId = areaId;
-    if (!$api.byId('allPatient').checked){
-        params.patientId = person.id
-        params.homepageId = person.homepageId
-    }
-    if (!$api.byId('allNurse').checked){
-        params.nurseId = userId
-    }
-    common.post({
-        url: config.inspectionQuery,
-        isLoading: true,
-        data:JSON.stringify(params),
-        dataType: "json",
-        success: function (ret) {
-            if(ret&&ret.content&&ret.content.length>0){
-                var userId = $api.getStorage(storageKey.userId);
-                var params = [];
-                params.list = ret.content;
-                params.userId  = userId;
-                $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
-                $api.html($api.byId('tourRecordsContentContainer'), "");
-                var contentTmpl = doT.template($api.text($api.byId('tourRecordsList')));
-                $api.html($api.byId('tourRecordsContentContainer'), contentTmpl(params));
-            }else{
-                $api.html($api.byId('tourRecordsContentContainer'), "");
-            }
-        }
-    });
-};
-
-var paddingInputTourRecords = function () {
-    var params = {};
-    params.queryCode = "inspectionType";
-    params.addAllFlag = false;
-    params.loadSonFlag = false;
-    params.nullFlag = false;
-    common.post({
-        url:config.dictUrl,
-        isLoading: true,
-        data:JSON.stringify(params),
-        dataType:JSON,
-        success:function(ret){
-            var data = {}
-            data.patientName = tourRecordsPerson.name;
-            data.medBedName = tourRecordsPerson.medBedName;
-            data.nurseLevelName = tourRecordsPerson.nurseLevelName;
-            data.list = {}
-            data.time = currentTime();
-            data.nurseName = $api.getStorage(storageKey.userName);
-            data.list = ret.content
-            $api.html($api.byId('tourRecords-result'), "");
-            var contentTmpl = doT.template($api.text($api.byId('inputTourRecords')));
-            $api.html($api.byId('tourRecords-result'), contentTmpl(data));
-        }
-    });
-
-
-}
-/**
- * 巡视记录保存
- * 20191022 修改，当扫码触发巡视时直接保存
- */
-var tourRecordsExecute = function (type) {
-    var inspectionTypeId = null;
-    var inspectionMemo = null;
-    var inspectionTime = currentTime();
-    if (isEmpty(type)){
-        inspectionTypeId = $api.val($api.byId('inspectionTypeId'));
-        inspectionMemo = $api.val($api.byId('inspectionMemo'));
-        inspectionTime = $api.val($api.byId('inspectionTime'));
-    }
-    var nurseLevelCode = tourRecordsPerson.nurseLevelCode;
-    var nurseLevel = ''
-    switch (nurseLevelCode) {
-        case 'A': nurseLevel = '120100002';break;
-        case 'B': nurseLevel = '120100003';break;
-        case 'C': nurseLevel = '120100004';break;
-        case 'D': nurseLevel = '120100005';break;
-        case 'E': nurseLevel = '1101005';break;
-    }
-    common.post({
-        url: config.inspectionSave,
-        data: {
-            patientId:  tourRecordsPerson.id,
-            homepageId:  tourRecordsPerson.homepageId,
-            registerNumber:  tourRecordsPerson.registerNumber,
-            patientName:  tourRecordsPerson.name,
-            medBedId: tourRecordsPerson.medBedId,
-            medBedName: tourRecordsPerson.medBedName,
-            organizationId: areaId,
-            nurseLevel: nurseLevel,
-            nurseId: userId,
-            nurseName: $api.getStorage(storageKey.userName),
-            inspectionTime: inspectionTime,
-            inspectionTypeId: inspectionTypeId,
-            inspectionMemo: inspectionMemo
-        },
-        isLoading: true,
-        success: function (ret) {
-            $api.removeCls($api.dom($api.byId('tour-records'), '#tourRecords-result'), 'active');
-            tourRecords();
-            api.toast({
-                msg: '操作成功',
-                duration: 2000,
-                location: 'middle'
-            });
-        },
-    });
-};
-var deleteThis = function (id) {
-    common.get({
-        url: config.inspectionDelete + id + "/" + userId,
-        isLoading: true,
-        success: function (ret) {
-            if(ret.code===200){
-                if (ret.content === -1){
-                    api.alert({
-                        title: '提示',
-                        msg: '只能删除自己创建的巡视记录！',
-                    });
-                } else if (ret.content > 0 ){
-                    api.alert({
-                        title: '提示',
-                        msg: '删除成功',
-                    });
-                } else{
-                    api.alert({
-                        title: '提示',
-                        msg: '删除失败',
-                    });
-                }
-            }
-            tourRecords();
-        },
-    });
-
 }
 
 /**
@@ -1022,7 +1076,7 @@ function ifNotNullEnd(timeStr){
 }
 
 function isEmpty(str){
-    if (str === null || str ==='' || str === undefined){
+    if (str === null || str ==='' || str === undefined || str === 'undefined'){
         return true
     }
 }

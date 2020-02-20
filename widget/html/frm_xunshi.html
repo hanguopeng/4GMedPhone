@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>巡视记录</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/tourRecord.css"/>
+</head>
+<body>
+<div class="bodyContainer">
+    <div class="tabBody">
+        <!--巡视记录-->
+        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
+            <div class="aui-padded-l-15" id="tour-records-header">
+                <label><input class="aui-margin-t-5 " name="allPatient" id="allPatient" type="checkbox" tapmode  onchange="tourRecords()" checked> 全部患者</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input class="aui-margin-t-5 " name="allNurse" id="allNurse" type="checkbox" tapmode   onchange="tourRecords()"> 全部护士</label>
+            </div>
+            <div class="itemContainer" id="tourRecordsContentContainer">
+            </div>
+            <div class="bottomContainer">
+                <div id="tourRecords-result" class="bottomBody aui-padded-15">
+                </div>
+                <div>
+                    <a href="#" class="add-btn" tapmode onclick="addTourRecords();"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--巡视记录 -->
+<script id="tourRecordsList" type="text/template">
+    <table class=" aui-font-size-14">
+        <thead>
+        <tr>
+            <th>巡视人</th>
+            <th>巡视时间</th>
+            <th>患者情况</th>
+            <th>患者姓名</th>
+            <th>床号</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{?it.list}}
+        {{for(var i=0;i<it.list.length;i++) {
+         var item = it.list[i];
+        }}
+        <tr onclick="changeNextTwoShow(this)">
+            <td>{{=item.nurseName}}</td>
+            <td>{{=item.inspectionTime}}</td>
+            <td>
+                {{?item.inspectionType==='巡视项'}}
+                {{??}}
+                {{=item.inspectionType}}
+                {{?}}
+            </td>
+            <td>{{=item.patientName}}</td>
+            <td>{{=item.medBedName}}</td>
+        </tr>
+        <tr class="hide">
+            <td>护理等级</td>
+            {{?it.userId === item.nurseId}}
+            <td colspan="3">{{=item.nurseLevelName||''}}</td>
+            <td>
+                <div style="color: red" onclick="deleteThis('{{=item.id}}')">删除</div>
+            </td>
+            {{??}}
+            <td colspan="4">{{=item.nurseLevelName||''}}</td>
+            {{?}}
+        </tr>
+        <tr class="hide">
+            <td>巡视备注</td>
+            <td colspan="4">{{=item.inspectionMemo||''}}</td>
+        </tr>
+        {{ } }}
+        {{?}}
+        </tbody>
+    </table>
+</script>
+<!--巡视结果保存-->
+<script id="inputTourRecords" type="text/template">
+    <div class="flex aui-margin-t-5" >
+        <div class="flex-item">
+            <span class="key">患者姓名：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>{{=it.patientName}}</span>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="flex-item">
+            <span class="key">床号：</span>
+            <span>{{=it.medBedName}}</span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5" >
+        <div class="flex-item">
+            <span class="key">护理等级：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>{{=it.nurseLevelName}}</span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;项：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="value">
+                 <select class="select" id="inspectionTypeId">
+                     {{
+                        if(it.list){
+                            for(var i=0;i<it.list.length;i++) {
+                            var item = it.list[i];
+                            }}
+                        <option value="{{=item.code}}">{{=item.text}}</option>
+                     {{}}}}
+                 </select>
+            </span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span >巡视备注：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="value"><textarea class="textarea"  id="inspectionMemo" placeholder="请输入内容"></textarea></span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key" style="margin-top: 3rem">巡视时间：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="value"><input type="text" style="font-size:0.7rem; width: 10rem; display: inline-block; padding: 0px 5px;" id="inspectionTime" placeholder="巡视时间"  value="{{=it.time}}" readonly></span>
+        </div>
+    </div>
+    <div class="flex aui-margin-t-5">
+        <div class="flex-item">
+            <span class="key">巡&nbsp;&nbsp;视&nbsp;&nbsp;人：</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>{{=it.nurseName}}</span>
+        </div>
+    </div>
+    <div class=" aui-text-center aui-margin-t-15">
+        <div class="btn aui-btn aui-btn-success" onclick="tourRecordsExecute();"><span class="aui-iconfont aui-icon-correct"></span>保存</div>
+    </div>
+</script>
+
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/tourRecord.js"></script>
+</body>
+</html>

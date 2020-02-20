@@ -1,9 +1,9 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
-var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://192.168.43.200:8085/cmc-server";
+var localServer = "http://172.17.100.2:8084/cmc-server";
+// var localServer = "http://192.168.43.51:8085/cmc-server";
 
-var ws = "ws://172.17.100.2:8889/";
-// var ws = "ws://192.168.1.126:8888/";
+var ws = "ws://172.17.100.2:8891/";
+// var ws = "ws://192.168.43.51:8888/";
 var config={
     // 已用
     duration:3000,
@@ -73,6 +73,13 @@ var config={
     selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
     scanMedical: localServer+"/med/advice/barcode/getByMaterialCode/", //扫码核对查询医嘱信息
     updateTelephone:localServer+"/med/patient/updateTelephone/", //修改联系电话
+    // 20200204 新消息提醒列表
+    newsWarnList: localServer+"/med/advice/newsWarn/queryList/",  // 新消息提醒列表
+    // 20200212 医嘱执行
+    infusionStickList: localServer+"/med/infusionStick/list",  // 输液贴列表
+    getInfusionStickById: localServer+"/med/infusionStick/info/",  // 输液贴信息
+    executeInfusionStick: localServer+"/med/infusionStick/execute",  // 输液贴执行
+    deleteInfusionStick: localServer+"/med/infusionStick/deleted/",  // 输液贴执行
 
 
     // 未用+护理单
@@ -175,6 +182,7 @@ var storageKey={
     userId:"userId", //登录用户id
     token:"token",//访问token
     areaId:"areaId", //疗区id
+    areaCode:"areaCode", //疗区Code,HIS端显示的部门code
     areaName:"areaName", //疗区名称
     persons:"persons", //查询到的相关病人信息
     currentPerson:"currentPerson", //当前选择的一个病人的信息
@@ -188,6 +196,9 @@ var storageKey={
     cmcScan:"cmcScan",  // 扫描模块
     createFlag:"createFlag", //websocket是否已经连接
     tourRecordsPersonId: "tourRecordsPersonId",
-    inOrganization: "inOrganization"    //入科提示
+    infusionStickValue: "infusionStickValue",
+    inOrganization: "inOrganization",    //入科提示
+    newsWarnColor: "newsWarnColor",    //新医嘱消息提醒颜色,
+    adviceExecuteScanPatientId: "adviceExecuteScanPatientId",    //医嘱执行扫描得到的病人id
 
 }

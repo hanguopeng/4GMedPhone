@@ -99,8 +99,14 @@
               {{?}}</span>
           <sapn style="width: 2rem;float: right;">{{=info.age || ''}}</sapn>
       </div>
-      <div class="time aui-font-size-15">医生：{{=info.doctorName || ''}}</div>
-      <div class="time aui-font-size-15">护士：{{=info.nurseName || ''}}</div>
+      <div style="position: relative;">
+          <div style="display:inline-block; ">
+              <div class="time aui-font-size-15">医生：{{=info.doctorName || ''}}</div>
+              <div class="time aui-font-size-15">护士：{{=info.nurseName || ''}}</div>
+          </div>
+          <div class="adviceExecute aui-font-size-15">{{=info.adviceExecute || ''}}
+          </div>
+      </div>
       <div class="time aui-font-size-15">
           <span>
              {{=subStrDate(info.inHospitalTime)}}

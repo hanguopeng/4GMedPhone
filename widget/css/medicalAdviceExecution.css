@@ -45,13 +45,13 @@
     border: 1px solid #67c23b;
 }
 
-/* 医嘱记录最外层div*/
+/* 医嘱发送记录最外层div*/
 .tab-body-item .itemContainer .adviceSendsTmplList{
     overflow: hidden;
     height:fit-content;
     margin-top: 0.2rem;
 }
-/* 医嘱记录左侧样式*/
+/* 医嘱发送记录左侧样式*/
 .tab-body-item .itemContainer .adviceSendsTmplList .left{
     float:left;
     width:7%;
@@ -62,7 +62,7 @@
     padding-bottom:9999px;
 
 }
-/* 医嘱记录右侧样式*/
+/* 医嘱发送记录右侧样式*/
 .tab-body-item .itemContainer .adviceSendsTmplList .right{
     float:left;
     width:93%;
@@ -70,6 +70,64 @@
     border: 1px solid #67c23b;
 
 }
+/* 医嘱执行样式*/
+.tab-body-item .itemContainer .adviceExecuteNoDoList{
+    overflow: hidden;
+    height:fit-content;
+    margin-top: 0.2rem;
+    border: 1px double #67c23b;
+}
+
+.tab-body-item .itemContainer .adviceExecuteNoDoList .executeStatus{
+    float:left;
+    height: auto;
+    margin-bottom:-9999px;
+    padding-bottom:9999px;
+    width:7%;
+    padding-top: 5%;
+    padding-left: 0.3rem;
+}
+.tab-body-item .itemContainer .adviceExecuteNoDoList .adviceType{
+    float:left;
+    height: auto;
+    margin-bottom:-9999px;
+    padding-bottom:9999px;
+    width:7%;
+    padding-top: 11%;
+    padding-left: 0.2rem;
+}
+/* 医嘱记录右侧样式*/
+.tab-body-item .itemContainer .adviceExecuteNoDoList .right{
+    float:left;
+    width:86%;
+    padding-left: 0.3rem;
+    border: 1px solid #67c23b;
+}
+/* 医嘱执行样式*/
+.tab-body-item .itemContainer .adviceExecuteDoneList{
+    overflow: hidden;
+    height:fit-content;
+    margin-top: 0.2rem;
+    border: 1px double #67c23b;
+}
+/* 医嘱记录左侧样式*/
+.tab-body-item .itemContainer .adviceExecuteDoneList .left{
+    float:left;
+    width:7%;
+    height: auto;
+    padding-top: 10%;
+    padding-left: 0.3rem;
+    margin-bottom:-9999px;
+    padding-bottom:9999px;
+}
+.tab-body-item .itemContainer .adviceExecuteDoneList .right{
+    float:left;
+    width:93%;
+    padding-left: 0.3rem;
+    border: 1px solid #67c23b;
+}
+
+
 
 /*不同状态背景颜色-绿色*/
 .tab-body-item .itemContainer  .background-white{

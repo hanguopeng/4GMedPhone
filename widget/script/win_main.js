@@ -59,6 +59,11 @@ apiready = function() {
                     name: 'tourRecordsResultShow'
                 });
                 $api.setStorage(storageKey.tourRecordsPersonId,value)
+            } else if (scannerStatus === 'adviceExecute'){
+                api.sendEvent({
+                    name: 'adviceExecuteShow'
+                });
+                $api.setStorage(storageKey.infusionStickValue,value)
             }else if(scannerStatus === 'checkDetail'){
                 //alert(JSON.stringify(ret.value));
                 var persons = $api.getStorage(storageKey.persons);
@@ -123,6 +128,12 @@ apiready = function() {
                         name: 'patientChange'
                     });
                 }
+            }else if(scannerStatus === 'adviceExecuteScanPatient'){
+                // 医嘱执行获取病人
+                $api.setStorage(storageKey.adviceExecuteScanPatientId,value)
+                api.sendEvent({
+                    name: 'adviceExecuteScanPatientId',
+                });
             }else{
                 var persons = $api.getStorage(storageKey.persons);
                 //遍历查询

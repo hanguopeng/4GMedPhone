@@ -202,7 +202,15 @@ html,body{
     padding-bottom: 0.125rem;
     margin-left: 0.5rem;
 }
-
+.bedContainer .bedItem .adviceExecute{
+    display:inline-block;
+    padding-left: 20%;
+    color: red;
+    text-align: center;
+    position: absolute;
+    top:50%;
+    margin-top: -8%;
+}
 .bedContainer .bedContentContainer{
     font-size: 0.7rem;
 }

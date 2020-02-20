@@ -143,7 +143,13 @@ function openFrameContent(page){
     api.closeFrame({
         name:'frm_yizhuzhixing'
     })
-    if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
+    api.closeFrame({
+        name:'frm_huliwendang'
+    })
+    api.closeFrame({
+        name:'frm_xunshi'
+    })
+    if (page === 'frm_tizhengshouji' || page === 'frm_yizhuzhixing'  || page === 'frm_shouji' || page === 'frm_huliwendang' || page === 'frm_fuzhugongju' ){
         var person = $api.getStorage(storageKey.currentPerson);
         common.get({
             url: config.patientDetailUrl + person.id + '/' + person.homepageId,
