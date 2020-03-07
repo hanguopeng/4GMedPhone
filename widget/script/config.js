@@ -1,6 +1,6 @@
 var cmcServer="http://doclever.cn:8090/mock/5ad3f5ff995b693f603c9eeb";
-var localServer = "http://172.17.100.2:8083/cmc-server";
-//var localServer = "http://192.168.43.200:8085/cmc-server";
+//var localServer = "http://172.17.100.2:8083/cmc-server";
+var localServer = "http://192.168.43.200:8085/cmc-server";
 
 var ws = "ws://172.17.100.2:8889/";
 // var ws = "ws://192.168.1.126:8888/";
@@ -121,6 +121,15 @@ var config={
     medCostSituationDownloadUrl: localServer+"/med/cost/situation/downLoad",  //费用信息
     medPatientDetailsDownloadUrl: localServer+"/med/patient/details/download",  //病人详情
 
+    //2020/01/16 韩国鹏 新增
+    temperatureNote: localServer + "/nur/nurseTemperatureChart/queryPdaList",  //留温本体温查询
+    temperatureTagNote: localServer + "/med/patient/tempNoteList",    //留温本病人标签
+    changeUpdateRecordType: localServer + "/med/patient/updateRecordType",  //留温本修改每次测量次数
+    tempreatureRecordSave:localServer + "/nur/tempreatureRecordNote/tempreatureRecordSave", //留温本标签修改记录
+    tempreatureSava:localServer + "/nur/tempreatureRecordNote/tempreatureSave", //留温本体温项修改记录
+    hisInhospitalPatient: localServer + "/nur/tempreatureRecordNote/hisInHospital", //查询历史在院病人
+    beforeThreeDays: localServer + "/nur/tempreatureRecordNote/beforeThreeDays",    //前三天体温是否正常
+    insertTag: localServer + "/nur/tempreatureRecordNote/insertTag",    //插入第二天标签
 }
 
 var accessoryType={

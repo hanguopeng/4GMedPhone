@@ -14,6 +14,12 @@ function openFrame(page){
       }
   });
 }
+function openWin(page){
+    api.openWin({
+        name: 'frm_liuwenben',
+        url: '../html/'+ page,
+    });
+}
 function hlwsList(){
     var item = {}  ;
     //alert(hlwsarr);

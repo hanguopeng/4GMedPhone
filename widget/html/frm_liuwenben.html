@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style type="text/css">
+        body {
+            background: white;
+        }
+        input {
+            width: 2rem;
+        }
+        .aui-row {
+            min-height: 30px;
+            line-height: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            text-align: center;
+        }
+        table td, table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        table thead th {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        table tr {
+            background: #fff;
+        }
+        .oneRecord{
+            background-color: mediumspringgreen;
+        }
+        .twoRecord{
+            background-color: #03a9f4;
+        }
+        .fourRecord{
+            background-color: yellow;
+        }
+        .sixRecord{
+            background-color: red;
+        }
+        .notInput{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+  <header class="aui-bar aui-bar-nav">
+            <div class="aui-pull-left aui-btn">
+                <span class="aui-iconfont aui-icon-left"></span>
+            </div>
+            <div style="left:3.5rem;text-align:left;width:30%;position: absolute;">留温本</div>
+              <div style="border:1px solid #000;height:1.2rem;width:30%;position: absolute;left:10rem;top:0.5rem;background-color: white;line-height: 1.2rem">
+                  <input id="lwbtime" class="aui-input" type="text" value="currentDate()" onclick="chooseDate(this)" readonly style="line-height: 1.2rem;height: 1.2rem;margin-left:0.7rem">
+              </div>
+  </header>
+  <div class="aui-row aui-margin-t-5">
+      <div class="aui-col-xs-1">&nbsp</div>
+      <div class="aui-col-xs-3"><input class="aui-btn-sm" type="checkbox" value="2" checked onclick="recordPerDay(this)">2次/日</div>
+      <div class="aui-col-xs-3"><input class="aui-btn-sm" type="checkbox" value="4" checked onclick="recordPerDay(this)">4次/日</div>
+      <div class="aui-col-xs-3"><input class="aui-btn-sm" type="checkbox" value="6" checked onclick="recordPerDay(this)">6次/日</div>
+  </div>
+    <div id="content">
+
+    </div>
+
+</body>
+<script type="text/template" id="lwb-tpl">
+    {{~it.list:item:index}}
+    {{? item.recordType=="2"}}
+        <div class="aui-row twoRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb" data-tag="{{=item.recordType}}">
+    {{?? item.recordType=="4"}}
+         <div class="aui-row fourRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
+    {{?? item.recordType=="6"}}
+         <div class="aui-row sixRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
+    {{?? item.recordType=="1"}}
+         <div class="aui-row oneRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
+    {{??}}
+        <div class="aui-row aui-hide" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom:8px" name="menuLwb"  data-tag="{{=item.recordType}}">
+    {{?}}
+            <div class="aui-col-xs-5" onclick="showNext(this,'{{=item.id}}','{{=item.homepageId}}','{{=item.recordType}}','{{=item.tagMemo}}','{{=item.age}}','{{=item.name}}')">
+                <div class="aui-col-xs-5">{{=item.medBedName||''}}</div>
+                <div class="aui-col-xs-7"  >{{=item.name}}</div>
+            </div>
+        <div class="aui-col-xs-2" style="background-color: white;height:22px;line-height: 22px;text-align: center;margin-top:9px">
+            <select style="margin-top: -11px;margin-left:3px" onchange="changeRecord(this,'{{=item.id}}','{{=item.homepageId}}','{{=item.name}}')" class="select">
+                {{? item.recordType=="1"}}
+                <option value="1" selected>1次/日</option>
+                {{??}}
+                <option value="1">1次/日</option>
+                {{?}}
+                {{? item.recordType=="2"}}
+                <option value="2" selected>2次/日</option>
+                {{??}}
+                <option value="2">2次/日</option>
+                {{?}}
+                {{? item.recordType=="4"||item.recordType==null}}
+                <option value="4" selected>4次/日</option>
+                {{??}}
+                <option value="4">4次/日</option>
+                {{?}}
+                {{? item.recordType=="6"}}
+                <option value="6" selected>6次/日</option>
+                {{??}}
+                <option value="6">6次/日</option>
+                {{?}}
+            </select>
+        </div>
+            <div class="aui-col-xs-1">&nbsp</div>
+            <div class="aui-col-xs-2" style="background-color: white;height:22px;line-height: 30px;text-align: center;margin-top:9px">
+                <select style="margin-top: -11px;margin-left:10px" onchange="changeTag(this,'{{=item.id}}','{{=item.homepageId}}','{{=item.name}}')">
+                    {{? item.tagMemo=="新入院患者"}}
+                    <option value="新入院患者" selected>新入院患者</option>
+                    {{??}}
+                    <option value="新入院患者" selected>新入院患者</option>
+                    {{?}}
+                    {{? item.tagMemo=="一般患者"}}
+                    <option value="一般患者" selected>一般患者</option>
+                    {{??}}
+                    <option value="一般患者">一般患者</option>
+                    {{?}}
+                    {{? item.tagMemo=="一般患者"}}
+                    <option value="14周岁以下患者" selected>14周岁以下患者</option>
+                    {{??}}
+                    <option value="14周岁以下患者">14周岁以下患者</option>
+                    {{?}}
+                    {{? item.tagMemo=="分娩"}}
+                    <option value="分娩" selected>分娩</option>
+                    {{??}}
+                    <option value="分娩">分娩</option>
+                    {{?}}
+                    {{? item.tagMemo=="介入"}}
+                    <option value="介入" selected>介入</option>
+                    {{??}}
+                    <option value="介入">介入</option>
+                    {{?}}
+                    {{? item.tagMemo=="体温异常"}}
+                    <option value="体温异常" selected>体温异常</option>
+                    {{??}}
+                    <option value="体温异常">体温异常</option>
+                    {{?}}
+                    {{? item.tagMemo=="高烧"}}
+                    <option value="高烧" selected>高烧</option>
+                    {{??}}
+                    <option value="高烧">高烧</option>
+                    {{?}}
+                    {{? item.tagMemo=="1级护理级别患者"}}
+                    <option value="1级护理级别患者" selected>1级护理级别患者</option>
+                    {{??}}
+                    <option value="1级护理级别患者">1级护理级别患者</option>
+                    {{?}}
+                    {{? item.tagMemo=="术前(择期手术)"}}
+                    <option value="术前" selected>术前(择期手术)</option>
+                    {{??}}
+                    <option value="术前">术前(择期手术)</option>
+                    {{?}}
+                    {{? item.tagMemo=="术晨(择期手术)"}}
+                    <option value="术晨" selected>术晨(择期手术)</option>
+                    {{??}}
+                    <option value="术晨">术晨(择期手术)</option>
+                    {{?}}
+                    {{? item.tagMemo=="一般患者"}}
+                    <option value="一般患者" selected>一般患者</option>
+                    {{??}}
+                    <option value="一般患者">一般患者</option>
+                    {{?}}
+
+                </select>
+            </div>
+            <div class="aui-col-xs-1">
+                &nbsp
+            </div>
+
+            <div class="aui-col-xs-1">
+                <i class="aui-iconfont aui-icon-close"></i>
+            </div>
+         </div>
+    <div class="childDiv" id="{{=item.id}}" name="nextDiv">
+
+    </div>
+
+    {{~}}
+</script>
+<script type="text/template" id="lwb-table">
+
+    <div class="aui-row">
+        <div class="aui-col-xs-3">&nbsp</div>
+        <div class="aui-col-xs-3" style="line-height: 44px;border-bottom: 1px solid #ccc;">大便(次/日):</div>
+        <div class="aui-col-xs-3" style="border-bottom: 1px solid #ccc;">
+            <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <input type="number" class="value" id="dbcs" value="{{=it.shit.measureValue||''}}"  placeholder="请输入" data-measureId="{{=it.shit.measureId||''}}" data-measureKey="{{=it.shit.measureKey||''}}" data-time="{{=it.shit.measureTime||''}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <div class="aui-col-xs-3">&nbsp</div>
+        <div class="aui-col-xs-3" style="line-height: 44px;border-bottom: 1px solid #ccc;">小便(次/日):</div>
+        <div class="aui-col-xs-3" style="border-bottom: 1px solid #ccc;">
+            <div class="flex aui-text-left aui-padded-l-10 aui-padded-r-10">
+                <div class="flex-item aui-margin-l-10 aui-text-left">
+                    <input type="number" class="value" id="xbcs" value="{{=it.pee.measureValue||''}}" placeholder="请输入" data-measureId="{{=it.pee.measureId||''}}" data-measureKey="{{=it.pee.measureKey||''}}" data-time="{{=it.pee.measureTime||''}}">
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-1">&nbsp</div>
+        <div class="aui-col-xs-2"><input type="button" value="保存" onclick="submit(this,'{{=it.medPatientId}}','{{=it.homePageID}}')"></div>
+    </div>
+    <div>
+        <table width="90%" class="table aui-font-size-14">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>体温(℃)</th>
+                <th>脉搏)(次/分)</th>
+                <th>呼吸(次/分)</th>
+                <th>疼痛(分)</th>
+                <th>心率</th>
+            </tr>
+            </thead>
+            <tr id="twoTr">
+                <td onclick="showMeasurePart(this)">2:00</td>
+                <td data-time="{{=it.tempTwo.measureTime||''}}" data-measurePart="{{=it.tempTwo.measurePart||''}}" data-measureId="{{=it.tempTwo.measureId||''}}" data-measureKey="{{=it.tempTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twoInput" value="{{=it.tempTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.heartTwo.measureTime||''}}" data-measurePart="{{=it.heartTwo.measurePart||''}}" data-measureId="{{=it.heartTwo.measureId||''}}" data-measureKey="{{=it.heartTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twoInput" value="{{=it.heartTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.breathTwo.measureTime||''}}" data-measurePart="{{=it.breathTwo.measurePart||''}}" data-measureId="{{=it.breathTwo.measureId||''}}" data-measureKey="{{=it.breathTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twoInput" value="{{=it.breathTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.patientTwo.measureTime||''}}" data-measurePart="{{=it.patientTwo.measurePart||''}}" data-measureId="{{=it.patientTwo.measureId||''}}" data-measureKey="{{=it.patientTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twoInput" value="{{=it.patientTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateTwo.measureTime||''}}" data-measurePart="{{=it.heartRateTwo.measurePart||''}}" data-measureId="{{=it.heartRateTwo.measureId||''}}" data-measureKey="{{=it.heartRateTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twoInput" value="{{=it.heartRateTwo.measureValue||''}}"></td>
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td>
+                    <select id="temTwoTempPart">
+                    {{? it.tempTwo.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempTwo.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempTwo.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempTwo.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempTwo.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+
+                    </select>
+                </td>
+                <td>
+                    <select id="breathTwoPart">
+                        {{? it.breathTwo.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathTwo.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="heartTwoPart">
+                        {{? it.heartTwo.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartTwo.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+            <tr id="sixTr">
+                <td onclick="showMeasurePart(this)">6:00</td>
+                <td data-time="{{=it.tempSix.measureTime||''}}" data-measurePart="{{=it.tempSix.measurePart||''}}" data-measureId="{{=it.tempSix.measureId||''}}" data-measureKey="{{=it.tempSix.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="sixInput" value="{{=it.tempSix.measureValue||''}}"></td>
+                <td data-time="{{=it.heartSix.measureTime||''}}" data-measurePart="{{=it.heartSix.measurePart||''}}" data-measureId="{{=it.heartSix.measureId||''}}" data-measureKey="{{=it.heartSix.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="sixInput" value="{{=it.heartSix.measureValue||''}}"></td>
+                <td data-time="{{=it.breathSix.measureTime||''}}" data-measurePart="{{=it.breathSix.measurePart||''}}" data-measureId="{{=it.breathSix.measureId||''}}" data-measureKey="{{=it.breathSix.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="sixInput" value="{{=it.breathSix.measureValue||''}}"></td>
+                <td data-time="{{=it.patientSix.measureTime||''}}" data-measurePart="{{=it.patientSix.measurePart||''}}" data-measureId="{{=it.patientSix.measureId||''}}" data-measureKey="{{=it.patientSix.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="sixInput" value="{{=it.patientSix.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateSix.measureTime||''}}" data-measurePart="{{=it.heartRateSix.measurePart||''}}" data-measureId="{{=it.heartRateSix.measureId||''}}" data-measureKey="{{=it.heartRateSix.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="sixInput" value="{{=it.heartRateSix.measureValue||''}}"></td>
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td><select id="tempSixPart">
+                    {{? it.tempSix.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempSix.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempSix.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempSix.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempSix.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+
+                    </select>
+                </td>
+                <td>
+                    <select id="heartSixPart">
+                        {{? it.heartSix.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartSix.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="breathSixPart">
+                        {{? it.breathSix.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathSix.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+            <tr id="tenTr">
+                <td onclick="showMeasurePart(this)">10:00</td>
+                <td data-time="{{=it.tempTen.measureTime||''}}" data-measurePart="{{=it.tempTen.measurePart||''}}" data-measureId="{{=it.tempTen.measureId||''}}" data-measureKey="{{=it.tempTen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="tenInput" value="{{=it.tempTen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartTen.measureTime||''}}" data-measurePart="{{=it.heartTen.measurePart||''}}" data-measureId="{{=it.heartTen.measureId||''}}"  data-measureKey="{{=it.heartTen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="tenInput" value="{{=it.heartTen.measureValue||''}}"></td>
+                <td data-time="{{=it.breathTen.measureTime||''}}" data-measurePart="{{=it.breathTen.measurePart||''}}" data-measureId="{{=it.breathTen.measureId||''}}"  data-measureKey="{{=it.breathTen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="tenInput" value="{{=it.breathTen.measureValue||''}}"></td>
+                <td data-time="{{=it.patientTen.measureTime||''}}" data-measurePart="{{=it.patientTen.measurePart||''}}" data-measureId="{{=it.patientTen.measureId||''}}"  data-measureKey="{{=it.patientTen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="tenInput" value="{{=it.patientTen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateTen.measureTime||''}}" data-measurePart="{{=it.heartRateTen.measurePart||''}}" data-measureId="{{=it.heartRateTen.measureId||''}}" data-measureKey="{{=it.heartRateTen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="tenInput" value="{{=it.heartRateTen.measureValue||''}}"></td>
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td><select id="tempTenPart">
+                    {{? it.tempTen.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempTen.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempTen.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempTen.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempTen.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+
+                    </select>
+                </td>
+                <td>
+                    <select id="heartTenPart">
+                        {{? it.heartTen.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartTen.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="breathTenPart">
+                        {{? it.breathTen.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathTen.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+            <tr id="fourteenTr">
+                <td onclick="showMeasurePart(this)">14:00</td>
+                <td data-time="{{=it.tempFourteen.measureTime||''}}" data-measurePart="{{=it.tempFourteen.measurePart||''}}" data-measureId="{{=it.tempFourteen.measureId||''}}" data-measureKey="{{=it.tempFourteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="fourteenInput" value="{{=it.tempFourteen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartFourteen.measureTime||''}}" data-measurePart="{{=it.heartFourteen.measurePart||''}}" data-measureId="{{=it.heartFourteen.measureId||''}}"data-measureKey="{{=it.heartFourteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="fourteenInput" value="{{=it.heartFourteen.measureValue||''}}"></td>
+                <td data-time="{{=it.breathFourteen.measureTime||''}}" data-measurePart="{{=it.breathFourteen.measurePart||''}}" data-measureId="{{=it.breathFourteen.measureId||''}}"data-measureKey="{{=it.breathFourteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="fourteenInput" value="{{=it.breathFourteen.measureValue||''}}"></td>
+                <td data-time="{{=it.patientFourteen.measureTime||''}}" data-measurePart="{{=it.patientFourteen.measurePart||''}}" data-measureId="{{=it.patientFourteen.measureId||''}}"data-measureKey="{{=it.patientFourteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="fourteenInput" value="{{=it.patientFourteen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateFourteen.measureTime||''}}" data-measurePart="{{=it.heartRateFourteen.measurePart||''}}" data-measureId="{{=it.heartRateFourteen.measureId||''}}"data-measureKey="{{=it.heartRateFourteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="fourteenInput" value="{{=it.heartRateFourteen.measureValue||''}}"></td>
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td><select id="tempFourteenPart">
+                    {{? it.tempFourteen.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempFourteen.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempFourteen.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempFourteen.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempFourteen.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+
+                    </select>
+                </td>
+                <td>
+                    <select id="heartFourteen">
+                        {{? it.heartFourteen.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartFourteen.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="breathFourteenPart">
+                        {{? it.breathFourteen.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathFourteen.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+            <tr id="eightTeenTr">
+                <td onclick="showMeasurePart(this)">18:00</td>
+                <td data-time="{{=it.tempEighteen.measureTime||''}}" data-measurePart="{{=it.tempEighteen.measurePart||''}}" data-measureId="{{=it.tempEighteen.measureId||''}}" data-measureKey="{{=it.tempEighteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="eighteenInput" value="{{=it.tempEighteen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartEighteen.measureTime||''}}" data-measurePart="{{=it.heartEighteen.measurePart||''}}" data-measureId="{{=it.heartEighteen.measureId||''}}" data-measureKey="{{=it.heartEighteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="eighteenInput" value="{{=it.heartEighteen.measureValue||''}}"></td>
+                <td data-time="{{=it.breathEighteen.measureTime||''}}" data-measurePart="{{=it.breathEighteen.measurePart||''}}" data-measureId="{{=it.breathEighteen.measureId||''}}" data-measureKey="{{=it.breathEighteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="eighteenInput" value="{{=it.breathEighteen.measureValue||''}}"></td>
+                <td data-time="{{=it.patientEighteen.measureTime||''}}" data-measurePart="{{=it.patientEighteen.measurePart||''}}" data-measureId="{{=it.patientEighteen.measureId||''}}" data-measureKey="{{=it.patientEighteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="eighteenInput" value="{{=it.patientEighteen.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateEighteen.measureTime||''}}" data-measurePart="{{=it.heartRateEighteen.measurePart||''}}" data-measureId="{{=it.heartRateEighteen.measureId||''}}" data-measureKey="{{=it.heartRateEighteen.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="eighteenInput" value="{{=it.heartRateEighteen.measureValue||''}}"></td>
+
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td><select id="tempEighteenPart">
+                    {{? it.tempEighteen.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempEighteen.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempEighteen.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempEighteen.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempEighteen.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="heartEighteen">
+                        {{? it.heartEighteen.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartEighteen.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="breathEighteenPart">
+                        {{? it.breathEighteen.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathEighteen.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+            <tr id="twentyTwoTr">
+                <td onclick="showMeasurePart(this)">22:00</td>
+                <td data-time="{{=it.tempTwentyTwo.measureTime||''}}" data-measurePart="{{=it.tempTwentyTwo.measurePart||''}}" data-measureId="{{=it.tempTwentyTwo.measureId||''}}" data-measureKey="{{=it.tempTwentyTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twentytwoInput" value="{{=it.tempTwentyTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.heartTwentyTwo.measureTime||''}}" data-measurePart="{{=it.heartTwentyTwo.measurePart||''}}" data-measureId="{{=it.heartTwentyTwo.measureId||''}}" data-measureKey="{{=it.heartTwentyTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twentytwoInput" value="{{=it.heartTwentyTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.breathTwentyTwo.measureTime||''}}" data-measurePart="{{=it.breathTwentyTwo.measurePart||''}}" data-measureId="{{=it.breathTwentyTwo.measureId||''}}" data-measureKey="{{=it.breathTwentyTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twentytwoInput" value="{{=it.breathTwentyTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.patientTwentyTwo.measureTime||''}}" data-measurePart="{{=it.patientTwentyTwo.measurePart||''}}" data-measureId="{{=it.patientTwentyTwo.measureId||''}}" data-measureKey="{{=it.patientTwentyTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twentytwoInput" value="{{=it.patientTwentyTwo.measureValue||''}}"></td>
+                <td data-time="{{=it.heartRateTwentyTwo.measureTime||''}}" data-measurePart="{{=it.heartRateTwentyTwo.measurePart||''}}" data-measureId="{{=it.heartRateTwentyTwo.measureId||''}}" data-measureKey="{{=it.heartRateTwentyTwo.measureKey||''}}"><input type="number" style="text-align: center;height:30px;" name="twentytwoInput" value="{{=it.heartRateTwentyTwo.measureValue||''}}"></td>
+
+            </tr>
+            <tr class="aui-hide">
+                <td>&nbsp</td>
+                <td><select id="tempTwentyTwoPart">
+                    {{? it.tempTwentyTwo.measurePart=="腋温"}}
+                    <option value="腋温" selected>腋温</option>
+                    {{??}}
+                    <option value="腋温">腋温</option>
+                    {{?}}
+                    {{? it.tempTwentyTwo.measurePart=="口温"}}
+                    <option value="口温" selected>口温</option>
+                    {{??}}
+                    <option value="口温">口温</option>
+                    {{?}}
+                    {{? it.tempTwentyTwo.measurePart=="肛温"}}
+                    <option value="肛温" selected>肛温</option>
+                    {{??}}
+                    <option value="肛温">肛温</option>
+                    {{?}}
+                    {{? it.tempTwentyTwo.measurePart=="耳温"}}
+                    <option value="耳温" selected>耳温</option>
+                    {{??}}
+                    <option value="耳温">肛温</option>
+                    {{?}}
+                    {{? it.tempTwentyTwo.measurePart=="额温"}}
+                    <option value="额温" selected>额温</option>
+                    {{??}}
+                    <option value="额温">肛温</option>
+                    {{?}}
+
+                    </select>
+                </td>
+                <td>
+                    <select id="heartTwentyTwo">
+                        {{? it.heartTwentyTwo.measurePart=="自测脉搏"}}
+                        <option value="自测脉搏" selected>自测脉搏</option>
+                        {{??}}
+                        <option value="自测脉搏">自测脉搏</option>
+                        {{?}}
+                        {{? it.heartTwentyTwo.measurePart=="起搏器脉搏"}}
+                        <option value="起搏器脉搏" selected>起搏器脉搏</option>
+                        {{??}}
+                        <option value="起搏器脉搏">起搏器脉搏</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>
+                    <select id="breathTwentyTwoPart">
+                        {{? it.breathTwentyTwo.measurePart=="自主呼吸"}}
+                        <option value="自主呼吸" selected>自主呼吸</option>
+                        {{??}}
+                        <option value="自主呼吸">自主呼吸</option>
+                        {{?}}
+                        {{? it.breathTwentyTwo.measurePart=="呼吸机"}}
+                        <option value="呼吸机" selected>呼吸机</option>
+                        {{??}}
+                        <option value="呼吸机">呼吸机</option>
+                        {{?}}
+                    </select>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        {{~it.tagList:item:index}}
+        <div class="aui-row">
+            <div class="aui-col-xs-2">
+                &nbsp&nbsp{{=item.updatePerson}}
+            </div>
+            <div class="aui-col-xs-6">
+                于{{=item.createTime}}
+            </div>
+            <div class="aui-col-xs-4">
+                修改为<span style="color: red;">{{=item.tag}}次/日</span>
+            </div>
+        </div>
+    </div>
+    {{~}}
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/frm_liuwenben.js"></script>
+</html>
