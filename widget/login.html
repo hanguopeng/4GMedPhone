@@ -140,14 +140,14 @@
                             //设置登录有效,后续登录失效时使用
                             common.loginInvalid = false;
 
-                            // 获取新开医嘱数量，并将数量存在缓存中
-                            common.get({
-                                url: config.adviceTipCount + value,
-                                isLoading: true,
-                                success: function (ret) {
-                                    $api.setStorage(storageKey.newAdviceCount,ret.content);
-                                }
-                            });
+                            // // 获取新开医嘱数量，并将数量存在缓存中
+                            // common.get({
+                            //     url: config.adviceTipCount + value,
+                            //     isLoading: true,
+                            //     success: function (ret) {
+                            //         $api.setStorage(storageKey.newAdviceCount,ret.content);
+                            //     }
+                            // });
 
                             openWin()
                         }
@@ -479,13 +479,13 @@
                 common.loginInvalid = false;
 
                 // 获取新开医嘱数量，并将数量存在缓存中
-                common.get({
-                    url: config.adviceTipCount + userName,
-                    isLoading: true,
-                    success: function (ret) {
-                        $api.setStorage(storageKey.newAdviceCount,ret.content);
-                    }
-                });
+                // common.get({
+                //     url: config.adviceTipCount + userName,
+                //     isLoading: true,
+                //     success: function (ret) {
+                //         $api.setStorage(storageKey.newAdviceCount,ret.content);
+                //     }
+                // });
 
                openWin();
             }

@@ -18,6 +18,7 @@
     .headerAnd{
       padding-top: -25px;
     }
+
     </style>
 </head>
 <body>
@@ -31,8 +32,13 @@
           </select>
         </div>
     </div>
-    <div class="aui-pull-right" style="float: right;margin-top: -0.2rem" id="caidanlan" tapmode onclick="toggleMenu();">
-        <span class="aui-iconfont aui-icon-menu" style="color:white;font-size:1rem;"></span>
+    <div class="aui-pull-right">
+        <div style="margin-top: -0.2rem; display:inline-block;padding-right: 0.6rem"  tapmode onclick="newsWarnList();">
+            <span class="aui-iconfont aui-icon-note textWhite" id="newsRemind" style="font-size:1rem;"></span>
+        </div>
+        <div  style="margin-top: -0.2rem; display:inline-block;" id="caidanlan" tapmode onclick="toggleMenu();">
+            <span class="aui-iconfont aui-icon-menu textWhite" style="font-size:1rem;"></span>
+        </div>
     </div>
     <div style="clear: both;"></div>
 </div>

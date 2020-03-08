@@ -8,16 +8,26 @@ var skinTestId = ''   //最后一次选中的皮试id
 var skinTestAdviceId = ''  //最后一次选中的皮试的医嘱id
 var skinTestStatus = true
 var tabList = ['tab-advice-records','tab-advice-sends','tab-tour-records','tab-skin-test']
-var currentTab = 0
-var tabFlag;
+var currentTab = 2
+var tabFlag = 'tour-records';
 
 var adviceStartTime;
+var redirectToAdviceList = false
 apiready = function () {
+    redirectToAdviceList = api.pageParam.redirectToAdviceList
     api.parseTapmode();
-    currentTab = 2
-    tabFlag = "tour-records"
-    // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
-    tourRecords();
+    if (redirectToAdviceList === true) {
+        currentTab = 0
+        tabFlag = 'advice-records';
+        $api.addCls($api.byId('tab-advice-records'), 'aui-active');
+        $api.addCls($api.byId('advice-records'), 'active');
+        adviceRecords()
+    }else{
+        // 进入医嘱执行，默认显示巡视记录页，并添加扫码监听事件
+        $api.addCls($api.byId('tab-tour-records'), 'aui-active');
+        $api.addCls($api.byId('tour-records'), 'active');
+        tourRecords();
+    }
     $api.setStorage(storageKey.scannerStatus, 'tour-records');
     paddingSelectAdviceRecords();
     // 监控左划事件

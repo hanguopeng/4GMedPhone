@@ -16,7 +16,7 @@
         <div class="aui-tab-item" id="tab-advice-records" data-to="advice-records" onclick="changeTab(this);">医嘱记录</div>
         <!--<div class="aui-tab-item" id="tab-advice-execute" data-to="advice-execute" onclick="changeTab(this);">医嘱执行</div>-->
         <div class="aui-tab-item" id="tab-advice-sends" data-to="advice-sends" onclick="changeTab(this);">医嘱发送</div>
-        <div class="aui-tab-item  aui-active" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
+        <div class="aui-tab-item" id="tab-tour-records" data-to="tour-records" onclick="changeTab(this);">巡视记录</div>
         <div class="aui-tab-item" id="tab-skin-test" data-to="skin-test" onclick="changeTab(this);">皮试结果</div>
     </div>
     <div class="tabBody">
@@ -171,7 +171,7 @@
             <!--</div>-->
         </div>
         <!--巡视记录-->
-        <div id="tour-records" class="active tab-body-item aui-padded-t-10 aui-font-size-14 ">
+        <div id="tour-records" class="tab-body-item aui-padded-t-10 aui-font-size-14 ">
             <div class="aui-padded-l-15" id="tour-records-header">
                 <label><input class="aui-margin-t-5 " name="allPatient" id="allPatient" type="checkbox" tapmode  onchange="tourRecords()" checked> 全部患者</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -252,6 +252,19 @@
                 <span>{{=item.name||''}}</span>
                 {{?}}
             </div>
+            {{?item.sonBoList}}
+            {{for(var j=0;j<item.sonBoList.length;j++) {
+            }}
+            <div  style="color: red;">
+                <span>医嘱内容{{=(j+1)}}：</span>
+                {{?item.sonBoList[j].dosage}}
+                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
+                {{??}}
+                <span>{{=item.sonBoList[j].name||''}}</span>
+                {{?}}
+            </div>
+            {{}}}
+            {{?}}
             <div>
                 <span>生效时间：</span>
                 <span>{{=item.adviceStart||''}}</span>
@@ -276,20 +289,6 @@
                 <span>开嘱时间：</span>
                 <span>{{=item.foundTime||''}}</span>
             </div>
-
-            {{?item.sonBoList}}
-            {{for(var j=0;j<item.sonBoList.length;j++) {
-            }}
-            <div  style="color: red;">
-                <span>医嘱内容{{=(j+1)}}：</span>
-                {{?item.sonBoList[j].dosage}}
-                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
-                {{??}}
-                <span>{{=item.sonBoList[j].name||''}}</span>
-                {{?}}
-            </div>
-            {{}}}
-            {{?}}
 
         </div>
     </div>
@@ -743,6 +742,19 @@
                 <span>{{=item.name||''}}</span>
                 {{?}}
             </div>
+            {{?item.sonBoList}}
+            {{for(var j=0;j<item.sonBoList.length;j++) {
+            }}
+            <div  style="color: red;">
+                <span>医嘱内容{{=(j+1)}}：</span>
+                {{?item.sonBoList[j].dosage}}
+                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
+                {{??}}
+                <span>{{=item.sonBoList[j].name||''}}</span>
+                {{?}}
+            </div>
+            {{}}}
+            {{?}}
             <div>
                 <span>生效时间：</span>
                 <span>{{=item.adviceStart||''}}</span>
@@ -767,20 +779,6 @@
                 <span>开嘱时间：</span>
                 <span>{{=item.foundTime||''}}</span>
             </div>
-
-            {{?item.sonBoList}}
-            {{for(var j=0;j<item.sonBoList.length;j++) {
-            }}
-            <div  style="color: red;">
-                <span>医嘱内容{{=(j+1)}}：</span>
-                {{?item.sonBoList[j].dosage}}
-                <span>{{=item.sonBoList[j].name||''}}，每次{{=item.sonBoList[j].dosage||''}}</span>
-                {{??}}
-                <span>{{=item.sonBoList[j].name||''}}</span>
-                {{?}}
-            </div>
-            {{}}}
-            {{?}}
         </div>
     </div>
     <div id="adviceSendsDetail{{=item.id}}"  onclick="closeDetail(this)"></div>

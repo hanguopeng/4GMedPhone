@@ -151,3 +151,11 @@ table tr {
 .hide{
     display: none;
 }
+
+.textRed{
+    color: red;
+}
+
+.textWhite{
+    color: white;
+}

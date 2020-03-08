@@ -1,21 +1,21 @@
 function toggleMenu(daList){
-    var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
+    // var newAdviceCount =  $api.getStorage(storageKey.newAdviceCount);
     api.actionSheet({
         cancelTitle: '取消',
         // buttons: ['扫描','搜索','首页','新医嘱列表'+'('+daList+')']
-        buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
+        // buttons: ['首页','搜索','新医嘱列表'+'('+newAdviceCount+')','修改密码','切换账户','直接退出系统']
+        buttons: ['首页','搜索','修改密码','切换账户','直接退出系统']
     }, function(ret, err){
         if(ret.buttonIndex==1){
             winMain();
         }else if(ret.buttonIndex==2){
             openPersonSearchFrame();
         }else if(ret.buttonIndex==3){
-            newDocAdvice();
-        }else if(ret.buttonIndex==4){
+            // newDocAdvice();
             changePwd();
-        }else if(ret.buttonIndex==5){
+        }else if(ret.buttonIndex==4){
             switchAccount();
-        }else if(ret.buttonIndex==6){
+        }else if(ret.buttonIndex==5){
             logOut();
         }
     });
@@ -80,6 +80,7 @@ function newDocAdvice(){
         hScrollBarEnabled: false
     });
 }
+
 // 修改密码
 function changePwd(){
     api.openWin({
@@ -108,5 +109,37 @@ function logOut(){
             name: 'closeWidget'
         },
         silent: true
+    });
+}
+
+//病人新医嘱提醒列表
+function newsWarnList(){
+    // 打开病人新医嘱提醒列表的同时，将消息提醒图标的颜色变为白色
+    api.sendEvent({
+        name: 'changeNewsColorWhite'
+    });
+    $api.setStorage(storageKey.newsWarnColor, "white");
+    var header = document.querySelector('#header');
+    var pos = $api.offset(header);
+    api.openFrame({
+        name: 'news_warn_for_patient',
+        url: './news_warn_for_patient.html',
+        rect: {
+            x: api.winWidth-300,
+            y: pos.h,
+            w: 'auto',
+            h: api.winHeight-pos.h
+        },
+        progress: {
+            type:"default",
+            title:"",
+            text:"正在加载数据"
+        },
+        animation:{
+            type:"flip",
+            subType:"from_bottom"
+        },
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
     });
 }
