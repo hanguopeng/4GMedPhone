@@ -33,13 +33,12 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
             isLoading:true,
             data:{
                 'medPatientId': eleId,
-                'beginDay':lwbtime ,
-                'endDay': lwbtime,
+                'beginDay':selectedDate ,
                 'homePageID': homeId
             },
             success:function (ret) {
                 if(ret&&ret.code&&ret.code===200){
-                    tagDays = ret.content.tagDays;
+                    //tagDays = ret.content.tagDays;
                     var itemContent = {
                         tempTwo:'',
                         tempSix:'',
@@ -786,7 +785,7 @@ function submit(ele,medPatientId,homePageID){
                     }
                 })
             }
-
+            console.log(JSON.stringify(tempList))
             common.post({
                 url:config.tempreatureSava,
                 isLoading:false,
