@@ -33,7 +33,7 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
             isLoading:true,
             data:{
                 'medPatientId': eleId,
-                'beginDay':selectedDate ,
+                'queryDate':selectedDate ,
                 'homePageID': homeId
             },
             success:function (ret) {
@@ -403,8 +403,9 @@ function addClasById(domId){
 
 //查询疗区所有病人
 function patientList(){
+    var queryDate = $api.val($api.byId('lwbtime'));
     common.get({
-        url:config.patientSearchUrl + "?inpatientArea=" + areaId,
+        url:config.patientSearchUrl + "?inpatientArea=" + areaId + "&queryDate=" + queryDate,
         isLoading: true,
         success:function(ret){
             if(ret&&ret.code===200){
@@ -459,6 +460,10 @@ function changeRecord(ele,tagMemo,patId,homeId,patName){
 
 
 function recordPerDay(ele){
+    var nextDivs = $("div[name='nextDiv']")
+    for(var k=0;k<nextDivs.length;k++){
+        $api.html(nextDivs[k], "");
+    }
     var recordList = $("div[name='menuLwb']");
     var eleValue = $api.val(ele);
     var recordValue = '';
@@ -468,7 +473,6 @@ function recordPerDay(ele){
              console.log(recordValue)
             if(eleValue==recordValue){
                 $api.removeCls(recordList[i],'aui-hide');
-
             }
         }
     }else{

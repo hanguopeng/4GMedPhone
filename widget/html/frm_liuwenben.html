@@ -72,16 +72,15 @@
 </body>
 <script type="text/template" id="lwb-tpl">
     {{~it.list:item:index}}
+    {{? item.inOrganizationTime!=null}}
     {{? item.recordType=="2"}}
         <div class="aui-row twoRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb" data-tag="{{=item.recordType}}">
     {{?? item.recordType=="4"}}
          <div class="aui-row fourRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
     {{?? item.recordType=="6"}}
          <div class="aui-row sixRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
-    {{?? item.recordType=="1"}}
-         <div class="aui-row oneRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType}}">
-    {{??}}
-        <div class="aui-row aui-hide" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom:8px" name="menuLwb"  data-tag="{{=item.recordType}}">
+    {{?? item.recordType=="1"||item.recordType==""||item.recordType==null}}
+         <div class="aui-row oneRecord" style="height:40px;line-height: 40px;margin-top:8px;margin-bottom: 8px;" name="menuLwb"  data-tag="{{=item.recordType||'1'}}">
     {{?}}
             <div class="aui-col-xs-5" onclick="showNext(this,'{{=item.id}}','{{=item.homepageId}}','{{=item.recordType}}','{{=item.tagMemo}}','{{=item.age}}','{{=item.name}}')">
                 <div class="aui-col-xs-5">{{=item.medBedName||''}}</div>
@@ -119,7 +118,7 @@
                     {{??}}
                     <option value="新入院患者" selected>新入院患者</option>
                     {{?}}
-                    {{? item.tagMemo=="一般患者"}}
+                    {{? item.tagMemo=="一般患者" || item.tagMemo == ""||item.tagMemo==null}}
                     <option value="一般患者" selected>一般患者</option>
                     {{??}}
                     <option value="一般患者">一般患者</option>
@@ -164,12 +163,6 @@
                     {{??}}
                     <option value="术晨">术晨(择期手术)</option>
                     {{?}}
-                    {{? item.tagMemo=="一般患者"}}
-                    <option value="一般患者" selected>一般患者</option>
-                    {{??}}
-                    <option value="一般患者">一般患者</option>
-                    {{?}}
-
                 </select>
             </div>
             <div class="aui-col-xs-1">
@@ -177,13 +170,17 @@
             </div>
 
             <div class="aui-col-xs-1">
+                {{? item.temperatureIsEnough}}
+                <i class="aui-iconfont aui-icon-correct"></i>
+                {{??}}
                 <i class="aui-iconfont aui-icon-close"></i>
+                {{?}}
             </div>
          </div>
     <div class="childDiv" id="{{=item.id}}" name="nextDiv">
 
     </div>
-
+    {{?}}
     {{~}}
 </script>
 <script type="text/template" id="lwb-table">

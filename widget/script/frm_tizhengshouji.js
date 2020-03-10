@@ -11,6 +11,8 @@ var currIdx = 1;
 var re = /^[1-9]+[0-9]*]*$/;
 var double = /^[0-9]+\.?[0-9]*$/;
 var UIInput;
+var patientTag;
+var timeSection;
 apiready = function () {
     UIInput = api.require('UIInput');
     api.parseTapmode();
@@ -72,6 +74,16 @@ apiready = function () {
     api.addEventListener({name: 'scrolltobottom', extra: {threshold: 0}}, function (ret, err) {
         loadMore();
     });
+
+            common.get({
+                url:config.getPatientRecord + "?oId=" + medPatientId + homePageID,
+                isLoading:false,
+                success:function (medRet) {
+                    if(medRet&&medRet.code===200){
+                        patientTag = medRet.content.recordType;
+                    }
+                }
+            })
 }
 
 //每个tab页面点击之后会进行的初始化
@@ -95,6 +107,17 @@ function showTZCJ() {
     api.parseTapmode();
 }
 
+function checkHot(temp){
+    if(temp&&temp>=38.5){
+        return 'hotFerver';
+    }else if(temp&&temp<=35){
+        return 'tempAbnormal';
+    }else if(temp&&temp>=37.5&&temp<=38.4){
+        return 'tempAbnormal';
+    }else{
+        return "";
+    }
+}
 //保存体征采集
 function saveTZ() {
     if (isEmpty(fileId)){
@@ -147,6 +170,71 @@ function saveTZ() {
     //读取其它的字段，只要有一个字段不为空，则可以进行保存
     //体温值
     var temperature_value = $("#temperature_value").val()
+    if(checkHot(parseFloat(temperature_value))==='hotFerver'){
+        if(patientTag!=="6") {
+            api.confirm({
+                title: '提示',
+                msg: '体温超过38.5，是否修改测量次数为6次/日',
+                buttons: ["确定", "取消"]
+            }, function (ret, err) {
+                var index = ret.buttonIndex;
+                if (index === 1) {
+                    common.post({
+                        url: config.changeUpdateRecordType,
+                        isLoading: true,
+                        data: {
+                            patientId: medPatientId,
+                            homepageId: homePageID,
+                            tag: '6',
+                            tagMemo: '高烧',
+                            oId: medPatientId + '' + homePageID
+                        },
+                        success: function (ret) {
+                            if (ret && ret.code == 200) {
+                                api.toast({
+                                    msg: '修改成功',
+                                    duration: 2000,
+                                    location: 'middle'
+                                });
+                            }
+                        }
+                    })
+                }
+            });
+        }
+    } else if(checkHot(parseFloat(temperature_value))==="tempAbnormal"){
+            if(patientTag!=='4'){
+                api.confirm({
+                    title: '提示',
+                    msg: '体温在37.5~38.4之间或在35度以下，是否修改测量次数为4次/日',
+                    buttons: ["确定","取消"]
+                }, function (ret, err) {
+                    var index = ret.buttonIndex;
+                    if(index===1){
+                        common.post({
+                            url: config.changeUpdateRecordType,
+                            isLoading: true,
+                            data: {
+                                patientId: medPatientId,
+                                homepageId: homePageID,
+                                tag: '4',
+                                tagMemo: '体温异常',
+                                oId: medPatientId + '' + homePageID
+                            },
+                            success: function (ret) {
+                                if(ret&&ret.code==200){
+                                    api.toast({
+                                        msg: '修改成功',
+                                        duration: 2000,
+                                        location: 'middle'
+                                    });
+                                }
+                            }
+                        })
+                    }
+                });
+            }
+        }
     //体温部位
     var temperature_part = $("#temperature_part").val()
     // 脉搏值
@@ -228,15 +316,91 @@ function saveTZ() {
                 data: JSON.stringify(data),
                 success: function (ret) {
                     api.hideProgress();
-                    api.alert({
-                        title: '提示',
-                        msg: ret.content.resultRemark
+                    api.toast({
+                        msg: ret.content.resultRemark,
+                        duration: 2000,
+                        location: 'middle'
                     }, function (ret, err) {
                         showTZCJ();
                     });
                 }
             });
+            if(timeSection==22){
+                common.post({
+                    url:config.beforeThreeDays,
+                    isLoading:false,
+                    data:{
+                        medPatientId:medPatientId,
+                        homePageID:homePageID,
+                        fileId:fileId
+                    },success:function (retThree) {
+                        if(retThree){
+                            if(retThree.code===200){
+                                if(ret.content==="threeDaysTempOk"){
+                                    api.confirm({
+                                        title: '提示',
+                                        msg: '此病人体温已回复至正常水平，是否将测量次数回复至正常？',
+                                        buttons: ['确定','取消']
+                                    }, function (ret, err) {
+                                        var index = ret.buttonIndex;
+                                        var patientAge = person.age;
+                                        var age;
+                                        if(patientAge.length<3){
+                                            age = parseInt(patientAge.slice(0,1));
+                                        }else{
+                                            age = parseInt(patientAge.slice(0,2));
+                                        }
+                                        if(index===1){
+                                            var threeTag = '1' ;
+                                            var threeTagMemo = '一般患者';
+                                            if(age<15) {
+                                                threeTag = '2';
+                                                threeTagMemo='14周岁以下患者'
+                                            }
+                                            common.post({
+                                                url: config.insertTag,
+                                                isLoading: false,
+                                                data: {
+                                                    recordType: threeTag,
+                                                    tag_memo: threeTagMemo,
+                                                    patientId: medPatientId,
+                                                    homepageId: homePageID
+                                                }, success: function (retHot) {
+                                                    if(retHot&&retHot.code&&retHot.code===200){
+                                                        common.post({
+                                                            url:config.tempreatureRecordSave,
+                                                            data:{
+                                                                updatePerson:$api.getStorage(storageKey.userName),
+                                                                updatePersonId:$api.getStorage(storageKey.userId),
+                                                                tag:threeTag,
+                                                                patientId:medPatientId,
+                                                                patientName:person.name,
+                                                                homepageId:homePageID,
+                                                                updateContent:'',
+                                                                tagMemo:threeTagMemo,
+                                                            },
+                                                            isLoading:true,
+                                                            success:function(ret1){
+                                                                api.toast({
+                                                                    msg: '修改成功',
+                                                                    duration: 2000,
+                                                                    location: 'middle'
+                                                                });
+                                                            }
 
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    });
+
+                                }
+                            }
+                        }
+                    }
+                })
+            }
         }
     });
 }
@@ -737,7 +901,7 @@ function chooseTime(el) {
         }
         var time = hour + ":" + minute;
         $api.val(el, time);
-        getMeasureTimeSection(hour)
+        getMeasureTimeSection(hour);
     });
 }
 
@@ -772,6 +936,7 @@ function getMeasureTimeSection(number) {
     var end = hour + 1 < 10 ? "0" + (hour + 1) : hour + 1
     var el1 = $api.dom('#measureTimeSectionRemark')
     $api.val(el1, "(" + start + ":00-" + end + ":59)");
+    timeSection = hour;
 }
 
 function changeMeasureTime(obj) {
