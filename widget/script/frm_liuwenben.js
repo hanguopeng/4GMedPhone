@@ -9,6 +9,7 @@ var patientAge;
 var timeArea = -1;  //出现体温异常时时间区域数组下标(2~22)
 var patientName;
 var currentSelectedTime;
+var queryHistoryFlag = false;
 apiready=function(){
     $api.val($api.byId('lwbtime'), currentDate());
 
@@ -33,7 +34,7 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
             isLoading:true,
             data:{
                 'medPatientId': eleId,
-                'queryDate':selectedDate ,
+                'beginDay':selectedDate ,
                 'homePageID': homeId
             },
             success:function (ret) {
@@ -267,7 +268,7 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
                     }
                     console.log(tagHisMemoArr)
                     console.log(tagHisMemoArr.length)
-                    if(tagHisMemoArr.length>0){
+                    if(tagHisMemoArr.length>1){
                             switch (tagHisMemoArr[0]) {
                                 case 6:
                                     domNameArr = ['sixTr','tenTr','fourteenTr','eightTeenTr','twentyTwoTr'];
@@ -284,7 +285,7 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
                                 case 22:
                                     domNameArr = ['twentyTwoTr'];
                                     break;
-                                default:
+                                case 2:
                                     domNameArr = ['twoTr','sixTr','tenTr','fourteenTr','eightTeenTr','twentyTwoTr'];
                                     break;
                             }
@@ -345,24 +346,17 @@ function showNext(obj,eleId,homeId,recordType,tag,age,name){
                                             }
                     }
 
-                    /*if(timeAreaNext){
-                        if(recordMemoTime){
-                            if(recordMemoTime===currentSelectedTime){
-                                switch (hisRecordType) {
-                                    case '2':
-                                        if(isNotNullArrFunc(getDomArrByName(domNameArr[timeAreaNext]))>4){
-                                            addClasById('fourteenInput');
-                                        };
-                                        break;
-                                    case '4':
-                                        if(isNotNullArrFunc(getDomArrByName(domNameArr[timeAreaNext]))>4){
-                                            addClasById();
-                                        };
-                                        break;
-                                }
-                            }
+                    if(queryHistoryFlag){
+                        var twoInputs = $("input[name='twoInput']");
+                        for(var i=0;i<twoInputs.length;i++){
+                            $api.attr(twoInputs[i], 'readonly', true);
+                            $api.attr(sixInputs[i], 'readonly', true);
+                            $api.attr(fourteenInputs[i], 'readonly', true);
+                            $api.attr(fourteenInputs[i], 'readonly', true);
+                            $api.attr(eighteenInputs[i], 'readonly', true);
+                            $api.attr(twentytwoInputs[i], 'readonly', true);
                         }
-                    }*/
+                    }
 
                 }
 
@@ -924,6 +918,7 @@ function chooseDate(el){
         $api.val(el, startDate);
         //patientList();
         currentSelectedTime = startDate;
+        queryHistoryFlag = true;
         hisInhospitalPatient(startDate);
     });
 }
