@@ -73,6 +73,13 @@ var config={
     selectVitalSignsById: localServer+"/nur/nursePlan/selectVitalSignsById/",  //通过id获取生命体征检测查询
     scanMedical: localServer+"/med/advice/barcode/getByMaterialCode/", //扫码核对查询医嘱信息
     updateTelephone:localServer+"/med/patient/updateTelephone/", //修改联系电话
+    // 20200204 新消息提醒列表
+    newsWarnList: localServer+"/med/advice/newsWarn/queryList/",  // 新消息提醒列表
+    // 20200212 医嘱执行
+    infusionStickList: localServer+"/med/infusionStick/list",  // 输液贴列表
+    getInfusionStickById: localServer+"/med/infusionStick/info/",  // 输液贴信息
+    executeInfusionStick: localServer+"/med/infusionStick/execute",  // 输液贴执行
+    deleteInfusionStick: localServer+"/med/infusionStick/deleted/",  // 输液贴执行
 
 
     // 未用+护理单
