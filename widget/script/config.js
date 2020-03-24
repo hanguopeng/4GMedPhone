@@ -192,6 +192,7 @@ var storageKey={
     userId:"userId", //登录用户id
     token:"token",//访问token
     areaId:"areaId", //疗区id
+    areaCode:"areaCode", //疗区Code,HIS端显示的部门code
     areaName:"areaName", //疗区名称
     persons:"persons", //查询到的相关病人信息
     currentPerson:"currentPerson", //当前选择的一个病人的信息
@@ -205,6 +206,9 @@ var storageKey={
     cmcScan:"cmcScan",  // 扫描模块
     createFlag:"createFlag", //websocket是否已经连接
     tourRecordsPersonId: "tourRecordsPersonId",
-    inOrganization: "inOrganization"    //入科提示
+    infusionStickValue: "infusionStickValue",
+    inOrganization: "inOrganization",    //入科提示
+    newsWarnColor: "newsWarnColor",    //新医嘱消息提醒颜色,
+    adviceExecuteScanPatientId: "adviceExecuteScanPatientId",    //医嘱执行扫描得到的病人id
 
 }
