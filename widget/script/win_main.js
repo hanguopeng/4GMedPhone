@@ -345,7 +345,7 @@ function createWs(wsdata) {
     };
     wsClient.onmessage = function(evt) {
         api.startPlay({
-            path : 'widget://res/Global.mp3'
+            path : 'widget://res/global.mp3'
         }, function() {
         });
         onmessage(evt)
