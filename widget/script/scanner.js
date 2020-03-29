@@ -8,6 +8,10 @@ function toggleMenu(daList){
     }, function(ret, err){
         if(ret.buttonIndex==1){
             winMain();
+            api.startPlay({
+                path : 'widget://res/global.mp3'
+            }, function() {
+            });
         }else if(ret.buttonIndex==2){
             openPersonSearchFrame();
         }else if(ret.buttonIndex==3){
